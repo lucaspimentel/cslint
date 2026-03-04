@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src\Cslint.Core\Cslint.Core.csproj" Type="Classic C#" />
+  <Project Path="src\Cslint.Cli\Cslint.Cli.csproj" Type="Classic C#" />
+  <Project Path="test\Cslint.Core.Tests\Cslint.Core.Tests.csproj" Type="Classic C#" />
+</Solution>

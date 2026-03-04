@@ -1,0 +1,12 @@
+.idea/
+.vs/
+.vscode/
+
+bin/
+obj/
+artifacts/
+publish/
+
+*.user
+
+.claude/*.local.*

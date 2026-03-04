@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+
+    <!-- Publish optimization -->
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishSingleFile>true</PublishSingleFile>
+
+    <!-- NuGet -->
+    <PackageId>Cslint</PackageId>
+    <Version>0.0.1-alpha</Version>
+    <Authors>Lucas Pimentel</Authors>
+    <Copyright>Copyright (c) Lucas Pimentel 2025</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25306.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cslint.Core\Cslint.Core.csproj" />
+  </ItemGroup>
+
+</Project>
