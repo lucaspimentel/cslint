@@ -1,12 +1,20 @@
 # CsLint
 
-A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing (no compilation or semantic model) for sub-100ms single-file linting.
+A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing (no compilation or semantic model) for fast single-file linting.
 
 ## Why?
 
 `dotnet format --verify-no-changes` is slow (~28s) because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
 
 ## Installation
+
+### .NET tool
+
+Requires [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
+
+```bash
+dotnet tool install --global cslint
+```
 
 ### Download pre-built binary
 

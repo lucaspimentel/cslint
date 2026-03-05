@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What is CsLint?
 
-A fast C# linter that reads rules from `.editorconfig`. Uses Roslyn **syntax-only** parsing (no compilation/semantic model) to achieve sub-100ms single-file linting, as an alternative to `dotnet format --verify-no-changes`.
+A fast C# linter that reads rules from `.editorconfig`. Uses Roslyn **syntax-only** parsing (no compilation/semantic model) as an alternative to `dotnet format --verify-no-changes`.
 
 ## Build & Test Commands
 

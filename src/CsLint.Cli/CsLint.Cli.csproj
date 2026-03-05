@@ -4,16 +4,28 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>cslint</AssemblyName>
 
-    <!-- Publish optimization -->
-    <PublishAot>true</PublishAot>
+    <!-- Publish optimization (disabled when packing as tool) -->
+    <PublishAot Condition="'$(PackAsTool)' != 'true'">true</PublishAot>
+
+    <!-- .NET Tool -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>cslint</ToolCommandName>
 
     <!-- NuGet -->
-    <PackageId>Cslint</PackageId>
+    <PackageId>cslint</PackageId>
     <Version>0.0.1-alpha</Version>
     <Authors>Lucas Pimentel</Authors>
+    <Description>A fast C# linter that reads rules from .editorconfig. Uses Roslyn syntax-only parsing for fast single-file linting.</Description>
     <Copyright>Copyright (c) Lucas Pimentel 2025</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/lucaspimentel/cslint</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>csharp;linter;editorconfig;roslyn;dotnet-tool</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25306.1" />
