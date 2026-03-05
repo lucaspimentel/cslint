@@ -31,7 +31,7 @@
     Downloads and installs version 1.0.0 of cslint.
 
 .EXAMPLE
-    irm https://raw.githubusercontent.com/lucaspimentel/Cslint/main/install-remote.ps1 | iex
+    irm https://raw.githubusercontent.com/lucaspimentel/cslint/main/install-remote.ps1 | iex
 
     One-liner to download and run this installer script directly from GitHub.
 #>
@@ -49,7 +49,7 @@ $ErrorActionPreference = 'Stop'
 
 $ProjectName = 'cslint'
 $GitHubOwner = 'lucaspimentel'
-$GitHubRepo = 'Cslint'
+$GitHubRepo = 'cslint'
 
 # Determine runtime identifier and archive extension
 $rid = if ($IsWindows) {

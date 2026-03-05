@@ -18,11 +18,12 @@ dotnet run --project src/CsLint.Cli -- <path>  # lint a file or directory
 
 ## Architecture
 
-Three projects in `CsLint.slnx`:
+Four projects in `CsLint.slnx`:
 
 - **CsLint.Core** — rules engine, config, formatters (class library)
 - **CsLint.Cli** — console app entry point using System.CommandLine
 - **CsLint.Core.Tests** — xUnit tests with Moq
+- **CsLint.Benchmarks** — BenchmarkDotNet performance benchmarks
 
 ### Rules are organized in tiers
 
@@ -33,7 +34,7 @@ Three projects in `CsLint.slnx`:
 ### Key design decisions
 
 - All rules implement `IRuleDefinition` and are manually registered in `RuleRegistry` (no reflection, trim-safe)
-- Config comes from `.editorconfig` via `editorconfig-core-net` NuGet, abstracted behind `IConfigProvider`
+- Config comes from `.editorconfig` via `editorconfig` NuGet package, abstracted behind `IConfigProvider`
 - `FileLinter` orchestrates: parse file → resolve config → run enabled rules
 - `DirectoryLinter` processes files in parallel via `Parallel.ForEachAsync`
 - Exit codes: 0 = clean, 1 = violations, 2 = error

@@ -6,9 +6,25 @@ A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing 
 
 `dotnet format --verify-no-changes` is slow (~28s) because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
 
-## Requirements
+## Installation
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+### Download pre-built binary
+
+Requires PowerShell 7+.
+
+```pwsh
+irm https://raw.githubusercontent.com/lucaspimentel/cslint/main/install-remote.ps1 | iex
+```
+
+### Build from source
+
+Requires PowerShell 7+ and [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
+
+```pwsh
+git clone https://github.com/lucaspimentel/cslint
+cd cslint
+./install-local.ps1
+```
 
 ## Usage
 
@@ -70,17 +86,11 @@ Rules are read from your `.editorconfig` and organized into three tiers:
 - Pattern matching (IDE0019/IDE0020/IDE0066)
 - Null checking (IDE0029–IDE0031/IDE0041)
 
-## Building from Source
+## Development
 
 ```bash
 dotnet build
 dotnet test
-```
-
-To publish as a Native AOT executable:
-
-```bash
-dotnet publish src/CsLint.Cli -c Release
 ```
 
 ## Claude Code Integration
@@ -120,3 +130,7 @@ fi
 ```
 
 When a hook exits with code 2, Claude Code receives the output as feedback and can fix the violations automatically.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

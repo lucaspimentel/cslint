@@ -47,7 +47,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $ProjectName = 'cslint'
-$ProjectFile = 'src/Cslint.Cli/Cslint.Cli.csproj'
+$ProjectFile = 'src/CsLint.Cli/CsLint.Cli.csproj'
 
 # Check if the local clone is up-to-date with remote
 Write-Host "Checking if repository is up-to-date..." -ForegroundColor Cyan
@@ -123,7 +123,7 @@ try {
 # Build and publish the project
 # With UseArtifactsOutput, output lands at artifacts/publish/<ProjectName>/release_<rid>/
 $projectPath = Join-Path $PSScriptRoot $ProjectFile
-$publishPath = Join-Path $PSScriptRoot "artifacts/publish/Cslint.Cli/release_$rid"
+$publishPath = Join-Path $PSScriptRoot "artifacts/publish/CsLint.Cli/release_$rid"
 
 try {
     dotnet publish $projectPath `

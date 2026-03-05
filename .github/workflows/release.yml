@@ -1,8 +1,9 @@
 name: Release
 
 env:
-  PROJECT_NAME: Cslint.Cli
-  PROJECT_FILE: src/Cslint.Cli/Cslint.Cli.csproj
+  ARTIFACT_NAME: cslint
+  PROJECT_NAME: CsLint.Cli
+  PROJECT_FILE: src/CsLint.Cli/CsLint.Cli.csproj
 
 on:
   push:
@@ -41,10 +42,10 @@ jobs:
         dotnet-version: 10.0.x
 
     - name: Restore dependencies
-      run: dotnet restore Cslint.slnx
+      run: dotnet restore CsLint.slnx
 
     - name: Test
-      run: dotnet test Cslint.slnx -c Release --verbosity normal
+      run: dotnet test CsLint.slnx -c Release --verbosity normal
 
     - name: Publish
       run: dotnet publish ${{ env.PROJECT_FILE }} -c Release -r ${{ matrix.rid }} --self-contained
@@ -60,27 +61,27 @@ jobs:
       if: matrix.archive == 'zip'
       shell: pwsh
       run: |
-        Compress-Archive -Path artifacts/publish/${{ env.PROJECT_NAME }}/release_${{ matrix.rid }}/* -DestinationPath ${{ env.PROJECT_NAME }}-${{ matrix.rid }}.zip
+        Compress-Archive -Path artifacts/publish/${{ env.PROJECT_NAME }}/release_${{ matrix.rid }}/* -DestinationPath ${{ env.ARTIFACT_NAME }}-${{ matrix.rid }}.zip
 
     - name: Create archive (Linux)
       if: matrix.archive == 'tar.gz'
       run: |
         cd artifacts/publish/${{ env.PROJECT_NAME }}/release_${{ matrix.rid }}
-        tar -czf ../../../../${{ env.PROJECT_NAME }}-${{ matrix.rid }}.tar.gz *
+        tar -czf ../../../../${{ env.ARTIFACT_NAME }}-${{ matrix.rid }}.tar.gz *
         cd -
 
     - name: Generate checksum
       shell: pwsh
       run: |
-        $hash = Get-FileHash -Path ${{ env.PROJECT_NAME }}-${{ matrix.rid }}.${{ matrix.archive }} -Algorithm SHA256
-        "$($hash.Hash)  ${{ env.PROJECT_NAME }}-${{ matrix.rid }}.${{ matrix.archive }}" | Out-File -FilePath checksum-${{ matrix.rid }}.txt -Encoding ascii
+        $hash = Get-FileHash -Path ${{ env.ARTIFACT_NAME }}-${{ matrix.rid }}.${{ matrix.archive }} -Algorithm SHA256
+        "$($hash.Hash)  ${{ env.ARTIFACT_NAME }}-${{ matrix.rid }}.${{ matrix.archive }}" | Out-File -FilePath checksum-${{ matrix.rid }}.txt -Encoding ascii
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ env.PROJECT_NAME }}-${{ matrix.rid }}
+        name: ${{ env.ARTIFACT_NAME }}-${{ matrix.rid }}
         path: |
-          ${{ env.PROJECT_NAME }}-${{ matrix.rid }}.${{ matrix.archive }}
+          ${{ env.ARTIFACT_NAME }}-${{ matrix.rid }}.${{ matrix.archive }}
           checksum-${{ matrix.rid }}.txt
 
   release:
@@ -95,8 +96,8 @@ jobs:
 
     - name: Combine checksums
       run: |
-        cat ${{ env.PROJECT_NAME }}-win-x64/checksum-win-x64.txt > checksums.txt
-        cat ${{ env.PROJECT_NAME }}-linux-x64/checksum-linux-x64.txt >> checksums.txt
+        cat ${{ env.ARTIFACT_NAME }}-win-x64/checksum-win-x64.txt > checksums.txt
+        cat ${{ env.ARTIFACT_NAME }}-linux-x64/checksum-linux-x64.txt >> checksums.txt
 
     - name: Determine version
       id: version
@@ -116,6 +117,6 @@ jobs:
         prerelease: ${{ contains(steps.version.outputs.version, '-') }}
         generate_release_notes: true
         files: |
-          ${{ env.PROJECT_NAME }}-win-x64/${{ env.PROJECT_NAME }}-win-x64.zip
-          ${{ env.PROJECT_NAME }}-linux-x64/${{ env.PROJECT_NAME }}-linux-x64.tar.gz
+          ${{ env.ARTIFACT_NAME }}-win-x64/${{ env.ARTIFACT_NAME }}-win-x64.zip
+          ${{ env.ARTIFACT_NAME }}-linux-x64/${{ env.ARTIFACT_NAME }}-linux-x64.tar.gz
           checksums.txt

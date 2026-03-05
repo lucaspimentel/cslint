@@ -1,8 +1,8 @@
 name: CI
 
 env:
-  PROJECT_NAME: Cslint.Cli
-  PROJECT_FILE: src/Cslint.Cli/Cslint.Cli.csproj
+  PROJECT_NAME: CsLint.Cli
+  PROJECT_FILE: src/CsLint.Cli/CsLint.Cli.csproj
 
 on:
   push:
@@ -40,13 +40,13 @@ jobs:
         dotnet-version: 10.0.x
 
     - name: Restore dependencies
-      run: dotnet restore Cslint.slnx
+      run: dotnet restore CsLint.slnx
 
     - name: Build
-      run: dotnet build Cslint.slnx -c Release --no-restore
+      run: dotnet build CsLint.slnx -c Release --no-restore
 
     - name: Test
-      run: dotnet test Cslint.slnx -c Release --no-build --verbosity normal
+      run: dotnet test CsLint.slnx -c Release --no-build --verbosity normal
 
     - name: Publish
       run: dotnet publish ${{ env.PROJECT_FILE }} -c Release -r ${{ matrix.rid }}
