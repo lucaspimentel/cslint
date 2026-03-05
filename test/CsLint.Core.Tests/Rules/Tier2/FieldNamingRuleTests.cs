@@ -40,6 +40,8 @@ public class FieldNamingRuleTests
     [InlineData("class C { protected int Count; }")]        // protected
     [InlineData("class C { private const int Max = 10; }")] // const
     [InlineData("class C { private static int Count; }")]   // static
+    [InlineData("class C { internal int Count; }")]            // internal
+    [InlineData("class Outer { class Inner { internal int Count; } }")] // internal in nested class
     public void Analyze_SkipsNonPrivateInstanceFields(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

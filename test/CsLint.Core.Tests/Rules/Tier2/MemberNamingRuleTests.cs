@@ -11,6 +11,8 @@ public class MemberNamingRuleTests
     [InlineData("class C { void DoWork() { } }")]
     [InlineData("class C { int Count { get; } }")]
     [InlineData("class C { event EventHandler Changed; }")]
+    [InlineData("class C { [DllImport(\"kernel32.dll\")] static extern bool closeHandle(IntPtr handle); }")]
+    [InlineData("class C { [LibraryImport(\"kernel32.dll\")] static partial bool closeHandle(IntPtr handle); }")]
     public void Analyze_PascalCaseMembers_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

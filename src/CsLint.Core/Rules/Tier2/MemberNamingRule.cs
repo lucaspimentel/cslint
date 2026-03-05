@@ -21,8 +21,16 @@ public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
         return walker.Diagnostics;
     }
 
-    void INamingRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+    void INamingRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        // Skip P/Invoke methods — they must match native function names
+        if (HasPInvokeAttribute(node))
+        {
+            return;
+        }
+
         CheckName(node.Identifier, "method", diagnostics);
+    }
 
     void INamingRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
         CheckName(node.Identifier, "property", diagnostics);
@@ -36,6 +44,29 @@ public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
         {
             CheckName(variable.Identifier, "event", diagnostics);
         }
+    }
+
+    private static bool HasPInvokeAttribute(MethodDeclarationSyntax node)
+    {
+        foreach (AttributeListSyntax attrList in node.AttributeLists)
+        {
+            foreach (AttributeSyntax attr in attrList.Attributes)
+            {
+                string attrName = attr.Name.ToString();
+
+                if (attrName is "DllImport" or "DllImportAttribute" or
+                    "LibraryImport" or "LibraryImportAttribute" or
+                    "System.Runtime.InteropServices.DllImport" or
+                    "System.Runtime.InteropServices.DllImportAttribute" or
+                    "System.Runtime.InteropServices.LibraryImport" or
+                    "System.Runtime.InteropServices.LibraryImportAttribute")
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)

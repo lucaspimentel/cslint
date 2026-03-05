@@ -32,7 +32,8 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
         }
 
         bool isPrivate = !node.Modifiers.Any(SyntaxKind.PublicKeyword) &&
-                         !node.Modifiers.Any(SyntaxKind.ProtectedKeyword);
+                         !node.Modifiers.Any(SyntaxKind.ProtectedKeyword) &&
+                         !node.Modifiers.Any(SyntaxKind.InternalKeyword);
 
         if (!isPrivate)
         {
