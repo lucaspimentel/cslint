@@ -6,7 +6,7 @@ bin/
 obj/
 artifacts/
 publish/
+BenchmarkDotNet.Artifacts/
 
 *.user
-
 .claude/*.local.*
