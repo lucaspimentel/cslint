@@ -1,4 +1,4 @@
-#!/usr/bin/env pwsh
+#!/usr/bin/env -S pwsh -NoProfile -File
 #Requires -Version 7.0
 
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Justification = 'Interactive installer script')]
@@ -91,24 +91,20 @@ try {
     Pop-Location
 }
 
-# Determine runtime identifier based on platform
-$rid = if ($IsWindows) {
-    'win-x64'
-} elseif ($IsMacOS) {
-    if ([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture -eq 'Arm64') {
-        'osx-arm64'
-    } else {
-        'osx-x64'
-    }
-} elseif ($IsLinux) {
-    'linux-x64'
-} else {
-    throw "Unsupported platform"
-}
-
 $exeName = if ($IsWindows) { "$ProjectName.exe" } else { $ProjectName }
+$installDir = Join-Path $HOME '.local/bin'
+$installPath = Join-Path $installDir $exeName
 
-Write-Host "Building $ProjectName for $rid..." -ForegroundColor Cyan
+# Check for existing installation before building
+$AlreadyInstalled = Test-Path $installPath
+if ($AlreadyInstalled -and -not $Force) {
+    Write-Host "$ProjectName is already installed at: $installPath" -ForegroundColor Yellow
+    $response = Read-Host "Overwrite existing installation? (y/N)"
+    if ($response -notmatch '^[Yy]') {
+        Write-Host "Installation cancelled." -ForegroundColor Cyan
+        exit 0
+    }
+}
 
 # Check for .NET SDK
 try {
@@ -121,14 +117,14 @@ try {
 }
 
 # Build and publish the project
-# With UseArtifactsOutput, output lands at artifacts/publish/<ProjectName>/release_<rid>/
+Write-Host "Building $ProjectName..." -ForegroundColor Cyan
 $projectPath = Join-Path $PSScriptRoot $ProjectFile
-$publishPath = Join-Path $PSScriptRoot "artifacts/publish/CsLint.Cli/release_$rid"
+$publishPath = Join-Path $PSScriptRoot 'artifacts/publish'
 
 try {
     dotnet publish $projectPath `
         -c Release `
-        -r $rid
+        --output $publishPath
 
     if ($LASTEXITCODE -ne 0) {
         throw "Build failed with exit code $LASTEXITCODE"
@@ -148,28 +144,16 @@ if (-not (Test-Path $exePath)) {
 
 Write-Host "Build successful!" -ForegroundColor Green
 
-# Install to ~/.local/bin
-$installDir = Join-Path $HOME '.local/bin'
-$installPath = Join-Path $installDir $exeName
+# Remove old installation if present
+if ($AlreadyInstalled) {
+    Write-Host "Removing existing installation..." -ForegroundColor Yellow
+    Remove-Item $installPath -Force
+}
 
 # Create installation directory if it doesn't exist
 if (-not (Test-Path $installDir)) {
     Write-Host "Creating installation directory: $installDir" -ForegroundColor Cyan
     New-Item -ItemType Directory -Path $installDir -Force | Out-Null
-}
-
-# Check for existing installation
-if (Test-Path $installPath) {
-    if (-not $Force) {
-        Write-Host "$ProjectName is already installed at: $installPath" -ForegroundColor Yellow
-        $response = Read-Host "Overwrite existing installation? (y/N)"
-        if ($response -notmatch '^[Yy]') {
-            Write-Host "Installation cancelled." -ForegroundColor Cyan
-            exit 0
-        }
-    }
-    Write-Host "Removing existing installation..." -ForegroundColor Yellow
-    Remove-Item $installPath -Force
 }
 
 # Copy executable to installation directory
