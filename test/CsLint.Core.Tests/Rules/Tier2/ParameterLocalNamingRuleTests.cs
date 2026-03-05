@@ -11,6 +11,10 @@ public class ParameterLocalNamingRuleTests
     [InlineData("class C { void M(int value) { } }")]
     [InlineData("class C { void M() { int count = 0; } }")]
     [InlineData("class C { void M(int _) { } }")] // discard
+    [InlineData("class C { void M(object @event) { } }")] // verbatim parameter
+    [InlineData("class C { void M() { int @case = 0; } }")] // verbatim local variable
+    [InlineData("record C(string Name, int Value);")] // record positional parameters
+    [InlineData("class C { void M() { foreach (var @item in new int[0]) { } } }")] // verbatim foreach variable
     public void Analyze_CamelCaseNamesOrDiscards_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

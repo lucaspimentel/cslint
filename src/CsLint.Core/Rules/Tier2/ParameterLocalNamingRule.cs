@@ -25,10 +25,18 @@ public sealed class ParameterLocalNamingRule : IRuleDefinition, INamingRuleHandl
     void INamingRuleHandler.VisitParameter(ParameterSyntax node, List<LintDiagnostic> diagnostics)
     {
         // Skip discard parameters
-        if (node.Identifier.Text != "_")
+        if (node.Identifier.ValueText == "_")
         {
-            CheckName(node.Identifier, "parameter", diagnostics);
+            return;
         }
+
+        // Skip record positional parameters (they generate public properties, PascalCase is correct)
+        if (node.Parent?.Parent is RecordDeclarationSyntax)
+        {
+            return;
+        }
+
+        CheckName(node.Identifier, "parameter", diagnostics);
     }
 
     void INamingRuleHandler.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node, List<LintDiagnostic> diagnostics)
@@ -39,7 +47,7 @@ public sealed class ParameterLocalNamingRule : IRuleDefinition, INamingRuleHandl
             foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
             {
                 // Skip discards
-                if (variable.Identifier.Text != "_")
+                if (variable.Identifier.ValueText != "_")
                 {
                     CheckName(variable.Identifier, "local variable", diagnostics);
                 }
@@ -52,7 +60,12 @@ public sealed class ParameterLocalNamingRule : IRuleDefinition, INamingRuleHandl
 
     private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
     {
-        string name = identifier.Text;
+        string name = identifier.ValueText;
+
+        if (string.IsNullOrEmpty(name))
+        {
+            return;
+        }
 
         if (!NamingHelper.IsCamelCase(name))
         {
