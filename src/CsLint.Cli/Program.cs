@@ -39,6 +39,7 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
     string path = parseResult.GetValue(pathArgument)!;
     string format = parseResult.GetValue(formatOption)!;
     string severity = parseResult.GetValue(severityOption)!;
+    string[]? excludePatterns = parseResult.GetValue(excludeOption);
 
     RuleRegistry registry = RuleRegistry.CreateDefault();
     var configProvider = new EditorConfigProvider();
@@ -68,7 +69,7 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
     else if (Directory.Exists(fullPath))
     {
         var directoryLinter = new DirectoryLinter(fileLinter);
-        diagnostics = await directoryLinter.LintDirectoryAsync(fullPath, cancellationToken: cancellationToken);
+        diagnostics = await directoryLinter.LintDirectoryAsync(fullPath, excludePatterns, cancellationToken);
     }
     else
     {

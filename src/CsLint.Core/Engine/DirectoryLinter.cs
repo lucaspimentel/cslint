@@ -1,11 +1,13 @@
 using System.Collections.Concurrent;
 using Cslint.Core.Rules;
+using Microsoft.Extensions.FileSystemGlobbing;
 
 namespace Cslint.Core.Engine;
 
 public sealed class DirectoryLinter
 {
     private readonly FileLinter _fileLinter;
+    private readonly IFileSystem _fileSystem;
 
     private static readonly HashSet<string> SkippedExtensions = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -24,9 +26,10 @@ public sealed class DirectoryLinter
         "node_modules",
     };
 
-    public DirectoryLinter(FileLinter fileLinter)
+    public DirectoryLinter(FileLinter fileLinter, IFileSystem? fileSystem = null)
     {
         _fileLinter = fileLinter;
+        _fileSystem = fileSystem ?? new DefaultFileSystem();
     }
 
     public async Task<IReadOnlyList<LintDiagnostic>> LintDirectoryAsync(
@@ -35,7 +38,7 @@ public sealed class DirectoryLinter
         CancellationToken cancellationToken = default)
     {
         string fullPath = Path.GetFullPath(directoryPath);
-        IEnumerable<string> files = EnumerateFiles(fullPath);
+        IEnumerable<string> files = EnumerateFiles(fullPath, excludeGlobs, _fileSystem);
         var allDiagnostics = new ConcurrentBag<LintDiagnostic>();
 
         await Parallel.ForEachAsync(
@@ -78,9 +81,17 @@ public sealed class DirectoryLinter
             .ToList();
     }
 
-    private static IEnumerable<string> EnumerateFiles(string directoryPath)
+    private static IEnumerable<string> EnumerateFiles(string directoryPath, IReadOnlyList<string>? excludeGlobs, IFileSystem fileSystem)
     {
-        return Directory.EnumerateFiles(directoryPath, "*.cs", SearchOption.AllDirectories)
+        Matcher? excludeMatcher = null;
+
+        if (excludeGlobs is { Count: > 0 })
+        {
+            excludeMatcher = new Matcher();
+            excludeMatcher.AddIncludePatterns(excludeGlobs);
+        }
+
+        return fileSystem.EnumerateFiles(directoryPath, "*.cs", SearchOption.AllDirectories)
             .Where(file =>
             {
                 // Skip generated files
@@ -107,6 +118,17 @@ public sealed class DirectoryLinter
                     }
 
                     dir = Path.GetDirectoryName(dir);
+                }
+
+                // Apply exclude globs against the relative path
+                if (excludeMatcher is not null)
+                {
+                    string relativePath = Path.GetRelativePath(directoryPath, file);
+
+                    if (excludeMatcher.Match(relativePath).HasMatches)
+                    {
+                        return false;
+                    }
                 }
 
                 return true;
