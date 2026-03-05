@@ -77,7 +77,7 @@ dotnet build
 dotnet test
 ```
 
-To publish as a single-file trimmed executable:
+To publish as a Native AOT executable:
 
 ```bash
 dotnet publish src/Cslint.Cli -c Release

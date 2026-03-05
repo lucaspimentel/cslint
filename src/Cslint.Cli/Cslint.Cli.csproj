@@ -2,11 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <AssemblyName>cslint</AssemblyName>
 
     <!-- Publish optimization -->
-    <PublishTrimmed>true</PublishTrimmed>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishAot>true</PublishAot>
 
     <!-- NuGet -->
     <PackageId>Cslint</PackageId>

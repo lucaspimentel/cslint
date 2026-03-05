@@ -17,7 +17,7 @@ Cslint.Core.Tests   (xUnit + Moq)
 - **editorconfig-core-net** NuGet for .editorconfig parsing (handles glob matching, section precedence, `root=true`)
 - **Manual rule registration** in `RuleRegistry` (no reflection -- trim-safe)
 - **`CSharpSyntaxWalker`** per rule for tree-based checks
-- **`PublishTrimmed` + `PublishReadyToRun`** for fast startup as a single-file executable
+- **`PublishAot`** for Native AOT compilation as a single-file executable
 - **Exit codes**: 0 = clean, 1 = violations, 2 = error
 
 ## Project Structure
@@ -123,7 +123,7 @@ test/
 ### Phase 6: Polish ✅
 - `--severity` filter, `--exclude` glob option
 - Performance benchmarking (target < 100ms single file)
-- Publish profile for single-file trimmed executable
+- Native AOT publish profile
 
 ## Verification
 
