@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## What is Cslint?
+## What is CsLint?
 
 A fast C# linter that reads rules from `.editorconfig`. Uses Roslyn **syntax-only** parsing (no compilation/semantic model) to achieve sub-100ms single-file linting, as an alternative to `dotnet format --verify-no-changes`.
 
@@ -13,16 +13,16 @@ dotnet build              # build all projects
 dotnet test               # run all tests
 dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests"  # run a single test class
 dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests.DetectsTrailingSpaces"  # single test method
-dotnet run --project src/Cslint.Cli -- <path>  # lint a file or directory
+dotnet run --project src/CsLint.Cli -- <path>  # lint a file or directory
 ```
 
 ## Architecture
 
-Three projects in `Cslint.slnx`:
+Three projects in `CsLint.slnx`:
 
-- **Cslint.Core** — rules engine, config, formatters (class library)
-- **Cslint.Cli** — console app entry point using System.CommandLine
-- **Cslint.Core.Tests** — xUnit tests with Moq
+- **CsLint.Core** — rules engine, config, formatters (class library)
+- **CsLint.Cli** — console app entry point using System.CommandLine
+- **CsLint.Core.Tests** — xUnit tests with Moq
 
 ### Rules are organized in tiers
 

@@ -1,10 +1,10 @@
-# Cslint
+# CsLint
 
 A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing (no compilation or semantic model) for sub-100ms single-file linting.
 
 ## Why?
 
-`dotnet format --verify-no-changes` is slow (~28s) because it loads the full Roslyn Workspaces layer with semantic analysis. Cslint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
+`dotnet format --verify-no-changes` is slow (~28s) because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
 
 ## Requirements
 
@@ -80,12 +80,12 @@ dotnet test
 To publish as a Native AOT executable:
 
 ```bash
-dotnet publish src/Cslint.Cli -c Release
+dotnet publish src/CsLint.Cli -c Release
 ```
 
 ## Claude Code Integration
 
-Cslint can run as a [Claude Code hook](https://docs.anthropic.com/en/docs/claude-code/hooks) to lint `.cs` files automatically after every edit. Add a `PostToolUse` hook in `~/.claude/settings.json`:
+CsLint can run as a [Claude Code hook](https://docs.anthropic.com/en/docs/claude-code/hooks) to lint `.cs` files automatically after every edit. Add a `PostToolUse` hook in `~/.claude/settings.json`:
 
 ```json
 {
