@@ -13,68 +13,56 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_preferred_modifier_order"];
 
-    private Dictionary<string, int>? _orderMap;
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_preferred_modifier_order") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        Initialize(context.Configuration);
+        (string? orderStr, string? _) = context.Configuration
+            .GetValueWithSeverity("csharp_preferred_modifier_order");
 
-        if (_orderMap is null)
+        if (orderStr is null)
         {
             return [];
         }
 
-        var walker = new CombinedStyleWalker([this]);
+        var walker = new CombinedStyleWalker([this], context.Configuration);
         walker.Visit(context.Root);
-        _orderMap = null;
         return walker.Diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config)
+    void IStyleRuleHandler.VisitClassDeclaration(
+        ClassDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitStructDeclaration(
+        StructDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitMethodDeclaration(
+        MethodDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitPropertyDeclaration(
+        PropertyDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitFieldDeclaration(
+        FieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitEventFieldDeclaration(
+        EventFieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    private static void CheckModifiers(
+        SyntaxTokenList modifiers,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        (string? orderStr, string? _) = config.GetValueWithSeverity("csharp_preferred_modifier_order");
+        Dictionary<string, int>? orderMap = BuildOrderMap(config);
 
-        if (orderStr is null)
-        {
-            _orderMap = null;
-            return;
-        }
-
-        string[] preferredOrder = orderStr.Split(',', StringSplitOptions.TrimEntries);
-        _orderMap = new Dictionary<string, int>(StringComparer.Ordinal);
-
-        for (int i = 0; i < preferredOrder.Length; i++)
-        {
-            _orderMap[preferredOrder[i]] = i;
-        }
-    }
-
-    internal void Reset() => _orderMap = null;
-
-    void IStyleRuleHandler.VisitClassDeclaration(ClassDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, diagnostics);
-
-    void IStyleRuleHandler.VisitStructDeclaration(StructDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, diagnostics);
-
-    void IStyleRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, diagnostics);
-
-    void IStyleRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, diagnostics);
-
-    void IStyleRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, diagnostics);
-
-    void IStyleRuleHandler.VisitEventFieldDeclaration(EventFieldDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, diagnostics);
-
-    private void CheckModifiers(SyntaxTokenList modifiers, List<LintDiagnostic> diagnostics)
-    {
-        if (_orderMap is null || modifiers.Count < 2)
+        if (orderMap is null || modifiers.Count < 2)
         {
             return;
         }
@@ -85,7 +73,7 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
         {
             string text = modifier.Text;
 
-            if (_orderMap.TryGetValue(text, out int order))
+            if (orderMap.TryGetValue(text, out int order))
             {
                 if (order < lastOrder)
                 {
@@ -108,5 +96,25 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
                 lastOrder = order;
             }
         }
+    }
+
+    private static Dictionary<string, int>? BuildOrderMap(LintConfiguration config)
+    {
+        (string? orderStr, string? _) = config.GetValueWithSeverity("csharp_preferred_modifier_order");
+
+        if (orderStr is null)
+        {
+            return null;
+        }
+
+        string[] preferredOrder = orderStr.Split(',', StringSplitOptions.TrimEntries);
+        var orderMap = new Dictionary<string, int>(StringComparer.Ordinal);
+
+        for (int i = 0; i < preferredOrder.Length; i++)
+        {
+            orderMap[preferredOrder[i]] = i;
+        }
+
+        return orderMap;
     }
 }

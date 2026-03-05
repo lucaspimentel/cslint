@@ -12,59 +12,52 @@ public sealed class UsingDirectivePlacementRule : IRuleDefinition, IDescendantNo
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_using_directive_placement"];
 
-    private bool _preferOutside;
-    private bool _active;
-    private bool _hasNamespace;
-    private string _filePath = "";
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_using_directive_placement") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        (string? pref, string? _) = context.Configuration.GetValueWithSeverity("csharp_using_directive_placement");
+        (string? pref, string? _) = context.Configuration
+            .GetValueWithSeverity("csharp_using_directive_placement");
 
         if (pref is null)
         {
             return [];
         }
 
-        _preferOutside = string.Equals(pref, "outside_namespace", StringComparison.OrdinalIgnoreCase);
-        _active = true;
-        _filePath = context.FilePath;
-        _hasNamespace = HasNamespace(context.Root);
         var diagnostics = new List<LintDiagnostic>();
 
         foreach (SyntaxNode node in context.Root.DescendantNodes())
         {
-            VisitNode(node, diagnostics);
+            VisitNode(node, context.Configuration, context.FilePath, diagnostics);
         }
 
-        _active = false;
         return diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config, string filePath, SyntaxNode root)
+    public void VisitNode(
+        SyntaxNode node,
+        LintConfiguration config,
+        string filePath,
+        List<LintDiagnostic> diagnostics)
     {
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_using_directive_placement");
-        _preferOutside = string.Equals(pref, "outside_namespace", StringComparison.OrdinalIgnoreCase);
-        _active = pref is not null;
-        _filePath = filePath;
-        _hasNamespace = HasNamespace(root);
-    }
-
-    internal void Reset() => _active = false;
-
-    public void VisitNode(SyntaxNode node, List<LintDiagnostic> diagnostics)
-    {
-        if (!_active || node is not UsingDirectiveSyntax usingDirective)
+        if (node is not UsingDirectiveSyntax usingDirective)
         {
             return;
         }
 
+        (string? pref, string? _) = config
+            .GetValueWithSeverity("csharp_using_directive_placement");
+
+        if (pref is null)
+        {
+            return;
+        }
+
+        bool preferOutside = string.Equals(pref, "outside_namespace", StringComparison.OrdinalIgnoreCase);
         bool insideNamespace = usingDirective.Parent is NamespaceDeclarationSyntax;
 
-        if (_preferOutside && insideNamespace)
+        if (preferOutside && insideNamespace)
         {
             FileLinePositionSpan span = usingDirective.UsingKeyword.GetLocation().GetLineSpan();
 
@@ -74,12 +67,12 @@ public sealed class UsingDirectivePlacementRule : IRuleDefinition, IDescendantNo
                     RuleId = RuleId,
                     Message = "Using directives should be placed outside the namespace",
                     Severity = LintSeverity.Warning,
-                    FilePath = _filePath,
+                    FilePath = filePath,
                     Line = span.StartLinePosition.Line + 1,
                     Column = span.StartLinePosition.Character + 1,
                 });
         }
-        else if (!_preferOutside && !insideNamespace && _hasNamespace)
+        else if (!preferOutside && !insideNamespace && HasNamespace(node.SyntaxTree.GetRoot()))
         {
             FileLinePositionSpan span = usingDirective.UsingKeyword.GetLocation().GetLineSpan();
 
@@ -89,7 +82,7 @@ public sealed class UsingDirectivePlacementRule : IRuleDefinition, IDescendantNo
                     RuleId = RuleId,
                     Message = "Using directives should be placed inside the namespace",
                     Severity = LintSeverity.Warning,
-                    FilePath = _filePath,
+                    FilePath = filePath,
                     Line = span.StartLinePosition.Line + 1,
                     Column = span.StartLinePosition.Character + 1,
                 });

@@ -23,11 +23,6 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
         "Byte", "SByte", "Object",
     };
 
-    private bool _checkLocals;
-    private bool _checkMemberAccess;
-    private bool _active;
-    private string _filePath = "";
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref1, string? _) = configuration.GetValueWithSeverity(
@@ -41,76 +36,62 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        (string? localsPref, string? _) = context.Configuration.GetValueWithSeverity(
-            "dotnet_style_predefined_type_for_locals_parameters_members");
-        (string? memberPref, string? _) = context.Configuration.GetValueWithSeverity(
-            "dotnet_style_predefined_type_for_member_access");
-
-        _checkLocals = string.Equals(localsPref, "true", StringComparison.OrdinalIgnoreCase);
-        _checkMemberAccess = string.Equals(memberPref, "true", StringComparison.OrdinalIgnoreCase);
-        _active = true;
-        _filePath = context.FilePath;
-
         var diagnostics = new List<LintDiagnostic>();
 
         foreach (SyntaxNode node in context.Root.DescendantNodes())
         {
-            VisitNode(node, diagnostics);
+            VisitNode(node, context.Configuration, context.FilePath, diagnostics);
         }
 
-        _active = false;
         return diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config, string filePath)
+    public void VisitNode(
+        SyntaxNode node,
+        LintConfiguration config,
+        string filePath,
+        List<LintDiagnostic> diagnostics)
     {
         (string? localsPref, string? _) = config.GetValueWithSeverity(
             "dotnet_style_predefined_type_for_locals_parameters_members");
         (string? memberPref, string? _) = config.GetValueWithSeverity(
             "dotnet_style_predefined_type_for_member_access");
 
-        _checkLocals = string.Equals(localsPref, "true", StringComparison.OrdinalIgnoreCase);
-        _checkMemberAccess = string.Equals(memberPref, "true", StringComparison.OrdinalIgnoreCase);
-        _active = _checkLocals || _checkMemberAccess;
-        _filePath = filePath;
-    }
+        bool checkLocals = string.Equals(localsPref, "true", StringComparison.OrdinalIgnoreCase);
+        bool checkMemberAccess = string.Equals(memberPref, "true", StringComparison.OrdinalIgnoreCase);
 
-    internal void Reset() => _active = false;
-
-    public void VisitNode(SyntaxNode node, List<LintDiagnostic> diagnostics)
-    {
-        if (!_active)
+        if (!checkLocals && !checkMemberAccess)
         {
             return;
         }
 
         switch (node)
         {
-            case IdentifierNameSyntax id when _checkLocals && FrameworkTypeNames.Contains(id.Identifier.Text):
+            case IdentifierNameSyntax id when checkLocals && FrameworkTypeNames.Contains(id.Identifier.Text):
             {
                 if (node.Parent is not MemberAccessExpressionSyntax)
                 {
-                    AddDiagnostic(diagnostics, id.Identifier);
+                    AddDiagnostic(diagnostics, id.Identifier, filePath);
                 }
 
                 break;
             }
 
-            case MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax typeName } when _checkMemberAccess:
+            case MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax typeName } when checkMemberAccess:
             {
                 if (FrameworkTypeNames.Contains(typeName.Identifier.Text))
                 {
-                    AddDiagnostic(diagnostics, typeName.Identifier);
+                    AddDiagnostic(diagnostics, typeName.Identifier, filePath);
                 }
 
                 break;
             }
 
-            case QualifiedNameSyntax { Right: IdentifierNameSyntax right } when _checkLocals:
+            case QualifiedNameSyntax { Right: IdentifierNameSyntax right } when checkLocals:
             {
                 if (FrameworkTypeNames.Contains(right.Identifier.Text))
                 {
-                    AddDiagnostic(diagnostics, right.Identifier);
+                    AddDiagnostic(diagnostics, right.Identifier, filePath);
                 }
 
                 break;
@@ -118,7 +99,7 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
         }
     }
 
-    private void AddDiagnostic(List<LintDiagnostic> diagnostics, SyntaxToken identifier)
+    private static void AddDiagnostic(List<LintDiagnostic> diagnostics, SyntaxToken identifier, string filePath)
     {
         FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
 
@@ -128,7 +109,7 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
                 RuleId = "CSLINT208",
                 Message = $"Use predefined type keyword instead of '{identifier.Text}'",
                 Severity = LintSeverity.Info,
-                FilePath = _filePath,
+                FilePath = filePath,
                 Line = span.StartLinePosition.Line + 1,
                 Column = span.StartLinePosition.Character + 1,
             });

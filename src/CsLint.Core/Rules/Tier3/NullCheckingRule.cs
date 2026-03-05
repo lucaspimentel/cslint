@@ -17,12 +17,15 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        var walker = new CombinedStyleWalker([this]);
+        var walker = new CombinedStyleWalker([this], context.Configuration);
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
 
-    void IStyleRuleHandler.VisitConditionalExpression(ConditionalExpressionSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitConditionalExpression(
+        ConditionalExpressionSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
         if (IsNullCheck(node.Condition))
         {
@@ -41,7 +44,10 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
         }
     }
 
-    void IStyleRuleHandler.VisitIfStatement(IfStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitIfStatement(
+        IfStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
         if (IsNullEqualityCheck(node.Condition) &&
             node.Statement is BlockSyntax { Statements.Count: 1 } block &&

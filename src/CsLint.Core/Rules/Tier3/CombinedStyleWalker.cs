@@ -1,3 +1,4 @@
+using Cslint.Core.Config;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -6,10 +7,12 @@ namespace Cslint.Core.Rules.Tier3;
 internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 {
     private readonly IStyleRuleHandler[] _handlers;
+    private readonly LintConfiguration _config;
 
-    public CombinedStyleWalker(IStyleRuleHandler[] handlers)
+    public CombinedStyleWalker(IStyleRuleHandler[] handlers, LintConfiguration config)
     {
         _handlers = handlers;
+        _config = config;
     }
 
     public List<LintDiagnostic> Diagnostics { get; } = [];
@@ -18,7 +21,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitClassDeclaration(node, Diagnostics);
+            handler.VisitClassDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitClassDeclaration(node);
@@ -28,7 +31,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitStructDeclaration(node, Diagnostics);
+            handler.VisitStructDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitStructDeclaration(node);
@@ -38,7 +41,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitInterfaceDeclaration(node, Diagnostics);
+            handler.VisitInterfaceDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitInterfaceDeclaration(node);
@@ -48,7 +51,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitEnumDeclaration(node, Diagnostics);
+            handler.VisitEnumDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitEnumDeclaration(node);
@@ -58,7 +61,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitMethodDeclaration(node, Diagnostics);
+            handler.VisitMethodDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitMethodDeclaration(node);
@@ -68,7 +71,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitPropertyDeclaration(node, Diagnostics);
+            handler.VisitPropertyDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitPropertyDeclaration(node);
@@ -78,7 +81,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitFieldDeclaration(node, Diagnostics);
+            handler.VisitFieldDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitFieldDeclaration(node);
@@ -88,7 +91,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitEventFieldDeclaration(node, Diagnostics);
+            handler.VisitEventFieldDeclaration(node, _config, Diagnostics);
         }
 
         base.VisitEventFieldDeclaration(node);
@@ -98,7 +101,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitLocalDeclarationStatement(node, Diagnostics);
+            handler.VisitLocalDeclarationStatement(node, _config, Diagnostics);
         }
 
         base.VisitLocalDeclarationStatement(node);
@@ -108,7 +111,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitIfStatement(node, Diagnostics);
+            handler.VisitIfStatement(node, _config, Diagnostics);
         }
 
         base.VisitIfStatement(node);
@@ -118,7 +121,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitForStatement(node, Diagnostics);
+            handler.VisitForStatement(node, _config, Diagnostics);
         }
 
         base.VisitForStatement(node);
@@ -128,7 +131,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitForEachStatement(node, Diagnostics);
+            handler.VisitForEachStatement(node, _config, Diagnostics);
         }
 
         base.VisitForEachStatement(node);
@@ -138,7 +141,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitWhileStatement(node, Diagnostics);
+            handler.VisitWhileStatement(node, _config, Diagnostics);
         }
 
         base.VisitWhileStatement(node);
@@ -148,7 +151,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitDoStatement(node, Diagnostics);
+            handler.VisitDoStatement(node, _config, Diagnostics);
         }
 
         base.VisitDoStatement(node);
@@ -158,7 +161,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitUsingStatement(node, Diagnostics);
+            handler.VisitUsingStatement(node, _config, Diagnostics);
         }
 
         base.VisitUsingStatement(node);
@@ -168,7 +171,7 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
     {
         foreach (IStyleRuleHandler handler in _handlers)
         {
-            handler.VisitConditionalExpression(node, Diagnostics);
+            handler.VisitConditionalExpression(node, _config, Diagnostics);
         }
 
         base.VisitConditionalExpression(node);

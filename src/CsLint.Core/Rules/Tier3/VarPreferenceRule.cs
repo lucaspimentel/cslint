@@ -18,8 +18,6 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
         "csharp_style_var_elsewhere",
     ];
 
-    private LintConfiguration? _config;
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_var_when_type_is_apparent") is not null ||
         configuration.GetValue("csharp_style_var_for_built_in_types") is not null ||
@@ -27,20 +25,17 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        _config = context.Configuration;
-        var walker = new CombinedStyleWalker([this]);
+        var walker = new CombinedStyleWalker([this], context.Configuration);
         walker.Visit(context.Root);
-        _config = null;
         return walker.Diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config) => _config = config;
-
-    internal void Reset() => _config = null;
-
-    void IStyleRuleHandler.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitLocalDeclarationStatement(
+        LocalDeclarationStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_config is null || node.Modifiers.Any(SyntaxKind.ConstKeyword))
+        if (node.Modifiers.Any(SyntaxKind.ConstKeyword))
         {
             return;
         }
@@ -57,9 +52,9 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
         bool isApparent = IsTypeApparent(initializer);
         bool isLiteral = initializer is LiteralExpressionSyntax;
 
-        (string? varForBuiltIn, string? _) = _config.GetValueWithSeverity("csharp_style_var_for_built_in_types");
-        (string? varWhenApparent, string? _) = _config.GetValueWithSeverity("csharp_style_var_when_type_is_apparent");
-        (string? varElsewhere, string? _) = _config.GetValueWithSeverity("csharp_style_var_elsewhere");
+        (string? varForBuiltIn, string? _) = config.GetValueWithSeverity("csharp_style_var_for_built_in_types");
+        (string? varWhenApparent, string? _) = config.GetValueWithSeverity("csharp_style_var_when_type_is_apparent");
+        (string? varElsewhere, string? _) = config.GetValueWithSeverity("csharp_style_var_elsewhere");
 
         if (usesVar)
         {

@@ -18,9 +18,6 @@ public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHand
         "dotnet_style_qualification_for_event",
     ];
 
-    private bool _active;
-    private string _filePath = "";
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_qualification_for_field") is not null ||
         configuration.GetValue("dotnet_style_qualification_for_property") is not null ||
@@ -29,55 +26,28 @@ public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHand
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        (string? fieldPref, string? _) = context.Configuration.GetValueWithSeverity("dotnet_style_qualification_for_field");
-        (string? propPref, string? _) = context.Configuration.GetValueWithSeverity("dotnet_style_qualification_for_property");
-        (string? methodPref, string? _) = context.Configuration.GetValueWithSeverity("dotnet_style_qualification_for_method");
-        (string? eventPref, string? _) = context.Configuration.GetValueWithSeverity("dotnet_style_qualification_for_event");
-
-        bool anyDisallowed =
-            string.Equals(fieldPref, "false", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(propPref, "false", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(methodPref, "false", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(eventPref, "false", StringComparison.OrdinalIgnoreCase);
-
-        if (!anyDisallowed)
+        if (!IsActive(context.Configuration))
         {
             return [];
         }
 
-        _active = true;
-        _filePath = context.FilePath;
         var diagnostics = new List<LintDiagnostic>();
 
         foreach (SyntaxNode node in context.Root.DescendantNodes())
         {
-            VisitNode(node, diagnostics);
+            VisitNode(node, context.Configuration, context.FilePath, diagnostics);
         }
 
-        _active = false;
         return diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config, string filePath)
+    public void VisitNode(
+        SyntaxNode node,
+        LintConfiguration config,
+        string filePath,
+        List<LintDiagnostic> diagnostics)
     {
-        (string? fieldPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_field");
-        (string? propPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_property");
-        (string? methodPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_method");
-        (string? eventPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_event");
-
-        _active =
-            string.Equals(fieldPref, "false", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(propPref, "false", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(methodPref, "false", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(eventPref, "false", StringComparison.OrdinalIgnoreCase);
-        _filePath = filePath;
-    }
-
-    internal void Reset() => _active = false;
-
-    public void VisitNode(SyntaxNode node, List<LintDiagnostic> diagnostics)
-    {
-        if (!_active)
+        if (!IsActive(config))
         {
             return;
         }
@@ -92,10 +62,23 @@ public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHand
                     RuleId = RuleId,
                     Message = $"Remove 'this.' qualification from '{memberAccess.Name}'",
                     Severity = LintSeverity.Warning,
-                    FilePath = _filePath,
+                    FilePath = filePath,
                     Line = span.StartLinePosition.Line + 1,
                     Column = span.StartLinePosition.Character + 1,
                 });
         }
+    }
+
+    private static bool IsActive(LintConfiguration config)
+    {
+        (string? fieldPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_field");
+        (string? propPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_property");
+        (string? methodPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_method");
+        (string? eventPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_event");
+
+        return string.Equals(fieldPref, "false", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(propPref, "false", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(methodPref, "false", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(eventPref, "false", StringComparison.OrdinalIgnoreCase);
     }
 }

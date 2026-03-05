@@ -17,12 +17,15 @@ public sealed class PatternMatchingRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        var walker = new CombinedStyleWalker([this]);
+        var walker = new CombinedStyleWalker([this], context.Configuration);
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
 
-    void IStyleRuleHandler.VisitIfStatement(IfStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitIfStatement(
+        IfStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
         if (node.Condition is BinaryExpressionSyntax
             {

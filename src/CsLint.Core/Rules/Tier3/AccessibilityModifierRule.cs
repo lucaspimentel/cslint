@@ -13,8 +13,6 @@ public sealed class AccessibilityModifierRule : IRuleDefinition, IStyleRuleHandl
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_require_accessibility_modifiers"];
 
-    private bool _active;
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity("dotnet_style_require_accessibility_modifiers");
@@ -24,68 +22,49 @@ public sealed class AccessibilityModifierRule : IRuleDefinition, IStyleRuleHandl
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        _active = true;
-        var walker = new CombinedStyleWalker([this]);
+        var walker = new CombinedStyleWalker([this], context.Configuration);
         walker.Visit(context.Root);
-        _active = false;
         return walker.Diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config) => _active = true;
+    void IStyleRuleHandler.VisitClassDeclaration(
+        ClassDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckAccessibility(node.Modifiers, node.Keyword, "class", node.Identifier.Text, diagnostics);
 
-    internal void Reset() => _active = false;
+    void IStyleRuleHandler.VisitStructDeclaration(
+        StructDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckAccessibility(node.Modifiers, node.Keyword, "struct", node.Identifier.Text, diagnostics);
 
-    void IStyleRuleHandler.VisitClassDeclaration(ClassDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitInterfaceDeclaration(
+        InterfaceDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckAccessibility(node.Modifiers, node.Keyword, "interface", node.Identifier.Text, diagnostics);
+
+    void IStyleRuleHandler.VisitEnumDeclaration(
+        EnumDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckAccessibility(node.Modifiers, node.EnumKeyword, "enum", node.Identifier.Text, diagnostics);
+
+    void IStyleRuleHandler.VisitMethodDeclaration(
+        MethodDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics)
     {
-        if (_active)
-        {
-            CheckAccessibility(node.Modifiers, node.Keyword, "class", node.Identifier.Text, diagnostics);
-        }
-    }
-
-    void IStyleRuleHandler.VisitStructDeclaration(StructDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        if (_active)
-        {
-            CheckAccessibility(node.Modifiers, node.Keyword, "struct", node.Identifier.Text, diagnostics);
-        }
-    }
-
-    void IStyleRuleHandler.VisitInterfaceDeclaration(InterfaceDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        if (_active)
-        {
-            CheckAccessibility(node.Modifiers, node.Keyword, "interface", node.Identifier.Text, diagnostics);
-        }
-    }
-
-    void IStyleRuleHandler.VisitEnumDeclaration(EnumDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        if (_active)
-        {
-            CheckAccessibility(node.Modifiers, node.EnumKeyword, "enum", node.Identifier.Text, diagnostics);
-        }
-    }
-
-    void IStyleRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        if (_active && node.Parent is not InterfaceDeclarationSyntax && node.ExplicitInterfaceSpecifier is null)
+        if (node.Parent is not InterfaceDeclarationSyntax && node.ExplicitInterfaceSpecifier is null)
         {
             CheckAccessibility(node.Modifiers, node.ReturnType.GetFirstToken(), "method", node.Identifier.Text, diagnostics);
         }
     }
 
-    void IStyleRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitPropertyDeclaration(
+        PropertyDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics)
     {
-        if (_active && node.Parent is not InterfaceDeclarationSyntax && node.ExplicitInterfaceSpecifier is null)
+        if (node.Parent is not InterfaceDeclarationSyntax && node.ExplicitInterfaceSpecifier is null)
         {
             CheckAccessibility(node.Modifiers, node.Type.GetFirstToken(), "property", node.Identifier.Text, diagnostics);
         }
     }
 
-    void IStyleRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitFieldDeclaration(
+        FieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics)
     {
-        if (_active && node.Parent is not InterfaceDeclarationSyntax)
+        if (node.Parent is not InterfaceDeclarationSyntax)
         {
             string name = node.Declaration.Variables.FirstOrDefault()?.Identifier.Text ?? "";
             CheckAccessibility(node.Modifiers, node.Declaration.Type.GetFirstToken(), "field", name, diagnostics);

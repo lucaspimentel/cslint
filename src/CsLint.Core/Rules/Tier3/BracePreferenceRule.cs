@@ -12,8 +12,6 @@ public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_prefer_braces"];
 
-    private bool _active;
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_prefer_braces") is not null;
 
@@ -26,24 +24,17 @@ public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
             return [];
         }
 
-        _active = true;
-        var walker = new CombinedStyleWalker([this]);
+        var walker = new CombinedStyleWalker([this], context.Configuration);
         walker.Visit(context.Root);
-        _active = false;
         return walker.Diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config)
+    void IStyleRuleHandler.VisitIfStatement(
+        IfStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_prefer_braces");
-        _active = string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
-
-    internal void Reset() => _active = false;
-
-    void IStyleRuleHandler.VisitIfStatement(IfStatementSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        if (!_active)
+        if (!IsActive(config))
         {
             return;
         }
@@ -56,44 +47,65 @@ public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
         }
     }
 
-    void IStyleRuleHandler.VisitForStatement(ForStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitForStatement(
+        ForStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_active)
+        if (IsActive(config))
         {
             CheckStatement(node.Statement, node.ForKeyword, diagnostics);
         }
     }
 
-    void IStyleRuleHandler.VisitForEachStatement(ForEachStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitForEachStatement(
+        ForEachStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_active)
+        if (IsActive(config))
         {
             CheckStatement(node.Statement, node.ForEachKeyword, diagnostics);
         }
     }
 
-    void IStyleRuleHandler.VisitWhileStatement(WhileStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitWhileStatement(
+        WhileStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_active)
+        if (IsActive(config))
         {
             CheckStatement(node.Statement, node.WhileKeyword, diagnostics);
         }
     }
 
-    void IStyleRuleHandler.VisitDoStatement(DoStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitDoStatement(
+        DoStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_active)
+        if (IsActive(config))
         {
             CheckStatement(node.Statement, node.DoKeyword, diagnostics);
         }
     }
 
-    void IStyleRuleHandler.VisitUsingStatement(UsingStatementSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitUsingStatement(
+        UsingStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_active && node.Statement is not UsingStatementSyntax)
+        if (IsActive(config) && node.Statement is not UsingStatementSyntax)
         {
             CheckStatement(node.Statement, node.UsingKeyword, diagnostics);
         }
+    }
+
+    private static bool IsActive(LintConfiguration config)
+    {
+        (string? pref, string? _) = config.GetValueWithSeverity("csharp_prefer_braces");
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
     }
 
     private static void CheckStatement(StatementSyntax statement, SyntaxToken keyword, List<LintDiagnostic> diagnostics)

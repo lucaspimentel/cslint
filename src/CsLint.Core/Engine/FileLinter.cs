@@ -28,7 +28,10 @@ public sealed class FileLinter
         return LintSource(fullPath, source, config);
     }
 
-    public IReadOnlyList<LintDiagnostic> LintSource(string filePath, string source, LintConfiguration configuration)
+    public IReadOnlyList<LintDiagnostic> LintSource(
+        string filePath,
+        string source,
+        LintConfiguration configuration)
     {
         SourceText sourceText = SourceText.From(source);
         SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sourceText, path: filePath);
@@ -68,7 +71,6 @@ public sealed class FileLinter
             {
                 styleHandlers ??= [];
                 styleHandlers.Add(styleHandler);
-                InitializeStyleHandler(rule, configuration);
                 continue;
             }
 
@@ -77,7 +79,6 @@ public sealed class FileLinter
             {
                 descendantHandlers ??= [];
                 descendantHandlers.Add(descendantHandler);
-                InitializeDescendantHandler(rule, configuration, filePath, root);
                 continue;
             }
 
@@ -95,14 +96,9 @@ public sealed class FileLinter
         // Run all style walker rules in a single tree walk
         if (styleHandlers is not null)
         {
-            var walker = new CombinedStyleWalker([.. styleHandlers]);
+            var walker = new CombinedStyleWalker([.. styleHandlers], configuration);
             walker.Visit(root);
             diagnostics.AddRange(walker.Diagnostics);
-
-            foreach (IStyleRuleHandler handler in styleHandlers)
-            {
-                ResetStyleHandler(handler);
-            }
         }
 
         // Run all DescendantNodes rules in a single enumeration
@@ -112,102 +108,11 @@ public sealed class FileLinter
             {
                 foreach (IDescendantNodeHandler handler in descendantHandlers)
                 {
-                    handler.VisitNode(node, diagnostics);
+                    handler.VisitNode(node, configuration, filePath, diagnostics);
                 }
-            }
-
-            foreach (IDescendantNodeHandler handler in descendantHandlers)
-            {
-                ResetDescendantHandler(handler);
             }
         }
 
         return diagnostics;
-    }
-
-    private static void InitializeStyleHandler(IRuleDefinition rule, LintConfiguration config)
-    {
-        switch (rule)
-        {
-            case VarPreferenceRule r:
-                r.Initialize(config);
-                break;
-            case ExpressionBodiedRule r:
-                r.Initialize(config);
-                break;
-            case BracePreferenceRule r:
-                r.Initialize(config);
-                break;
-            case ModifierOrderRule r:
-                r.Initialize(config);
-                break;
-            case AccessibilityModifierRule r:
-                r.Initialize(config);
-                break;
-        }
-    }
-
-    private static void ResetStyleHandler(IStyleRuleHandler handler)
-    {
-        switch (handler)
-        {
-            case VarPreferenceRule r:
-                r.Reset();
-                break;
-            case ExpressionBodiedRule r:
-                r.Reset();
-                break;
-            case BracePreferenceRule r:
-                r.Reset();
-                break;
-            case ModifierOrderRule r:
-                r.Reset();
-                break;
-            case AccessibilityModifierRule r:
-                r.Reset();
-                break;
-        }
-    }
-
-    private static void InitializeDescendantHandler(
-        IRuleDefinition rule,
-        LintConfiguration config,
-        string filePath,
-        SyntaxNode root)
-    {
-        switch (rule)
-        {
-            case NamespaceDeclarationRule r:
-                r.Initialize(config, filePath);
-                break;
-            case ThisQualificationRule r:
-                r.Initialize(config, filePath);
-                break;
-            case UsingDirectivePlacementRule r:
-                r.Initialize(config, filePath, root);
-                break;
-            case PredefinedTypeRule r:
-                r.Initialize(config, filePath);
-                break;
-        }
-    }
-
-    private static void ResetDescendantHandler(IDescendantNodeHandler handler)
-    {
-        switch (handler)
-        {
-            case NamespaceDeclarationRule r:
-                r.Reset();
-                break;
-            case ThisQualificationRule r:
-                r.Reset();
-                break;
-            case UsingDirectivePlacementRule r:
-                r.Reset();
-                break;
-            case PredefinedTypeRule r:
-                r.Reset();
-                break;
-        }
     }
 }

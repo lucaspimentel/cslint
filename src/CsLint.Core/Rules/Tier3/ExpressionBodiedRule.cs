@@ -18,8 +18,6 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
         "csharp_style_expression_bodied_accessors",
     ];
 
-    private LintConfiguration? _config;
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_expression_bodied_methods") is not null ||
         configuration.GetValue("csharp_style_expression_bodied_properties") is not null ||
@@ -27,36 +25,26 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        _config = context.Configuration;
-        var walker = new CombinedStyleWalker([this]);
+        var walker = new CombinedStyleWalker([this], context.Configuration);
         walker.Visit(context.Root);
-        _config = null;
         return walker.Diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config) => _config = config;
-
-    internal void Reset() => _config = null;
-
-    void IStyleRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitMethodDeclaration(
+        MethodDeclarationSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_config is null)
-        {
-            return;
-        }
-
-        (string? pref, string? _) = _config.GetValueWithSeverity("csharp_style_expression_bodied_methods");
+        (string? pref, string? _) = config.GetValueWithSeverity("csharp_style_expression_bodied_methods");
         CheckExpressionBody(node.ExpressionBody, node.Body, node.Identifier, pref, "method", diagnostics);
     }
 
-    void IStyleRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    void IStyleRuleHandler.VisitPropertyDeclaration(
+        PropertyDeclarationSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
     {
-        if (_config is null)
-        {
-            return;
-        }
-
-        (string? pref, string? _) = _config.GetValueWithSeverity("csharp_style_expression_bodied_properties");
+        (string? pref, string? _) = config.GetValueWithSeverity("csharp_style_expression_bodied_properties");
 
         if (node.ExpressionBody is null && node.AccessorList?.Accessors.Count == 1)
         {

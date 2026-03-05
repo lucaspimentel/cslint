@@ -12,54 +12,46 @@ public sealed class NamespaceDeclarationRule : IRuleDefinition, IDescendantNodeH
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_namespace_declarations"];
 
-    private bool _preferFileScoped;
-    private bool _active;
-    private string _filePath = "";
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_namespace_declarations") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        (string? pref, string? _) = context.Configuration.GetValueWithSeverity("csharp_style_namespace_declarations");
+        (string? pref, string? _) = context.Configuration
+            .GetValueWithSeverity("csharp_style_namespace_declarations");
 
         if (pref is null)
         {
             return [];
         }
 
-        _preferFileScoped = string.Equals(pref, "file_scoped", StringComparison.OrdinalIgnoreCase);
-        _active = true;
-        _filePath = context.FilePath;
         var diagnostics = new List<LintDiagnostic>();
 
         foreach (SyntaxNode node in context.Root.DescendantNodes())
         {
-            VisitNode(node, diagnostics);
+            VisitNode(node, context.Configuration, context.FilePath, diagnostics);
         }
 
-        _active = false;
         return diagnostics;
     }
 
-    internal void Initialize(LintConfiguration config, string filePath)
+    public void VisitNode(
+        SyntaxNode node,
+        LintConfiguration config,
+        string filePath,
+        List<LintDiagnostic> diagnostics)
     {
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_style_namespace_declarations");
-        _preferFileScoped = string.Equals(pref, "file_scoped", StringComparison.OrdinalIgnoreCase);
-        _active = pref is not null;
-        _filePath = filePath;
-    }
+        (string? pref, string? _) = config
+            .GetValueWithSeverity("csharp_style_namespace_declarations");
 
-    internal void Reset() => _active = false;
-
-    public void VisitNode(SyntaxNode node, List<LintDiagnostic> diagnostics)
-    {
-        if (!_active)
+        if (pref is null)
         {
             return;
         }
 
-        if (_preferFileScoped && node is NamespaceDeclarationSyntax ns)
+        bool preferFileScoped = string.Equals(pref, "file_scoped", StringComparison.OrdinalIgnoreCase);
+
+        if (preferFileScoped && node is NamespaceDeclarationSyntax ns)
         {
             FileLinePositionSpan span = ns.NamespaceKeyword.GetLocation().GetLineSpan();
 
@@ -69,12 +61,12 @@ public sealed class NamespaceDeclarationRule : IRuleDefinition, IDescendantNodeH
                     RuleId = RuleId,
                     Message = "Use file-scoped namespace declaration",
                     Severity = LintSeverity.Warning,
-                    FilePath = _filePath,
+                    FilePath = filePath,
                     Line = span.StartLinePosition.Line + 1,
                     Column = span.StartLinePosition.Character + 1,
                 });
         }
-        else if (!_preferFileScoped && node is FileScopedNamespaceDeclarationSyntax fileScopedNs)
+        else if (!preferFileScoped && node is FileScopedNamespaceDeclarationSyntax fileScopedNs)
         {
             FileLinePositionSpan span = fileScopedNs.NamespaceKeyword.GetLocation().GetLineSpan();
 
@@ -84,7 +76,7 @@ public sealed class NamespaceDeclarationRule : IRuleDefinition, IDescendantNodeH
                     RuleId = RuleId,
                     Message = "Use block-scoped namespace declaration",
                     Severity = LintSeverity.Warning,
-                    FilePath = _filePath,
+                    FilePath = filePath,
                     Line = span.StartLinePosition.Line + 1,
                     Column = span.StartLinePosition.Character + 1,
                 });
