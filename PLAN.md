@@ -23,7 +23,7 @@ Cslint.Core.Tests   (xUnit + Moq)
 ## Project Structure
 
 ```
-Cslint.sln
+Cslint.slnx
 Directory.Build.props              # net10.0, LangVersion=latest, Nullable=enable
 .editorconfig                      # Dogfooding
 src/
@@ -35,8 +35,8 @@ src/
     Rules/
       IRuleDefinition.cs           # RuleId, Name, ConfigKeys, IsEnabled(), Analyze()
       RuleContext.cs               # FilePath, SourceText, SyntaxTree, Root, Configuration
-      Diagnostic.cs                # RuleId, Message, Severity, FilePath, Line, Column
-      DiagnosticSeverity.cs        # None, Info, Warning, Error
+      Diagnostic.cs                # LintDiagnostic: RuleId, Message, Severity, FilePath, Line, Column
+      DiagnosticSeverity.cs        # LintSeverity: None, Info, Warning, Error
       Tier1/                       # Formatting (text-level, no syntax tree needed)
         IndentationRule.cs         # indent_style, indent_size
         LineEndingRule.cs          # end_of_line
@@ -73,7 +73,7 @@ src/
       SarifFormatter.cs
   Cslint.Cli/
     Program.cs                     # System.CommandLine: cslint <path> [--format text|json|sarif]
-tests/
+test/
   Cslint.Core.Tests/               # [Theory]-based tests per rule, engine, formatters
 ```
 
@@ -89,9 +89,9 @@ tests/
 
 ## Implementation Phases
 
-### Phase 1: Skeleton + First Rule
-1. Create `Cslint.sln`, all `.csproj` files, `Directory.Build.props`, `.gitignore`, `.editorconfig`
-2. Core types: `Diagnostic`, `DiagnosticSeverity`, `RuleContext`, `IRuleDefinition`
+### Phase 1: Skeleton + First Rule ✅
+1. Create `Cslint.slnx`, all `.csproj` files, `Directory.Build.props`, `.gitignore`, `.editorconfig`
+2. Core types: `LintDiagnostic`, `LintSeverity`, `RuleContext`, `IRuleDefinition`
 3. Config: `IConfigProvider`, `EditorConfigProvider`, `LintConfiguration`
 4. First rule: `TrailingWhitespaceRule` (pure text, simplest possible)
 5. Engine: `RuleRegistry`, `FileLinter`
@@ -100,27 +100,27 @@ tests/
 8. Tests for `TrailingWhitespaceRule` + `FileLinter`
 9. Verify end-to-end: `dotnet run -- some-file.cs`
 
-### Phase 2: Remaining Tier 1 Rules
+### Phase 2: Remaining Tier 1 Rules ✅
 - `IndentationRule`, `LineEndingRule`, `FinalNewlineRule`, `MaxLineLengthRule`
 - All text-level checks, no syntax tree needed
 - `[Theory]` tests for each
 
-### Phase 3: Tier 2 Naming Rules
+### Phase 3: Tier 2 Naming Rules ✅
 - Shared `NamingHelper` utility (`IsPascalCase`, `IsCamelCase`, `HasPrefix`)
 - All 6 naming rules using `CSharpSyntaxWalker`
 - Parse `dotnet_naming_rule.*` config properties
 
-### Phase 4: Tier 3 Style Rules
+### Phase 4: Tier 3 Style Rules ✅
 - All 11 style rules
 - `var` rule is approximate (syntax-only can detect `new`, casts, literals but not method return types -- false negatives OK, no false positives)
 
-### Phase 5: Output Formats + Directory Linting
+### Phase 5: Output Formats + Directory Linting ✅
 - `JsonFormatter` (System.Text.Json)
 - `SarifFormatter` (SARIF v2.1.0)
 - `DirectoryLinter` with parallel processing
 - Skip generated files (`*.g.cs`, `*.designer.cs`, `obj/`)
 
-### Phase 6: Polish
+### Phase 6: Polish ✅
 - `--severity` filter, `--exclude` glob option
 - Performance benchmarking (target < 100ms single file)
 - Publish profile for single-file trimmed executable
