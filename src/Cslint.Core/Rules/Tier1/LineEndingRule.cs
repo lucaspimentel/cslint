@@ -23,7 +23,7 @@ public sealed class LineEndingRule : IRuleDefinition
             return diagnostics;
         }
 
-        string text = context.SourceText.ToString();
+        string text = context.SourceString;
         bool expectCrlf = string.Equals(eol, "crlf", StringComparison.OrdinalIgnoreCase);
         bool expectCr = string.Equals(eol, "cr", StringComparison.OrdinalIgnoreCase);
         // Default: lf

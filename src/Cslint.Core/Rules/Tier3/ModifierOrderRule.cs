@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class ModifierOrderRule : IRuleDefinition
+public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
 {
     public string RuleId => "CSLINT205";
 
@@ -13,106 +13,99 @@ public sealed class ModifierOrderRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_preferred_modifier_order"];
 
+    private Dictionary<string, int>? _orderMap;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_preferred_modifier_order") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        (string? orderStr, string? _) = context.Configuration.GetValueWithSeverity("csharp_preferred_modifier_order");
+        Initialize(context.Configuration);
 
-        if (orderStr is null)
+        if (_orderMap is null)
         {
             return [];
         }
 
-        string[] preferredOrder = orderStr.Split(',', StringSplitOptions.TrimEntries);
-        var orderMap = new Dictionary<string, int>(StringComparer.Ordinal);
-
-        for (int i = 0; i < preferredOrder.Length; i++)
-        {
-            orderMap[preferredOrder[i]] = i;
-        }
-
-        var walker = new ModifierWalker(context.FilePath, orderMap);
+        var walker = new CombinedStyleWalker([this]);
         walker.Visit(context.Root);
+        _orderMap = null;
         return walker.Diagnostics;
     }
 
-    private sealed class ModifierWalker(string filePath, Dictionary<string, int> orderMap) : CSharpSyntaxWalker
+    internal void Initialize(LintConfiguration config)
     {
-        public List<LintDiagnostic> Diagnostics { get; } = [];
+        (string? orderStr, string? _) = config.GetValueWithSeverity("csharp_preferred_modifier_order");
 
-        public override void VisitClassDeclaration(ClassDeclarationSyntax node)
+        if (orderStr is null)
         {
-            CheckModifiers(node.Modifiers);
-            base.VisitClassDeclaration(node);
+            _orderMap = null;
+            return;
         }
 
-        public override void VisitStructDeclaration(StructDeclarationSyntax node)
+        string[] preferredOrder = orderStr.Split(',', StringSplitOptions.TrimEntries);
+        _orderMap = new Dictionary<string, int>(StringComparer.Ordinal);
+
+        for (int i = 0; i < preferredOrder.Length; i++)
         {
-            CheckModifiers(node.Modifiers);
-            base.VisitStructDeclaration(node);
+            _orderMap[preferredOrder[i]] = i;
+        }
+    }
+
+    internal void Reset() => _orderMap = null;
+
+    void IStyleRuleHandler.VisitClassDeclaration(ClassDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, diagnostics);
+
+    void IStyleRuleHandler.VisitStructDeclaration(StructDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, diagnostics);
+
+    void IStyleRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, diagnostics);
+
+    void IStyleRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, diagnostics);
+
+    void IStyleRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, diagnostics);
+
+    void IStyleRuleHandler.VisitEventFieldDeclaration(EventFieldDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, diagnostics);
+
+    private void CheckModifiers(SyntaxTokenList modifiers, List<LintDiagnostic> diagnostics)
+    {
+        if (_orderMap is null || modifiers.Count < 2)
+        {
+            return;
         }
 
-        public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
-        {
-            CheckModifiers(node.Modifiers);
-            base.VisitMethodDeclaration(node);
-        }
+        int lastOrder = -1;
 
-        public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
+        foreach (SyntaxToken modifier in modifiers)
         {
-            CheckModifiers(node.Modifiers);
-            base.VisitPropertyDeclaration(node);
-        }
+            string text = modifier.Text;
 
-        public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
-        {
-            CheckModifiers(node.Modifiers);
-            base.VisitFieldDeclaration(node);
-        }
-
-        public override void VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
-        {
-            CheckModifiers(node.Modifiers);
-            base.VisitEventFieldDeclaration(node);
-        }
-
-        private void CheckModifiers(SyntaxTokenList modifiers)
-        {
-            if (modifiers.Count < 2)
+            if (_orderMap.TryGetValue(text, out int order))
             {
-                return;
-            }
-
-            int lastOrder = -1;
-
-            foreach (SyntaxToken modifier in modifiers)
-            {
-                string text = modifier.Text;
-
-                if (orderMap.TryGetValue(text, out int order))
+                if (order < lastOrder)
                 {
-                    if (order < lastOrder)
-                    {
-                        FileLinePositionSpan span = modifiers[0].GetLocation().GetLineSpan();
+                    FileLinePositionSpan span = modifiers[0].GetLocation().GetLineSpan();
 
-                        Diagnostics.Add(
-                            new LintDiagnostic
-                            {
-                                RuleId = "CSLINT205",
-                                Message = "Modifiers are not in the preferred order",
-                                Severity = LintSeverity.Warning,
-                                FilePath = filePath,
-                                Line = span.StartLinePosition.Line + 1,
-                                Column = span.StartLinePosition.Character + 1,
-                            });
+                    diagnostics.Add(
+                        new LintDiagnostic
+                        {
+                            RuleId = "CSLINT205",
+                            Message = "Modifiers are not in the preferred order",
+                            Severity = LintSeverity.Warning,
+                            FilePath = span.Path,
+                            Line = span.StartLinePosition.Line + 1,
+                            Column = span.StartLinePosition.Character + 1,
+                        });
 
-                        break;
-                    }
-
-                    lastOrder = order;
+                    break;
                 }
+
+                lastOrder = order;
             }
         }
     }

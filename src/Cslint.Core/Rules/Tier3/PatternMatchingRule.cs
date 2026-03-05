@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class PatternMatchingRule : IRuleDefinition
+public sealed class PatternMatchingRule : IRuleDefinition, IStyleRuleHandler
 {
     public string RuleId => "CSLINT209";
 
@@ -17,47 +17,38 @@ public sealed class PatternMatchingRule : IRuleDefinition
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        var walker = new PatternWalker(context.FilePath);
+        var walker = new CombinedStyleWalker([this]);
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
 
-    private sealed class PatternWalker(string filePath) : CSharpSyntaxWalker
+    void IStyleRuleHandler.VisitIfStatement(IfStatementSyntax node, List<LintDiagnostic> diagnostics)
     {
-        public List<LintDiagnostic> Diagnostics { get; } = [];
-
-        public override void VisitIfStatement(IfStatementSyntax node)
-        {
-            // Detect: if (x is Type) { var y = (Type)x; }
-            if (node.Condition is BinaryExpressionSyntax
-                {
-                    RawKind: (int)SyntaxKind.IsExpression,
-                    Right: TypeSyntax,
-                })
+        if (node.Condition is BinaryExpressionSyntax
             {
-                // Check if the body contains a cast of the same variable
-                bool hasCast = node.Statement.DescendantNodes()
-                    .OfType<CastExpressionSyntax>()
-                    .Any();
+                RawKind: (int)SyntaxKind.IsExpression,
+                Right: TypeSyntax,
+            })
+        {
+            bool hasCast = node.Statement.DescendantNodes()
+                .OfType<CastExpressionSyntax>()
+                .Any();
 
-                if (hasCast)
-                {
-                    FileLinePositionSpan span = node.IfKeyword.GetLocation().GetLineSpan();
+            if (hasCast)
+            {
+                FileLinePositionSpan span = node.IfKeyword.GetLocation().GetLineSpan();
 
-                    Diagnostics.Add(
-                        new LintDiagnostic
-                        {
-                            RuleId = "CSLINT209",
-                            Message = "Use pattern matching ('is Type name') instead of 'is' check followed by cast",
-                            Severity = LintSeverity.Info,
-                            FilePath = filePath,
-                            Line = span.StartLinePosition.Line + 1,
-                            Column = span.StartLinePosition.Character + 1,
-                        });
-                }
+                diagnostics.Add(
+                    new LintDiagnostic
+                    {
+                        RuleId = "CSLINT209",
+                        Message = "Use pattern matching ('is Type name') instead of 'is' check followed by cast",
+                        Severity = LintSeverity.Info,
+                        FilePath = span.Path,
+                        Line = span.StartLinePosition.Line + 1,
+                        Column = span.StartLinePosition.Character + 1,
+                    });
             }
-
-            base.VisitIfStatement(node);
         }
     }
 }

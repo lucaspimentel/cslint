@@ -25,12 +25,11 @@ public sealed class IndentationRule : IRuleDefinition
         }
 
         bool expectTabs = string.Equals(style, "tab", StringComparison.OrdinalIgnoreCase);
-        string text = context.SourceText.ToString();
-        string[] lines = text.Split('\n');
+        int lineNumber = 0;
 
-        for (int i = 0; i < lines.Length; i++)
+        foreach (ReadOnlySpan<char> line in context.SourceString.AsSpan().EnumerateLines())
         {
-            string line = lines[i].TrimEnd('\r');
+            lineNumber++;
 
             if (line.Length == 0 || !char.IsWhiteSpace(line[0]))
             {
@@ -45,7 +44,7 @@ public sealed class IndentationRule : IRuleDefinition
                 wsEnd++;
             }
 
-            string leading = line[..wsEnd];
+            ReadOnlySpan<char> leading = line[..wsEnd];
 
             if (expectTabs)
             {
@@ -58,7 +57,7 @@ public sealed class IndentationRule : IRuleDefinition
                             Message = "Expected tab indentation, found spaces",
                             Severity = LintSeverity.Warning,
                             FilePath = context.FilePath,
-                            Line = i + 1,
+                            Line = lineNumber,
                             Column = 1,
                         });
                 }
@@ -74,7 +73,7 @@ public sealed class IndentationRule : IRuleDefinition
                             Message = "Expected space indentation, found tabs",
                             Severity = LintSeverity.Warning,
                             FilePath = context.FilePath,
-                            Line = i + 1,
+                            Line = lineNumber,
                             Column = 1,
                         });
                 }

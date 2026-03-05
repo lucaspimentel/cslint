@@ -1,11 +1,10 @@
 using Cslint.Core.Config;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class ThisQualificationRule : IRuleDefinition
+public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHandler
 {
     public string RuleId => "CSLINT204";
 
@@ -19,6 +18,9 @@ public sealed class ThisQualificationRule : IRuleDefinition
         "dotnet_style_qualification_for_event",
     ];
 
+    private bool _active;
+    private string _filePath = "";
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_qualification_for_field") is not null ||
         configuration.GetValue("dotnet_style_qualification_for_property") is not null ||
@@ -27,7 +29,6 @@ public sealed class ThisQualificationRule : IRuleDefinition
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        // Syntax-only: detect 'this.' usage and report if preference is false
         (string? fieldPref, string? _) = context.Configuration.GetValueWithSeverity("dotnet_style_qualification_for_field");
         (string? propPref, string? _) = context.Configuration.GetValueWithSeverity("dotnet_style_qualification_for_property");
         (string? methodPref, string? _) = context.Configuration.GetValueWithSeverity("dotnet_style_qualification_for_method");
@@ -44,27 +45,57 @@ public sealed class ThisQualificationRule : IRuleDefinition
             return [];
         }
 
+        _active = true;
+        _filePath = context.FilePath;
         var diagnostics = new List<LintDiagnostic>();
 
         foreach (SyntaxNode node in context.Root.DescendantNodes())
         {
-            if (node is MemberAccessExpressionSyntax { Expression: ThisExpressionSyntax } memberAccess)
-            {
-                FileLinePositionSpan span = memberAccess.Expression.GetLocation().GetLineSpan();
-
-                diagnostics.Add(
-                    new LintDiagnostic
-                    {
-                        RuleId = RuleId,
-                        Message = $"Remove 'this.' qualification from '{memberAccess.Name}'",
-                        Severity = LintSeverity.Warning,
-                        FilePath = context.FilePath,
-                        Line = span.StartLinePosition.Line + 1,
-                        Column = span.StartLinePosition.Character + 1,
-                    });
-            }
+            VisitNode(node, diagnostics);
         }
 
+        _active = false;
         return diagnostics;
+    }
+
+    internal void Initialize(LintConfiguration config, string filePath)
+    {
+        (string? fieldPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_field");
+        (string? propPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_property");
+        (string? methodPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_method");
+        (string? eventPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_event");
+
+        _active =
+            string.Equals(fieldPref, "false", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(propPref, "false", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(methodPref, "false", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(eventPref, "false", StringComparison.OrdinalIgnoreCase);
+        _filePath = filePath;
+    }
+
+    internal void Reset() => _active = false;
+
+    public void VisitNode(SyntaxNode node, List<LintDiagnostic> diagnostics)
+    {
+        if (!_active)
+        {
+            return;
+        }
+
+        if (node is MemberAccessExpressionSyntax { Expression: ThisExpressionSyntax } memberAccess)
+        {
+            FileLinePositionSpan span = memberAccess.Expression.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = RuleId,
+                    Message = $"Remove 'this.' qualification from '{memberAccess.Name}'",
+                    Severity = LintSeverity.Warning,
+                    FilePath = _filePath,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
+        }
     }
 }

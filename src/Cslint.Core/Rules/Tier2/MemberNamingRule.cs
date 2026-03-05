@@ -1,11 +1,10 @@
 using Cslint.Core.Config;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier2;
 
-public sealed class MemberNamingRule : IRuleDefinition
+public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
 {
     public string RuleId => "CSLINT102";
 
@@ -17,51 +16,46 @@ public sealed class MemberNamingRule : IRuleDefinition
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        var walker = new MemberWalker(context.FilePath);
+        var walker = new CombinedNamingWalker([this]);
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
 
-    private sealed class MemberWalker(string filePath) : CSharpSyntaxWalker
+    void INamingRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "method", diagnostics);
+
+    void INamingRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "property", diagnostics);
+
+    void INamingRuleHandler.VisitEventDeclaration(EventDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "event", diagnostics);
+
+    void INamingRuleHandler.VisitEventFieldDeclaration(EventFieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
     {
-        public List<LintDiagnostic> Diagnostics { get; } = [];
-
-        public override void VisitMethodDeclaration(MethodDeclarationSyntax node) =>
-            CheckName(node.Identifier, "method");
-
-        public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node) =>
-            CheckName(node.Identifier, "property");
-
-        public override void VisitEventDeclaration(EventDeclarationSyntax node) =>
-            CheckName(node.Identifier, "event");
-
-        public override void VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
+        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
         {
-            foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
-            {
-                CheckName(variable.Identifier, "event");
-            }
+            CheckName(variable.Identifier, "event", diagnostics);
         }
+    }
 
-        private void CheckName(SyntaxToken identifier, string kind)
+    private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
+    {
+        string name = identifier.Text;
+
+        if (!NamingHelper.IsPascalCase(name))
         {
-            string name = identifier.Text;
+            FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
 
-            if (!NamingHelper.IsPascalCase(name))
-            {
-                FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
-
-                Diagnostics.Add(
-                    new LintDiagnostic
-                    {
-                        RuleId = "CSLINT102",
-                        Message = $"{kind} '{name}' should use PascalCase",
-                        Severity = LintSeverity.Warning,
-                        FilePath = filePath,
-                        Line = span.StartLinePosition.Line + 1,
-                        Column = span.StartLinePosition.Character + 1,
-                    });
-            }
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = "CSLINT102",
+                    Message = $"{kind} '{name}' should use PascalCase",
+                    Severity = LintSeverity.Warning,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
         }
     }
 }

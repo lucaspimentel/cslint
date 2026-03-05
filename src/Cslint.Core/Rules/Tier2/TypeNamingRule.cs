@@ -1,11 +1,10 @@
 using Cslint.Core.Config;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier2;
 
-public sealed class TypeNamingRule : IRuleDefinition
+public sealed class TypeNamingRule : IRuleDefinition, INamingRuleHandler
 {
     public string RuleId => "CSLINT100";
 
@@ -17,49 +16,44 @@ public sealed class TypeNamingRule : IRuleDefinition
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        var walker = new TypeNamingWalker(context.FilePath);
+        var walker = new CombinedNamingWalker([this]);
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
 
-    private sealed class TypeNamingWalker(string filePath) : CSharpSyntaxWalker
+    void INamingRuleHandler.VisitClassDeclaration(ClassDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "class", diagnostics);
+
+    void INamingRuleHandler.VisitStructDeclaration(StructDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "struct", diagnostics);
+
+    void INamingRuleHandler.VisitEnumDeclaration(EnumDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "enum", diagnostics);
+
+    void INamingRuleHandler.VisitRecordDeclaration(RecordDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "record", diagnostics);
+
+    void INamingRuleHandler.VisitDelegateDeclaration(DelegateDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "delegate", diagnostics);
+
+    private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
     {
-        public List<LintDiagnostic> Diagnostics { get; } = [];
+        string name = identifier.Text;
 
-        public override void VisitClassDeclaration(ClassDeclarationSyntax node) =>
-            CheckName(node.Identifier, "class");
-
-        public override void VisitStructDeclaration(StructDeclarationSyntax node) =>
-            CheckName(node.Identifier, "struct");
-
-        public override void VisitEnumDeclaration(EnumDeclarationSyntax node) =>
-            CheckName(node.Identifier, "enum");
-
-        public override void VisitRecordDeclaration(RecordDeclarationSyntax node) =>
-            CheckName(node.Identifier, "record");
-
-        public override void VisitDelegateDeclaration(DelegateDeclarationSyntax node) =>
-            CheckName(node.Identifier, "delegate");
-
-        private void CheckName(SyntaxToken identifier, string kind)
+        if (!NamingHelper.IsPascalCase(name))
         {
-            string name = identifier.Text;
+            FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
 
-            if (!NamingHelper.IsPascalCase(name))
-            {
-                FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
-
-                Diagnostics.Add(
-                    new LintDiagnostic
-                    {
-                        RuleId = "CSLINT100",
-                        Message = $"{kind} '{name}' should use PascalCase",
-                        Severity = LintSeverity.Warning,
-                        FilePath = filePath,
-                        Line = span.StartLinePosition.Line + 1,
-                        Column = span.StartLinePosition.Character + 1,
-                    });
-            }
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = "CSLINT100",
+                    Message = $"{kind} '{name}' should use PascalCase",
+                    Severity = LintSeverity.Warning,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
         }
     }
 }

@@ -16,7 +16,7 @@ public sealed class FinalNewlineRule : IRuleDefinition
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
         bool expectFinalNewline = context.Configuration.GetBool("insert_final_newline");
-        string text = context.SourceText.ToString();
+        string text = context.SourceString;
 
         if (text.Length == 0)
         {

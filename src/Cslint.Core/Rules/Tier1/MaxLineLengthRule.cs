@@ -26,12 +26,11 @@ public sealed class MaxLineLengthRule : IRuleDefinition
         }
 
         var diagnostics = new List<LintDiagnostic>();
-        string text = context.SourceText.ToString();
-        string[] lines = text.Split('\n');
+        int lineNumber = 0;
 
-        for (int i = 0; i < lines.Length; i++)
+        foreach (ReadOnlySpan<char> line in context.SourceString.AsSpan().EnumerateLines())
         {
-            string line = lines[i].TrimEnd('\r');
+            lineNumber++;
 
             if (line.Length > maxLength.Value)
             {
@@ -42,7 +41,7 @@ public sealed class MaxLineLengthRule : IRuleDefinition
                         Message = $"Line length {line.Length} exceeds maximum of {maxLength.Value}",
                         Severity = LintSeverity.Warning,
                         FilePath = context.FilePath,
-                        Line = i + 1,
+                        Line = lineNumber,
                         Column = maxLength.Value + 1,
                     });
             }

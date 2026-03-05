@@ -1,17 +1,18 @@
 using Cslint.Core.Config;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class BracePreferenceRule : IRuleDefinition
+public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
 {
     public string RuleId => "CSLINT202";
 
     public string Name => "BracePreference";
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_prefer_braces"];
+
+    private bool _active;
 
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_prefer_braces") is not null;
@@ -25,79 +26,92 @@ public sealed class BracePreferenceRule : IRuleDefinition
             return [];
         }
 
-        var walker = new BraceWalker(context.FilePath);
+        _active = true;
+        var walker = new CombinedStyleWalker([this]);
         walker.Visit(context.Root);
+        _active = false;
         return walker.Diagnostics;
     }
 
-    private sealed class BraceWalker(string filePath) : CSharpSyntaxWalker
+    internal void Initialize(LintConfiguration config)
     {
-        public List<LintDiagnostic> Diagnostics { get; } = [];
+        (string? pref, string? _) = config.GetValueWithSeverity("csharp_prefer_braces");
+        _active = string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
 
-        public override void VisitIfStatement(IfStatementSyntax node)
+    internal void Reset() => _active = false;
+
+    void IStyleRuleHandler.VisitIfStatement(IfStatementSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (!_active)
         {
-            CheckStatement(node.Statement, node.IfKeyword);
-
-            if (node.Else?.Statement is not null and not IfStatementSyntax and not BlockSyntax)
-            {
-                CheckStatement(node.Else.Statement, node.Else.ElseKeyword);
-            }
-
-            base.VisitIfStatement(node);
+            return;
         }
 
-        public override void VisitForStatement(ForStatementSyntax node)
+        CheckStatement(node.Statement, node.IfKeyword, diagnostics);
+
+        if (node.Else?.Statement is not null and not IfStatementSyntax and not BlockSyntax)
         {
-            CheckStatement(node.Statement, node.ForKeyword);
-            base.VisitForStatement(node);
+            CheckStatement(node.Else.Statement, node.Else.ElseKeyword, diagnostics);
         }
+    }
 
-        public override void VisitForEachStatement(ForEachStatementSyntax node)
+    void IStyleRuleHandler.VisitForStatement(ForStatementSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (_active)
         {
-            CheckStatement(node.Statement, node.ForEachKeyword);
-            base.VisitForEachStatement(node);
+            CheckStatement(node.Statement, node.ForKeyword, diagnostics);
         }
+    }
 
-        public override void VisitWhileStatement(WhileStatementSyntax node)
+    void IStyleRuleHandler.VisitForEachStatement(ForEachStatementSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (_active)
         {
-            CheckStatement(node.Statement, node.WhileKeyword);
-            base.VisitWhileStatement(node);
+            CheckStatement(node.Statement, node.ForEachKeyword, diagnostics);
         }
+    }
 
-        public override void VisitDoStatement(DoStatementSyntax node)
+    void IStyleRuleHandler.VisitWhileStatement(WhileStatementSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (_active)
         {
-            CheckStatement(node.Statement, node.DoKeyword);
-            base.VisitDoStatement(node);
+            CheckStatement(node.Statement, node.WhileKeyword, diagnostics);
         }
+    }
 
-        public override void VisitUsingStatement(UsingStatementSyntax node)
+    void IStyleRuleHandler.VisitDoStatement(DoStatementSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (_active)
         {
-            // Allow nested using without braces (using cascade)
-            if (node.Statement is not UsingStatementSyntax)
-            {
-                CheckStatement(node.Statement, node.UsingKeyword);
-            }
-
-            base.VisitUsingStatement(node);
+            CheckStatement(node.Statement, node.DoKeyword, diagnostics);
         }
+    }
 
-        private void CheckStatement(StatementSyntax statement, SyntaxToken keyword)
+    void IStyleRuleHandler.VisitUsingStatement(UsingStatementSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (_active && node.Statement is not UsingStatementSyntax)
         {
-            if (statement is not BlockSyntax)
-            {
-                FileLinePositionSpan span = keyword.GetLocation().GetLineSpan();
+            CheckStatement(node.Statement, node.UsingKeyword, diagnostics);
+        }
+    }
 
-                Diagnostics.Add(
-                    new LintDiagnostic
-                    {
-                        RuleId = "CSLINT202",
-                        Message = "Prefer braces for control flow statements",
-                        Severity = LintSeverity.Warning,
-                        FilePath = filePath,
-                        Line = span.StartLinePosition.Line + 1,
-                        Column = span.StartLinePosition.Character + 1,
-                    });
-            }
+    private static void CheckStatement(StatementSyntax statement, SyntaxToken keyword, List<LintDiagnostic> diagnostics)
+    {
+        if (statement is not BlockSyntax)
+        {
+            FileLinePositionSpan span = keyword.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = "CSLINT202",
+                    Message = "Prefer braces for control flow statements",
+                    Severity = LintSeverity.Warning,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
         }
     }
 }

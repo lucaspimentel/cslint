@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier2;
 
-public sealed class ConstantNamingRule : IRuleDefinition
+public sealed class ConstantNamingRule : IRuleDefinition, INamingRuleHandler
 {
     public string RuleId => "CSLINT105";
 
@@ -17,74 +17,56 @@ public sealed class ConstantNamingRule : IRuleDefinition
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        var walker = new ConstantWalker(context.FilePath);
+        var walker = new CombinedNamingWalker([this]);
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
 
-    private sealed class ConstantWalker(string filePath) : CSharpSyntaxWalker
+    void INamingRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
     {
-        public List<LintDiagnostic> Diagnostics { get; } = [];
-
-        public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
+        if (!node.Modifiers.Any(SyntaxKind.ConstKeyword))
         {
-            if (!node.Modifiers.Any(SyntaxKind.ConstKeyword))
-            {
-                return;
-            }
-
-            foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
-            {
-                string name = variable.Identifier.Text;
-
-                // Accept PascalCase or UPPER_CASE
-                if (!NamingHelper.IsPascalCase(name) && !NamingHelper.IsUpperCase(name))
-                {
-                    FileLinePositionSpan span = variable.Identifier.GetLocation().GetLineSpan();
-
-                    Diagnostics.Add(
-                        new LintDiagnostic
-                        {
-                            RuleId = "CSLINT105",
-                            Message = $"Constant '{name}' should use PascalCase or UPPER_CASE",
-                            Severity = LintSeverity.Warning,
-                            FilePath = filePath,
-                            Line = span.StartLinePosition.Line + 1,
-                            Column = span.StartLinePosition.Character + 1,
-                        });
-                }
-            }
+            return;
         }
 
-        public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
+        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
         {
-            if (!node.Modifiers.Any(SyntaxKind.ConstKeyword))
-            {
-                return;
-            }
+            CheckConstant(variable.Identifier, diagnostics);
+        }
+    }
 
-            foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
-            {
-                string name = variable.Identifier.Text;
+    void INamingRuleHandler.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (!node.Modifiers.Any(SyntaxKind.ConstKeyword))
+        {
+            return;
+        }
 
-                if (!NamingHelper.IsPascalCase(name) && !NamingHelper.IsUpperCase(name))
+        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
+        {
+            CheckConstant(variable.Identifier, diagnostics);
+        }
+    }
+
+    private static void CheckConstant(SyntaxToken identifier, List<LintDiagnostic> diagnostics)
+    {
+        string name = identifier.Text;
+
+        // Accept PascalCase or UPPER_CASE
+        if (!NamingHelper.IsPascalCase(name) && !NamingHelper.IsUpperCase(name))
+        {
+            FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
                 {
-                    FileLinePositionSpan span = variable.Identifier.GetLocation().GetLineSpan();
-
-                    Diagnostics.Add(
-                        new LintDiagnostic
-                        {
-                            RuleId = "CSLINT105",
-                            Message = $"Constant '{name}' should use PascalCase or UPPER_CASE",
-                            Severity = LintSeverity.Warning,
-                            FilePath = filePath,
-                            Line = span.StartLinePosition.Line + 1,
-                            Column = span.StartLinePosition.Character + 1,
-                        });
-                }
-            }
-
-            base.VisitLocalDeclarationStatement(node);
+                    RuleId = "CSLINT105",
+                    Message = $"Constant '{name}' should use PascalCase or UPPER_CASE",
+                    Severity = LintSeverity.Warning,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
         }
     }
 }

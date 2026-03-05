@@ -16,17 +16,15 @@ public sealed class TrailingWhitespaceRule : IRuleDefinition
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
         var diagnostics = new List<LintDiagnostic>();
-        string text = context.SourceText.ToString();
-        string[] lines = text.Split('\n');
+        int lineNumber = 0;
 
-        for (int i = 0; i < lines.Length; i++)
+        foreach (ReadOnlySpan<char> line in context.SourceString.AsSpan().EnumerateLines())
         {
-            string line = lines[i].TrimEnd('\r');
+            lineNumber++;
 
             if (line.Length > 0 && char.IsWhiteSpace(line[^1]))
             {
-                string trimmed = line.TrimEnd();
-                int column = trimmed.Length + 1;
+                int column = line.TrimEnd().Length + 1;
 
                 diagnostics.Add(
                     new LintDiagnostic
@@ -35,7 +33,7 @@ public sealed class TrailingWhitespaceRule : IRuleDefinition
                         Message = "Trailing whitespace detected",
                         Severity = LintSeverity.Warning,
                         FilePath = context.FilePath,
-                        Line = i + 1,
+                        Line = lineNumber,
                         Column = column,
                     });
             }

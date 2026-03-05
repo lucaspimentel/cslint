@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier2;
 
-public sealed class FieldNamingRule : IRuleDefinition
+public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
 {
     public string RuleId => "CSLINT104";
 
@@ -17,51 +17,46 @@ public sealed class FieldNamingRule : IRuleDefinition
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        var walker = new FieldWalker(context.FilePath);
+        var walker = new CombinedNamingWalker([this]);
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
 
-    private sealed class FieldWalker(string filePath) : CSharpSyntaxWalker
+    void INamingRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
     {
-        public List<LintDiagnostic> Diagnostics { get; } = [];
-
-        public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
+        // Only check private/internal instance fields (not const, not static, not events)
+        if (node.Modifiers.Any(SyntaxKind.ConstKeyword) ||
+            node.Modifiers.Any(SyntaxKind.StaticKeyword))
         {
-            // Only check private/internal instance fields (not const, not static, not events)
-            if (node.Modifiers.Any(SyntaxKind.ConstKeyword) ||
-                node.Modifiers.Any(SyntaxKind.StaticKeyword))
+            return;
+        }
+
+        bool isPrivate = !node.Modifiers.Any(SyntaxKind.PublicKeyword) &&
+                         !node.Modifiers.Any(SyntaxKind.ProtectedKeyword);
+
+        if (!isPrivate)
+        {
+            return;
+        }
+
+        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
+        {
+            string name = variable.Identifier.Text;
+
+            if (!NamingHelper.IsUnderscoreCamelCase(name))
             {
-                return;
-            }
+                FileLinePositionSpan span = variable.Identifier.GetLocation().GetLineSpan();
 
-            bool isPrivate = !node.Modifiers.Any(SyntaxKind.PublicKeyword) &&
-                             !node.Modifiers.Any(SyntaxKind.ProtectedKeyword);
-
-            if (!isPrivate)
-            {
-                return;
-            }
-
-            foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
-            {
-                string name = variable.Identifier.Text;
-
-                if (!NamingHelper.IsUnderscoreCamelCase(name))
-                {
-                    FileLinePositionSpan span = variable.Identifier.GetLocation().GetLineSpan();
-
-                    Diagnostics.Add(
-                        new LintDiagnostic
-                        {
-                            RuleId = "CSLINT104",
-                            Message = $"Private field '{name}' should use _camelCase",
-                            Severity = LintSeverity.Warning,
-                            FilePath = filePath,
-                            Line = span.StartLinePosition.Line + 1,
-                            Column = span.StartLinePosition.Character + 1,
-                        });
-                }
+                diagnostics.Add(
+                    new LintDiagnostic
+                    {
+                        RuleId = "CSLINT104",
+                        Message = $"Private field '{name}' should use _camelCase",
+                        Severity = LintSeverity.Warning,
+                        FilePath = span.Path,
+                        Line = span.StartLinePosition.Line + 1,
+                        Column = span.StartLinePosition.Character + 1,
+                    });
             }
         }
     }

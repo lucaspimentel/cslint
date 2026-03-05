@@ -7,6 +7,8 @@ namespace Cslint.Core.Rules;
 
 public sealed class RuleContext
 {
+    private string? _sourceString;
+
     public required string FilePath { get; init; }
 
     public required SourceText SourceText { get; init; }
@@ -16,4 +18,6 @@ public sealed class RuleContext
     public required CSharpSyntaxNode Root { get; init; }
 
     public required LintConfiguration Configuration { get; init; }
+
+    public string SourceString => _sourceString ??= SourceText.ToString();
 }
