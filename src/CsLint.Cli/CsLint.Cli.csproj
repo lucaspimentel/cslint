@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cslint.Core\Cslint.Core.csproj" />
+    <ProjectReference Include="..\CsLint.Core\CsLint.Core.csproj" />
   </ItemGroup>
 
 </Project>

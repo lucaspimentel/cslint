@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Cslint.Core\Cslint.Core.csproj" />
+    <ProjectReference Include="..\..\src\CsLint.Core\CsLint.Core.csproj" />
   </ItemGroup>
 
 </Project>
