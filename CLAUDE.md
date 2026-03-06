@@ -27,7 +27,7 @@ Four projects in `CsLint.slnx`:
 
 ### Rules are organized in tiers
 
-- **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length). No syntax tree needed.
+- **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length, no `#region` directives). No syntax tree needed.
 - **Tier2** (`Rules/Tier2/`) — naming convention checks using `CSharpSyntaxWalker` (type naming, interface prefix, member naming, field naming, etc.). Shared `NamingHelper` utility.
 - **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, etc.).
 
@@ -35,7 +35,8 @@ Four projects in `CsLint.slnx`:
 
 - All rules implement `IRuleDefinition` and are manually registered in `RuleRegistry` (no reflection, trim-safe)
 - Config comes from `.editorconfig` via `editorconfig` NuGet package, abstracted behind `IConfigProvider`
-- `FileLinter` orchestrates: parse file → resolve config → run enabled rules
+- `PragmaSuppressionMap` filters diagnostics suppressed by `#pragma warning disable CSLINTXXX` directives
+- `FileLinter` orchestrates: parse file → resolve config → run enabled rules → filter pragma suppressions
 - `DirectoryLinter` processes files in parallel via `Parallel.ForEachAsync`
 - Exit codes: 0 = clean, 1 = violations, 2 = error
 - Output formats: text (MSBuild-style), JSON, SARIF

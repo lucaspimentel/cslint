@@ -52,4 +52,36 @@ public class FileLinterTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Fact]
+    public void LintSource_PragmaDisable_SuppressesDiagnosticInRange()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "true" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+
+        const string Source = "#pragma warning disable CSLINT001\nclass Foo { }   \n";
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", Source, config);
+
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+    }
+
+    [Fact]
+    public void LintSource_PragmaDisableRestore_DiagnosticOutsideRangeStillReported()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "true" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+
+        const string Source = "#pragma warning disable CSLINT001\n#pragma warning restore CSLINT001\nclass Foo { }   \n";
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", Source, config);
+
+        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+    }
 }

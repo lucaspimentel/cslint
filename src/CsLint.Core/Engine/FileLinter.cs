@@ -113,6 +113,13 @@ public sealed class FileLinter
             }
         }
 
+        PragmaSuppressionMap suppressions = PragmaSuppressionMap.Build(root);
+
+        if (suppressions.HasSuppressions)
+        {
+            diagnostics.RemoveAll(d => suppressions.IsSuppressed(d.RuleId, d.Line));
+        }
+
         return diagnostics;
     }
 }

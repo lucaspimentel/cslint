@@ -72,6 +72,7 @@ Rules are read from your `.editorconfig` and organized into three tiers:
 - **Trailing whitespace** — `trim_trailing_whitespace`
 - **Final newline** — `insert_final_newline`
 - **Max line length** — `max_line_length`
+- **No `#region` directives** — `dotnet_diagnostic.CSLINT006.severity`
 
 ### Tier 2 — Naming conventions
 - Type naming (PascalCase for classes, structs, enums, records)
@@ -93,6 +94,20 @@ Rules are read from your `.editorconfig` and organized into three tiers:
 - Predefined type preferences (IDE0049)
 - Pattern matching (IDE0019/IDE0020/IDE0066)
 - Null checking (IDE0029–IDE0031/IDE0041)
+
+## Suppressing Diagnostics
+
+Suppress specific CsLint rules with `#pragma warning disable`:
+
+```csharp
+#pragma warning disable CSLINT001
+class Foo { }   // trailing whitespace not reported
+#pragma warning restore CSLINT001
+```
+
+- Supports single or multiple rule IDs: `#pragma warning disable CSLINT001, CSLINT200`
+- `#pragma warning disable` (no IDs) suppresses all CsLint rules in that range
+- Without a matching `restore`, suppression continues to end of file
 
 ## Development
 
