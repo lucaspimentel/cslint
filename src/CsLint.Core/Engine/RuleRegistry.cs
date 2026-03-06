@@ -21,6 +21,7 @@ public sealed class RuleRegistry
         registry.Register(new LineEndingRule());
         registry.Register(new FinalNewlineRule());
         registry.Register(new MaxLineLengthRule());
+        registry.Register(new NoRegionDirectivesRule());
 
         // Tier 2: Naming conventions (syntax walker)
         registry.Register(new TypeNamingRule());
