@@ -2,14 +2,13 @@
 
 ## Next rules to implement
 
-Priority 2 candidates from the [rule mappings review](docs/rule-mappings.md#priority-2----medium-value-moderate-complexity):
+Priority 3 candidates from the [rule mappings review](docs/rule-mappings.md#priority-3----niche-or-newer-c-features):
 
-- **IDE0054/IDE0074** — Compound assignment (`x = x + 1` → `x += 1`, `x = x ?? y` → `x ??= y`)
-- **IDE0017** — Object initializers
-- **IDE0028** — Collection initializers
-- **IDE0053** — Expression body for lambdas
-- **IDE0061** — Expression body for local functions
-- **IDE0083** — Pattern matching (`not`)
-- **IDE0078** — Pattern matching (`and`/`or`)
+- **IDE0290** — Primary constructors
+- **IDE0300--IDE0305** — Collection expressions
+- **IDE0180** — Tuple swap
+- **IDE0230** — UTF-8 string literals
+- **IDE0071** — Simplify interpolation
+- **IDE0056/IDE0057** — Index/range operators
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the full prioritized list and feasibility analysis.

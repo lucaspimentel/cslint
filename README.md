@@ -98,6 +98,13 @@ Rules are read from your `.editorconfig` and organized into three tiers:
 - Using declarations (IDE0063)
 - Target-typed `new` (IDE0090)
 - Simplify `default` expression (IDE0034)
+- Compound assignment (IDE0054/IDE0074)
+- Object initializers (IDE0017)
+- Collection initializers (IDE0028)
+- Expression body for lambdas (IDE0053)
+- Expression body for local functions (IDE0061)
+- Pattern matching `not` (IDE0083)
+- Pattern matching combinators `and`/`or` (IDE0078)
 
 ## Suppressing Diagnostics
 

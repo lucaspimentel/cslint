@@ -47,6 +47,13 @@ public sealed class RuleRegistry
         registry.Register(new UsingDeclarationRule());
         registry.Register(new TargetTypedNewRule());
         registry.Register(new SimpleDefaultExpressionRule());
+        registry.Register(new CompoundAssignmentRule());
+        registry.Register(new ObjectInitializerRule());
+        registry.Register(new CollectionInitializerRule());
+        registry.Register(new ExpressionBodiedLambdasRule());
+        registry.Register(new ExpressionBodiedLocalFunctionsRule());
+        registry.Register(new PatternMatchingNotRule());
+        registry.Register(new PatternMatchingCombinatorRule());
 
         return registry;
     }

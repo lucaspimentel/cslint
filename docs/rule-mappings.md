@@ -45,6 +45,13 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT211 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | IDE0063 |
 | CSLINT212 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |
 | CSLINT213 | Simplify `default` expression | `csharp_prefer_simple_default_expression` | IDE0034 |
+| CSLINT214 | Compound assignment | `dotnet_style_prefer_compound_assignment` | IDE0054, IDE0074 |
+| CSLINT215 | Object initializers | `dotnet_style_object_initializer` | IDE0017 |
+| CSLINT216 | Collection initializers | `dotnet_style_collection_initializer` | IDE0028 |
+| CSLINT217 | Expression body for lambdas | `csharp_style_expression_bodied_lambdas` | IDE0053 |
+| CSLINT218 | Expression body for local functions | `csharp_style_expression_bodied_local_functions` | IDE0061 |
+| CSLINT219 | Pattern matching (`not`) | `csharp_style_prefer_not_pattern` | IDE0083 |
+| CSLINT220 | Pattern matching (`and`/`or`) | `csharp_style_prefer_pattern_matching` | IDE0078 |
 
 ## Pragma Alias Support
 
@@ -58,35 +65,30 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0003, IDE0009 | CSLINT204 | Microsoft |
 | IDE0007, IDE0008 | CSLINT200 | Microsoft |
 | IDE0011 | CSLINT202 | Microsoft |
+| IDE0017 | CSLINT215 | Microsoft |
 | IDE0019, IDE0020, IDE0066 | CSLINT209 | Microsoft |
 | IDE0021--IDE0027 | CSLINT201 | Microsoft |
+| IDE0028 | CSLINT216 | Microsoft |
 | IDE0029--IDE0031, IDE0041 | CSLINT210 | Microsoft |
+| IDE0034 | CSLINT213 | Microsoft |
 | IDE0036 | CSLINT205 | Microsoft |
 | IDE0040 | CSLINT206 | Microsoft |
 | IDE0049 | CSLINT208 | Microsoft |
-| IDE0065 | CSLINT207 | Microsoft |
-| IDE0160, IDE0161 | CSLINT203 | Microsoft |
-| IDE0034 | CSLINT213 | Microsoft |
+| IDE0053 | CSLINT217 | Microsoft |
+| IDE0054, IDE0074 | CSLINT214 | Microsoft |
+| IDE0061 | CSLINT218 | Microsoft |
 | IDE0063 | CSLINT211 | Microsoft |
+| IDE0065 | CSLINT207 | Microsoft |
 | IDE0073 | CSLINT007 | Microsoft |
+| IDE0078 | CSLINT220 | Microsoft |
+| IDE0083 | CSLINT219 | Microsoft |
 | IDE0090 | CSLINT212 | Microsoft |
+| IDE0160, IDE0161 | CSLINT203 | Microsoft |
 | IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
 
 ## Future Candidates
 
 Rules that can be implemented with syntax-only analysis (no semantic model).
-
-### Priority 2 -- Medium value, moderate complexity
-
-| IDE Rule | Description | editorconfig Key | Notes |
-|---|---|---|---|
-| IDE0054/IDE0074 | Compound assignment | `dotnet_style_prefer_compound_assignment` | Detect `x = x + 1` and suggest `x += 1`, `x = x ?? y` and suggest `x ??= y` |
-| IDE0017 | Object initializers | `dotnet_style_object_initializer` | Detect `var x = new Foo(); x.A = 1;` and suggest initializer syntax |
-| IDE0028 | Collection initializers | `dotnet_style_collection_initializer` | Detect `var list = new List<int>(); list.Add(1);` and suggest initializer |
-| IDE0053 | Expression body for lambdas | `csharp_style_expression_bodied_lambdas` | Extends CSLINT201 pattern to lambdas |
-| IDE0061 | Expression body for local functions | `csharp_style_expression_bodied_local_functions` | Extends CSLINT201 pattern to local functions |
-| IDE0083 | Pattern matching (`not`) | `csharp_style_prefer_not_pattern` | Detect `!(x is T)` and suggest `x is not T` |
-| IDE0078 | Pattern matching (`and`/`or`) | `csharp_style_prefer_pattern_matching` | Detect compound conditions and suggest pattern combinators |
 
 ### Priority 3 -- Niche or newer C# features
 
