@@ -54,6 +54,13 @@ public sealed class RuleRegistry
         registry.Register(new ExpressionBodiedLocalFunctionsRule());
         registry.Register(new PatternMatchingNotRule());
         registry.Register(new PatternMatchingCombinatorRule());
+        registry.Register(new PrimaryConstructorRule());
+        registry.Register(new CollectionExpressionRule());
+        registry.Register(new TupleSwapRule());
+        registry.Register(new Utf8StringLiteralRule());
+        registry.Register(new SimplifyInterpolationRule());
+        registry.Register(new IndexOperatorRule());
+        registry.Register(new RangeOperatorRule());
 
         return registry;
     }

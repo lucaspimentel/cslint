@@ -1,14 +1,9 @@
 # TODO
 
-## Next rules to implement
+## Completed
 
-Priority 3 candidates from the [rule mappings review](docs/rule-mappings.md#priority-3----niche-or-newer-c-features):
+- [x] Priority 1 rules (CSLINT211--CSLINT213)
+- [x] Priority 2 rules (CSLINT214--CSLINT220)
+- [x] Priority 3 rules (CSLINT221--CSLINT227)
 
-- **IDE0290** — Primary constructors
-- **IDE0300--IDE0305** — Collection expressions
-- **IDE0180** — Tuple swap
-- **IDE0230** — UTF-8 string literals
-- **IDE0071** — Simplify interpolation
-- **IDE0056/IDE0057** — Index/range operators
-
-See [docs/rule-mappings.md](docs/rule-mappings.md) for the full prioritized list and feasibility analysis.
+All syntax-only rules from [docs/rule-mappings.md](docs/rule-mappings.md) have been implemented. Remaining IDE rules require semantic model analysis and are not feasible.

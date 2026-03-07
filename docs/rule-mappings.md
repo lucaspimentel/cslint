@@ -52,6 +52,13 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT218 | Expression body for local functions | `csharp_style_expression_bodied_local_functions` | IDE0061 |
 | CSLINT219 | Pattern matching (`not`) | `csharp_style_prefer_not_pattern` | IDE0083 |
 | CSLINT220 | Pattern matching (`and`/`or`) | `csharp_style_prefer_pattern_matching` | IDE0078 |
+| CSLINT221 | Primary constructors | `csharp_style_prefer_primary_constructors` | IDE0290 |
+| CSLINT222 | Collection expressions | `dotnet_style_prefer_collection_expression` | IDE0300--IDE0305 |
+| CSLINT223 | Tuple swap | `csharp_style_prefer_tuple_swap` | IDE0180 |
+| CSLINT224 | UTF-8 string literals | `csharp_style_prefer_utf8_string_literals` | IDE0230 |
+| CSLINT225 | Simplify interpolation | `dotnet_style_prefer_simplified_interpolation` | IDE0071 |
+| CSLINT226 | Index operator (`^`) | `csharp_style_prefer_index_operator` | IDE0056 |
+| CSLINT227 | Range operator (`..`) | `csharp_style_prefer_range_operator` | IDE0057 |
 
 ## Pragma Alias Support
 
@@ -82,24 +89,20 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0073 | CSLINT007 | Microsoft |
 | IDE0078 | CSLINT220 | Microsoft |
 | IDE0083 | CSLINT219 | Microsoft |
+| IDE0056 | CSLINT226 | Microsoft |
+| IDE0057 | CSLINT227 | Microsoft |
+| IDE0071 | CSLINT225 | Microsoft |
 | IDE0090 | CSLINT212 | Microsoft |
 | IDE0160, IDE0161 | CSLINT203 | Microsoft |
+| IDE0180 | CSLINT223 | Microsoft |
+| IDE0230 | CSLINT224 | Microsoft |
+| IDE0290 | CSLINT221 | Microsoft |
+| IDE0300--IDE0305 | CSLINT222 | Microsoft |
 | IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
 
+All syntax-feasible IDE rules have been implemented. See "Not Feasible" below for rules that require a semantic model.
+
 ## Future Candidates
-
-Rules that can be implemented with syntax-only analysis (no semantic model).
-
-### Priority 3 -- Niche or newer C# features
-
-| IDE Rule | Description | editorconfig Key | Notes |
-|---|---|---|---|
-| IDE0290 | Primary constructors | `csharp_style_prefer_primary_constructors` | Detect constructor that only assigns fields and suggest primary ctor |
-| IDE0300--IDE0305 | Collection expressions | `dotnet_style_prefer_collection_expression` | Detect `new int[] { 1, 2 }` and suggest `[1, 2]` |
-| IDE0180 | Tuple swap | `csharp_style_prefer_tuple_swap` | Detect temp-variable swap pattern and suggest `(a, b) = (b, a)` |
-| IDE0230 | UTF-8 string literals | `csharp_style_prefer_utf8_string_literals` | Detect `Encoding.UTF8.GetBytes("...")` and suggest `"..."u8` |
-| IDE0071 | Simplify interpolation | `dotnet_style_prefer_simplified_interpolation` | Detect `{x.ToString()}` and suggest `{x}` inside interpolated strings |
-| IDE0056/IDE0057 | Index/range operators | `csharp_style_prefer_index_operator`, `csharp_style_prefer_range_operator` | Detect `arr[arr.Length - 1]` and suggest `arr[^1]` |
 
 ### Not Feasible (require semantic model)
 

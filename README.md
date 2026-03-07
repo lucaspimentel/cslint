@@ -105,6 +105,13 @@ Rules are read from your `.editorconfig` and organized into three tiers:
 - Expression body for local functions (IDE0061)
 - Pattern matching `not` (IDE0083)
 - Pattern matching combinators `and`/`or` (IDE0078)
+- Primary constructors (IDE0290)
+- Collection expressions (IDE0300–IDE0305)
+- Tuple swap (IDE0180)
+- UTF-8 string literals (IDE0230)
+- Simplify interpolation (IDE0071)
+- Index operator `^` (IDE0056)
+- Range operator `..` (IDE0057)
 
 ## Suppressing Diagnostics
 
