@@ -65,6 +65,22 @@ public sealed class PragmaSuppressionMap
                     {
                         CloseRange(openRanges, suppressedRanges, id, line);
                     }
+
+                    // Also register mapped CsLint IDs for third-party rule aliases
+                    if (PragmaAliasMap.TryGetMappedIds(id, out string[] mappedIds))
+                    {
+                        foreach (string mappedId in mappedIds)
+                        {
+                            if (isDisable)
+                            {
+                                openRanges.TryAdd(mappedId, line);
+                            }
+                            else
+                            {
+                                CloseRange(openRanges, suppressedRanges, mappedId, line);
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -35,7 +35,7 @@ Four projects in `CsLint.slnx`:
 
 - All rules implement `IRuleDefinition` and are manually registered in `RuleRegistry` (no reflection, trim-safe)
 - Config comes from `.editorconfig` via `editorconfig` NuGet package, abstracted behind `IConfigProvider`
-- `PragmaSuppressionMap` filters diagnostics suppressed by `#pragma warning disable CSLINTXXX` directives
+- `PragmaSuppressionMap` filters diagnostics suppressed by `#pragma warning disable` directives; `PragmaAliasMap` maps third-party IDs (e.g., `SA1313`, `IDE1006`) to CsLint IDs so existing pragmas also suppress corresponding CsLint rules
 - `FileLinter` orchestrates: parse file → resolve config → run enabled rules → filter pragma suppressions
 - `DirectoryLinter` processes files in parallel via `Parallel.ForEachAsync`
 - Exit codes: 0 = clean, 1 = violations, 2 = error

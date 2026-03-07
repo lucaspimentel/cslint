@@ -161,4 +161,70 @@ public class PragmaSuppressionMapTests
         Assert.False(map.HasSuppressions);
         Assert.False(map.IsSuppressed("CSLINT001", 1));
     }
+
+    [Fact]
+    public void SA1313_SuppressesCslint103()
+    {
+        const string Source = """
+            #pragma warning disable SA1313
+            void M(int camelCase) { }
+            """;
+
+        PragmaSuppressionMap map = BuildMap(Source);
+
+        Assert.True(map.IsSuppressed("CSLINT103", 2));
+        Assert.False(map.IsSuppressed("CSLINT102", 2));
+        Assert.False(map.IsSuppressed("CSLINT104", 2));
+    }
+
+    [Fact]
+    public void IDE1006_SuppressesMultipleCslintRules()
+    {
+        const string Source = """
+            #pragma warning disable IDE1006
+            class Foo { }
+            """;
+
+        PragmaSuppressionMap map = BuildMap(Source);
+
+        Assert.True(map.IsSuppressed("CSLINT102", 2));
+        Assert.True(map.IsSuppressed("CSLINT103", 2));
+        Assert.True(map.IsSuppressed("CSLINT104", 2));
+        Assert.False(map.IsSuppressed("CSLINT101", 2));
+    }
+
+    [Fact]
+    public void SA1300_DisableRestore_SuppressesOnlyInRange()
+    {
+        const string Source = """
+            class Before { }
+            #pragma warning disable SA1300
+            class Inside { }
+            #pragma warning restore SA1300
+            class After { }
+            """;
+
+        PragmaSuppressionMap map = BuildMap(Source);
+
+        Assert.False(map.IsSuppressed("CSLINT102", 1));
+        Assert.True(map.IsSuppressed("CSLINT102", 2));
+        Assert.True(map.IsSuppressed("CSLINT102", 3));
+        Assert.True(map.IsSuppressed("CSLINT102", 4));
+        Assert.False(map.IsSuppressed("CSLINT102", 5));
+    }
+
+    [Fact]
+    public void UnmappedThirdPartyId_IsIgnored()
+    {
+        const string Source = """
+            #pragma warning disable CA1000
+            class Foo { }
+            """;
+
+        PragmaSuppressionMap map = BuildMap(Source);
+
+        Assert.False(map.IsSuppressed("CSLINT102", 2));
+        Assert.False(map.IsSuppressed("CSLINT103", 2));
+        Assert.False(map.IsSuppressed("CSLINT104", 2));
+    }
 }
