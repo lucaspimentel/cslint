@@ -27,7 +27,7 @@ Four projects in `CsLint.slnx`:
 
 ### Rules are organized in tiers
 
-- **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length, no `#region` directives). No syntax tree needed.
+- **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length, no `#region` directives, file header). No syntax tree needed.
 - **Tier2** (`Rules/Tier2/`) — naming convention checks using `CSharpSyntaxWalker` (type naming, interface prefix, member naming, field naming, etc.). Shared `NamingHelper` utility.
 - **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, etc.).
 

@@ -14,6 +14,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT004 | Final newline | `insert_final_newline` | -- |
 | CSLINT005 | Max line length | `max_line_length` | -- |
 | CSLINT006 | No `#region` directives | `dotnet_diagnostic.CSLINT006.severity` | -- |
+| CSLINT007 | File header | `file_header_template` | IDE0073 |
 
 ### Tier 2 -- Naming Conventions
 
@@ -41,6 +42,9 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT208 | Predefined type preferences | `dotnet_style_predefined_type_for_*` | IDE0049 |
 | CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0019, IDE0020, IDE0066 |
 | CSLINT210 | Null checking | `csharp_style_*_null_check` | IDE0029--IDE0031, IDE0041 |
+| CSLINT211 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | IDE0063 |
+| CSLINT212 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |
+| CSLINT213 | Simplify `default` expression | `csharp_prefer_simple_default_expression` | IDE0034 |
 
 ## Pragma Alias Support
 
@@ -62,20 +66,15 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0049 | CSLINT208 | Microsoft |
 | IDE0065 | CSLINT207 | Microsoft |
 | IDE0160, IDE0161 | CSLINT203 | Microsoft |
+| IDE0034 | CSLINT213 | Microsoft |
+| IDE0063 | CSLINT211 | Microsoft |
+| IDE0073 | CSLINT007 | Microsoft |
+| IDE0090 | CSLINT212 | Microsoft |
 | IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
 
 ## Future Candidates
 
 Rules that can be implemented with syntax-only analysis (no semantic model).
-
-### Priority 1 -- High value, low complexity
-
-| IDE Rule | Description | editorconfig Key | Notes |
-|---|---|---|---|
-| IDE0063 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | Detect `using (var x = ...) { }` and suggest `using var x = ...;` |
-| IDE0090 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | Detect `Foo x = new Foo()` and suggest `Foo x = new()` |
-| IDE0034 | Simplify `default` expression | `csharp_prefer_simple_default_expression` | Detect `default(T)` and suggest `default` where type is inferrable |
-| IDE0073 | File header | `file_header_template` | Check first line(s) match configured header template |
 
 ### Priority 2 -- Medium value, moderate complexity
 

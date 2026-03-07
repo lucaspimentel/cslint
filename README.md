@@ -73,6 +73,7 @@ Rules are read from your `.editorconfig` and organized into three tiers:
 - **Final newline** — `insert_final_newline`
 - **Max line length** — `max_line_length`
 - **No `#region` directives** — `dotnet_diagnostic.CSLINT006.severity`
+- **File header** — `file_header_template` (IDE0073)
 
 ### Tier 2 — Naming conventions
 - Type naming (PascalCase for classes, structs, enums, records)
@@ -94,6 +95,9 @@ Rules are read from your `.editorconfig` and organized into three tiers:
 - Predefined type preferences (IDE0049)
 - Pattern matching (IDE0019/IDE0020/IDE0066)
 - Null checking (IDE0029–IDE0031/IDE0041)
+- Using declarations (IDE0063)
+- Target-typed `new` (IDE0090)
+- Simplify `default` expression (IDE0034)
 
 ## Suppressing Diagnostics
 

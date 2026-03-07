@@ -36,6 +36,10 @@ internal static class PragmaAliasMap
             ["IDE0066"] = ["CSLINT209"],
             ["IDE0160"] = ["CSLINT203"],
             ["IDE0161"] = ["CSLINT203"],
+            ["IDE0034"] = ["CSLINT213"],
+            ["IDE0063"] = ["CSLINT211"],
+            ["IDE0073"] = ["CSLINT007"],
+            ["IDE0090"] = ["CSLINT212"],
             ["IDE1006"] = ["CSLINT102", "CSLINT103", "CSLINT104"],
         };
 

@@ -22,6 +22,7 @@ public sealed class RuleRegistry
         registry.Register(new FinalNewlineRule());
         registry.Register(new MaxLineLengthRule());
         registry.Register(new NoRegionDirectivesRule());
+        registry.Register(new FileHeaderRule());
 
         // Tier 2: Naming conventions (syntax walker)
         registry.Register(new TypeNamingRule());
@@ -43,6 +44,9 @@ public sealed class RuleRegistry
         registry.Register(new PredefinedTypeRule());
         registry.Register(new PatternMatchingRule());
         registry.Register(new NullCheckingRule());
+        registry.Register(new UsingDeclarationRule());
+        registry.Register(new TargetTypedNewRule());
+        registry.Register(new SimpleDefaultExpressionRule());
 
         return registry;
     }
