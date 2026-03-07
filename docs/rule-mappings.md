@@ -15,6 +15,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT005 | Max line length | `max_line_length` | -- |
 | CSLINT006 | No `#region` directives | `dotnet_diagnostic.CSLINT006.severity` | -- |
 | CSLINT007 | File header | `file_header_template` | IDE0073 |
+| CSLINT008 | No multiple blank lines | `csharp_no_multiple_blank_lines` | IDE2000 |
 
 ### Tier 2 -- Naming Conventions
 
@@ -100,6 +101,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0290 | CSLINT221 | Microsoft |
 | IDE0300--IDE0305 | CSLINT222 | Microsoft |
 | IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
+| IDE2000 | CSLINT008 | Microsoft |
 
 ## Future Candidates
 
@@ -111,7 +113,6 @@ These rules can be implemented with syntax-only parsing:
 
 | IDE Rule | Description | CsLint Tier |
 |---|---|---|
-| IDE2000 | Avoid multiple blank lines | Tier 1 |
 | IDE2001 | Embedded statements must be on their own line | Tier 3 |
 | IDE2002 | Consecutive braces must not have blank line between them | Tier 3 |
 | IDE2003 | Blank line required between block and subsequent statement | Tier 3 |

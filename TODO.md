@@ -6,7 +6,7 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 
 ### Tier 1 — Text-level
 
-- [ ] IDE2000 — Avoid multiple blank lines
+- [x] IDE2000 — Avoid multiple blank lines
 
 ### Tier 3 — New-line formatting
 

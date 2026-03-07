@@ -74,6 +74,7 @@ CsLint implements a subset of rules from Microsoft's [.NET code analysis framewo
 - **Max line length** — `max_line_length`
 - **No `#region` directives** — `dotnet_diagnostic.CSLINT006.severity`
 - **File header** — `file_header_template` (IDE0073)
+- **No multiple blank lines** — `csharp_no_multiple_blank_lines` (IDE2000)
 
 ### Tier 2 — Naming conventions
 - Type naming (PascalCase for classes, structs, enums, records)

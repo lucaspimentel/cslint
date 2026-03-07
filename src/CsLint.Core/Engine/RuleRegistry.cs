@@ -23,6 +23,7 @@ public sealed class RuleRegistry
         registry.Register(new MaxLineLengthRule());
         registry.Register(new NoRegionDirectivesRule());
         registry.Register(new FileHeaderRule());
+        registry.Register(new MultipleBlankLinesRule());
 
         // Tier 2: Naming conventions (syntax walker)
         registry.Register(new TypeNamingRule());
