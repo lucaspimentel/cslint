@@ -227,4 +227,27 @@ public class PragmaSuppressionMapTests
         Assert.False(map.IsSuppressed("CSLINT103", 2));
         Assert.False(map.IsSuppressed("CSLINT104", 2));
     }
+
+    [Theory]
+    [InlineData("IDE0007", "CSLINT200")]
+    [InlineData("IDE0008", "CSLINT200")]
+    [InlineData("IDE0011", "CSLINT202")]
+    [InlineData("IDE0021", "CSLINT201")]
+    [InlineData("IDE0036", "CSLINT205")]
+    [InlineData("IDE0040", "CSLINT206")]
+    [InlineData("IDE0049", "CSLINT208")]
+    [InlineData("IDE0065", "CSLINT207")]
+    [InlineData("IDE0160", "CSLINT203")]
+    [InlineData("IDE0003", "CSLINT204")]
+    [InlineData("IDE0019", "CSLINT209")]
+    [InlineData("IDE0029", "CSLINT210")]
+    [InlineData("IDE0041", "CSLINT210")]
+    public void IdeAlias_SuppressesMappedCslintRule(string ideId, string expectedCslintId)
+    {
+        string source = $"#pragma warning disable {ideId}\nclass Foo {{ }}\n";
+
+        PragmaSuppressionMap map = BuildMap(source);
+
+        Assert.True(map.IsSuppressed(expectedCslintId, 2));
+    }
 }

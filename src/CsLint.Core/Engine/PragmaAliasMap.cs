@@ -5,9 +5,37 @@ internal static class PragmaAliasMap
     private static readonly Dictionary<string, string[]> Aliases =
         new(StringComparer.OrdinalIgnoreCase)
         {
-            ["SA1313"] = ["CSLINT103"],
-            ["SA1306"] = ["CSLINT104"],
+            // StyleCop
             ["SA1300"] = ["CSLINT102"],
+            ["SA1306"] = ["CSLINT104"],
+            ["SA1313"] = ["CSLINT103"],
+
+            // Microsoft IDE
+            ["IDE0003"] = ["CSLINT204"],
+            ["IDE0007"] = ["CSLINT200"],
+            ["IDE0008"] = ["CSLINT200"],
+            ["IDE0009"] = ["CSLINT204"],
+            ["IDE0011"] = ["CSLINT202"],
+            ["IDE0019"] = ["CSLINT209"],
+            ["IDE0020"] = ["CSLINT209"],
+            ["IDE0021"] = ["CSLINT201"],
+            ["IDE0022"] = ["CSLINT201"],
+            ["IDE0023"] = ["CSLINT201"],
+            ["IDE0024"] = ["CSLINT201"],
+            ["IDE0025"] = ["CSLINT201"],
+            ["IDE0026"] = ["CSLINT201"],
+            ["IDE0027"] = ["CSLINT201"],
+            ["IDE0029"] = ["CSLINT210"],
+            ["IDE0030"] = ["CSLINT210"],
+            ["IDE0031"] = ["CSLINT210"],
+            ["IDE0036"] = ["CSLINT205"],
+            ["IDE0040"] = ["CSLINT206"],
+            ["IDE0041"] = ["CSLINT210"],
+            ["IDE0049"] = ["CSLINT208"],
+            ["IDE0065"] = ["CSLINT207"],
+            ["IDE0066"] = ["CSLINT209"],
+            ["IDE0160"] = ["CSLINT203"],
+            ["IDE0161"] = ["CSLINT203"],
             ["IDE1006"] = ["CSLINT102", "CSLINT103", "CSLINT104"],
         };
 

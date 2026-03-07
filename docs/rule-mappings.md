@@ -1,0 +1,107 @@
+# CsLint Rule Mappings
+
+Comprehensive reference for all CsLint rules and their corresponding third-party rule IDs.
+
+## Implemented Rules
+
+### Tier 1 -- Formatting (text-level)
+
+| CsLint ID | Description | editorconfig Key | Third-Party IDs |
+|---|---|---|---|
+| CSLINT001 | Trailing whitespace | `trim_trailing_whitespace` | -- |
+| CSLINT002 | Indentation | `indent_style`, `indent_size` | -- |
+| CSLINT003 | Line endings | `end_of_line` | -- |
+| CSLINT004 | Final newline | `insert_final_newline` | -- |
+| CSLINT005 | Max line length | `max_line_length` | -- |
+| CSLINT006 | No `#region` directives | `dotnet_diagnostic.CSLINT006.severity` | -- |
+
+### Tier 2 -- Naming Conventions
+
+| CsLint ID | Description | editorconfig Key | Third-Party IDs |
+|---|---|---|---|
+| CSLINT100 | Type naming (PascalCase) | `dotnet_naming_rule` | -- |
+| CSLINT101 | Interface prefix (`I`) | `dotnet_naming_rule` | -- |
+| CSLINT102 | Member naming (PascalCase) | `dotnet_naming_rule` | SA1300, IDE1006 |
+| CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1313, IDE1006 |
+| CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
+| CSLINT105 | Constant naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | -- |
+
+### Tier 3 -- Style Preferences
+
+| CsLint ID | Description | editorconfig Key | Third-Party IDs |
+|---|---|---|---|
+| CSLINT200 | `var` preference | `csharp_style_var_*` | IDE0007, IDE0008 |
+| CSLINT201 | Expression-bodied members | `csharp_style_expression_bodied_*` | IDE0021--IDE0027 |
+| CSLINT202 | Brace preference | `csharp_prefer_braces` | IDE0011 |
+| CSLINT203 | Namespace declarations | `csharp_style_namespace_declarations` | IDE0160, IDE0161 |
+| CSLINT204 | `this.` qualification | `dotnet_style_qualification_for_*` | IDE0003, IDE0009 |
+| CSLINT205 | Modifier ordering | `csharp_preferred_modifier_order` | IDE0036 |
+| CSLINT206 | Accessibility modifiers | `dotnet_style_require_accessibility_modifiers` | IDE0040 |
+| CSLINT207 | Using directive placement | `csharp_using_directive_placement` | IDE0065 |
+| CSLINT208 | Predefined type preferences | `dotnet_style_predefined_type_for_*` | IDE0049 |
+| CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0019, IDE0020, IDE0066 |
+| CSLINT210 | Null checking | `csharp_style_*_null_check` | IDE0029--IDE0031, IDE0041 |
+
+## Pragma Alias Support
+
+The following third-party rule IDs are recognized in `#pragma warning disable` directives and mapped to CsLint rules:
+
+| Third-Party ID | CsLint ID(s) | Source |
+|---|---|---|
+| SA1300 | CSLINT102 | StyleCop |
+| SA1306 | CSLINT104 | StyleCop |
+| SA1313 | CSLINT103 | StyleCop |
+| IDE0003, IDE0009 | CSLINT204 | Microsoft |
+| IDE0007, IDE0008 | CSLINT200 | Microsoft |
+| IDE0011 | CSLINT202 | Microsoft |
+| IDE0019, IDE0020, IDE0066 | CSLINT209 | Microsoft |
+| IDE0021--IDE0027 | CSLINT201 | Microsoft |
+| IDE0029--IDE0031, IDE0041 | CSLINT210 | Microsoft |
+| IDE0036 | CSLINT205 | Microsoft |
+| IDE0040 | CSLINT206 | Microsoft |
+| IDE0049 | CSLINT208 | Microsoft |
+| IDE0065 | CSLINT207 | Microsoft |
+| IDE0160, IDE0161 | CSLINT203 | Microsoft |
+| IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
+
+## Future Candidates
+
+Rules that can be implemented with syntax-only analysis (no semantic model).
+
+### Priority 1 -- High value, low complexity
+
+| IDE Rule | Description | editorconfig Key | Notes |
+|---|---|---|---|
+| IDE0063 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | Detect `using (var x = ...) { }` and suggest `using var x = ...;` |
+| IDE0090 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | Detect `Foo x = new Foo()` and suggest `Foo x = new()` |
+| IDE0034 | Simplify `default` expression | `csharp_prefer_simple_default_expression` | Detect `default(T)` and suggest `default` where type is inferrable |
+| IDE0073 | File header | `file_header_template` | Check first line(s) match configured header template |
+
+### Priority 2 -- Medium value, moderate complexity
+
+| IDE Rule | Description | editorconfig Key | Notes |
+|---|---|---|---|
+| IDE0054/IDE0074 | Compound assignment | `dotnet_style_prefer_compound_assignment` | Detect `x = x + 1` and suggest `x += 1`, `x = x ?? y` and suggest `x ??= y` |
+| IDE0017 | Object initializers | `dotnet_style_object_initializer` | Detect `var x = new Foo(); x.A = 1;` and suggest initializer syntax |
+| IDE0028 | Collection initializers | `dotnet_style_collection_initializer` | Detect `var list = new List<int>(); list.Add(1);` and suggest initializer |
+| IDE0053 | Expression body for lambdas | `csharp_style_expression_bodied_lambdas` | Extends CSLINT201 pattern to lambdas |
+| IDE0061 | Expression body for local functions | `csharp_style_expression_bodied_local_functions` | Extends CSLINT201 pattern to local functions |
+| IDE0083 | Pattern matching (`not`) | `csharp_style_prefer_not_pattern` | Detect `!(x is T)` and suggest `x is not T` |
+| IDE0078 | Pattern matching (`and`/`or`) | `csharp_style_prefer_pattern_matching` | Detect compound conditions and suggest pattern combinators |
+
+### Priority 3 -- Niche or newer C# features
+
+| IDE Rule | Description | editorconfig Key | Notes |
+|---|---|---|---|
+| IDE0290 | Primary constructors | `csharp_style_prefer_primary_constructors` | Detect constructor that only assigns fields and suggest primary ctor |
+| IDE0300--IDE0305 | Collection expressions | `dotnet_style_prefer_collection_expression` | Detect `new int[] { 1, 2 }` and suggest `[1, 2]` |
+| IDE0180 | Tuple swap | `csharp_style_prefer_tuple_swap` | Detect temp-variable swap pattern and suggest `(a, b) = (b, a)` |
+| IDE0230 | UTF-8 string literals | `csharp_style_prefer_utf8_string_literals` | Detect `Encoding.UTF8.GetBytes("...")` and suggest `"..."u8` |
+| IDE0071 | Simplify interpolation | `dotnet_style_prefer_simplified_interpolation` | Detect `{x.ToString()}` and suggest `{x}` inside interpolated strings |
+| IDE0056/IDE0057 | Index/range operators | `csharp_style_prefer_index_operator`, `csharp_style_prefer_range_operator` | Detect `arr[arr.Length - 1]` and suggest `arr[^1]` |
+
+### Not Feasible (require semantic model)
+
+These rules are excluded because they need type information, flow analysis, or semantic model:
+
+IDE0001, IDE0002, IDE0004, IDE0005, IDE0010, IDE0016, IDE0018, IDE0032, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0051, IDE0052, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0380

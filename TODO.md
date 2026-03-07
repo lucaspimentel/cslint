@@ -1,5 +1,12 @@
 # TODO
 
-## Review Microsoft code analysis rules
+## Next rules to implement
 
-Sift through the rules in [Microsoft's docs](https://raw.githubusercontent.com/dotnet/docs/refs/heads/live/docs/fundamentals/code-analysis/categories.md) and decide which ones to implement in CsLint.
+Priority 1 candidates from the [rule mappings review](docs/rule-mappings.md#priority-1----high-value-low-complexity):
+
+- **IDE0063** — Using declarations (`using var` vs `using (var x = ...) { }`)
+- **IDE0090** — Target-typed `new` (`Foo x = new()`)
+- **IDE0034** — Simplify `default` expression (`default` vs `default(T)`)
+- **IDE0073** — File header template
+
+See [docs/rule-mappings.md](docs/rule-mappings.md) for the full prioritized list and feasibility analysis.
