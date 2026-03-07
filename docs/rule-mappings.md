@@ -1,6 +1,6 @@
 # CsLint Rule Mappings
 
-Comprehensive reference for all CsLint rules and their corresponding third-party rule IDs.
+Comprehensive reference for all CsLint rules and their corresponding third-party rule IDs. CsLint rule IDs map to Microsoft's [IDE code style analyzers](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/categories) and StyleCop (SA) rules where applicable.
 
 ## Implemented Rules
 

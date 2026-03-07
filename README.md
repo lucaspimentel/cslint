@@ -64,7 +64,7 @@ cslint src/ --exclude "**/Generated/*.cs" --exclude "**/*.g.cs"
 
 ## Supported Rules
 
-Rules are read from your `.editorconfig` and organized into three tiers:
+CsLint implements a subset of rules from Microsoft's [.NET code analysis framework](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/categories), including IDE code style analyzers and StyleCop (SA) rules. Rules are read from your `.editorconfig` and organized into three tiers:
 
 ### Tier 1 — Formatting (text-level)
 - **Indentation** — `indent_style`, `indent_size`
