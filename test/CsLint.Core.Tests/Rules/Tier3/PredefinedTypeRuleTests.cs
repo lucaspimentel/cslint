@@ -38,4 +38,38 @@ public class PredefinedTypeRuleTests
         Assert.Equal("CSLINT208", diagnostics[0].RuleId);
         Assert.Contains("Int32", diagnostics[0].Message);
     }
+
+    [Fact]
+    public void Analyze_PropertyNamedString_DoesNotFlag()
+    {
+        string source = """
+            readonly struct CachedBytes
+            {
+                public readonly string? String;
+                public readonly byte[]? Bytes;
+                public CachedBytes(string? @string, byte[]? bytes)
+                {
+                    String = @string;
+                    Bytes = bytes;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, PreferPredefined);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_FrameworkTypeInVariableDeclaration_ReturnsDiagnostic()
+    {
+        string source = "class C { void M() { String s = \"\"; } }";
+        RuleContext context = TestHelper.CreateContext(source, PreferPredefined);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Contains("String", diagnostics[0].Message);
+    }
 }

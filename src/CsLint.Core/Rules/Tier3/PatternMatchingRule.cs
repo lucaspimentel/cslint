@@ -30,12 +30,15 @@ public sealed class PatternMatchingRule : IRuleDefinition, IStyleRuleHandler
         if (node.Condition is BinaryExpressionSyntax
             {
                 RawKind: (int)SyntaxKind.IsExpression,
+                Left: var isLeft,
                 Right: TypeSyntax,
             })
         {
+            string isTarget = isLeft.ToString();
+
             bool hasCast = node.Statement.DescendantNodes()
                 .OfType<CastExpressionSyntax>()
-                .Any();
+                .Any(c => c.Expression.ToString() == isTarget);
 
             if (hasCast)
             {

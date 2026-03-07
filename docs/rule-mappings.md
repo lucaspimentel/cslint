@@ -21,7 +21,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CsLint ID | Description | editorconfig Key | Third-Party IDs |
 |---|---|---|---|
 | CSLINT100 | Type naming (PascalCase) | `dotnet_naming_rule` | -- |
-| CSLINT101 | Interface prefix (`I`) | `dotnet_naming_rule` | -- |
+| CSLINT101 | Interface prefix (`I`) | `dotnet_naming_rule` | SA1302 |
 | CSLINT102 | Member naming (PascalCase) | `dotnet_naming_rule` | SA1300, IDE1006 |
 | CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1313, IDE1006 |
 | CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
@@ -67,6 +67,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | Third-Party ID | CsLint ID(s) | Source |
 |---|---|---|
 | SA1300 | CSLINT102 | StyleCop |
+| SA1302 | CSLINT101 | StyleCop |
 | SA1306 | CSLINT104 | StyleCop |
 | SA1313 | CSLINT103 | StyleCop |
 | IDE0003, IDE0009 | CSLINT204 | Microsoft |

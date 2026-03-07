@@ -155,4 +155,30 @@ public class CollectionInitializerRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Fact]
+    public void Analyze_HashCodeWithAdd_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C
+            {
+                public override int GetHashCode()
+                {
+                    var hashCode = new HashCode();
+                    hashCode.Add(1);
+                    hashCode.Add(2);
+                    return hashCode.ToHashCode();
+                }
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["dotnet_style_collection_initializer"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
 }

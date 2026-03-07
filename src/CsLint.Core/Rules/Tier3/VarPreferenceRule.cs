@@ -49,6 +49,14 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
         }
 
         ExpressionSyntax initializer = declarator.Initializer.Value;
+
+        // null and default literals cannot have their type inferred — skip entirely
+        if (initializer.IsKind(SyntaxKind.NullLiteralExpression) ||
+            initializer.IsKind(SyntaxKind.DefaultLiteralExpression))
+        {
+            return;
+        }
+
         bool isApparent = IsTypeApparent(initializer);
         bool isLiteral = initializer is LiteralExpressionSyntax;
 
@@ -75,7 +83,9 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
             {
                 AddDiagnostic(node.Declaration.Type, "Use 'var' when type is apparent from the right-hand side", diagnostics);
             }
-            else if (isBuiltIn && string.Equals(varForBuiltIn, "true", StringComparison.OrdinalIgnoreCase))
+            else if (isBuiltIn && isLiteral &&
+                     LiteralMatchesDeclaredType(initializer, node.Declaration.Type) &&
+                     string.Equals(varForBuiltIn, "true", StringComparison.OrdinalIgnoreCase))
             {
                 AddDiagnostic(node.Declaration.Type, "Use 'var' for built-in types", diagnostics);
             }
@@ -86,9 +96,68 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
         expression is ObjectCreationExpressionSyntax or
                       ImplicitObjectCreationExpressionSyntax or
                       CastExpressionSyntax or
-                      LiteralExpressionSyntax or
                       DefaultExpressionSyntax or
                       ArrayCreationExpressionSyntax;
+
+    private static bool LiteralMatchesDeclaredType(ExpressionSyntax literal, TypeSyntax declaredType)
+    {
+        string type = declaredType.ToString();
+        string literalText = literal.ToString();
+
+        return literal.Kind() switch
+        {
+            SyntaxKind.StringLiteralExpression => type is "string",
+            SyntaxKind.CharacterLiteralExpression => type is "char",
+            SyntaxKind.TrueLiteralExpression or SyntaxKind.FalseLiteralExpression => type is "bool",
+            SyntaxKind.NumericLiteralExpression => MatchesNumericType(literalText, type),
+            _ => false,
+        };
+    }
+
+    private static bool MatchesNumericType(string literalText, string declaredType)
+    {
+        string upper = literalText.TrimEnd().ToUpperInvariant();
+
+        // Check for suffix to determine natural type
+        if (upper.EndsWith("UL") || upper.EndsWith("LU"))
+        {
+            return declaredType is "ulong";
+        }
+
+        if (upper.EndsWith('U'))
+        {
+            return declaredType is "uint";
+        }
+
+        if (upper.EndsWith('L'))
+        {
+            return declaredType is "long";
+        }
+
+        if (upper.EndsWith('M'))
+        {
+            return declaredType is "decimal";
+        }
+
+        if (upper.EndsWith('F'))
+        {
+            return declaredType is "float";
+        }
+
+        if (upper.EndsWith('D') && !upper.StartsWith("0X"))
+        {
+            return declaredType is "double";
+        }
+
+        // No suffix — check if it contains a decimal point
+        if (literalText.Contains('.'))
+        {
+            return declaredType is "double";
+        }
+
+        // Plain integer literal with no suffix defaults to int
+        return declaredType is "int";
+    }
 
     private static bool IsBuiltInType(TypeSyntax type)
     {

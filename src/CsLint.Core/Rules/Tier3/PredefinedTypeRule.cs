@@ -69,7 +69,7 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
         {
             case IdentifierNameSyntax id when checkLocals && FrameworkTypeNames.Contains(id.Identifier.Text):
             {
-                if (node.Parent is not MemberAccessExpressionSyntax)
+                if (IsInTypePosition(node))
                 {
                     AddDiagnostic(diagnostics, id.Identifier, filePath);
                 }
@@ -97,6 +97,31 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
                 break;
             }
         }
+    }
+
+    private static bool IsInTypePosition(SyntaxNode node)
+    {
+        SyntaxNode? parent = node.Parent;
+
+        return parent switch
+        {
+            VariableDeclarationSyntax v => v.Type == node,
+            ParameterSyntax p => p.Type == node,
+            PropertyDeclarationSyntax p => p.Type == node,
+            MethodDeclarationSyntax m => m.ReturnType == node,
+            CastExpressionSyntax c => c.Type == node,
+            TypeOfExpressionSyntax t => t.Type == node,
+            ArrayTypeSyntax a => a.ElementType == node,
+            NullableTypeSyntax n => n.ElementType == node,
+            ObjectCreationExpressionSyntax o => o.Type == node,
+            BaseTypeSyntax b => b.Type == node,
+            TypeConstraintSyntax t => t.Type == node,
+            TypeArgumentListSyntax => true,
+            EventDeclarationSyntax e => e.Type == node,
+            EventFieldDeclarationSyntax => false,
+            FieldDeclarationSyntax => false,
+            _ => false,
+        };
     }
 
     private static void AddDiagnostic(List<LintDiagnostic> diagnostics, SyntaxToken identifier, string filePath)

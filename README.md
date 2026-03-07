@@ -130,6 +130,7 @@ class Foo { }   // trailing whitespace not reported
 
 | Third-Party ID | CsLint ID(s) | Rule |
 |---|---|---|
+| `SA1302` | `CSLINT101` | Interface prefix |
 | `SA1313` | `CSLINT103` | Parameter naming |
 | `SA1306` | `CSLINT104` | Field naming |
 | `IDE0007`/`IDE0008` | `CSLINT200` | `var` preference |

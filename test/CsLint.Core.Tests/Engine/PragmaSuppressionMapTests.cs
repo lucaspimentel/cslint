@@ -228,6 +228,19 @@ public class PragmaSuppressionMapTests
         Assert.False(map.IsSuppressed("CSLINT104", 2));
     }
 
+    [Fact]
+    public void SA1302_SuppressesCslint101()
+    {
+        const string Source = """
+            #pragma warning disable SA1302
+            interface MappedDiagnosticsProxy { }
+            """;
+
+        PragmaSuppressionMap map = BuildMap(Source);
+
+        Assert.True(map.IsSuppressed("CSLINT101", 2));
+    }
+
     [Theory]
     [InlineData("IDE0007", "CSLINT200")]
     [InlineData("IDE0008", "CSLINT200")]

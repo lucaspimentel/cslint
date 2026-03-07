@@ -65,6 +65,14 @@ public sealed class CollectionInitializerRule : IRuleDefinition, IDescendantNode
             return;
         }
 
+        // Exclude well-known non-collection types that use Add() (builder pattern)
+        string typeName = creation.Type.ToString();
+
+        if (typeName is "HashCode" or "System.HashCode")
+        {
+            return;
+        }
+
         (string? pref, string? _) = config.GetValueWithSeverity("dotnet_style_collection_initializer");
 
         if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))

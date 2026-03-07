@@ -7,6 +7,7 @@ internal static class PragmaAliasMap
         {
             // StyleCop
             ["SA1300"] = ["CSLINT102"],
+            ["SA1302"] = ["CSLINT101"],
             ["SA1306"] = ["CSLINT104"],
             ["SA1313"] = ["CSLINT103"],
 
