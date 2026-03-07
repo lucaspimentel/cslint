@@ -101,12 +101,51 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0300--IDE0305 | CSLINT222 | Microsoft |
 | IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
 
-All syntax-feasible IDE rules have been implemented. See "Not Feasible" below for rules that require a semantic model.
-
 ## Future Candidates
+
+### Syntax-Feasible (planned)
+
+These rules can be implemented with syntax-only parsing:
+
+#### New-line formatting (IDE2000 series)
+
+| IDE Rule | Description | CsLint Tier |
+|---|---|---|
+| IDE2000 | Avoid multiple blank lines | Tier 1 |
+| IDE2001 | Embedded statements must be on their own line | Tier 3 |
+| IDE2002 | Consecutive braces must not have blank line between them | Tier 3 |
+| IDE2003 | Blank line required between block and subsequent statement | Tier 3 |
+| IDE2004 | Blank line not allowed after constructor initializer colon | Tier 3 |
+| IDE2005 | Blank line not allowed after conditional expression token | Tier 3 |
+| IDE2006 | Blank line not allowed after arrow expression clause token | Tier 3 |
+
+#### Style preferences
+
+| IDE Rule | Description | CsLint Tier | Notes |
+|---|---|---|---|
+| IDE0037 | Use inferred member name | Tier 3 | Detect `new { x = x }` → `new { x }` |
+| IDE0075 | Simplify conditional expression | Tier 3 | Detect `cond ? true : false` → `cond` |
+| IDE0170 | Simplify property pattern | Tier 3 | Detect `{ a: { b: v } }` → `{ a.b: v }` |
+
+#### Stretch goals (partially feasible)
+
+| IDE Rule | Description | Notes |
+|---|---|---|
+| IDE0038 | Pattern matching (`is` + cast, no variable) | Overlaps with CSLINT209; requires cross-statement matching |
+| IDE0047 | Remove unnecessary parentheses | Operator precedence is syntax-determinable but rules are complex |
+| IDE0048 | Add parentheses for clarity | Inverse of IDE0047; equally complex |
 
 ### Not Feasible (require semantic model)
 
 These rules are excluded because they need type information, flow analysis, or semantic model:
 
-IDE0001, IDE0002, IDE0004, IDE0005, IDE0010, IDE0016, IDE0018, IDE0032, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0051, IDE0052, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0380
+IDE0001, IDE0002, IDE0004, IDE0005, IDE0010, IDE0016, IDE0018, IDE0032, IDE0033, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0050, IDE0051, IDE0052, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380, IDE1005
+
+### Not Applicable
+
+| IDE Rule | Reason |
+|---|---|
+| IDE0055 | General formatting — already covered by CsLint Tier 1 rules |
+| IDE0081 | Remove `ByVal` — VB.NET only |
+| IDE0084 | Use `IsNot` pattern — VB.NET only |
+| IDE3000 | Implement with Copilot — not a linting rule |
