@@ -142,4 +142,33 @@ public class FileLinterTests
         Assert.NotEmpty(diagnostics);
         Assert.All(diagnostics, d => Assert.Equal(LintSeverity.Warning, d.Severity));
     }
+
+    [Fact]
+    public void LintSource_FalseWithSeveritySuffix_RuleIsDisabled()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "false:error" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+    }
+
+    [Fact]
+    public void LintSource_TrueWithSeveritySuffix_RuleIsEnabled()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "true:warning" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        Assert.NotEmpty(diagnostics);
+        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+    }
 }
