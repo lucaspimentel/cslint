@@ -19,6 +19,6 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 
 ### Tier 3 — Style preferences
 
-- [ ] IDE0037 — Use inferred member name
-- [ ] IDE0075 — Simplify conditional expression
-- [ ] IDE0170 — Simplify property pattern
+- [x] IDE0037 — Use inferred member name
+- [x] IDE0075 — Simplify conditional expression
+- [x] IDE0170 — Simplify property pattern

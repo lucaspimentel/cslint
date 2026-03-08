@@ -119,6 +119,9 @@ CsLint implements a subset of rules from Microsoft's [.NET code analysis framewo
 - No blank line after constructor initializer colon (IDE2004)
 - No blank line after conditional expression token (IDE2005)
 - No blank line after arrow expression token (IDE2006)
+- Inferred member names (IDE0037)
+- Simplify boolean expression (IDE0075)
+- Extended property pattern (IDE0170)
 
 ## Suppressing Diagnostics
 

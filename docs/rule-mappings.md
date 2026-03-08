@@ -66,6 +66,9 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT231 | No blank line after constructor initializer colon | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer` | IDE2004 |
 | CSLINT232 | No blank line after conditional expression token | `csharp_style_allow_blank_line_after_token_in_conditional_expression` | IDE2005 |
 | CSLINT233 | No blank line after arrow expression token | `csharp_style_allow_blank_line_after_token_in_arrow_expression_clause` | IDE2006 |
+| CSLINT234 | Inferred member name | `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
+| CSLINT235 | Simplify boolean expression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
+| CSLINT236 | Extended property pattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
 
 ## Pragma Alias Support
 
@@ -114,20 +117,15 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE2004 | CSLINT231 | Microsoft |
 | IDE2005 | CSLINT232 | Microsoft |
 | IDE2006 | CSLINT233 | Microsoft |
+| IDE0037 | CSLINT234 | Microsoft |
+| IDE0075 | CSLINT235 | Microsoft |
+| IDE0170 | CSLINT236 | Microsoft |
 
 ## Future Candidates
 
 ### Syntax-Feasible (planned)
 
 These rules can be implemented with syntax-only parsing:
-
-#### Style preferences
-
-| IDE Rule | Description | CsLint Tier | Notes |
-|---|---|---|---|
-| IDE0037 | Use inferred member name | Tier 3 | Detect `new { x = x }` → `new { x }` |
-| IDE0075 | Simplify conditional expression | Tier 3 | Detect `cond ? true : false` → `cond` |
-| IDE0170 | Simplify property pattern | Tier 3 | Detect `{ a: { b: v } }` → `{ a.b: v }` |
 
 #### Stretch goals (partially feasible)
 

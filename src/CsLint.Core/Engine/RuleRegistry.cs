@@ -68,6 +68,9 @@ public sealed class RuleRegistry
         registry.Register(new ConstructorInitializerBlankLineRule());
         registry.Register(new ConditionalExpressionBlankLineRule());
         registry.Register(new ArrowExpressionBlankLineRule());
+        registry.Register(new InferredMemberNameRule());
+        registry.Register(new SimplifiedBooleanExpressionRule());
+        registry.Register(new ExtendedPropertyPatternRule());
 
         return registry;
     }
