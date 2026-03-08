@@ -60,6 +60,12 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT225 | Simplify interpolation | `dotnet_style_prefer_simplified_interpolation` | IDE0071 |
 | CSLINT226 | Index operator (`^`) | `csharp_style_prefer_index_operator` | IDE0056 |
 | CSLINT227 | Range operator (`..`) | `csharp_style_prefer_range_operator` | IDE0057 |
+| CSLINT228 | Embedded statements on own line | `csharp_style_allow_embedded_statements_on_same_line` | IDE2001 |
+| CSLINT229 | No blank line between consecutive braces | `csharp_style_allow_blank_lines_between_consecutive_braces` | IDE2002 |
+| CSLINT230 | Blank line required after block | `csharp_style_allow_blank_line_after_block` | IDE2003 |
+| CSLINT231 | No blank line after constructor initializer colon | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer` | IDE2004 |
+| CSLINT232 | No blank line after conditional expression token | `csharp_style_allow_blank_line_after_token_in_conditional_expression` | IDE2005 |
+| CSLINT233 | No blank line after arrow expression token | `csharp_style_allow_blank_line_after_token_in_arrow_expression_clause` | IDE2006 |
 
 ## Pragma Alias Support
 
@@ -102,23 +108,18 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0300--IDE0305 | CSLINT222 | Microsoft |
 | IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
 | IDE2000 | CSLINT008 | Microsoft |
+| IDE2001 | CSLINT228 | Microsoft |
+| IDE2002 | CSLINT229 | Microsoft |
+| IDE2003 | CSLINT230 | Microsoft |
+| IDE2004 | CSLINT231 | Microsoft |
+| IDE2005 | CSLINT232 | Microsoft |
+| IDE2006 | CSLINT233 | Microsoft |
 
 ## Future Candidates
 
 ### Syntax-Feasible (planned)
 
 These rules can be implemented with syntax-only parsing:
-
-#### New-line formatting (IDE2000 series)
-
-| IDE Rule | Description | CsLint Tier |
-|---|---|---|
-| IDE2001 | Embedded statements must be on their own line | Tier 3 |
-| IDE2002 | Consecutive braces must not have blank line between them | Tier 3 |
-| IDE2003 | Blank line required between block and subsequent statement | Tier 3 |
-| IDE2004 | Blank line not allowed after constructor initializer colon | Tier 3 |
-| IDE2005 | Blank line not allowed after conditional expression token | Tier 3 |
-| IDE2006 | Blank line not allowed after arrow expression clause token | Tier 3 |
 
 #### Style preferences
 

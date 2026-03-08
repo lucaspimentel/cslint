@@ -62,6 +62,12 @@ public sealed class RuleRegistry
         registry.Register(new SimplifyInterpolationRule());
         registry.Register(new IndexOperatorRule());
         registry.Register(new RangeOperatorRule());
+        registry.Register(new EmbeddedStatementRule());
+        registry.Register(new ConsecutiveBracesRule());
+        registry.Register(new BlankLineAfterBlockRule());
+        registry.Register(new ConstructorInitializerBlankLineRule());
+        registry.Register(new ConditionalExpressionBlankLineRule());
+        registry.Register(new ArrowExpressionBlankLineRule());
 
         return registry;
     }

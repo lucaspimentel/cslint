@@ -113,6 +113,12 @@ CsLint implements a subset of rules from Microsoft's [.NET code analysis framewo
 - Simplify interpolation (IDE0071)
 - Index operator `^` (IDE0056)
 - Range operator `..` (IDE0057)
+- Embedded statements on own line (IDE2001)
+- No blank line between consecutive braces (IDE2002)
+- Blank line required after block statement (IDE2003)
+- No blank line after constructor initializer colon (IDE2004)
+- No blank line after conditional expression token (IDE2005)
+- No blank line after arrow expression token (IDE2006)
 
 ## Suppressing Diagnostics
 

@@ -10,12 +10,12 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 
 ### Tier 3 — New-line formatting
 
-- [ ] IDE2001 — Embedded statements must be on their own line
-- [ ] IDE2002 — No blank line between consecutive braces
-- [ ] IDE2003 — Blank line required between block and subsequent statement
-- [ ] IDE2004 — No blank line after constructor initializer colon
-- [ ] IDE2005 — No blank line after conditional expression token
-- [ ] IDE2006 — No blank line after arrow expression clause token
+- [x] IDE2001 — Embedded statements must be on their own line
+- [x] IDE2002 — No blank line between consecutive braces
+- [x] IDE2003 — Blank line required between block and subsequent statement
+- [x] IDE2004 — No blank line after constructor initializer colon
+- [x] IDE2005 — No blank line after conditional expression token
+- [x] IDE2006 — No blank line after arrow expression clause token
 
 ### Tier 3 — Style preferences
 

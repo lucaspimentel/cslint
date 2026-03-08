@@ -63,6 +63,12 @@ internal static class PragmaAliasMap
             ["IDE0305"] = ["CSLINT222"],
             ["IDE1006"] = ["CSLINT102", "CSLINT103", "CSLINT104"],
             ["IDE2000"] = ["CSLINT008"],
+            ["IDE2001"] = ["CSLINT228"],
+            ["IDE2002"] = ["CSLINT229"],
+            ["IDE2003"] = ["CSLINT230"],
+            ["IDE2004"] = ["CSLINT231"],
+            ["IDE2005"] = ["CSLINT232"],
+            ["IDE2006"] = ["CSLINT233"],
         };
 
     public static bool TryGetMappedIds(string id, out string[] cslintIds) =>
