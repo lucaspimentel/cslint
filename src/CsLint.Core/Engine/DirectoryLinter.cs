@@ -39,7 +39,7 @@ public sealed class DirectoryLinter
     {
         string fullPath = Path.GetFullPath(directoryPath);
         IEnumerable<string> files = EnumerateFiles(fullPath, excludeGlobs, _fileSystem);
-        var allDiagnostics = new ConcurrentBag<LintDiagnostic>();
+        var fileDiagnostics = new ConcurrentQueue<IReadOnlyList<LintDiagnostic>>();
 
         await Parallel.ForEachAsync(
             files,
@@ -52,14 +52,15 @@ public sealed class DirectoryLinter
                 {
                     IReadOnlyList<LintDiagnostic> diagnostics = _fileLinter.LintFile(file);
 
-                    foreach (LintDiagnostic d in diagnostics)
+                    if (diagnostics.Count > 0)
                     {
-                        allDiagnostics.Add(d);
+                        fileDiagnostics.Enqueue(diagnostics);
                     }
                 }
                 catch (Exception ex)
                 {
-                    allDiagnostics.Add(
+                    fileDiagnostics.Enqueue(
+                    [
                         new LintDiagnostic
                         {
                             RuleId = "CSLINT000",
@@ -68,13 +69,15 @@ public sealed class DirectoryLinter
                             FilePath = file,
                             Line = 0,
                             Column = 0,
-                        });
+                        },
+                    ]);
                 }
 
                 return ValueTask.CompletedTask;
             });
 
-        return allDiagnostics
+        return fileDiagnostics
+            .SelectMany(d => d)
             .OrderBy(d => d.FilePath, StringComparer.OrdinalIgnoreCase)
             .ThenBy(d => d.Line)
             .ThenBy(d => d.Column)

@@ -116,41 +116,54 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
 
     private static bool MatchesNumericType(string literalText, string declaredType)
     {
-        string upper = literalText.TrimEnd().ToUpperInvariant();
+        ReadOnlySpan<char> span = literalText.AsSpan().TrimEnd();
 
-        // Check for suffix to determine natural type
-        if (upper.EndsWith("UL") || upper.EndsWith("LU"))
+        if (span.Length == 0)
         {
-            return declaredType is "ulong";
+            return false;
         }
 
-        if (upper.EndsWith('U'))
+        // Check for two-character suffixes first
+        if (span.Length >= 2)
+        {
+            char secondToLast = char.ToUpperInvariant(span[^2]);
+            char last = char.ToUpperInvariant(span[^1]);
+
+            if ((secondToLast == 'U' && last == 'L') || (secondToLast == 'L' && last == 'U'))
+            {
+                return declaredType is "ulong";
+            }
+        }
+
+        char suffix = char.ToUpperInvariant(span[^1]);
+
+        if (suffix == 'U')
         {
             return declaredType is "uint";
         }
 
-        if (upper.EndsWith('L'))
+        if (suffix == 'L')
         {
             return declaredType is "long";
         }
 
-        if (upper.EndsWith('M'))
+        if (suffix == 'M')
         {
             return declaredType is "decimal";
         }
 
-        if (upper.EndsWith('F'))
+        if (suffix == 'F')
         {
             return declaredType is "float";
         }
 
-        if (upper.EndsWith('D') && !upper.StartsWith("0X"))
+        if (suffix == 'D' && !span.StartsWith("0X", StringComparison.OrdinalIgnoreCase))
         {
             return declaredType is "double";
         }
 
         // No suffix — check if it contains a decimal point
-        if (literalText.Contains('.'))
+        if (span.Contains('.'))
         {
             return declaredType is "double";
         }

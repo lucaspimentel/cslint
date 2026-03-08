@@ -18,7 +18,7 @@ public sealed class JsonFormatter : IOutputFormatter
             writer.WriteStartObject();
             writer.WriteString("ruleId", d.RuleId);
             writer.WriteString("message", d.Message);
-            writer.WriteString("severity", d.Severity.ToString().ToLowerInvariant());
+            writer.WriteString("severity", SeverityToString(d.Severity));
             writer.WriteString("filePath", d.FilePath);
             writer.WriteNumber("line", d.Line);
             writer.WriteNumber("column", d.Column);
@@ -28,6 +28,14 @@ public sealed class JsonFormatter : IOutputFormatter
         writer.WriteEndArray();
         writer.Flush();
 
-        return Encoding.UTF8.GetString(stream.ToArray());
+        return Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Position);
     }
+
+    private static string SeverityToString(LintSeverity severity) => severity switch
+    {
+        LintSeverity.Error => "error",
+        LintSeverity.Warning => "warning",
+        LintSeverity.Info => "info",
+        _ => "none",
+    };
 }

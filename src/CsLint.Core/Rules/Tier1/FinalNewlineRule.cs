@@ -27,20 +27,7 @@ public sealed class FinalNewlineRule : IRuleDefinition
 
         if (expectFinalNewline && !hasFinalNewline)
         {
-            // Count lines to report correct position
-            int lineCount = 1;
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (text[i] == '\n')
-                {
-                    lineCount++;
-                }
-                else if (text[i] == '\r' && (i + 1 >= text.Length || text[i + 1] != '\n'))
-                {
-                    lineCount++;
-                }
-            }
+            int lineCount = context.SourceText.Lines.Count;
 
             return
             [
@@ -58,7 +45,7 @@ public sealed class FinalNewlineRule : IRuleDefinition
 
         if (!expectFinalNewline && hasFinalNewline)
         {
-            int lineCount = text.Count(c => c == '\n') + 1;
+            int lineCount = context.SourceText.Lines.Count;
 
             return
             [

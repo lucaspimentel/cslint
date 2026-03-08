@@ -88,6 +88,6 @@ public sealed class SarifFormatter : IOutputFormatter
         writer.WriteEndObject(); // root
 
         writer.Flush();
-        return Encoding.UTF8.GetString(stream.ToArray());
+        return Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Position);
     }
 }

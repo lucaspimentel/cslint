@@ -18,12 +18,12 @@ public sealed class EditorConfigProvider : IConfigProvider
             return LintConfiguration.Empty;
         }
 
-        return _cache.GetOrAdd(fullPath, _ => ParseConfiguration(fullPath));
+        return _cache.GetOrAdd(directory, _ => ParseConfiguration(fullPath));
     }
 
-    private LintConfiguration ParseConfiguration(string fullPath)
+    private LintConfiguration ParseConfiguration(string representativeFilePath)
     {
-        FileConfiguration config = _parser.Parse(fullPath);
+        FileConfiguration config = _parser.Parse(representativeFilePath);
         var properties = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         foreach (KeyValuePair<string, string> kvp in config.Properties)

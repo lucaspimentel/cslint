@@ -10,7 +10,7 @@ public class LintBenchmarks
 {
     private string _tracerSettingsSource = null!;
     private string _duckTypeSource = null!;
-    private RuleRegistry _registry = null!;
+    private FileLinter _linter = null!;
     private LintConfiguration _config = null!;
 
     [GlobalSetup]
@@ -19,23 +19,22 @@ public class LintBenchmarks
         string fixturesDir = Path.Combine(AppContext.BaseDirectory, "Fixtures");
         _tracerSettingsSource = File.ReadAllText(Path.Combine(fixturesDir, "TracerSettings.cs"));
         _duckTypeSource = File.ReadAllText(Path.Combine(fixturesDir, "DuckType.cs"));
-        _registry = RuleRegistry.CreateDefault();
+        RuleRegistry registry = RuleRegistry.CreateDefault();
         _config = LintConfiguration.Empty;
+        _linter = new FileLinter(registry, new NullConfigProvider(_config));
     }
 
     [Benchmark]
     public int LintTracerSettings()
     {
-        var linter = new FileLinter(_registry, new NullConfigProvider(_config));
-        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("TracerSettings.cs", _tracerSettingsSource, _config);
+        IReadOnlyList<LintDiagnostic> diagnostics = _linter.LintSource("TracerSettings.cs", _tracerSettingsSource, _config);
         return diagnostics.Count;
     }
 
     [Benchmark]
     public int LintDuckType()
     {
-        var linter = new FileLinter(_registry, new NullConfigProvider(_config));
-        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("DuckType.cs", _duckTypeSource, _config);
+        IReadOnlyList<LintDiagnostic> diagnostics = _linter.LintSource("DuckType.cs", _duckTypeSource, _config);
         return diagnostics.Count;
     }
 
