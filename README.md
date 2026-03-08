@@ -37,6 +37,9 @@ cd cslint
 ## Usage
 
 ```bash
+# Lint current directory (default if no path specified)
+cslint
+
 # Lint a single file
 cslint path/to/File.cs
 

@@ -7,6 +7,7 @@ using Cslint.Core.Rules;
 var pathArgument = new Argument<string>("path")
 {
     Description = "Path to a C# file or directory to lint",
+    DefaultValueFactory = _ => ".",
 };
 
 var formatOption = new Option<string>("--format")
