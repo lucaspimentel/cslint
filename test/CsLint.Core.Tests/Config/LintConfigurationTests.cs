@@ -61,4 +61,48 @@ public class LintConfigurationTests
         LintSeverity? severity = LintConfiguration.Empty.GetSeverityForKey("nonexistent_key");
         Assert.Null(severity);
     }
+
+    [Theory]
+    [InlineData("true:error", true)]
+    [InlineData("true:warning", true)]
+    [InlineData("true:suggestion", true)]
+    [InlineData("false:error", false)]
+    [InlineData("false:warning", false)]
+    [InlineData("true", true)]
+    [InlineData("false", false)]
+    public void GetBool_WithAndWithoutSeveritySuffix_ReturnsCorrectValue(string raw, bool expected)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["key"] = raw });
+
+        Assert.Equal(expected, config.GetBool("key"));
+    }
+
+    [Theory]
+    [InlineData("120:warning", 120)]
+    [InlineData("80:error", 80)]
+    [InlineData("120", 120)]
+    public void GetInt_WithAndWithoutSeveritySuffix_ReturnsCorrectValue(string raw, int expected)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["key"] = raw });
+
+        Assert.Equal(expected, config.GetInt("key"));
+    }
+
+    [Theory]
+    [InlineData("true:error", "true", "error")]
+    [InlineData("false:warning", "false", "warning")]
+    [InlineData("true", "true", null)]
+    [InlineData("when_on_single_line:silent", "when_on_single_line", "silent")]
+    public void GetValueWithSeverity_SplitsCorrectly(string raw, string expectedValue, string? expectedSeverity)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["key"] = raw });
+
+        (string? value, string? severity) = config.GetValueWithSeverity("key");
+
+        Assert.Equal(expectedValue, value);
+        Assert.Equal(expectedSeverity, severity);
+    }
 }
