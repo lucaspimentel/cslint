@@ -87,6 +87,24 @@ jobs:
           ${{ env.ARTIFACT_NAME }}-${{ matrix.rid }}.${{ matrix.archive }}
           checksum-${{ matrix.rid }}.txt
 
+  nuget:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Pack
+      run: dotnet pack ${{ env.PROJECT_FILE }} -c Release
+
+    - name: Push to NuGet.org
+      run: dotnet nuget push artifacts/package/release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
   release:
     needs: build
     runs-on: ubuntu-latest
