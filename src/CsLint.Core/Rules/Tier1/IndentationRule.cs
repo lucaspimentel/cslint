@@ -39,7 +39,7 @@ public sealed class IndentationRule : IRuleDefinition
             // Extract leading whitespace
             int wsEnd = 0;
 
-            while (wsEnd < line.Length && (line[wsEnd] == ' ' || line[wsEnd] == '\t'))
+            while (wsEnd < line.Length && line[wsEnd] is ' ' or '\t')
             {
                 wsEnd++;
             }

@@ -64,8 +64,8 @@ public sealed class PatternMatchingNotRule : IRuleDefinition, IDescendantNodeHan
 
         // IsPatternExpressionSyntax = `x is T t` or `x is pattern`
         // BinaryExpressionSyntax with IsExpression = `x is T` (type-check without pattern)
-        if (operand is not IsPatternExpressionSyntax &&
-            !(operand is BinaryExpressionSyntax { RawKind: (int)SyntaxKind.IsExpression }))
+        if (operand is not IsPatternExpressionSyntax and
+            not BinaryExpressionSyntax { RawKind: (int)SyntaxKind.IsExpression })
         {
             return;
         }

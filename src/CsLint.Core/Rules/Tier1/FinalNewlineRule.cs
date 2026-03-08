@@ -23,7 +23,7 @@ public sealed class FinalNewlineRule : IRuleDefinition
             return [];
         }
 
-        bool hasFinalNewline = text[^1] == '\n' || text[^1] == '\r';
+        bool hasFinalNewline = text[^1] is '\n' or '\r';
 
         if (expectFinalNewline && !hasFinalNewline)
         {

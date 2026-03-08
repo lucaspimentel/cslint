@@ -23,7 +23,7 @@ public class MaxLineLengthRuleTests
     [Fact]
     public void Analyze_ExceedsLimit_ReturnsDiagnostic()
     {
-        string source = new string('x', 81);
+        var source = new string('x', 81);
         RuleContext context = CreateContext(source, "80");
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);

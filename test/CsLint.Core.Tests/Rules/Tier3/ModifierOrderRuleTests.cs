@@ -11,7 +11,8 @@ public class ModifierOrderRuleTests
     private static LintConfiguration OrderConfig =>
         new(new Dictionary<string, string>
         {
-            ["csharp_preferred_modifier_order"] = "public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async",
+            ["csharp_preferred_modifier_order"] =
+                "public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async",
         });
 
     [Fact]
