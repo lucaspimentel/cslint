@@ -13,7 +13,7 @@ A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing 
 Requires [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
 
 ```bash
-dotnet tool install --global cslint
+dotnet tool install --global cslint --version 1.0.0-beta.1
 ```
 
 ### Download pre-built binary
