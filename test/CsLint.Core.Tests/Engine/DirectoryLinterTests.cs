@@ -46,6 +46,8 @@ public class DirectoryLinterTests
     [Theory]
     [InlineData("**/Generated/*.cs")]
     [InlineData("Generated/**")]
+    [InlineData("Generated\\Bar.cs")]
+    [InlineData("Generated\\**")]
     public async Task LintDirectoryAsync_ExcludeGlob_FiltersMatchingFiles(string excludePattern)
     {
         string root = Path.GetFullPath("/src");
@@ -67,7 +69,7 @@ public class DirectoryLinterTests
 
         IReadOnlyList<LintDiagnostic> diagnostics = await directoryLinter.LintDirectoryAsync(
             root,
-            new[] { excludePattern });
+            [excludePattern]);
 
         // The excluded file should produce an error diagnostic (file not found),
         // but only for the included file — the excluded one should be filtered out.
@@ -94,7 +96,7 @@ public class DirectoryLinterTests
 
         IReadOnlyList<LintDiagnostic> diagnostics = await directoryLinter.LintDirectoryAsync(
             root,
-            new[] { "**/Generated/*.cs" });
+            ["**/Generated/*.cs"]);
 
         // Foo.cs doesn't match the exclude pattern, so it should be processed.
         // It will produce a CSLINT000 error because the file doesn't exist on disk,

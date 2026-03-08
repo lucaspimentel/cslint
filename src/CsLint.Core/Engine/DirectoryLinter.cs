@@ -91,7 +91,7 @@ public sealed class DirectoryLinter
         if (excludeGlobs is { Count: > 0 })
         {
             excludeMatcher = new Matcher();
-            excludeMatcher.AddIncludePatterns(excludeGlobs);
+            excludeMatcher.AddIncludePatterns(excludeGlobs.Select(p => p.Replace('\\', '/')));
         }
 
         return fileSystem.EnumerateFiles(directoryPath, "*.cs", SearchOption.AllDirectories)
@@ -126,7 +126,7 @@ public sealed class DirectoryLinter
                 // Apply exclude globs against the relative path
                 if (excludeMatcher is not null)
                 {
-                    string relativePath = Path.GetRelativePath(directoryPath, file);
+                    string relativePath = Path.GetRelativePath(directoryPath, file).Replace('\\', '/');
 
                     if (excludeMatcher.Match(relativePath).HasMatches)
                     {
