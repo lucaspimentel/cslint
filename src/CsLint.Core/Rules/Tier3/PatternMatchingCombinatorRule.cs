@@ -109,7 +109,8 @@ public sealed class PatternMatchingCombinatorRule : IRuleDefinition, IDescendant
                           or SyntaxKind.GreaterThanExpression
                           or SyntaxKind.GreaterThanOrEqualExpression
                           or SyntaxKind.EqualsExpression
-                          or SyntaxKind.NotEqualsExpression)
+                          or SyntaxKind.NotEqualsExpression &&
+            IsConstantCompatible(binary.Right))
         {
             variableName = binary.Left.WithoutTrivia().ToFullString();
             return true;
@@ -117,4 +118,16 @@ public sealed class PatternMatchingCombinatorRule : IRuleDefinition, IDescendant
 
         return false;
     }
+
+    /// <summary>
+    /// Returns true if the expression can be used in a C# relational pattern (compile-time constant).
+    /// </summary>
+    private static bool IsConstantCompatible(ExpressionSyntax expr) =>
+        expr is LiteralExpressionSyntax ||
+        (expr is PrefixUnaryExpressionSyntax prefix &&
+         prefix.Kind() is SyntaxKind.UnaryMinusExpression &&
+         prefix.Operand is LiteralExpressionSyntax) ||
+        expr is DefaultExpressionSyntax ||
+        expr.Kind() is SyntaxKind.DefaultLiteralExpression ||
+        expr is SizeOfExpressionSyntax;
 }

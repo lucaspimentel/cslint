@@ -161,6 +161,76 @@ public class PatternMatchingCombinatorRuleTests
     }
 
     [Fact]
+    public void Analyze_NonConstantRhs_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C
+            {
+                void M(int x, System.Collections.Generic.List<int> list, int[] arr)
+                {
+                    if (x >= list.Count && x < arr.Length) { }
+                }
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_style_prefer_pattern_matching"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_MixedConstantAndNonConstant_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C
+            {
+                void M(int x, System.Collections.Generic.List<int> list)
+                {
+                    if (x >= 0 && x < list.Count) { }
+                }
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_style_prefer_pattern_matching"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_NegativeLiteralConstants_ReturnsDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(int x)
+                {
+                    if (x >= -1 && x < 10) { }
+                }
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_style_prefer_pattern_matching"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT220", diagnostics[0].RuleId);
+    }
+
+    [Fact]
     public void Analyze_ConfigMissing_ReturnsNoDiagnostics()
     {
         string source = """
