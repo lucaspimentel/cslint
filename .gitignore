@@ -10,3 +10,4 @@ BenchmarkDotNet.Artifacts/
 
 *.user
 .claude/*.local.*
+.claude/worktrees/
