@@ -4,24 +4,15 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
+internal sealed class CombinedStyleWalker(IStyleRuleHandler[] handlers, LintConfiguration config) : CSharpSyntaxWalker
 {
-    private readonly IStyleRuleHandler[] _handlers;
-    private readonly LintConfiguration _config;
-
-    public CombinedStyleWalker(IStyleRuleHandler[] handlers, LintConfiguration config)
-    {
-        _handlers = handlers;
-        _config = config;
-    }
-
     public List<LintDiagnostic> Diagnostics { get; } = [];
 
     public override void VisitClassDeclaration(ClassDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitClassDeclaration(node, _config, Diagnostics);
+            handler.VisitClassDeclaration(node, config, Diagnostics);
         }
 
         base.VisitClassDeclaration(node);
@@ -29,9 +20,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitStructDeclaration(StructDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitStructDeclaration(node, _config, Diagnostics);
+            handler.VisitStructDeclaration(node, config, Diagnostics);
         }
 
         base.VisitStructDeclaration(node);
@@ -39,9 +30,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitInterfaceDeclaration(node, _config, Diagnostics);
+            handler.VisitInterfaceDeclaration(node, config, Diagnostics);
         }
 
         base.VisitInterfaceDeclaration(node);
@@ -49,9 +40,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitEnumDeclaration(EnumDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitEnumDeclaration(node, _config, Diagnostics);
+            handler.VisitEnumDeclaration(node, config, Diagnostics);
         }
 
         base.VisitEnumDeclaration(node);
@@ -59,9 +50,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitMethodDeclaration(node, _config, Diagnostics);
+            handler.VisitMethodDeclaration(node, config, Diagnostics);
         }
 
         base.VisitMethodDeclaration(node);
@@ -69,9 +60,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitPropertyDeclaration(node, _config, Diagnostics);
+            handler.VisitPropertyDeclaration(node, config, Diagnostics);
         }
 
         base.VisitPropertyDeclaration(node);
@@ -79,9 +70,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitFieldDeclaration(node, _config, Diagnostics);
+            handler.VisitFieldDeclaration(node, config, Diagnostics);
         }
 
         base.VisitFieldDeclaration(node);
@@ -89,9 +80,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitEventFieldDeclaration(node, _config, Diagnostics);
+            handler.VisitEventFieldDeclaration(node, config, Diagnostics);
         }
 
         base.VisitEventFieldDeclaration(node);
@@ -99,9 +90,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitLocalDeclarationStatement(node, _config, Diagnostics);
+            handler.VisitLocalDeclarationStatement(node, config, Diagnostics);
         }
 
         base.VisitLocalDeclarationStatement(node);
@@ -109,9 +100,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitIfStatement(IfStatementSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitIfStatement(node, _config, Diagnostics);
+            handler.VisitIfStatement(node, config, Diagnostics);
         }
 
         base.VisitIfStatement(node);
@@ -119,9 +110,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitForStatement(ForStatementSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitForStatement(node, _config, Diagnostics);
+            handler.VisitForStatement(node, config, Diagnostics);
         }
 
         base.VisitForStatement(node);
@@ -129,9 +120,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitForEachStatement(ForEachStatementSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitForEachStatement(node, _config, Diagnostics);
+            handler.VisitForEachStatement(node, config, Diagnostics);
         }
 
         base.VisitForEachStatement(node);
@@ -139,9 +130,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitWhileStatement(WhileStatementSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitWhileStatement(node, _config, Diagnostics);
+            handler.VisitWhileStatement(node, config, Diagnostics);
         }
 
         base.VisitWhileStatement(node);
@@ -149,9 +140,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitDoStatement(DoStatementSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitDoStatement(node, _config, Diagnostics);
+            handler.VisitDoStatement(node, config, Diagnostics);
         }
 
         base.VisitDoStatement(node);
@@ -159,9 +150,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitUsingStatement(UsingStatementSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitUsingStatement(node, _config, Diagnostics);
+            handler.VisitUsingStatement(node, config, Diagnostics);
         }
 
         base.VisitUsingStatement(node);
@@ -169,9 +160,9 @@ internal sealed class CombinedStyleWalker : CSharpSyntaxWalker
 
     public override void VisitConditionalExpression(ConditionalExpressionSyntax node)
     {
-        foreach (IStyleRuleHandler handler in _handlers)
+        foreach (IStyleRuleHandler handler in handlers)
         {
-            handler.VisitConditionalExpression(node, _config, Diagnostics);
+            handler.VisitConditionalExpression(node, config, Diagnostics);
         }
 
         base.VisitConditionalExpression(node);

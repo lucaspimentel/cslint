@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Engine;
 
+#pragma warning disable CSLINT221 // Private constructor cannot be a primary constructor (static factory pattern)
 public sealed class PragmaSuppressionMap
 {
     // Empty string key means "all rules"

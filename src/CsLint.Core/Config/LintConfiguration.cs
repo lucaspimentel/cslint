@@ -1,16 +1,9 @@
 namespace Cslint.Core.Config;
 
-public sealed class LintConfiguration
+public sealed class LintConfiguration(IReadOnlyDictionary<string, string> properties)
 {
-    private readonly IReadOnlyDictionary<string, string> _properties;
-
-    public LintConfiguration(IReadOnlyDictionary<string, string> properties)
-    {
-        _properties = properties;
-    }
-
     public string? GetValue(string key) =>
-        _properties.TryGetValue(key, out string? value) ? value : null;
+        properties.TryGetValue(key, out string? value) ? value : null;
 
     public bool GetBool(string key, bool defaultValue = false)
     {

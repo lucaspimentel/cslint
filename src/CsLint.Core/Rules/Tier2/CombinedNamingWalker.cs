@@ -2,20 +2,13 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Cslint.Core.Rules.Tier2;
 
-internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
+internal sealed class CombinedNamingWalker(INamingRuleHandler[] handlers) : CSharpSyntaxWalker
 {
-    private readonly INamingRuleHandler[] _handlers;
-
-    public CombinedNamingWalker(INamingRuleHandler[] handlers)
-    {
-        _handlers = handlers;
-    }
-
     public List<LintDiagnostic> Diagnostics { get; } = [];
 
     public override void VisitClassDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitClassDeclaration(node, Diagnostics);
         }
@@ -25,7 +18,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitStructDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.StructDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitStructDeclaration(node, Diagnostics);
         }
@@ -35,7 +28,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitInterfaceDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.InterfaceDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitInterfaceDeclaration(node, Diagnostics);
         }
@@ -45,7 +38,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitEnumDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.EnumDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitEnumDeclaration(node, Diagnostics);
         }
@@ -55,7 +48,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitRecordDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.RecordDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitRecordDeclaration(node, Diagnostics);
         }
@@ -65,7 +58,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitDelegateDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.DelegateDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitDelegateDeclaration(node, Diagnostics);
         }
@@ -75,7 +68,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitMethodDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.MethodDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitMethodDeclaration(node, Diagnostics);
         }
@@ -85,7 +78,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitPropertyDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.PropertyDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitPropertyDeclaration(node, Diagnostics);
         }
@@ -95,7 +88,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitEventDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.EventDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitEventDeclaration(node, Diagnostics);
         }
@@ -105,7 +98,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitEventFieldDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.EventFieldDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitEventFieldDeclaration(node, Diagnostics);
         }
@@ -115,7 +108,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitFieldDeclaration(Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitFieldDeclaration(node, Diagnostics);
         }
@@ -125,7 +118,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitParameter(Microsoft.CodeAnalysis.CSharp.Syntax.ParameterSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitParameter(node, Diagnostics);
         }
@@ -135,7 +128,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitLocalDeclarationStatement(Microsoft.CodeAnalysis.CSharp.Syntax.LocalDeclarationStatementSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitLocalDeclarationStatement(node, Diagnostics);
         }
@@ -145,7 +138,7 @@ internal sealed class CombinedNamingWalker : CSharpSyntaxWalker
 
     public override void VisitForEachStatement(Microsoft.CodeAnalysis.CSharp.Syntax.ForEachStatementSyntax node)
     {
-        foreach (INamingRuleHandler handler in _handlers)
+        foreach (INamingRuleHandler handler in handlers)
         {
             handler.VisitForEachStatement(node, Diagnostics);
         }

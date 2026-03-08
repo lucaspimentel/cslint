@@ -8,22 +8,13 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace Cslint.Core.Engine;
 
-public sealed class FileLinter
+public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProvider)
 {
-    private readonly RuleRegistry _registry;
-    private readonly IConfigProvider _configProvider;
-
-    public FileLinter(RuleRegistry registry, IConfigProvider configProvider)
-    {
-        _registry = registry;
-        _configProvider = configProvider;
-    }
-
     public IReadOnlyList<LintDiagnostic> LintFile(string filePath)
     {
         string fullPath = Path.GetFullPath(filePath);
         string source = File.ReadAllText(fullPath);
-        LintConfiguration config = _configProvider.GetConfiguration(fullPath);
+        LintConfiguration config = configProvider.GetConfiguration(fullPath);
 
         return LintSource(fullPath, source, config);
     }
@@ -51,7 +42,7 @@ public sealed class FileLinter
         List<IStyleRuleHandler>? styleHandlers = null;
         List<IDescendantNodeHandler>? descendantHandlers = null;
 
-        foreach (IRuleDefinition rule in _registry.Rules)
+        foreach (IRuleDefinition rule in registry.Rules)
         {
             if (!rule.IsEnabled(configuration))
             {
