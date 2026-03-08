@@ -78,4 +78,150 @@ public class PatternMatchingRuleTests
         // is-check on info.Kind but cast on info — different expressions, should NOT flag
         Assert.Empty(diagnostics);
     }
+
+    [Fact]
+    public void Analyze_GuardClause_NegatedIs_WithCast_ReturnsDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(object obj)
+                {
+                    if (!(obj is string)) return;
+                    var s = (string)obj;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT209", diagnostics[0].RuleId);
+    }
+
+    [Fact]
+    public void Analyze_GuardClause_IsNotPattern_WithCast_ReturnsDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(object obj)
+                {
+                    if (obj is not string) return;
+                    var s = (string)obj;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT209", diagnostics[0].RuleId);
+    }
+
+    [Fact]
+    public void Analyze_GuardClause_CastToDifferentType_NoDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(object obj)
+                {
+                    if (!(obj is string)) return;
+                    var n = (int)obj;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_GuardClause_CastOnDifferentExpression_NoDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(object obj, object other)
+                {
+                    if (!(obj is string)) return;
+                    var s = (string)other;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_GuardClause_NoCastAfter_NoDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(object obj)
+                {
+                    if (!(obj is string)) return;
+                    System.Console.WriteLine("hello");
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_GuardClause_WithThrow_ReturnsDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(object obj)
+                {
+                    if (!(obj is string)) throw new System.Exception();
+                    var s = (string)obj;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT209", diagnostics[0].RuleId);
+    }
+
+    [Fact]
+    public void Analyze_GuardClause_WithElse_NoDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M(object obj)
+                {
+                    if (!(obj is string))
+                        return;
+                    else
+                        System.Console.WriteLine("has else");
+                    var s = (string)obj;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
 }

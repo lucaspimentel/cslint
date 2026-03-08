@@ -20,5 +20,6 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 ### Tier 3 — Style preferences
 
 - [x] IDE0037 — Use inferred member name
+- [x] IDE0038 — Pattern matching (`is` + cast, guard clause)
 - [x] IDE0075 — Simplify conditional expression
 - [x] IDE0170 — Simplify property pattern

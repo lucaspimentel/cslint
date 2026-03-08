@@ -97,7 +97,7 @@ CsLint implements a subset of rules from Microsoft's [.NET code analysis framewo
 - Accessibility modifiers (IDE0040)
 - `using` directive placement (IDE0065)
 - Predefined type preferences (IDE0049)
-- Pattern matching (IDE0019/IDE0020/IDE0066)
+- Pattern matching (IDE0019/IDE0020/IDE0038/IDE0066)
 - Null checking (IDE0029–IDE0031/IDE0041)
 - Using declarations (IDE0063)
 - Target-typed `new` (IDE0090)

@@ -41,7 +41,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT206 | Accessibility modifiers | `dotnet_style_require_accessibility_modifiers` | IDE0040 |
 | CSLINT207 | Using directive placement | `csharp_using_directive_placement` | IDE0065 |
 | CSLINT208 | Predefined type preferences | `dotnet_style_predefined_type_for_*` | IDE0049 |
-| CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0019, IDE0020, IDE0066 |
+| CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0019, IDE0020, IDE0038, IDE0066 |
 | CSLINT210 | Null checking | `csharp_style_*_null_check` | IDE0029--IDE0031, IDE0041 |
 | CSLINT211 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | IDE0063 |
 | CSLINT212 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |
@@ -84,7 +84,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0007, IDE0008 | CSLINT200 | Microsoft |
 | IDE0011 | CSLINT202 | Microsoft |
 | IDE0017 | CSLINT215 | Microsoft |
-| IDE0019, IDE0020, IDE0066 | CSLINT209 | Microsoft |
+| IDE0019, IDE0020, IDE0038, IDE0066 | CSLINT209 | Microsoft |
 | IDE0021--IDE0027 | CSLINT201 | Microsoft |
 | IDE0028 | CSLINT216 | Microsoft |
 | IDE0029--IDE0031, IDE0041 | CSLINT210 | Microsoft |
@@ -131,7 +131,6 @@ These rules can be implemented with syntax-only parsing:
 
 | IDE Rule | Description | Notes |
 |---|---|---|
-| IDE0038 | Pattern matching (`is` + cast, no variable) | Overlaps with CSLINT209; requires cross-statement matching |
 | IDE0047 | Remove unnecessary parentheses | Operator precedence is syntax-determinable but rules are complex |
 | IDE0048 | Add parentheses for clarity | Inverse of IDE0047; equally complex |
 
