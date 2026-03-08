@@ -6,7 +6,7 @@ public sealed class LintDiagnostic
 
     public required string Message { get; init; }
 
-    public required LintSeverity Severity { get; init; }
+    public required LintSeverity Severity { get; set; }
 
     public required string FilePath { get; init; }
 

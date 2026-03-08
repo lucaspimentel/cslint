@@ -12,6 +12,8 @@ public sealed class UsingDeclarationRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_prefer_simple_using_statement"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_prefer_simple_using_statement") is not null;
 

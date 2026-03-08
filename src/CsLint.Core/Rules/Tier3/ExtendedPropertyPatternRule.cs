@@ -12,6 +12,8 @@ public sealed class ExtendedPropertyPatternRule : IRuleDefinition, IDescendantNo
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_prefer_extended_property_pattern"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_prefer_extended_property_pattern") is not null;
 

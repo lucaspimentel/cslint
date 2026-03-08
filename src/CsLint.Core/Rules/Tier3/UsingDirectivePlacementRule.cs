@@ -12,6 +12,8 @@ public sealed class UsingDirectivePlacementRule : IRuleDefinition, IDescendantNo
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_using_directive_placement"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_using_directive_placement") is not null;
 

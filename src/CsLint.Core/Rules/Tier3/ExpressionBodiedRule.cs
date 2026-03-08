@@ -18,6 +18,8 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
         "csharp_style_expression_bodied_accessors",
     ];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_expression_bodied_methods") is not null ||
         configuration.GetValue("csharp_style_expression_bodied_properties") is not null ||

@@ -13,6 +13,8 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_naming_rule.private_fields_should_be_underscore_camel_case"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

@@ -14,6 +14,8 @@ public sealed class ArrowExpressionBlankLineRule : IRuleDefinition, IDescendantN
 
     public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ConfigKey) is not null;
 

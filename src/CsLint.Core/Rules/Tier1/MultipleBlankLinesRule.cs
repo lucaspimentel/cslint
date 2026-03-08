@@ -10,6 +10,8 @@ public sealed class MultipleBlankLinesRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_no_multiple_blank_lines"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetBool("csharp_no_multiple_blank_lines");
 

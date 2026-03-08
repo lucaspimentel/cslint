@@ -12,6 +12,8 @@ public sealed class SimpleDefaultExpressionRule : IRuleDefinition, IDescendantNo
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_prefer_simple_default_expression"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_prefer_simple_default_expression") is not null;
 

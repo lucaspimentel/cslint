@@ -16,6 +16,8 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
         "dotnet_style_predefined_type_for_member_access",
     ];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     private static readonly HashSet<string> FrameworkTypeNames = new(StringComparer.Ordinal)
     {
         "Int16", "Int32", "Int64", "UInt16", "UInt32", "UInt64",

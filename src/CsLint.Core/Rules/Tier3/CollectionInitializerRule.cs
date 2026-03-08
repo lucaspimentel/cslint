@@ -13,6 +13,8 @@ public sealed class CollectionInitializerRule : IRuleDefinition, IDescendantNode
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_collection_initializer"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_collection_initializer") is not null;
 

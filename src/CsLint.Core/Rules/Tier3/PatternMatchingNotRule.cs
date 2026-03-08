@@ -13,6 +13,8 @@ public sealed class PatternMatchingNotRule : IRuleDefinition, IDescendantNodeHan
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_prefer_not_pattern"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_prefer_not_pattern") is not null;
 

@@ -12,6 +12,8 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_prefer_collection_expression"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_prefer_collection_expression") is not null;
 

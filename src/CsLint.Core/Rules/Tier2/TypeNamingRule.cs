@@ -12,6 +12,8 @@ public sealed class TypeNamingRule : IRuleDefinition, INamingRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_naming_rule.types_should_be_pascal_case"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

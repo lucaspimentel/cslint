@@ -13,6 +13,8 @@ public sealed class PatternMatchingRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_pattern_matching_over_is_with_cast_check"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

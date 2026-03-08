@@ -10,6 +10,8 @@ public sealed class MaxLineLengthRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["max_line_length"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         string? value = configuration.GetValue("max_line_length");

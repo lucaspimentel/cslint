@@ -10,6 +10,8 @@ public interface IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; }
 
+    public LintSeverity DefaultSeverity { get; }
+
     public bool IsEnabled(LintConfiguration configuration);
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context);

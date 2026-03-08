@@ -13,6 +13,8 @@ public sealed class ObjectInitializerRule : IRuleDefinition, IDescendantNodeHand
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_object_initializer"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_object_initializer") is not null;
 

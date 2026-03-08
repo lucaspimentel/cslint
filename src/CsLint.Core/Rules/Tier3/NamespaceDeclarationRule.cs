@@ -12,6 +12,8 @@ public sealed class NamespaceDeclarationRule : IRuleDefinition, IDescendantNodeH
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_namespace_declarations"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_namespace_declarations") is not null;
 

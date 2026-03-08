@@ -10,6 +10,8 @@ public sealed class IndentationRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["indent_style", "indent_size"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("indent_style") is not null;
 

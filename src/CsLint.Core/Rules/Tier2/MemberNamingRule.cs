@@ -12,6 +12,8 @@ public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_naming_rule.members_should_be_pascal_case"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

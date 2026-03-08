@@ -12,6 +12,8 @@ public sealed class Utf8StringLiteralRule : IRuleDefinition, IDescendantNodeHand
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_prefer_utf8_string_literals"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_prefer_utf8_string_literals") is not null;
 

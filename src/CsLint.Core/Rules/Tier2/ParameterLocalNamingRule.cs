@@ -13,6 +13,8 @@ public sealed class ParameterLocalNamingRule : IRuleDefinition, INamingRuleHandl
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_naming_rule.locals_should_be_camel_case"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

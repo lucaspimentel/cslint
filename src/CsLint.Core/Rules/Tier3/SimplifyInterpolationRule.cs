@@ -12,6 +12,8 @@ public sealed class SimplifyInterpolationRule : IRuleDefinition, IDescendantNode
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_prefer_simplified_interpolation"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_prefer_simplified_interpolation") is not null;
 

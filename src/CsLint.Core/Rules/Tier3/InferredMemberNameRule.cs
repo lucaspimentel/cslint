@@ -12,6 +12,8 @@ public sealed class InferredMemberNameRule : IRuleDefinition, IDescendantNodeHan
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_prefer_inferred_anonymous_type_member_names"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_prefer_inferred_anonymous_type_member_names") is not null;
 

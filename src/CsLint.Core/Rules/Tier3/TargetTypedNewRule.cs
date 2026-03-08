@@ -12,6 +12,8 @@ public sealed class TargetTypedNewRule : IRuleDefinition, IDescendantNodeHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_implicit_object_creation_when_type_is_apparent"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_implicit_object_creation_when_type_is_apparent") is not null;
 

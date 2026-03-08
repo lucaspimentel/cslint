@@ -13,6 +13,8 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_null_checking"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

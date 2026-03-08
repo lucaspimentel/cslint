@@ -13,6 +13,8 @@ public sealed class TupleSwapRule : IRuleDefinition, IDescendantNodeHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_prefer_tuple_swap"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_prefer_tuple_swap") is not null;
 

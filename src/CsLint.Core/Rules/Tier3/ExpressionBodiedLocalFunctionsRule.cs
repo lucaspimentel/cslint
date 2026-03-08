@@ -12,6 +12,8 @@ public sealed class ExpressionBodiedLocalFunctionsRule : IRuleDefinition, IDesce
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_expression_bodied_local_functions"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_expression_bodied_local_functions") is not null;
 

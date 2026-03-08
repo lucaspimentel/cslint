@@ -12,6 +12,8 @@ public sealed class InterfacePrefixRule : IRuleDefinition, INamingRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_naming_rule.interface_should_begin_with_i"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

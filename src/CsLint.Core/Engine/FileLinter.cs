@@ -104,6 +104,9 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
             }
         }
 
+        // Resolve effective severity from .editorconfig and suppress None-severity diagnostics
+        ApplySeverityOverrides(diagnostics, registry.Rules, configuration);
+
         PragmaSuppressionMap suppressions = PragmaSuppressionMap.Build(root);
 
         if (suppressions.HasSuppressions)
@@ -112,5 +115,53 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         }
 
         return diagnostics;
+    }
+
+    private static void ApplySeverityOverrides(
+        List<LintDiagnostic> diagnostics,
+        IReadOnlyList<IRuleDefinition> rules,
+        LintConfiguration configuration)
+    {
+        // Build a map of ruleId -> effective severity
+        Dictionary<string, LintSeverity>? severityByRule = null;
+
+        foreach (IRuleDefinition rule in rules)
+        {
+            LintSeverity? mostSevere = null;
+
+            foreach (string key in rule.ConfigKeys)
+            {
+                LintSeverity? parsed = configuration.GetSeverityForKey(key);
+
+                if (parsed is not null && (mostSevere is null || parsed > mostSevere))
+                {
+                    mostSevere = parsed;
+                }
+            }
+
+            if (mostSevere is not null)
+            {
+                severityByRule ??= new Dictionary<string, LintSeverity>();
+                severityByRule[rule.RuleId] = mostSevere.Value;
+            }
+        }
+
+        if (severityByRule is null)
+        {
+            return;
+        }
+
+        // Remove suppressed diagnostics and update severity on remaining ones
+        diagnostics.RemoveAll(d =>
+            severityByRule.TryGetValue(d.RuleId, out LintSeverity severity) &&
+            severity == LintSeverity.None);
+
+        foreach (LintDiagnostic diagnostic in diagnostics)
+        {
+            if (severityByRule.TryGetValue(diagnostic.RuleId, out LintSeverity severity))
+            {
+                diagnostic.Severity = severity;
+            }
+        }
     }
 }

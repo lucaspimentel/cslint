@@ -1,3 +1,5 @@
+using Cslint.Core.Rules;
+
 namespace Cslint.Core.Config;
 
 public sealed class LintConfiguration(IReadOnlyDictionary<string, string> properties)
@@ -7,7 +9,7 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
 
     public bool GetBool(string key, bool defaultValue = false)
     {
-        string? value = GetValue(key);
+        (string? value, string? _) = GetValueWithSeverity(key);
 
         if (value is null)
         {
@@ -19,7 +21,7 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
 
     public int? GetInt(string key)
     {
-        string? value = GetValue(key);
+        (string? value, string? _) = GetValueWithSeverity(key);
 
         if (value is null)
         {
@@ -47,6 +49,22 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
 
         return (raw[..colonIndex], raw[(colonIndex + 1)..]);
     }
+
+    public LintSeverity? GetSeverityForKey(string key)
+    {
+        (string? _, string? severity) = GetValueWithSeverity(key);
+        return ParseSeverity(severity);
+    }
+
+    public static LintSeverity? ParseSeverity(string? severity) =>
+        severity?.ToLowerInvariant() switch
+        {
+            "error" => LintSeverity.Error,
+            "warning" => LintSeverity.Warning,
+            "suggestion" => LintSeverity.Info,
+            "silent" or "none" => LintSeverity.None,
+            _ => null,
+        };
 
     public static LintConfiguration Empty { get; } = new(new Dictionary<string, string>());
 }

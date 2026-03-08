@@ -10,6 +10,8 @@ public sealed class TrailingWhitespaceRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["trim_trailing_whitespace"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetBool("trim_trailing_whitespace");
 

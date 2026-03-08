@@ -12,6 +12,8 @@ public sealed class ExpressionBodiedLambdasRule : IRuleDefinition, IDescendantNo
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_expression_bodied_lambdas"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_expression_bodied_lambdas") is not null;
 

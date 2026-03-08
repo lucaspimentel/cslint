@@ -10,6 +10,8 @@ public sealed class FileHeaderRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["file_header_template"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         string? template = configuration.GetValue("file_header_template");

@@ -18,6 +18,8 @@ public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHand
         "dotnet_style_qualification_for_event",
     ];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_qualification_for_field") is not null ||
         configuration.GetValue("dotnet_style_qualification_for_property") is not null ||

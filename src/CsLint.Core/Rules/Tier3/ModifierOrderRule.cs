@@ -13,6 +13,8 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_preferred_modifier_order"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_preferred_modifier_order") is not null;
 

@@ -12,6 +12,8 @@ public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_prefer_braces"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_prefer_braces") is not null;
 

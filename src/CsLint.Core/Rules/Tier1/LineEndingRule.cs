@@ -10,6 +10,8 @@ public sealed class LineEndingRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["end_of_line"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("end_of_line") is not null;
 

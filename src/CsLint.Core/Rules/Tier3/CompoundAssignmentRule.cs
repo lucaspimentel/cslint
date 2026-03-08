@@ -13,6 +13,8 @@ public sealed class CompoundAssignmentRule : IRuleDefinition, IDescendantNodeHan
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_prefer_compound_assignment"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_prefer_compound_assignment") is not null;
 

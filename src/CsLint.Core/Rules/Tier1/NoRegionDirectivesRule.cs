@@ -10,6 +10,8 @@ public sealed class NoRegionDirectivesRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_no_region_directives"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetBool("csharp_no_region_directives");
 

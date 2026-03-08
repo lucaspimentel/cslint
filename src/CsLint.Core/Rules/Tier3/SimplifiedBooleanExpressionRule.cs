@@ -13,6 +13,8 @@ public sealed class SimplifiedBooleanExpressionRule : IRuleDefinition, IStyleRul
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_prefer_simplified_boolean_expressions"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_prefer_simplified_boolean_expressions") is not null;
 

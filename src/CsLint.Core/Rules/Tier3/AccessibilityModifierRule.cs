@@ -13,6 +13,8 @@ public sealed class AccessibilityModifierRule : IRuleDefinition, IStyleRuleHandl
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_require_accessibility_modifiers"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity("dotnet_style_require_accessibility_modifiers");

@@ -13,6 +13,8 @@ public sealed class IndexOperatorRule : IRuleDefinition, IDescendantNodeHandler
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_style_prefer_index_operator"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_prefer_index_operator") is not null;
 

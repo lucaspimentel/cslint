@@ -10,6 +10,8 @@ public sealed class FinalNewlineRule : IRuleDefinition
 
     public IReadOnlyList<string> ConfigKeys { get; } = ["insert_final_newline"];
 
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("insert_final_newline") is not null;
 

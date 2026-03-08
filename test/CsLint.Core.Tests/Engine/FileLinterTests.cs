@@ -84,4 +84,62 @@ public class FileLinterTests
 
         Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
     }
+
+    [Fact]
+    public void LintSource_SeverityOverrideError_ProducesErrorDiagnostics()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "true:error" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        Assert.NotEmpty(diagnostics);
+        Assert.All(diagnostics, d => Assert.Equal(LintSeverity.Error, d.Severity));
+    }
+
+    [Fact]
+    public void LintSource_SeverityNone_SuppressesDiagnostics()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "true:none" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+    }
+
+    [Fact]
+    public void LintSource_SeveritySilent_SuppressesDiagnostics()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "true:silent" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+    }
+
+    [Fact]
+    public void LintSource_NoSeveritySuffix_UsesDefaultSeverity()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["trim_trailing_whitespace"] = "true" });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object);
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        Assert.NotEmpty(diagnostics);
+        Assert.All(diagnostics, d => Assert.Equal(LintSeverity.Warning, d.Severity));
+    }
 }
