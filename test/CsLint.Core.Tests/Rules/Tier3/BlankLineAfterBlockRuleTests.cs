@@ -24,7 +24,7 @@ public class BlankLineAfterBlockRuleTests
                 {
                     if (true)
                     {
-                        return;
+                        int y = 1;
                     }
                     int x = 1;
                 }
@@ -183,5 +183,87 @@ public class BlankLineAfterBlockRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Empty(diagnostics);
+    }
+
+    [Theory]
+    [InlineData("if (x) { p += 2; continue; }")]
+    [InlineData("if (x) { p += 2; break; }")]
+    [InlineData("while (x) { p++; }")]
+    public void Analyze_SingleLineBlock_ReturnsNoDiagnostics(string singleLineBlock)
+    {
+        string source = $$"""
+            class C
+            {
+                void M()
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        {{singleLineBlock}}
+                        int y = 1;
+                    }
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, Enforced);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Theory]
+    [InlineData("return;")]
+    [InlineData("throw new System.Exception();")]
+    [InlineData("break;")]
+    [InlineData("continue;")]
+    public void Analyze_GuardClauseIfChain_ReturnsNoDiagnostics(string jumpStatement)
+    {
+        string source = $$"""
+            class C
+            {
+                void M()
+                {
+                    if (true)
+                    {
+                        {{jumpStatement}}
+                    }
+                    if (false)
+                    {
+                        return;
+                    }
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, Enforced);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_IfWithoutJumpFollowedByStatement_ReturnsDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M()
+                {
+                    if (true)
+                    {
+                        int y = 1;
+                    }
+                    if (false)
+                    {
+                        return;
+                    }
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, Enforced);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
     }
 }

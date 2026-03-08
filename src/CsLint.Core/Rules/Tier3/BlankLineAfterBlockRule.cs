@@ -61,6 +61,14 @@ public sealed class BlankLineAfterBlockRule : IRuleDefinition, IDescendantNodeHa
             return;
         }
 
+        // Skip single-line blocks (e.g., `if (x) { p += 2; continue; }`)
+        FileLinePositionSpan lineSpan = statement.GetLocation().GetLineSpan();
+
+        if (lineSpan.StartLinePosition.Line == lineSpan.EndLinePosition.Line)
+        {
+            return;
+        }
+
         // Find the next statement in the parent block
         SyntaxList<StatementSyntax> statements = parentBlock.Statements;
         int index = statements.IndexOf(statement);
@@ -71,6 +79,16 @@ public sealed class BlankLineAfterBlockRule : IRuleDefinition, IDescendantNodeHa
         }
 
         StatementSyntax nextStatement = statements[index + 1];
+
+        // Skip guard clause if-chains: consecutive if blocks ending with a jump statement
+        if (statement is IfStatementSyntax ifStatement
+            && ifStatement.Else is null
+            && ifStatement.Statement is BlockSyntax ifBlock
+            && ifBlock.Statements.Count > 0
+            && IsJumpStatement(ifBlock.Statements.Last()))
+        {
+            return;
+        }
 
         // Check if there's NO blank line between the closing brace and the next statement
         SyntaxToken closeBrace = statement.GetLastToken();
@@ -92,6 +110,12 @@ public sealed class BlankLineAfterBlockRule : IRuleDefinition, IDescendantNodeHa
                 });
         }
     }
+
+    private static bool IsJumpStatement(StatementSyntax statement) =>
+        statement is ReturnStatementSyntax
+            or ThrowStatementSyntax
+            or BreakStatementSyntax
+            or ContinueStatementSyntax;
 
     private static bool EndsWithBlock(StatementSyntax statement)
     {
