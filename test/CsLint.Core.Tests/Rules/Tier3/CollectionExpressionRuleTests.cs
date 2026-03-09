@@ -105,6 +105,54 @@ public class CollectionExpressionRuleTests
     }
 
     [Fact]
+    public void Analyze_ImplicitArrayWithMethodChain_ReturnsDiagnosticWithChainMessage()
+    {
+        string source = """
+            using System.Collections.Frozen;
+            class C
+            {
+                FrozenSet<string> Keywords { get; } = new[] { "abstract", "sealed" }.ToFrozenSet();
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["dotnet_style_prefer_collection_expression"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT222", diagnostics[0].RuleId);
+        Assert.Contains("target-typed collection expression", diagnostics[0].Message);
+        Assert.Contains("method chain", diagnostics[0].Message);
+    }
+
+    [Fact]
+    public void Analyze_ExplicitArrayWithMethodChain_ReturnsDiagnosticWithChainMessage()
+    {
+        string source = """
+            using System.Collections.Generic;
+            class C
+            {
+                List<string> Items { get; } = new string[] { "a", "b" }.ToList();
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["dotnet_style_prefer_collection_expression"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT222", diagnostics[0].RuleId);
+        Assert.Contains("target-typed collection expression", diagnostics[0].Message);
+        Assert.Contains("method chain", diagnostics[0].Message);
+    }
+
+    [Fact]
     public void Analyze_ArrayWithoutInitializer_ReturnsNoDiagnostics()
     {
         string source = """

@@ -47,12 +47,12 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
         {
             // new int[] { 1, 2, 3 } — explicit array creation with initializer
             case ArrayCreationExpressionSyntax { Initializer: not null } arrayCreation:
-                AddDiagnostic(arrayCreation, "Use collection expression instead of explicit array creation", filePath, diagnostics);
+                AddDiagnostic(arrayCreation, GetArrayCreationMessage("explicit", arrayCreation), filePath, diagnostics);
                 break;
 
             // new[] { 1, 2, 3 } — implicitly-typed array creation
             case ImplicitArrayCreationExpressionSyntax implicitArray:
-                AddDiagnostic(implicitArray, "Use collection expression instead of implicitly-typed array creation", filePath, diagnostics);
+                AddDiagnostic(implicitArray, GetArrayCreationMessage("implicitly-typed", implicitArray), filePath, diagnostics);
                 break;
 
             // Array.Empty<T>() or Enumerable.Empty<T>()
@@ -61,6 +61,11 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
                 break;
         }
     }
+
+    private static string GetArrayCreationMessage(string arrayKind, SyntaxNode node) =>
+        node.Parent is MemberAccessExpressionSyntax
+            ? "Consider using a target-typed collection expression instead of array creation with method chain"
+            : $"Use collection expression instead of {arrayKind} array creation";
 
     private void CheckEmptyInvocation(
         InvocationExpressionSyntax invocation,
