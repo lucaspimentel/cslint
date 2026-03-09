@@ -2,6 +2,8 @@
 
 A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing (no compilation or semantic model) for fast single-file linting.
 
+Pre-built binaries support Windows and Linux. macOS is supported when built from source or installed as a dotnet tool.
+
 ## Why?
 
 `dotnet format --verify-no-changes` can be slow because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
