@@ -118,13 +118,6 @@ class Foo { }   // trailing whitespace not reported
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the full alias mapping table.
 
-## Development
-
-```bash
-dotnet build
-dotnet test
-```
-
 ## Claude Code Integration
 
 CsLint can run as a [Claude Code hook](https://docs.anthropic.com/en/docs/claude-code/hooks) to lint `.cs` files automatically after every edit. Make sure `cslint` is installed and available on your PATH (see [Installation](#installation)), then choose one of the options below.
