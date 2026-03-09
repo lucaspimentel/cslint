@@ -53,23 +53,48 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
-        if (IsNullEqualityCheck(node.Condition) &&
-            node.Statement is BlockSyntax { Statements.Count: 1 } block &&
-            block.Statements[0] is ThrowStatementSyntax)
+        if (!TryGetNullCheckedIdentifierFromEquality(node.Condition, out string? checkedName) ||
+            node.Statement is not BlockSyntax { Statements.Count: 1 } block ||
+            block.Statements[0] is not ThrowStatementSyntax)
         {
-            FileLinePositionSpan span = node.IfKeyword.GetLocation().GetLineSpan();
-
-            diagnostics.Add(
-                new LintDiagnostic
-                {
-                    RuleId = "CSLINT210",
-                    Message = "Use null coalescing throw expression (?? throw) instead of null check with if statement",
-                    Severity = LintSeverity.Info,
-                    FilePath = span.Path,
-                    Line = span.StartLinePosition.Line + 1,
-                    Column = span.StartLinePosition.Character + 1,
-                });
+            return;
         }
+
+        // Only flag when the next sibling statement is an assignment or return using
+        // the checked identifier — that's the pattern convertible to `?? throw`.
+        // Standalone guard clauses (no next statement or unrelated next statement) cannot
+        // use `?? throw` and would be false positives.
+        if (node.Parent is not BlockSyntax parentBlock)
+        {
+            return;
+        }
+
+        int index = parentBlock.Statements.IndexOf(node);
+
+        if (index < 0 || index >= parentBlock.Statements.Count - 1)
+        {
+            return;
+        }
+
+        StatementSyntax nextStatement = parentBlock.Statements[index + 1];
+
+        if (!NextStatementUsesIdentifier(nextStatement, checkedName!))
+        {
+            return;
+        }
+
+        FileLinePositionSpan span = node.IfKeyword.GetLocation().GetLineSpan();
+
+        diagnostics.Add(
+            new LintDiagnostic
+            {
+                RuleId = "CSLINT210",
+                Message = "Use null coalescing throw expression (?? throw) instead of null check with if statement",
+                Severity = LintSeverity.Info,
+                FilePath = span.Path,
+                Line = span.StartLinePosition.Line + 1,
+                Column = span.StartLinePosition.Character + 1,
+            });
     }
 
     private static bool TryGetNullCheckedIdentifier(ExpressionSyntax expression, out string? identifier)
@@ -105,14 +130,48 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
         return expression;
     }
 
-    private static bool IsNullEqualityCheck(ExpressionSyntax expression)
+    private static bool TryGetNullCheckedIdentifierFromEquality(ExpressionSyntax expression, out string? identifier)
     {
         if (expression is BinaryExpressionSyntax binary && binary.IsKind(SyntaxKind.EqualsExpression))
         {
-            return binary.Right.IsKind(SyntaxKind.NullLiteralExpression) ||
-                   binary.Left.IsKind(SyntaxKind.NullLiteralExpression);
+            if (binary.Right.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Left) is IdentifierNameSyntax leftId)
+            {
+                identifier = leftId.Identifier.Text;
+                return true;
+            }
+
+            if (binary.Left.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Right) is IdentifierNameSyntax rightId)
+            {
+                identifier = rightId.Identifier.Text;
+                return true;
+            }
+        }
+
+        identifier = null;
+        return false;
+    }
+
+    private static bool NextStatementUsesIdentifier(StatementSyntax statement, string identifierName)
+    {
+        // Assignment: `_field = identifier;`
+        if (statement is ExpressionStatementSyntax { Expression: AssignmentExpressionSyntax assignment } &&
+            StripParentheses(assignment.Right) is IdentifierNameSyntax assignId &&
+            assignId.Identifier.Text == identifierName)
+        {
+            return true;
+        }
+
+        // Return: `return identifier;`
+        if (statement is ReturnStatementSyntax { Expression: { } returnExpr } &&
+            StripParentheses(returnExpr) is IdentifierNameSyntax returnId &&
+            returnId.Identifier.Text == identifierName)
+        {
+            return true;
         }
 
         return false;
     }
+
 }
