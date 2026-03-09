@@ -1,9 +1,11 @@
+using System.Collections.Concurrent;
 using Cslint.Core.Rules;
 
 namespace Cslint.Core.Config;
 
 public sealed class LintConfiguration(IReadOnlyDictionary<string, string> properties)
 {
+    private readonly ConcurrentDictionary<string, (string? value, string? severity)> _severityCache = new();
     public string? GetValue(string key) =>
         properties.TryGetValue(key, out string? value) ? value : null;
 
@@ -40,14 +42,17 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
             return (null, null);
         }
 
-        int colonIndex = raw.IndexOf(':');
-
-        if (colonIndex < 0)
+        return _severityCache.GetOrAdd(key, _ =>
         {
-            return (raw, null);
-        }
+            int colonIndex = raw.IndexOf(':');
 
-        return (raw[..colonIndex], raw[(colonIndex + 1)..]);
+            if (colonIndex < 0)
+            {
+                return (raw, null);
+            }
+
+            return (raw[..colonIndex], raw[(colonIndex + 1)..]);
+        });
     }
 
     public LintSeverity? GetSeverityForKey(string key)

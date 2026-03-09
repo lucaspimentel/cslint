@@ -7,6 +7,9 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
 {
+    private string? _cachedOrderStr;
+    private Dictionary<string, int>? _cachedOrderMap;
+
     public string RuleId => "CSLINT205";
 
     public string Name => "ModifierOrder";
@@ -57,7 +60,7 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
         EventFieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
         CheckModifiers(node.Modifiers, config, diagnostics);
 
-    private static void CheckModifiers(
+    private void CheckModifiers(
         SyntaxTokenList modifiers,
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
@@ -100,13 +103,18 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
         }
     }
 
-    private static Dictionary<string, int>? BuildOrderMap(LintConfiguration config)
+    private Dictionary<string, int>? BuildOrderMap(LintConfiguration config)
     {
         (string? orderStr, string? _) = config.GetValueWithSeverity("csharp_preferred_modifier_order");
 
         if (orderStr is null)
         {
             return null;
+        }
+
+        if (ReferenceEquals(orderStr, _cachedOrderStr))
+        {
+            return _cachedOrderMap;
         }
 
         string[] preferredOrder = orderStr.Split(',', StringSplitOptions.TrimEntries);
@@ -116,6 +124,9 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
         {
             orderMap[preferredOrder[i]] = i;
         }
+
+        _cachedOrderStr = orderStr;
+        _cachedOrderMap = orderMap;
 
         return orderMap;
     }

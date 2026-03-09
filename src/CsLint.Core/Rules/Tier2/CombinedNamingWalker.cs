@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Cslint.Core.Rules.Tier2;
 
-internal sealed class CombinedNamingWalker(INamingRuleHandler[] handlers) : CSharpSyntaxWalker
+internal sealed class CombinedNamingWalker(IReadOnlyList<INamingRuleHandler> handlers) : CSharpSyntaxWalker
 {
     public List<LintDiagnostic> Diagnostics { get; } = [];
 

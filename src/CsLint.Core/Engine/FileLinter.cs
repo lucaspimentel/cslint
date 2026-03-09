@@ -79,7 +79,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         // Run all naming rules in a single tree walk
         if (namingHandlers is not null)
         {
-            var walker = new CombinedNamingWalker([.. namingHandlers]);
+            var walker = new CombinedNamingWalker(namingHandlers);
             walker.Visit(root);
             diagnostics.AddRange(walker.Diagnostics);
         }
@@ -87,7 +87,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         // Run all style walker rules in a single tree walk
         if (styleHandlers is not null)
         {
-            var walker = new CombinedStyleWalker([.. styleHandlers], configuration);
+            var walker = new CombinedStyleWalker(styleHandlers, configuration);
             walker.Visit(root);
             diagnostics.AddRange(walker.Diagnostics);
         }

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-internal sealed class CombinedStyleWalker(IStyleRuleHandler[] handlers, LintConfiguration config) : CSharpSyntaxWalker
+internal sealed class CombinedStyleWalker(IReadOnlyList<IStyleRuleHandler> handlers, LintConfiguration config) : CSharpSyntaxWalker
 {
     public List<LintDiagnostic> Diagnostics { get; } = [];
 
