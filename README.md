@@ -1,5 +1,7 @@
 # CsLint
 
+[![CI](https://github.com/lucaspimentel/cslint/actions/workflows/ci.yml/badge.svg)](https://github.com/lucaspimentel/cslint/actions/workflows/ci.yml) [![Release](https://github.com/lucaspimentel/cslint/actions/workflows/release.yml/badge.svg)](https://github.com/lucaspimentel/cslint/actions/workflows/release.yml)
+
 A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing (no compilation or semantic model) for fast single-file linting.
 
 Pre-built binaries support Windows and Linux. macOS is supported when built from source or installed as a dotnet tool.
