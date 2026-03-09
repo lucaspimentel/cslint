@@ -4,7 +4,7 @@
 
 Found via linting dd-trace-dotnet (`Datadog.Trace`, excluding `Vendors/`). Full analysis: [dd-trace-dotnet-lint-analysis.md](dd-trace-dotnet-lint-analysis.md)
 
-- [ ] **P0 — CSLINT105: local constants flagged as naming violations (~77 false positives)**
+- [x] **P0 — CSLINT105: local constants flagged as naming violations (~77 false positives)**
   `ConstantNamingRule.VisitLocalDeclarationStatement` enforces PascalCase/UPPER_CASE on local `const` variables inside method bodies. Local constants conventionally use camelCase (same as local variables). The rule should only enforce naming on class-level `const` fields, not local declarations.
 
 - [ ] **P1 — CSLINT104: struct fields in `[StructLayout]` types flagged (~10 false positives)**

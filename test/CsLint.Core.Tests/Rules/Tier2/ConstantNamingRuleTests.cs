@@ -10,7 +10,6 @@ public class ConstantNamingRuleTests
     [Theory]
     [InlineData("class C { const int MaxValue = 10; }")]
     [InlineData("class C { const int MAX_VALUE = 10; }")]
-    [InlineData("class C { void M() { const int MaxValue = 10; } }")]
     public void Analyze_ValidConstantNames_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);
@@ -23,7 +22,6 @@ public class ConstantNamingRuleTests
     [Theory]
     [InlineData("class C { const int maxValue = 10; }", "maxValue")]
     [InlineData("class C { const int _value = 10; }", "_value")]
-    [InlineData("class C { void M() { const int camelCase = 1; } }", "camelCase")]
     public void Analyze_InvalidConstantNames_ReturnsDiagnostics(string source, string name)
     {
         RuleContext context = TestHelper.CreateContext(source);
@@ -33,5 +31,18 @@ public class ConstantNamingRuleTests
         Assert.Single(diagnostics);
         Assert.Equal("CSLINT105", diagnostics[0].RuleId);
         Assert.Contains(name, diagnostics[0].Message);
+    }
+
+    [Theory]
+    [InlineData("class C { void M() { const int camelCase = 1; } }")]
+    [InlineData("class C { void M() { const int PascalCase = 1; } }")]
+    [InlineData("class C { void M() { const int UPPER_CASE = 1; } }")]
+    public void Analyze_LocalConstants_AreIgnored(string source)
+    {
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
     }
 }

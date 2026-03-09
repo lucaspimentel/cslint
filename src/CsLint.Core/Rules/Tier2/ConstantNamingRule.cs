@@ -37,19 +37,6 @@ public sealed class ConstantNamingRule : IRuleDefinition, INamingRuleHandler
         }
     }
 
-    void INamingRuleHandler.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        if (!node.Modifiers.Any(SyntaxKind.ConstKeyword))
-        {
-            return;
-        }
-
-        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
-        {
-            CheckConstant(variable.Identifier, diagnostics);
-        }
-    }
-
     private static void CheckConstant(SyntaxToken identifier, List<LintDiagnostic> diagnostics)
     {
         string name = identifier.Text;

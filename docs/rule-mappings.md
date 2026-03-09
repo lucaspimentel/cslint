@@ -26,7 +26,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT102 | Member naming (PascalCase) | `dotnet_naming_rule` | SA1300, IDE1006 |
 | CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1313, IDE1006 |
 | CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
-| CSLINT105 | Constant naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | -- |
+| CSLINT105 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | -- |
 
 ### Tier 3 -- Style Preferences
 

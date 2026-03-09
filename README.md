@@ -88,7 +88,7 @@ CsLint implements a subset of rules from Microsoft's [.NET code analysis framewo
 - Member naming (PascalCase for methods, properties, events)
 - Parameter/local naming (camelCase)
 - Field naming (`_camelCase` for private fields)
-- Constant naming (PascalCase or UPPER_CASE)
+- Constant field naming (PascalCase or UPPER_CASE)
 
 ### Tier 3 — Style preferences
 - `var` usage (IDE0007/IDE0008)
