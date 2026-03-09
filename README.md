@@ -55,6 +55,9 @@ cslint src/ --severity warning
 
 # Exclude files by glob pattern
 cslint src/ --exclude "**/Generated/*.cs" --exclude "**/*.g.cs"
+
+# List all available rules
+cslint --list-rules
 ```
 
 ### Exit codes

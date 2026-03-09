@@ -77,4 +77,25 @@ internal static class PragmaAliasMap
 
     public static bool TryGetMappedIds(string id, out string[] cslintIds) =>
         Aliases.TryGetValue(id, out cslintIds!);
+
+    internal static IReadOnlyDictionary<string, List<string>> GetAliasesByCslintId()
+    {
+        var reverse = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+        foreach ((string alias, string[] cslintIds) in Aliases)
+        {
+            foreach (string cslintId in cslintIds)
+            {
+                if (!reverse.TryGetValue(cslintId, out List<string>? list))
+                {
+                    list = [];
+                    reverse[cslintId] = list;
+                }
+
+                list.Add(alias);
+            }
+        }
+
+        return reverse;
+    }
 }

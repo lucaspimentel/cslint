@@ -14,6 +14,7 @@ dotnet test               # run all tests
 dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests"  # run a single test class
 dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests.DetectsTrailingSpaces"  # single test method
 dotnet run --project src/CsLint.Cli -- [path]  # lint a file or directory (defaults to CWD)
+dotnet run --project src/CsLint.Cli -- --list-rules  # list all available rules
 ```
 
 ## Architecture

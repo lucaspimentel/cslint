@@ -1,4 +1,6 @@
 using System.CommandLine;
+using System.Text.Json;
+using System.Text;
 using Cslint.Core.Config;
 using Cslint.Core.Engine;
 using Cslint.Core.Reporting;
@@ -27,16 +29,29 @@ var excludeOption = new Option<string[]>("--exclude")
     Description = "Glob patterns to exclude (e.g., **/Generated/*.cs)",
 };
 
+var listRulesOption = new Option<bool>("--list-rules")
+{
+    Description = "List all available rules and exit",
+};
+
 var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorconfig")
 {
     pathArgument,
     formatOption,
     severityOption,
     excludeOption,
+    listRulesOption,
 };
 
 rootCommand.SetAction(async (parseResult, cancellationToken) =>
 {
+    bool listRules = parseResult.GetValue(listRulesOption);
+
+    if (listRules)
+    {
+        return PrintRuleList();
+    }
+
     string path = parseResult.GetValue(pathArgument)!;
     string format = parseResult.GetValue(formatOption)!;
     string severity = parseResult.GetValue(severityOption)!;
@@ -96,3 +111,50 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
 
 ParseResult result = rootCommand.Parse(args);
 return await result.InvokeAsync();
+
+static int PrintRuleList()
+{
+    RuleRegistry registry = RuleRegistry.CreateDefault();
+    IReadOnlyDictionary<string, List<string>> aliases = RuleRegistry.GetAliases();
+
+    using var stream = new MemoryStream();
+    using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+
+    writer.WriteStartArray();
+
+    foreach (IRuleDefinition rule in registry.Rules)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("id", rule.RuleId);
+        writer.WriteString("name", rule.Name);
+        writer.WriteString("defaultSeverity", rule.DefaultSeverity.ToString().ToLowerInvariant());
+
+        writer.WriteStartArray("configKeys");
+
+        foreach (string key in rule.ConfigKeys)
+        {
+            writer.WriteStringValue(key);
+        }
+
+        writer.WriteEndArray();
+
+        writer.WriteStartArray("aliases");
+
+        if (aliases.TryGetValue(rule.RuleId, out List<string>? aliasList))
+        {
+            foreach (string alias in aliasList)
+            {
+                writer.WriteStringValue(alias);
+            }
+        }
+
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+    }
+
+    writer.WriteEndArray();
+    writer.Flush();
+
+    Console.WriteLine(Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Position));
+    return 0;
+}

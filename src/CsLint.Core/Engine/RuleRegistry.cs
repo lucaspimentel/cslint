@@ -76,4 +76,7 @@ public sealed class RuleRegistry
     }
 
     public void Register(IRuleDefinition rule) => _rules.Add(rule);
+
+    public static IReadOnlyDictionary<string, List<string>> GetAliases() =>
+        PragmaAliasMap.GetAliasesByCslintId();
 }
