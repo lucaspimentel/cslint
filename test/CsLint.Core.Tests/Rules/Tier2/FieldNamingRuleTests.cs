@@ -50,4 +50,17 @@ public class FieldNamingRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Theory]
+    [InlineData("[StructLayout(LayoutKind.Sequential)] struct MEMORYSTATUSEX { int dwLength; long ullTotalPhys; }")]
+    [InlineData("[System.Runtime.InteropServices.StructLayout(LayoutKind.Sequential)] struct MEMORYSTATUSEX { int dwLength; }")]
+    [InlineData("[StructLayoutAttribute(LayoutKind.Sequential)] struct MEMORYSTATUSEX { int dwLength; }")]
+    public void Analyze_StructLayoutFields_AreIgnored(string source)
+    {
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
 }

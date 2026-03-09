@@ -33,6 +33,12 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
             return;
         }
 
+        // Skip fields in [StructLayout] types — field names must match native APIs
+        if (HasStructLayoutAttribute(node))
+        {
+            return;
+        }
+
         bool isPrivate = !node.Modifiers.Any(SyntaxKind.PublicKeyword) &&
                          !node.Modifiers.Any(SyntaxKind.ProtectedKeyword) &&
                          !node.Modifiers.Any(SyntaxKind.InternalKeyword);
@@ -62,5 +68,30 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
                     });
             }
         }
+    }
+
+    private static bool HasStructLayoutAttribute(FieldDeclarationSyntax node)
+    {
+        if (node.Parent is not TypeDeclarationSyntax typeDecl)
+        {
+            return false;
+        }
+
+        foreach (AttributeListSyntax attrList in typeDecl.AttributeLists)
+        {
+            foreach (AttributeSyntax attr in attrList.Attributes)
+            {
+                string attrName = attr.Name.ToString();
+
+                if (attrName is "StructLayout" or "StructLayoutAttribute" or
+                    "System.Runtime.InteropServices.StructLayout" or
+                    "System.Runtime.InteropServices.StructLayoutAttribute")
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

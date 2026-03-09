@@ -7,7 +7,7 @@ Found via linting dd-trace-dotnet (`Datadog.Trace`, excluding `Vendors/`). Full 
 - [x] **P0 — CSLINT105: local constants flagged as naming violations (~77 false positives)**
   `ConstantNamingRule.VisitLocalDeclarationStatement` enforces PascalCase/UPPER_CASE on local `const` variables inside method bodies. Local constants conventionally use camelCase (same as local variables). The rule should only enforce naming on class-level `const` fields, not local declarations.
 
-- [ ] **P1 — CSLINT104: struct fields in `[StructLayout]` types flagged (~10 false positives)**
+- [x] **P1 — CSLINT104: struct fields in `[StructLayout]` types flagged (~10 false positives)**
   `FieldNamingRule` flags private fields in P/Invoke interop structs (e.g., `MEMORYSTATUSEX` with fields like `dwLength`, `ullTotalPhys`). These field names must match native Win32 APIs — renaming to `_camelCase` would break marshalling. The rule should skip types annotated with `[StructLayout]`.
 
 - [ ] **P2 — CSLINT210: false positive null-coalescing suggestion on ternary expressions (~4+ false positives)**
