@@ -9,37 +9,58 @@ namespace Cslint.Benchmarks;
 public class LintBenchmarks
 {
     private string _tracerSettingsSource = null!;
+    private string _tracerSettingsPath = null!;
     private string _duckTypeSource = null!;
+    private string _duckTypePath = null!;
+    private string _repoRoot = null!;
     private FileLinter _linter = null!;
-    private LintConfiguration _config = null!;
+    private DirectoryLinter _directoryLinter = null!;
+    private LintConfiguration _fixtureConfig = null!;
 
     [GlobalSetup]
     public void Setup()
     {
-        string fixturesDir = Path.Combine(AppContext.BaseDirectory, "Fixtures");
-        _tracerSettingsSource = File.ReadAllText(Path.Combine(fixturesDir, "TracerSettings.cs"));
-        _duckTypeSource = File.ReadAllText(Path.Combine(fixturesDir, "DuckType.cs"));
+        // Walk up from bin output to find the repo root (contains .editorconfig)
+        string dir = AppContext.BaseDirectory;
+
+        while (dir is not null && !File.Exists(Path.Combine(dir, ".editorconfig")))
+        {
+            dir = Path.GetDirectoryName(dir)!;
+        }
+
+        _repoRoot = dir ?? throw new InvalidOperationException("Could not find repo root with .editorconfig");
+
+        // Use fixture files at their real repo paths so EditorConfigProvider resolves .editorconfig
+        _tracerSettingsPath = Path.Combine(_repoRoot, "benchmarks", "CsLint.Benchmarks", "Fixtures", "TracerSettings.cs");
+        _duckTypePath = Path.Combine(_repoRoot, "benchmarks", "CsLint.Benchmarks", "Fixtures", "DuckType.cs");
+        _tracerSettingsSource = File.ReadAllText(_tracerSettingsPath);
+        _duckTypeSource = File.ReadAllText(_duckTypePath);
+
+        var configProvider = new EditorConfigProvider();
         RuleRegistry registry = RuleRegistry.CreateDefault();
-        _config = LintConfiguration.Empty;
-        _linter = new FileLinter(registry, new NullConfigProvider(_config));
+        _fixtureConfig = configProvider.GetConfiguration(_tracerSettingsPath);
+        _linter = new FileLinter(registry, configProvider);
+        _directoryLinter = new DirectoryLinter(_linter);
     }
 
     [Benchmark]
     public int LintTracerSettings()
     {
-        IReadOnlyList<LintDiagnostic> diagnostics = _linter.LintSource("TracerSettings.cs", _tracerSettingsSource, _config);
+        IReadOnlyList<LintDiagnostic> diagnostics = _linter.LintSource(_tracerSettingsPath, _tracerSettingsSource, _fixtureConfig);
         return diagnostics.Count;
     }
 
     [Benchmark]
     public int LintDuckType()
     {
-        IReadOnlyList<LintDiagnostic> diagnostics = _linter.LintSource("DuckType.cs", _duckTypeSource, _config);
+        IReadOnlyList<LintDiagnostic> diagnostics = _linter.LintSource(_duckTypePath, _duckTypeSource, _fixtureConfig);
         return diagnostics.Count;
     }
 
-    private sealed class NullConfigProvider(LintConfiguration config) : IConfigProvider
+    [Benchmark]
+    public int LintSelf()
     {
-        public LintConfiguration GetConfiguration(string filePath) => config;
+        IReadOnlyList<LintDiagnostic> diagnostics = _directoryLinter.LintDirectoryAsync(_repoRoot).GetAwaiter().GetResult();
+        return diagnostics.Count;
     }
 }
