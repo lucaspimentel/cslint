@@ -4,7 +4,7 @@ A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing 
 
 ## Why?
 
-`dotnet format --verify-no-changes` is slow (~28s) because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
+`dotnet format --verify-no-changes` can be slow because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
 
 ## Installation
 
@@ -72,62 +72,16 @@ cslint --list-rules
 
 CsLint implements a subset of rules from Microsoft's [.NET code analysis framework](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/categories), including IDE code style analyzers and StyleCop (SA) rules. Rules are read from your `.editorconfig` and organized into three tiers:
 
-### Tier 1 — Formatting (text-level)
-- **Indentation** — `indent_style`, `indent_size`
-- **Line endings** — `end_of_line`
-- **Trailing whitespace** — `trim_trailing_whitespace`
-- **Final newline** — `insert_final_newline`
-- **Max line length** — `max_line_length`
-- **No `#region` directives** — `dotnet_diagnostic.CSLINT006.severity`
-- **File header** — `file_header_template` (IDE0073)
-- **No multiple blank lines** — `csharp_no_multiple_blank_lines` (IDE2000)
+### Tier 1 — Formatting (8 rules)
+Text-level checks: indentation, line endings, whitespace, max line length, `#region`, file headers.
 
-### Tier 2 — Naming conventions
-- Type naming (PascalCase for classes, structs, enums, records)
-- Interface prefix (`I`-prefix)
-- Member naming (PascalCase for methods, properties, events)
-- Parameter/local naming (camelCase)
-- Field naming (`_camelCase` for private fields)
-- Constant field naming (PascalCase or UPPER_CASE)
+### Tier 2 — Naming (6 rules)
+Naming conventions: PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.
 
-### Tier 3 — Style preferences
-- `var` usage (IDE0007/IDE0008)
-- Expression-bodied members (IDE0021–IDE0027)
-- Brace preferences (IDE0011)
-- Namespace declarations (IDE0160/IDE0161)
-- `this.` qualification (IDE0003/IDE0009)
-- Modifier ordering (IDE0036)
-- Accessibility modifiers (IDE0040)
-- `using` directive placement (IDE0065)
-- Predefined type preferences (IDE0049)
-- Pattern matching (IDE0019/IDE0020/IDE0038/IDE0066)
-- Null checking (IDE0029–IDE0031/IDE0041)
-- Using declarations (IDE0063)
-- Target-typed `new` (IDE0090)
-- Simplify `default` expression (IDE0034)
-- Compound assignment (IDE0054/IDE0074)
-- Object initializers (IDE0017)
-- Collection initializers (IDE0028)
-- Expression body for lambdas (IDE0053)
-- Expression body for local functions (IDE0061)
-- Pattern matching `not` (IDE0083)
-- Pattern matching combinators `and`/`or` (IDE0078)
-- Primary constructors (IDE0290)
-- Collection expressions (IDE0300–IDE0305)
-- Tuple swap (IDE0180)
-- UTF-8 string literals (IDE0230)
-- Simplify interpolation (IDE0071)
-- Index operator `^` (IDE0056)
-- Range operator `..` (IDE0057)
-- Embedded statements on own line (IDE2001)
-- No blank line between consecutive braces (IDE2002)
-- Blank line required after block statement (IDE2003)
-- No blank line after constructor initializer colon (IDE2004)
-- No blank line after conditional expression token (IDE2005)
-- No blank line after arrow expression token (IDE2006)
-- Inferred member names (IDE0037)
-- Simplify boolean expression (IDE0075)
-- Extended property pattern (IDE0170)
+### Tier 3 — Style (37 rules)
+Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, and more.
+
+See [docs/rule-mappings.md](docs/rule-mappings.md) for the complete rule reference with editorconfig keys and analyzer ID mappings.
 
 ## Suppressing Diagnostics
 
