@@ -127,7 +127,29 @@ dotnet test
 
 ## Claude Code Integration
 
-CsLint can run as a [Claude Code hook](https://docs.anthropic.com/en/docs/claude-code/hooks) to lint `.cs` files automatically after every edit. Add a `PostToolUse` hook in `~/.claude/settings.json`:
+CsLint can run as a [Claude Code hook](https://docs.anthropic.com/en/docs/claude-code/hooks) to lint `.cs` files automatically after every edit. Make sure `cslint` is installed and available on your PATH (see [Installation](#installation)), then choose one of the options below.
+
+### Option 1: Install the linters plugin
+
+The [linters plugin](https://github.com/lucaspimentel/claude-plugins/tree/main/plugins/linters) sets up `PostToolUse` hooks for CsLint and other linters automatically. First add the marketplace, then install the plugin:
+
+From the CLI:
+
+```sh
+claude plugin marketplace add https://github.com/lucaspimentel/claude-plugins
+claude plugin install linters@lucasp-claude-plugins
+```
+
+Or from inside Claude Code:
+
+```
+/plugin marketplace add https://github.com/lucaspimentel/claude-plugins
+/plugin install linters@lucasp-claude-plugins
+```
+
+### Option 2: Manual hook setup
+
+Add a `PostToolUse` hook in `~/.claude/settings.json`:
 
 ```json
 {
