@@ -8,6 +8,13 @@ A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing 
 
 ## Installation
 
+### Scoop (Windows)
+
+```bash
+scoop bucket add lucaspimentel https://github.com/lucaspimentel/scoop-bucket
+scoop install cslint
+```
+
 ### .NET tool
 
 Requires [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
