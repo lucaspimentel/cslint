@@ -47,14 +47,14 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
         {
             // new int[] { 1, 2, 3 } — explicit array creation with initializer
             case ArrayCreationExpressionSyntax { Initializer: not null } arrayCreation
-                when !IsInsideAttribute(arrayCreation):
-                AddDiagnostic(arrayCreation, GetArrayCreationMessage("explicit", arrayCreation), filePath, diagnostics);
+                when !IsInsideAttribute(arrayCreation) && !IsMethodChained(arrayCreation):
+                AddDiagnostic(arrayCreation, $"Use collection expression instead of explicit array creation", filePath, diagnostics);
                 break;
 
             // new[] { 1, 2, 3 } — implicitly-typed array creation
             case ImplicitArrayCreationExpressionSyntax implicitArray
-                when !IsInsideAttribute(implicitArray):
-                AddDiagnostic(implicitArray, GetArrayCreationMessage("implicitly-typed", implicitArray), filePath, diagnostics);
+                when !IsInsideAttribute(implicitArray) && !IsMethodChained(implicitArray):
+                AddDiagnostic(implicitArray, "Use collection expression instead of implicitly-typed array creation", filePath, diagnostics);
                 break;
 
             // Array.Empty<T>() or Enumerable.Empty<T>()
@@ -64,10 +64,8 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
         }
     }
 
-    private static string GetArrayCreationMessage(string arrayKind, SyntaxNode node) =>
-        node.Parent is MemberAccessExpressionSyntax
-            ? "Consider using a target-typed collection expression instead of array creation with method chain"
-            : $"Use collection expression instead of {arrayKind} array creation";
+    private static bool IsMethodChained(SyntaxNode node) =>
+        node.Parent is MemberAccessExpressionSyntax;
 
     private void CheckEmptyInvocation(
         InvocationExpressionSyntax invocation,

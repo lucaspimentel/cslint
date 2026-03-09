@@ -105,7 +105,7 @@ public class CollectionExpressionRuleTests
     }
 
     [Fact]
-    public void Analyze_ImplicitArrayWithMethodChain_ReturnsDiagnosticWithChainMessage()
+    public void Analyze_ImplicitArrayWithMethodChain_ReturnsNoDiagnostics()
     {
         string source = """
             using System.Collections.Frozen;
@@ -122,14 +122,11 @@ public class CollectionExpressionRuleTests
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
-        Assert.Single(diagnostics);
-        Assert.Equal("CSLINT222", diagnostics[0].RuleId);
-        Assert.Contains("target-typed collection expression", diagnostics[0].Message);
-        Assert.Contains("method chain", diagnostics[0].Message);
+        Assert.Empty(diagnostics);
     }
 
     [Fact]
-    public void Analyze_ExplicitArrayWithMethodChain_ReturnsDiagnosticWithChainMessage()
+    public void Analyze_ExplicitArrayWithMethodChain_ReturnsNoDiagnostics()
     {
         string source = """
             using System.Collections.Generic;
@@ -146,10 +143,7 @@ public class CollectionExpressionRuleTests
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
-        Assert.Single(diagnostics);
-        Assert.Equal("CSLINT222", diagnostics[0].RuleId);
-        Assert.Contains("target-typed collection expression", diagnostics[0].Message);
-        Assert.Contains("method chain", diagnostics[0].Message);
+        Assert.Empty(diagnostics);
     }
 
     [Fact]
