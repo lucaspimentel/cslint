@@ -13,6 +13,7 @@ public class TypeNamingRuleTests
     [InlineData("enum MyEnum { }")]
     [InlineData("record MyRecord;")]
     [InlineData("delegate void MyDelegate();")]
+    [InlineData("class @MyClass { }")]
     public void Analyze_PascalCaseTypes_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

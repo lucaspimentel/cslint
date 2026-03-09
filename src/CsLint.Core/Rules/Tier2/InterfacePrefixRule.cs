@@ -25,7 +25,7 @@ public sealed class InterfacePrefixRule : IRuleDefinition, INamingRuleHandler
 
     void INamingRuleHandler.VisitInterfaceDeclaration(InterfaceDeclarationSyntax node, List<LintDiagnostic> diagnostics)
     {
-        string name = node.Identifier.Text;
+        string name = node.Identifier.ValueText;
 
         if (!NamingHelper.HasPrefix(name, "I") || name.Length < 2 || !char.IsUpper(name[1]))
         {

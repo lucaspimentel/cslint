@@ -11,6 +11,7 @@ public class FieldNamingRuleTests
     [InlineData("class C { private int _count; }")]
     [InlineData("class C { int _value; }")] // implicitly private
     [InlineData("class C { private readonly int _items; }")]
+    [InlineData("class C { private int @_count; }")]
     public void Analyze_UnderscoreCamelCase_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

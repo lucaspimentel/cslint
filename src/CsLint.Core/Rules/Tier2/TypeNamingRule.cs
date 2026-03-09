@@ -40,7 +40,7 @@ public sealed class TypeNamingRule : IRuleDefinition, INamingRuleHandler
 
     private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
     {
-        string name = identifier.Text;
+        string name = identifier.ValueText;
 
         if (!NamingHelper.IsPascalCase(name))
         {

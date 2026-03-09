@@ -50,7 +50,7 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
 
         foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
         {
-            string name = variable.Identifier.Text;
+            string name = variable.Identifier.ValueText;
 
             if (!NamingHelper.IsUnderscoreCamelCase(name))
             {

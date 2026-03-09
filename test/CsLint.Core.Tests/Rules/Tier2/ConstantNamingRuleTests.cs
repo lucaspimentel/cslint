@@ -10,6 +10,7 @@ public class ConstantNamingRuleTests
     [Theory]
     [InlineData("class C { const int MaxValue = 10; }")]
     [InlineData("class C { const int MAX_VALUE = 10; }")]
+    [InlineData("class C { const int @MaxValue = 10; }")]
     public void Analyze_ValidConstantNames_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

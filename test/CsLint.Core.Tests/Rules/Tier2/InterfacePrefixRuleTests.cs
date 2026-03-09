@@ -10,6 +10,7 @@ public class InterfacePrefixRuleTests
     [Theory]
     [InlineData("interface IFoo { }")]
     [InlineData("interface IMyInterface { }")]
+    [InlineData("interface @IFoo { }")]
     public void Analyze_IPrefixed_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

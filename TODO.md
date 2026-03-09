@@ -13,6 +13,9 @@ Found via linting dd-trace-dotnet (`Datadog.Trace`, excluding `Vendors/`). Full 
 - [x] **P2 — CSLINT210: false positive null-coalescing suggestion on ternary expressions (~4+ false positives)**
   The rule suggests `??` for patterns like `Resource != null ? Resource.GetHashCode() : 0`, but `??` doesn't apply here — the non-null branch produces an `int` (via method call), not the original nullable reference. Only suggest `??` when the ternary directly returns the checked variable in the true branch.
 
+- [x] **P3 — Tier2 naming rules: false positives on verbatim identifiers (~5 false positives)**
+  Five Tier2 naming rules use `SyntaxToken.Text` which includes the `@` prefix for verbatim identifiers (e.g., `@Return` → `"@Return"`). This causes false positives because `@Return` fails PascalCase checks. Fixed by switching to `SyntaxToken.ValueText` which strips the `@` prefix (`"Return"`). Affected rules: CSLINT100 (TypeNaming), CSLINT101 (InterfacePrefix), CSLINT102 (MemberNaming), CSLINT104 (FieldNaming), CSLINT105 (ConstantNaming).
+
 ## Future rule candidates
 
 Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.md#future-candidates)

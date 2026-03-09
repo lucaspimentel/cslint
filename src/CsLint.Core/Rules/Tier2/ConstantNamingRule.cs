@@ -39,7 +39,7 @@ public sealed class ConstantNamingRule : IRuleDefinition, INamingRuleHandler
 
     private static void CheckConstant(SyntaxToken identifier, List<LintDiagnostic> diagnostics)
     {
-        string name = identifier.Text;
+        string name = identifier.ValueText;
 
         // Accept PascalCase or UPPER_CASE
         if (!NamingHelper.IsPascalCase(name) && !NamingHelper.IsUpperCase(name))
