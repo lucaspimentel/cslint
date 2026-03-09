@@ -46,12 +46,14 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
         switch (node)
         {
             // new int[] { 1, 2, 3 } — explicit array creation with initializer
-            case ArrayCreationExpressionSyntax { Initializer: not null } arrayCreation:
+            case ArrayCreationExpressionSyntax { Initializer: not null } arrayCreation
+                when !IsInsideAttribute(arrayCreation):
                 AddDiagnostic(arrayCreation, GetArrayCreationMessage("explicit", arrayCreation), filePath, diagnostics);
                 break;
 
             // new[] { 1, 2, 3 } — implicitly-typed array creation
-            case ImplicitArrayCreationExpressionSyntax implicitArray:
+            case ImplicitArrayCreationExpressionSyntax implicitArray
+                when !IsInsideAttribute(implicitArray):
                 AddDiagnostic(implicitArray, GetArrayCreationMessage("implicitly-typed", implicitArray), filePath, diagnostics);
                 break;
 
@@ -100,6 +102,19 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
         }
 
         AddDiagnostic(invocation, $"Use collection expression instead of '{identifier.Identifier.Text}.Empty<T>()'", filePath, diagnostics);
+    }
+
+    private static bool IsInsideAttribute(SyntaxNode node)
+    {
+        for (SyntaxNode? current = node.Parent; current is not null; current = current.Parent)
+        {
+            if (current is AttributeArgumentSyntax)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void AddDiagnostic(

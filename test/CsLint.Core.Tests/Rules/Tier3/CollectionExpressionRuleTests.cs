@@ -175,6 +175,31 @@ public class CollectionExpressionRuleTests
         Assert.Empty(diagnostics);
     }
 
+    [Theory]
+    [InlineData("new[] { \"/some/path\" }")]
+    [InlineData("new string[] { \"a\", \"b\" }")]
+    public void Analyze_ArrayInAttribute_ReturnsNoDiagnostics(string arrayExpr)
+    {
+        string source = $$"""
+            using System;
+            class C
+            {
+                [InlineData({{arrayExpr}})]
+                void M() { }
+            }
+            class InlineDataAttribute(params object[] args) : Attribute { }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["dotnet_style_prefer_collection_expression"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
     [Fact]
     public void Analyze_ConfigFalse_ReturnsNoDiagnostics()
     {
