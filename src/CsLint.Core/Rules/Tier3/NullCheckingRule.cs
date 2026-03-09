@@ -29,7 +29,9 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
-        if (IsNullCheck(node.Condition))
+        if (TryGetNullCheckedIdentifier(node.Condition, out string? checkedName) &&
+            StripParentheses(node.WhenTrue) is IdentifierNameSyntax trueName &&
+            trueName.Identifier.Text == checkedName)
         {
             FileLinePositionSpan span = node.QuestionToken.GetLocation().GetLineSpan();
 
@@ -70,15 +72,37 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
         }
     }
 
-    private static bool IsNullCheck(ExpressionSyntax expression)
+    private static bool TryGetNullCheckedIdentifier(ExpressionSyntax expression, out string? identifier)
     {
         if (expression is BinaryExpressionSyntax binary && binary.IsKind(SyntaxKind.NotEqualsExpression))
         {
-            return binary.Right.IsKind(SyntaxKind.NullLiteralExpression) ||
-                   binary.Left.IsKind(SyntaxKind.NullLiteralExpression);
+            if (binary.Right.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Left) is IdentifierNameSyntax leftId)
+            {
+                identifier = leftId.Identifier.Text;
+                return true;
+            }
+
+            if (binary.Left.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Right) is IdentifierNameSyntax rightId)
+            {
+                identifier = rightId.Identifier.Text;
+                return true;
+            }
         }
 
+        identifier = null;
         return false;
+    }
+
+    private static ExpressionSyntax StripParentheses(ExpressionSyntax expression)
+    {
+        while (expression is ParenthesizedExpressionSyntax paren)
+        {
+            expression = paren.Expression;
+        }
+
+        return expression;
     }
 
     private static bool IsNullEqualityCheck(ExpressionSyntax expression)

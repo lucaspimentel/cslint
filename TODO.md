@@ -10,7 +10,7 @@ Found via linting dd-trace-dotnet (`Datadog.Trace`, excluding `Vendors/`). Full 
 - [x] **P1 — CSLINT104: struct fields in `[StructLayout]` types flagged (~10 false positives)**
   `FieldNamingRule` flags private fields in P/Invoke interop structs (e.g., `MEMORYSTATUSEX` with fields like `dwLength`, `ullTotalPhys`). These field names must match native Win32 APIs — renaming to `_camelCase` would break marshalling. The rule should skip types annotated with `[StructLayout]`.
 
-- [ ] **P2 — CSLINT210: false positive null-coalescing suggestion on ternary expressions (~4+ false positives)**
+- [x] **P2 — CSLINT210: false positive null-coalescing suggestion on ternary expressions (~4+ false positives)**
   The rule suggests `??` for patterns like `Resource != null ? Resource.GetHashCode() : 0`, but `??` doesn't apply here — the non-null branch produces an `int` (via method call), not the original nullable reference. Only suggest `??` when the ternary directly returns the checked variable in the true branch.
 
 ## Future rule candidates
