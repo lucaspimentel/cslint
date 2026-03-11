@@ -6,6 +6,9 @@ namespace Cslint.Core.Config;
 public sealed class LintConfiguration(IReadOnlyDictionary<string, string> properties)
 {
     private readonly ConcurrentDictionary<string, (string? value, string? severity)> _severityCache = new();
+
+    public IReadOnlyDictionary<string, string> Properties => properties;
+
     public string? GetValue(string key) =>
         properties.TryGetValue(key, out string? value) ? value : null;
 

@@ -69,6 +69,10 @@ cslint src/ --exclude "**/Generated/*.cs" --exclude "**/*.g.cs"
 
 # List all available rules
 cslint --list-rules
+
+# Show resolved .editorconfig settings for a path
+cslint --show-config .
+cslint --show-config src/MyFile.cs
 ```
 
 ### Exit codes

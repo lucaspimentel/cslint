@@ -34,6 +34,11 @@ var listRulesOption = new Option<bool>("--list-rules")
     Description = "List all available rules and exit",
 };
 
+var showConfigOption = new Option<bool>("--show-config")
+{
+    Description = "Show resolved .editorconfig settings for the given path and exit",
+};
+
 var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorconfig")
 {
     pathArgument,
@@ -41,6 +46,7 @@ var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorcon
     severityOption,
     excludeOption,
     listRulesOption,
+    showConfigOption,
 };
 
 rootCommand.SetAction(async (parseResult, cancellationToken) =>
@@ -50,6 +56,23 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
     if (listRules)
     {
         return PrintRuleList();
+    }
+
+    bool showConfig = parseResult.GetValue(showConfigOption);
+
+    if (showConfig)
+    {
+        string configPath = Path.GetFullPath(parseResult.GetValue(pathArgument)!);
+
+        // editorconfig resolves by file extension, so use a dummy .cs file for directories
+        if (Directory.Exists(configPath))
+        {
+            configPath = Path.Combine(configPath, "_.cs");
+        }
+
+        var editorConfigProvider = new EditorConfigProvider();
+        LintConfiguration config = editorConfigProvider.GetConfiguration(configPath);
+        return PrintConfig(config);
     }
 
     string path = parseResult.GetValue(pathArgument)!;
@@ -153,6 +176,25 @@ static int PrintRuleList()
     }
 
     writer.WriteEndArray();
+    writer.Flush();
+
+    Console.WriteLine(Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Position));
+    return 0;
+}
+
+static int PrintConfig(LintConfiguration config)
+{
+    using var stream = new MemoryStream();
+    using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+
+    writer.WriteStartObject();
+
+    foreach (KeyValuePair<string, string> kvp in config.Properties.OrderBy(p => p.Key, StringComparer.OrdinalIgnoreCase))
+    {
+        writer.WriteString(kvp.Key, kvp.Value);
+    }
+
+    writer.WriteEndObject();
     writer.Flush();
 
     Console.WriteLine(Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Position));
