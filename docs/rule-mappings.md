@@ -13,7 +13,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT003 | Line endings | `end_of_line` | -- |
 | CSLINT004 | Final newline | `insert_final_newline` | -- |
 | CSLINT005 | Max line length | `max_line_length` | -- |
-| CSLINT006 | No `#region` directives | `dotnet_diagnostic.CSLINT006.severity` | -- |
+| CSLINT006 | No `#region` directives | `csharp_no_region_directives` | -- |
 | CSLINT007 | File header | `file_header_template` | IDE0073 |
 | CSLINT008 | No multiple blank lines | `csharp_no_multiple_blank_lines` | IDE2000 |
 
