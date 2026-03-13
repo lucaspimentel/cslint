@@ -81,6 +81,7 @@ csharp_style_prefer_primary_constructors = true:suggestion
 # ── Tier 3: style – code quality ──
 csharp_no_empty_finalizers = true:warning
 csharp_no_unnecessary_initialization = true:suggestion
+csharp_prefer_sealed_types = true:suggestion
 
 # ── Tier 3: style – blank line rules ──
 csharp_style_allow_blank_lines_between_consecutive_braces = false:warning

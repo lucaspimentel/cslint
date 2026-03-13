@@ -77,6 +77,7 @@ internal static class PragmaAliasMap
             // Microsoft CA (code quality)
             ["CA1821"] = ["CSLINT237"],
             ["CA1805"] = ["CSLINT238"],
+            ["CA1852"] = ["CSLINT239"],
         };
 
     public static bool TryGetMappedIds(string id, out string[] cslintIds) =>

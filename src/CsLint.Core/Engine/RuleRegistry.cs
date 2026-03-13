@@ -73,6 +73,7 @@ public sealed class RuleRegistry
         registry.Register(new ExtendedPropertyPatternRule());
         registry.Register(new EmptyFinalizerRule());
         registry.Register(new UnnecessaryInitializationRule());
+        registry.Register(new SealedTypePreferenceRule());
 
         return registry;
     }
