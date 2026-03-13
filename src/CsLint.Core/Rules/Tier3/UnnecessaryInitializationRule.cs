@@ -28,8 +28,11 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
-    public bool IsEnabled(LintConfiguration configuration) =>
-        string.Equals(configuration.GetValue(ConfigKey), "true", StringComparison.OrdinalIgnoreCase);
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
@@ -43,7 +46,9 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
-        if (!string.Equals(config.GetValue(ConfigKey), "true", StringComparison.OrdinalIgnoreCase))
+        (string? pref, string? _) = config.GetValueWithSeverity(ConfigKey);
+
+        if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
         {
             return;
         }

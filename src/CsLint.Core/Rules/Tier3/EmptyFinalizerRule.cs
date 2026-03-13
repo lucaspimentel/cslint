@@ -14,8 +14,11 @@ public sealed class EmptyFinalizerRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration) =>
-        string.Equals(configuration.GetValue("csharp_no_empty_finalizers"), "true", StringComparison.OrdinalIgnoreCase);
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        (string? pref, string? _) = configuration.GetValueWithSeverity("csharp_no_empty_finalizers");
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
@@ -29,7 +32,9 @@ public sealed class EmptyFinalizerRule : IRuleDefinition, IStyleRuleHandler
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
-        if (!string.Equals(config.GetValue("csharp_no_empty_finalizers"), "true", StringComparison.OrdinalIgnoreCase))
+        (string? pref, string? _) = config.GetValueWithSeverity("csharp_no_empty_finalizers");
+
+        if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
