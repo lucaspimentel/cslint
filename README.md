@@ -93,7 +93,7 @@ Text-level checks: indentation, line endings, whitespace, max line length, `#reg
 ### Tier 2 — Naming (6 rules)
 Naming conventions: PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.
 
-### Tier 3 — Style (37 rules)
+### Tier 3 — Style (38 rules)
 Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, and more.
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the complete rule reference with editorconfig keys and analyzer ID mappings.

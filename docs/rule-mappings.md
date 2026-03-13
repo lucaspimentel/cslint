@@ -69,6 +69,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT234 | Inferred member name | `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
 | CSLINT235 | Simplify boolean expression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
 | CSLINT236 | Extended property pattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
+| CSLINT237 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
 
 ## Pragma Alias Support
 
@@ -120,6 +121,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0037 | CSLINT234 | Microsoft |
 | IDE0075 | CSLINT235 | Microsoft |
 | IDE0170 | CSLINT236 | Microsoft |
+| CA1821 | CSLINT237 | Microsoft |
 
 ## Future Candidates
 

@@ -71,6 +71,7 @@ public sealed class RuleRegistry
         registry.Register(new InferredMemberNameRule());
         registry.Register(new SimplifiedBooleanExpressionRule());
         registry.Register(new ExtendedPropertyPatternRule());
+        registry.Register(new EmptyFinalizerRule());
 
         return registry;
     }

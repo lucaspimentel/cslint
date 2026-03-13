@@ -167,4 +167,14 @@ internal sealed class CombinedStyleWalker(IReadOnlyList<IStyleRuleHandler> handl
 
         base.VisitConditionalExpression(node);
     }
+
+    public override void VisitDestructorDeclaration(DestructorDeclarationSyntax node)
+    {
+        foreach (IStyleRuleHandler handler in handlers)
+        {
+            handler.VisitDestructorDeclaration(node, config, Diagnostics);
+        }
+
+        base.VisitDestructorDeclaration(node);
+    }
 }

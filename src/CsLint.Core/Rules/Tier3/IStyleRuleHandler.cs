@@ -21,4 +21,5 @@ internal interface IStyleRuleHandler
     void VisitDoStatement(DoStatementSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
     void VisitUsingStatement(UsingStatementSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
     void VisitConditionalExpression(ConditionalExpressionSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
+    void VisitDestructorDeclaration(DestructorDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
 }
