@@ -1,0 +1,5 @@
+actions: [version, changelog, docs, commit, tag, push, watch, release]
+version-files:
+  - src/CsLint.Cli/CsLint.Cli.csproj
+changelog-file: CHANGELOG.md
+tag-format: "v{version}"
