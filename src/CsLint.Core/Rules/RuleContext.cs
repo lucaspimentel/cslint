@@ -19,5 +19,7 @@ public sealed class RuleContext
 
     public required LintConfiguration Configuration { get; init; }
 
+    public SemanticModel? SemanticModel { get; init; }
+
     public string SourceString => _sourceString ??= SourceText.ToString();
 }

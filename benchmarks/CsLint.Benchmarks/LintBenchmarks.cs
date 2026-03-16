@@ -14,7 +14,9 @@ public class LintBenchmarks
     private string _duckTypePath = null!;
     private string _repoRoot = null!;
     private FileLinter _linter = null!;
+    private FileLinter _semanticLinter = null!;
     private DirectoryLinter _directoryLinter = null!;
+    private DirectoryLinter _semanticDirectoryLinter = null!;
     private LintConfiguration _fixtureConfig = null!;
 
     [GlobalSetup]
@@ -40,7 +42,9 @@ public class LintBenchmarks
         RuleRegistry registry = RuleRegistry.CreateDefault();
         _fixtureConfig = configProvider.GetConfiguration(_tracerSettingsPath);
         _linter = new FileLinter(registry, configProvider);
+        _semanticLinter = new FileLinter(registry, configProvider) { EnableSemantic = true };
         _directoryLinter = new DirectoryLinter(_linter);
+        _semanticDirectoryLinter = new DirectoryLinter(_semanticLinter);
     }
 
     [Benchmark]
@@ -58,9 +62,30 @@ public class LintBenchmarks
     }
 
     [Benchmark]
+    public int LintTracerSettings_Semantic()
+    {
+        IReadOnlyList<LintDiagnostic> diagnostics = _semanticLinter.LintSource(_tracerSettingsPath, _tracerSettingsSource, _fixtureConfig);
+        return diagnostics.Count;
+    }
+
+    [Benchmark]
+    public int LintDuckType_Semantic()
+    {
+        IReadOnlyList<LintDiagnostic> diagnostics = _semanticLinter.LintSource(_duckTypePath, _duckTypeSource, _fixtureConfig);
+        return diagnostics.Count;
+    }
+
+    [Benchmark]
     public int LintSelf()
     {
         IReadOnlyList<LintDiagnostic> diagnostics = _directoryLinter.LintDirectoryAsync(_repoRoot).GetAwaiter().GetResult();
+        return diagnostics.Count;
+    }
+
+    [Benchmark]
+    public int LintSelf_Semantic()
+    {
+        IReadOnlyList<LintDiagnostic> diagnostics = _semanticDirectoryLinter.LintDirectoryAsync(_repoRoot).GetAwaiter().GetResult();
         return diagnostics.Count;
     }
 }

@@ -2,6 +2,7 @@ using Cslint.Core.Config;
 using Cslint.Core.Rules;
 using Cslint.Core.Rules.Tier2;
 using Cslint.Core.Rules.Tier3;
+using Cslint.Core.Rules.Tier4;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -10,6 +11,10 @@ namespace Cslint.Core.Engine;
 
 public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProvider)
 {
+    public bool EnableSemantic { get; set; }
+
+    public CSharpCompilation? Compilation { get; set; }
+
     public IReadOnlyList<LintDiagnostic> LintFile(string filePath)
     {
         string fullPath = Path.GetFullPath(filePath);
@@ -24,8 +29,23 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         string source,
         LintConfiguration configuration)
     {
-        SourceText sourceText = SourceText.From(source);
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sourceText, path: filePath);
+        SyntaxTree syntaxTree;
+        SourceText sourceText;
+
+        // Reuse the tree from the shared compilation if available (avoids double-parsing
+        // and ensures the tree instance matches what the compilation knows about)
+        if (Compilation is not null)
+        {
+            syntaxTree = Compilation.SyntaxTrees.First(t =>
+                string.Equals(t.FilePath, filePath, StringComparison.OrdinalIgnoreCase));
+            sourceText = syntaxTree.GetText();
+        }
+        else
+        {
+            sourceText = SourceText.From(source);
+            syntaxTree = CSharpSyntaxTree.ParseText(sourceText, path: filePath);
+        }
+
         var root = (CSharpSyntaxNode)syntaxTree.GetRoot();
 
         var context = new RuleContext
@@ -41,6 +61,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         List<INamingRuleHandler>? namingHandlers = null;
         List<IStyleRuleHandler>? styleHandlers = null;
         List<IDescendantNodeHandler>? descendantHandlers = null;
+        List<ISemanticRuleHandler>? semanticHandlers = null;
 
         foreach (IRuleDefinition rule in registry.Rules)
         {
@@ -73,6 +94,14 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
                 continue;
             }
 
+            // Batch Tier4 semantic rules
+            if (rule is ISemanticRuleHandler semanticHandler)
+            {
+                semanticHandlers ??= [];
+                semanticHandlers.Add(semanticHandler);
+                continue;
+            }
+
             diagnostics.AddRange(rule.Analyze(context));
         }
 
@@ -101,6 +130,19 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
                 {
                     handler.VisitNode(node, configuration, filePath, diagnostics);
                 }
+            }
+        }
+
+        // Run Tier4 semantic rules (only when --semantic is enabled)
+        if (EnableSemantic && semanticHandlers is not null)
+        {
+            SemanticModel model = Compilation is not null
+                ? CompilationFactory.GetSemanticModel(Compilation, syntaxTree)
+                : CompilationFactory.CreateSemanticModel(syntaxTree);
+
+            foreach (ISemanticRuleHandler handler in semanticHandlers)
+            {
+                handler.Analyze(context, model, diagnostics);
             }
         }
 

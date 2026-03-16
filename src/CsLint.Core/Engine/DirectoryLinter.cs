@@ -1,5 +1,8 @@
 using System.Collections.Concurrent;
 using Cslint.Core.Rules;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.FileSystemGlobbing;
 
 namespace Cslint.Core.Engine;
@@ -38,7 +41,23 @@ public sealed class DirectoryLinter
         CancellationToken cancellationToken = default)
     {
         string fullPath = Path.GetFullPath(directoryPath);
-        IEnumerable<string> files = EnumerateFiles(fullPath, excludeGlobs, _fileSystem);
+        List<string> files = EnumerateFiles(fullPath, excludeGlobs, _fileSystem).ToList();
+
+        // When semantic mode is enabled, create a single shared compilation for all files
+        if (_fileLinter.EnableSemantic)
+        {
+            var trees = new List<SyntaxTree>(files.Count);
+
+            foreach (string file in files)
+            {
+                string source = File.ReadAllText(file);
+                SourceText sourceText = SourceText.From(source);
+                trees.Add(CSharpSyntaxTree.ParseText(sourceText, path: file));
+            }
+
+            _fileLinter.Compilation = CompilationFactory.CreateCompilation(trees);
+        }
+
         var fileDiagnostics = new ConcurrentQueue<IReadOnlyList<LintDiagnostic>>();
 
         await Parallel.ForEachAsync(

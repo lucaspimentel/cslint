@@ -39,6 +39,11 @@ var showConfigOption = new Option<bool>("--show-config")
     Description = "Show resolved .editorconfig settings for the given path and exit",
 };
 
+var semanticOption = new Option<bool>("--semantic")
+{
+    Description = "Enable semantic analysis for advanced rules",
+};
+
 var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorconfig")
 {
     pathArgument,
@@ -47,6 +52,7 @@ var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorcon
     excludeOption,
     listRulesOption,
     showConfigOption,
+    semanticOption,
 };
 
 rootCommand.SetAction(async (parseResult, cancellationToken) =>
@@ -80,9 +86,10 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
     string severity = parseResult.GetValue(severityOption)!;
     string[]? excludePatterns = parseResult.GetValue(excludeOption);
 
+    bool semantic = parseResult.GetValue(semanticOption);
     RuleRegistry registry = RuleRegistry.CreateDefault();
     var configProvider = new EditorConfigProvider();
-    var fileLinter = new FileLinter(registry, configProvider);
+    var fileLinter = new FileLinter(registry, configProvider) { EnableSemantic = semantic };
 
     IOutputFormatter formatter = format.ToLowerInvariant() switch
     {

@@ -2,6 +2,7 @@ using Cslint.Core.Rules;
 using Cslint.Core.Rules.Tier1;
 using Cslint.Core.Rules.Tier2;
 using Cslint.Core.Rules.Tier3;
+using Cslint.Core.Rules.Tier4;
 
 namespace Cslint.Core.Engine;
 
@@ -74,6 +75,9 @@ public sealed class RuleRegistry
         registry.Register(new EmptyFinalizerRule());
         registry.Register(new UnnecessaryInitializationRule());
         registry.Register(new SealedTypePreferenceRule());
+
+        // Tier 4: Semantic analysis
+        registry.Register(new UnusedUsingRule());
 
         return registry;
     }
