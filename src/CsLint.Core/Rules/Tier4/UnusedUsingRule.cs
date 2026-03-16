@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Cslint.Core.Config;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -21,7 +22,19 @@ internal sealed class UnusedUsingRule : IRuleDefinition, ISemanticRuleHandler
 
     public void Analyze(RuleContext context, SemanticModel model, List<LintDiagnostic> diagnostics)
     {
-        foreach (Diagnostic diagnostic in model.GetDiagnostics())
+        ImmutableArray<Diagnostic> allDiagnostics = model.GetDiagnostics();
+
+        // If the compilation is missing references, Roslyn reports usings for unresolved types
+        // as "unused" (CS8019) even though they're needed. CS0246/CS0234 indicate unresolved
+        // types/namespaces, so skip unused-using detection when present.
+        bool hasMissingReferences = allDiagnostics.Any(d => d.Id is "CS0246" or "CS0234");
+
+        if (hasMissingReferences)
+        {
+            return;
+        }
+
+        foreach (Diagnostic diagnostic in allDiagnostics)
         {
             if (diagnostic.Id != "CS8019")
             {
