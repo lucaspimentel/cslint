@@ -16,7 +16,7 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 - [ ] **Unnecessary casts** — detect redundant casts where both types are in-source or BCL (symbol resolution reliable)
 - [ ] **Redundant await** — detect `async` methods that just `return await` a single call; `Task`/`ValueTask` are BCL so symbol resolution is reliable
 - [ ] **Unused private members** — fields/methods/properties with `private` access declared but never referenced within the compilation
-- [ ] **Duplicate enum values** — constant value analysis is purely local, no external type resolution needed
+- [x] **Duplicate enum values** — constant value analysis is purely local, no external type resolution needed — implemented as CSLINT303
 - [ ] **Self-assignment detection** (`x = x`) — symbol equality check, no external type resolution needed
 - [ ] **Empty catch blocks** — catch blocks that swallow exceptions without logging/rethrowing; structural + symbol check on `Exception` (BCL type)
 
