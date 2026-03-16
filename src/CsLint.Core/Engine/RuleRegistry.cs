@@ -78,6 +78,7 @@ public sealed class RuleRegistry
 
         // Tier 4: Semantic analysis
         registry.Register(new UnusedUsingRule());
+        registry.Register(new UnusedLocalVariableRule());
 
         return registry;
     }

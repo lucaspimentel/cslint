@@ -12,7 +12,7 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 
 - [ ] **CSLINT300 false-positive mitigation** — filter out CS8019 (unused using) diagnostics where the compilation also reports unresolved type errors (CS0246, CS0234) in the same file; that's a strong signal that NuGet/project references are missing, so the "unused" using is probably a false positive
   - In `UnusedUsingRule.Analyze`, check `model.GetDiagnostics()` for CS0246/CS0234 and skip CS8019 when present
-- [ ] **Unused local variables** — surface CS0219 from `SemanticModel.GetDiagnostics()`, same pattern as CSLINT300
+- [x] **Unused local variables** — surface CS0219 from `SemanticModel.GetDiagnostics()`, same pattern as CSLINT300 — implemented as CSLINT301
 - [ ] **Unreachable code** — surface CS0162 from `SemanticModel.GetDiagnostics()`
 - [ ] **Unnecessary casts** — detect redundant casts where both types are in-source or BCL (symbol resolution reliable)
 - [ ] **Redundant await** — detect `async` methods that just `return await` a single call; `Task`/`ValueTask` are BCL so symbol resolution is reliable
