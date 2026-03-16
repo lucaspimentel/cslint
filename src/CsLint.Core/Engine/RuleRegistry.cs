@@ -81,6 +81,7 @@ public sealed class RuleRegistry
         registry.Register(new UnusedLocalVariableRule());
         registry.Register(new UnreachableCodeRule());
         registry.Register(new DuplicateEnumValueRule());
+        registry.Register(new SelfAssignmentRule());
 
         return registry;
     }
