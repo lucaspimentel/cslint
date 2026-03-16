@@ -75,6 +75,7 @@ public sealed class RuleRegistry
         registry.Register(new EmptyFinalizerRule());
         registry.Register(new UnnecessaryInitializationRule());
         registry.Register(new SealedTypePreferenceRule());
+        registry.Register(new EmptyCatchBlockRule());
 
         // Tier 4: Semantic analysis
         registry.Register(new UnusedUsingRule());

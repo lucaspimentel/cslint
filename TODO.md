@@ -18,7 +18,7 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 - [ ] **Unused private members** — fields/methods/properties with `private` access declared but never referenced within the compilation
 - [x] **Duplicate enum values** — constant value analysis is purely local, no external type resolution needed — implemented as CSLINT303
 - [x] **Self-assignment detection** (`x = x`) — symbol equality check, no external type resolution needed — implemented as CSLINT304
-- [ ] **Empty catch blocks** — catch blocks that swallow exceptions without logging/rethrowing; structural + symbol check on `Exception` (BCL type)
+- [x] **Empty catch blocks** — catch blocks that swallow exceptions without logging/rethrowing; structural check on catch clause body — implemented as CSLINT305
 
 ## Low priority / high cost
 
