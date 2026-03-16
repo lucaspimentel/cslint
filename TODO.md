@@ -8,6 +8,19 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 - [x] **CA1805 — Do not initialize unnecessarily** (Tier 3, syntax-only, partial coverage) — implemented as CSLINT238
 - [x] **CA1852 — Prefer sealed types** (Tier 3, syntax-only) — implemented as CSLINT239
 
+## Semantic rules (Tier 4)
+
+- [ ] **CSLINT300 false-positive mitigation** — filter out CS8019 (unused using) diagnostics where the compilation also reports unresolved type errors (CS0246, CS0234) in the same file; that's a strong signal that NuGet/project references are missing, so the "unused" using is probably a false positive
+  - In `UnusedUsingRule.Analyze`, check `model.GetDiagnostics()` for CS0246/CS0234 and skip CS8019 when present
+- [ ] **Unused local variables** — surface CS0219 from `SemanticModel.GetDiagnostics()`, same pattern as CSLINT300
+- [ ] **Unreachable code** — surface CS0162 from `SemanticModel.GetDiagnostics()`
+- [ ] **Unnecessary casts** — detect redundant casts where both types are in-source or BCL (symbol resolution reliable)
+- [ ] **Redundant await** — detect `async` methods that just `return await` a single call; `Task`/`ValueTask` are BCL so symbol resolution is reliable
+- [ ] **Unused private members** — fields/methods/properties with `private` access declared but never referenced within the compilation
+- [ ] **Duplicate enum values** — constant value analysis is purely local, no external type resolution needed
+- [ ] **Self-assignment detection** (`x = x`) — symbol equality check, no external type resolution needed
+- [ ] **Empty catch blocks** — catch blocks that swallow exceptions without logging/rethrowing; structural + symbol check on `Exception` (BCL type)
+
 ## Low priority / high cost
 
 - [ ] **CSLINT239 project-wide type hierarchy** — two-pass architecture to reduce false positives on `SealedTypePreferenceRule` by building an in-memory `HashSet<string>` of inherited type names before the lint pass, so base classes aren't flagged
