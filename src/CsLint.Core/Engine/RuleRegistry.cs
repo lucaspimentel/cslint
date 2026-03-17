@@ -84,6 +84,7 @@ public sealed class RuleRegistry
         registry.Register(new DuplicateEnumValueRule());
         registry.Register(new SelfAssignmentRule());
         registry.Register(new UnnecessaryCastRule());
+        registry.Register(new RedundantAwaitRule());
 
         return registry;
     }
