@@ -72,9 +72,68 @@ internal sealed class UnnecessaryCastRule : IRuleDefinition, ISemanticRuleHandle
 
             if (conversion.IsImplicit && !conversion.IsUserDefined && !conversion.IsBoxing)
             {
+                // Skip widening casts in arithmetic expressions — removing the cast
+                // would change the operation semantics (e.g., integer vs float division)
+                if (IsArithmeticOperand(cast) && conversion.IsNumeric)
+                {
+                    continue;
+                }
+
+                // Skip casts used for method overload resolution — removing the cast
+                // may select a different overload (e.g., Write(int) vs Write(short))
+                if (IsMethodArgument(cast, model))
+                {
+                    continue;
+                }
+
                 ReportDiagnostic(cast, context.FilePath, diagnostics);
             }
         }
+    }
+
+    private static bool IsArithmeticOperand(CastExpressionSyntax cast) =>
+        cast.Parent is BinaryExpressionSyntax binary &&
+        binary.Kind() is SyntaxKind.AddExpression
+            or SyntaxKind.SubtractExpression
+            or SyntaxKind.MultiplyExpression
+            or SyntaxKind.DivideExpression
+            or SyntaxKind.ModuloExpression;
+
+    private static bool IsMethodArgument(CastExpressionSyntax cast, SemanticModel model)
+    {
+        if (cast.Parent is not ArgumentSyntax)
+        {
+            return false;
+        }
+
+        // Find the containing invocation
+        SyntaxNode? invocation = cast.Parent.Parent?.Parent;
+
+        if (invocation is not InvocationExpressionSyntax inv)
+        {
+            return false;
+        }
+
+        SymbolInfo symbolInfo = model.GetSymbolInfo(inv);
+
+        // If we can't resolve the method, be conservative — assume the cast is needed
+        if (symbolInfo.Symbol is not IMethodSymbol method)
+        {
+            return true;
+        }
+
+        // Check if the method has overloads with the same parameter count —
+        // if so, the cast may be needed for disambiguation
+        INamedTypeSymbol? containingType = method.ContainingType;
+
+        if (containingType is null)
+        {
+            return true;
+        }
+
+        return containingType.GetMembers(method.Name)
+            .OfType<IMethodSymbol>()
+            .Count(m => m.Parameters.Length == method.Parameters.Length) > 1;
     }
 
     private void ReportDiagnostic(CastExpressionSyntax cast, string filePath, List<LintDiagnostic> diagnostics)

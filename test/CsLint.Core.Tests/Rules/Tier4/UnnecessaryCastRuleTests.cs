@@ -234,6 +234,57 @@ public class UnnecessaryCastRuleTests
         Assert.Empty(diagnostics);
     }
 
+    [Theory]
+    [InlineData("(double)intVar / other", "int intVar = 10; int other = 3; double r = (double)intVar / other;")]
+    [InlineData("(long)a + b", "int a = int.MaxValue; int b = 1; long r = (long)a + b;")]
+    [InlineData("(float)x * y", "int x = 5; int y = 3; float r = (float)x * y;")]
+    public void Analyze_WideningCastInArithmeticExpression_NoDiagnostic(string _, string statement)
+    {
+        string source = $$"""
+            class C
+            {
+                void M()
+                {
+                    {{statement}}
+                }
+            }
+            """;
+
+        (RuleContext context, SemanticModel model) = CreateSemanticContext(source);
+        var diagnostics = new List<LintDiagnostic>();
+
+        _rule.Analyze(context, model, diagnostics);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Theory]
+    [InlineData("Write(short)", "writer.Write((short)1);")]
+    [InlineData("Write(byte)", "writer.Write((byte)255);")]
+    public void Analyze_CastForOverloadResolution_NoDiagnostic(string _, string statement)
+    {
+        string source = $$"""
+            using System.IO;
+
+            class C
+            {
+                void M()
+                {
+                    using var stream = new MemoryStream();
+                    using var writer = new BinaryWriter(stream);
+                    {{statement}}
+                }
+            }
+            """;
+
+        (RuleContext context, SemanticModel model) = CreateSemanticContext(source);
+        var diagnostics = new List<LintDiagnostic>();
+
+        _rule.Analyze(context, model, diagnostics);
+
+        Assert.Empty(diagnostics);
+    }
+
     private static (RuleContext Context, SemanticModel Model) CreateSemanticContext(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);
