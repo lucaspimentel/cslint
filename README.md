@@ -2,13 +2,13 @@
 
 [![CI](https://github.com/lucaspimentel/cslint/actions/workflows/ci.yml/badge.svg)](https://github.com/lucaspimentel/cslint/actions/workflows/ci.yml) [![Release](https://github.com/lucaspimentel/cslint/actions/workflows/release.yml/badge.svg)](https://github.com/lucaspimentel/cslint/actions/workflows/release.yml)
 
-A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing (no compilation or semantic model) for fast single-file linting.
+A fast C# linter that respects `.editorconfig`. Uses Roslyn syntax-only parsing for fast single-file linting, with opt-in semantic analysis (`--semantic`) for deeper checks.
 
 Pre-built binaries support Windows and Linux. macOS is supported when built from source or installed as a dotnet tool.
 
 ## Why?
 
-`dotnet format --verify-no-changes` can be slow because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips all of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit.
+`dotnet format --verify-no-changes` can be slow because it loads the full Roslyn Workspaces layer with semantic analysis. CsLint skips most of that — it parses syntax trees directly and reads rules from `.editorconfig`, making it fast enough to run as a hook on every file edit. When you need deeper analysis, the `--semantic` flag enables Tier 4 rules that use the Roslyn semantic model.
 
 ## Installation
 
@@ -67,6 +67,9 @@ cslint src/ --severity warning
 # Exclude files by glob pattern
 cslint src/ --exclude "**/Generated/*.cs" --exclude "**/*.g.cs"
 
+# Enable semantic analysis (Tier 4 rules)
+cslint src/ --semantic
+
 # List all available rules
 cslint --list-rules
 
@@ -85,7 +88,7 @@ cslint --show-config src/MyFile.cs
 
 ## Supported Rules
 
-CsLint implements a subset of rules from Microsoft's [.NET code analysis framework](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/categories), including IDE code style analyzers and StyleCop (SA) rules. Rules are read from your `.editorconfig` and organized into three tiers:
+CsLint implements a subset of rules from Microsoft's [.NET code analysis framework](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/categories), including IDE code style analyzers and StyleCop (SA) rules. Rules are read from your `.editorconfig` and organized into four tiers:
 
 ### Tier 1 — Formatting
 Text-level checks: indentation, line endings, whitespace, max line length, `#region`, file headers.
@@ -94,7 +97,10 @@ Text-level checks: indentation, line endings, whitespace, max line length, `#reg
 Naming conventions: PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.
 
 ### Tier 3 — Style
-Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, and more.
+Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, and more.
+
+### Tier 4 — Semantic (requires `--semantic`)
+Rules that use the Roslyn semantic model: unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await.
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the complete rule reference with editorconfig keys and analyzer ID mappings.
 

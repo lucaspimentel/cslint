@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What is CsLint?
 
-A fast C# linter that reads rules from `.editorconfig`. Uses Roslyn **syntax-only** parsing (no compilation/semantic model) as an alternative to `dotnet format --verify-no-changes`.
+A fast C# linter that reads rules from `.editorconfig`. Uses Roslyn **syntax-only** parsing as an alternative to `dotnet format --verify-no-changes`, with opt-in semantic analysis (`--semantic`) for deeper checks.
 
 ## Build & Test Commands
 
@@ -15,6 +15,7 @@ dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests"  # run a s
 dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests.DetectsTrailingSpaces"  # single test method
 dotnet run --project src/CsLint.Cli -- [path]  # lint a file or directory (defaults to CWD)
 dotnet run --project src/CsLint.Cli -- --list-rules  # list all available rules
+dotnet run --project src/CsLint.Cli -- --semantic [path]  # lint with semantic analysis (Tier 4 rules)
 dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .editorconfig settings for a path
 ```
 
@@ -31,7 +32,8 @@ Four projects in `CsLint.slnx`:
 
 - **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length, no `#region` directives, file header, multiple blank lines). No syntax tree needed.
 - **Tier2** (`Rules/Tier2/`) — naming convention checks using `CSharpSyntaxWalker` (type naming, interface prefix, member naming, field naming, etc.). Shared `NamingHelper` utility.
-- **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, etc.).
+- **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, sealed types, empty catch blocks, etc.).
+- **Tier4** (`Rules/Tier4/`) — semantic analysis rules requiring Roslyn `SemanticModel` (unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await). Only active with `--semantic` flag.
 
 ### Config key conventions by tier
 

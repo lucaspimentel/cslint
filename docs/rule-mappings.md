@@ -71,6 +71,22 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT236 | Extended property pattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
 | CSLINT237 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
 | CSLINT238 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization` | CA1805 |
+| CSLINT239 | Prefer sealed types | `csharp_prefer_sealed_types` | CA1852 |
+| CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
+
+### Tier 4 -- Semantic Analysis (requires `--semantic`)
+
+These rules use the Roslyn semantic model and are only active when the `--semantic` flag is passed.
+
+| CsLint ID | Description | editorconfig Key | Third-Party IDs |
+|---|---|---|---|
+| CSLINT300 | Unused using directive | `dotnet_diagnostic.CSLINT300.severity` | CS8019 |
+| CSLINT301 | Unused local variable | `dotnet_diagnostic.CSLINT301.severity` | CS0219 |
+| CSLINT302 | Unreachable code | `dotnet_diagnostic.CSLINT302.severity` | CS0162 |
+| CSLINT303 | Duplicate enum values | `dotnet_diagnostic.CSLINT303.severity` | -- |
+| CSLINT304 | Self-assignment | `dotnet_diagnostic.CSLINT304.severity` | -- |
+| CSLINT306 | Unnecessary cast | `dotnet_diagnostic.CSLINT306.severity` | IDE0004 |
+| CSLINT307 | Redundant await | `dotnet_diagnostic.CSLINT307.severity` | -- |
 
 ## Pragma Alias Support
 
@@ -124,6 +140,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0170 | CSLINT236 | Microsoft |
 | CA1821 | CSLINT237 | Microsoft |
 | CA1805 | CSLINT238 | Microsoft |
+| CA1852 | CSLINT239 | Microsoft |
+| CS1717 | CSLINT304 | C# compiler |
 
 ## Future Candidates
 
@@ -140,9 +158,9 @@ These rules can be implemented with syntax-only parsing:
 
 ### Not Feasible (require semantic model)
 
-These rules are excluded because they need type information, flow analysis, or semantic model:
+These rules require type information, flow analysis, or semantic model and are not currently implemented (some may become Tier 4 candidates in the future):
 
-IDE0001, IDE0002, IDE0004, IDE0005, IDE0010, IDE0016, IDE0018, IDE0032, IDE0033, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0050, IDE0051, IDE0052, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380, IDE1005
+IDE0001, IDE0002, IDE0010, IDE0016, IDE0018, IDE0032, IDE0033, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0050, IDE0051, IDE0052, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380, IDE1005
 
 ### Not Applicable
 
