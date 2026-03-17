@@ -70,14 +70,19 @@ internal static class PragmaAliasMap
             ["IDE2004"] = ["CSLINT231"],
             ["IDE2005"] = ["CSLINT232"],
             ["IDE2006"] = ["CSLINT233"],
+            ["IDE0004"] = ["CSLINT306"],
+            ["IDE0005"] = ["CSLINT300"],
             ["IDE0037"] = ["CSLINT234"],
             ["IDE0075"] = ["CSLINT235"],
             ["IDE0170"] = ["CSLINT236"],
 
             // C# compiler
+            ["CS0162"] = ["CSLINT302"],
+            ["CS0219"] = ["CSLINT301"],
             ["CS1717"] = ["CSLINT304"],
 
             // Microsoft CA (code quality)
+            ["CA1069"] = ["CSLINT303"],
             ["CA1821"] = ["CSLINT237"],
             ["CA1805"] = ["CSLINT238"],
             ["CA1852"] = ["CSLINT239"],

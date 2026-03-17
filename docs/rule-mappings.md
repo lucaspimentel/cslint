@@ -80,11 +80,11 @@ These rules use the Roslyn semantic model and are only active when the `--semant
 
 | CsLint ID | Description | editorconfig Key | Third-Party IDs |
 |---|---|---|---|
-| CSLINT300 | Unused using directive | `dotnet_diagnostic.CSLINT300.severity` | CS8019 |
+| CSLINT300 | Unused using directive | `dotnet_diagnostic.CSLINT300.severity` | IDE0005, CS8019 |
 | CSLINT301 | Unused local variable | `dotnet_diagnostic.CSLINT301.severity` | CS0219 |
 | CSLINT302 | Unreachable code | `dotnet_diagnostic.CSLINT302.severity` | CS0162 |
-| CSLINT303 | Duplicate enum values | `dotnet_diagnostic.CSLINT303.severity` | -- |
-| CSLINT304 | Self-assignment | `dotnet_diagnostic.CSLINT304.severity` | -- |
+| CSLINT303 | Duplicate enum values | `dotnet_diagnostic.CSLINT303.severity` | CA1069 |
+| CSLINT304 | Self-assignment | `dotnet_diagnostic.CSLINT304.severity` | CS1717 |
 | CSLINT306 | Unnecessary cast | `dotnet_diagnostic.CSLINT306.severity` | IDE0004 |
 | CSLINT307 | Redundant await | `dotnet_diagnostic.CSLINT307.severity` | -- |
 
@@ -141,7 +141,12 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA1821 | CSLINT237 | Microsoft |
 | CA1805 | CSLINT238 | Microsoft |
 | CA1852 | CSLINT239 | Microsoft |
+| IDE0004 | CSLINT306 | Microsoft |
+| IDE0005 | CSLINT300 | Microsoft |
+| CS0162 | CSLINT302 | C# compiler |
+| CS0219 | CSLINT301 | C# compiler |
 | CS1717 | CSLINT304 | C# compiler |
+| CA1069 | CSLINT303 | Microsoft |
 
 ## Future Candidates
 
