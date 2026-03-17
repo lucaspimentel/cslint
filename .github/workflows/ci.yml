@@ -45,10 +45,10 @@ jobs:
       run: dotnet restore CsLint.slnx
 
     - name: Build
-      run: dotnet build CsLint.slnx -c Release --no-restore
+      run: dotnet build CsLint.slnx -c Release --no-restore -p:IncludeSemanticRules=true
 
     - name: Test
-      run: dotnet test CsLint.slnx -c Release --no-build --verbosity normal
+      run: dotnet test CsLint.slnx -c Release --no-build --verbosity normal -p:IncludeSemanticRules=true
 
     - name: Publish
       run: dotnet publish ${{ env.PROJECT_FILE }} -c Release -r ${{ matrix.rid }}

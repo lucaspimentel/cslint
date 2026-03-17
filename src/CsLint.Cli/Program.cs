@@ -87,9 +87,21 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
     string[]? excludePatterns = parseResult.GetValue(excludeOption);
 
     bool semantic = parseResult.GetValue(semanticOption);
+#if !SEMANTIC
+    if (semantic)
+    {
+        Console.Error.WriteLine("Warning: --semantic is not available in the native AOT build. Install the .NET tool version for semantic analysis.");
+    }
+#endif
+
     RuleRegistry registry = RuleRegistry.CreateDefault();
     var configProvider = new EditorConfigProvider();
-    var fileLinter = new FileLinter(registry, configProvider) { EnableSemantic = semantic };
+    var fileLinter = new FileLinter(registry, configProvider)
+    {
+#if SEMANTIC
+        EnableSemantic = semantic,
+#endif
+    };
 
     IOutputFormatter formatter = format.ToLowerInvariant() switch
     {

@@ -43,6 +43,7 @@ public sealed class DirectoryLinter
         string fullPath = Path.GetFullPath(directoryPath);
         List<string> files = EnumerateFiles(fullPath, excludeGlobs, _fileSystem).ToList();
 
+#if SEMANTIC
         // When semantic mode is enabled, create a single shared compilation for all files
         if (_fileLinter.EnableSemantic)
         {
@@ -57,6 +58,7 @@ public sealed class DirectoryLinter
 
             _fileLinter.Compilation = CompilationFactory.CreateCompilation(trees);
         }
+#endif
 
         var fileDiagnostics = new ConcurrentQueue<IReadOnlyList<LintDiagnostic>>();
 

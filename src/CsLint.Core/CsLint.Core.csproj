@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- Exclude semantic analysis files from AOT builds (no IncludeSemanticRules) -->
+  <ItemGroup Condition="'$(IncludeSemanticRules)' != 'true'">
+    <Compile Remove="Rules/Tier4/**" />
+    <Compile Remove="Engine/CompilationFactory.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
     <PackageReference Include="editorconfig" Version="0.15.0" />

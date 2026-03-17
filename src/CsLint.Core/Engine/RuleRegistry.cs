@@ -2,7 +2,9 @@ using Cslint.Core.Rules;
 using Cslint.Core.Rules.Tier1;
 using Cslint.Core.Rules.Tier2;
 using Cslint.Core.Rules.Tier3;
+#if SEMANTIC
 using Cslint.Core.Rules.Tier4;
+#endif
 
 namespace Cslint.Core.Engine;
 
@@ -77,6 +79,7 @@ public sealed class RuleRegistry
         registry.Register(new SealedTypePreferenceRule());
         registry.Register(new EmptyCatchBlockRule());
 
+#if SEMANTIC
         // Tier 4: Semantic analysis
         registry.Register(new UnusedUsingRule());
         registry.Register(new UnusedLocalVariableRule());
@@ -85,6 +88,7 @@ public sealed class RuleRegistry
         registry.Register(new SelfAssignmentRule());
         registry.Register(new UnnecessaryCastRule());
         registry.Register(new RedundantAwaitRule());
+#endif
 
         return registry;
     }

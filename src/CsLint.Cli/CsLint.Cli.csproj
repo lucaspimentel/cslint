@@ -4,8 +4,8 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>cslint</AssemblyName>
 
-    <!-- Publish optimization (disabled when packing as tool) -->
-    <PublishAot Condition="'$(PackAsTool)' != 'true'">true</PublishAot>
+    <!-- Native AOT when semantic rules are excluded (standalone binary) -->
+    <PublishAot Condition="'$(PackAsTool)' != 'true' and '$(IncludeSemanticRules)' != 'true'">true</PublishAot>
 
     <!-- .NET Tool -->
     <PackAsTool>true</PackAsTool>

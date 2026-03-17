@@ -2,7 +2,9 @@ using Cslint.Core.Config;
 using Cslint.Core.Rules;
 using Cslint.Core.Rules.Tier2;
 using Cslint.Core.Rules.Tier3;
+#if SEMANTIC
 using Cslint.Core.Rules.Tier4;
+#endif
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -11,9 +13,11 @@ namespace Cslint.Core.Engine;
 
 public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProvider)
 {
+#if SEMANTIC
     public bool EnableSemantic { get; set; }
 
     public CSharpCompilation? Compilation { get; set; }
+#endif
 
     public IReadOnlyList<LintDiagnostic> LintFile(string filePath)
     {
@@ -32,6 +36,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         SyntaxTree syntaxTree;
         SourceText sourceText;
 
+#if SEMANTIC
         // Reuse the tree from the shared compilation if available (avoids double-parsing
         // and ensures the tree instance matches what the compilation knows about)
         if (Compilation is not null)
@@ -41,6 +46,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
             sourceText = syntaxTree.GetText();
         }
         else
+#endif
         {
             sourceText = SourceText.From(source);
             syntaxTree = CSharpSyntaxTree.ParseText(sourceText, path: filePath);
@@ -61,7 +67,9 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         List<INamingRuleHandler>? namingHandlers = null;
         List<IStyleRuleHandler>? styleHandlers = null;
         List<IDescendantNodeHandler>? descendantHandlers = null;
+#if SEMANTIC
         List<ISemanticRuleHandler>? semanticHandlers = null;
+#endif
 
         foreach (IRuleDefinition rule in registry.Rules)
         {
@@ -94,6 +102,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
                 continue;
             }
 
+#if SEMANTIC
             // Batch Tier4 semantic rules
             if (rule is ISemanticRuleHandler semanticHandler)
             {
@@ -101,6 +110,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
                 semanticHandlers.Add(semanticHandler);
                 continue;
             }
+#endif
 
             diagnostics.AddRange(rule.Analyze(context));
         }
@@ -133,6 +143,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
             }
         }
 
+#if SEMANTIC
         // Run Tier4 semantic rules (only when --semantic is enabled)
         if (EnableSemantic && semanticHandlers is not null)
         {
@@ -145,6 +156,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
                 handler.Analyze(context, model, diagnostics);
             }
         }
+#endif
 
         // Resolve effective severity from .editorconfig and suppress None-severity diagnostics
         ApplySeverityOverrides(diagnostics, registry.Rules, configuration);

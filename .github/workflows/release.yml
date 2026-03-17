@@ -48,7 +48,7 @@ jobs:
       run: dotnet restore CsLint.slnx
 
     - name: Test
-      run: dotnet test CsLint.slnx -c Release --verbosity normal
+      run: dotnet test CsLint.slnx -c Release --verbosity normal -p:IncludeSemanticRules=true
 
     - name: Publish
       run: dotnet publish ${{ env.PROJECT_FILE }} -c Release -r ${{ matrix.rid }} --self-contained
@@ -100,7 +100,7 @@ jobs:
         dotnet-version: 10.0.x
 
     - name: Pack
-      run: dotnet pack ${{ env.PROJECT_FILE }} -c Release
+      run: dotnet pack ${{ env.PROJECT_FILE }} -c Release -p:IncludeSemanticRules=true
 
     - name: Push to NuGet.org
       run: dotnet nuget push artifacts/package/release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
