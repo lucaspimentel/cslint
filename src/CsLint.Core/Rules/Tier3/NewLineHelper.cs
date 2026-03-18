@@ -28,7 +28,7 @@ internal static class NewLineHelper
                     return true;
                 }
             }
-            else if (!trivia.IsKind(SyntaxKind.WhitespaceTrivia))
+            else if (!trivia.IsKind(SyntaxKind.WhitespaceTrivia) && !trivia.IsDirective)
             {
                 newlineCount = 0;
             }

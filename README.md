@@ -76,6 +76,9 @@ cslint --list-rules
 # Show resolved .editorconfig settings for a path
 cslint --show-config .
 cslint --show-config src/MyFile.cs
+
+# Show version
+cslint --version
 ```
 
 ### Exit codes

@@ -185,6 +185,32 @@ public class BlankLineAfterBlockRuleTests
         Assert.Empty(diagnostics);
     }
 
+    [Fact]
+    public void Analyze_BlockFollowedByDirectiveAndBlankLine_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C
+            {
+                void M()
+                {
+            #if DEBUG
+                    if (true)
+                    {
+                        return;
+                    }
+            #endif
+
+                    int x = 1;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, Enforced);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
     [Theory]
     [InlineData("if (x) { p += 2; continue; }")]
     [InlineData("if (x) { p += 2; break; }")]

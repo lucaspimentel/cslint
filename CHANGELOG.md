@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-03-18
+
+### Added
+- Add `--version` CLI option
+
+### Fixed
+- Fix CSLINT230 false positive when preprocessor directives appear between a block and the next statement
+- Fix test project build when semantic rules are excluded
+
 ## [1.2.0] - 2026-03-16
 
 ### Added

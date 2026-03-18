@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.Reflection;
 using System.Text.Json;
 using System.Text;
 using Cslint.Core.Config;
@@ -44,6 +45,11 @@ var semanticOption = new Option<bool>("--semantic")
     Description = "Enable semantic analysis for advanced rules",
 };
 
+var versionOption = new Option<bool>("--version")
+{
+    Description = "Show version information and exit",
+};
+
 var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorconfig")
 {
     pathArgument,
@@ -53,10 +59,21 @@ var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorcon
     listRulesOption,
     showConfigOption,
     semanticOption,
+    versionOption,
 };
 
 rootCommand.SetAction(async (parseResult, cancellationToken) =>
 {
+    if (parseResult.GetValue(versionOption))
+    {
+        string version = Assembly.GetEntryAssembly()
+            ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion ?? "unknown";
+
+        Console.WriteLine(version);
+        return 0;
+    }
+
     bool listRules = parseResult.GetValue(listRulesOption);
 
     if (listRules)
