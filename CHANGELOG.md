@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- Add 13 StyleCop pragma aliases for already-covered rules (SA1027, SA1028, SA1101, SA1121, SA1124, SA1206, SA1303, SA1312, SA1400, SA1500, SA1503, SA1507, SA1518)
+
 ## [1.2.1] - 2026-03-18
 
 ### Added

@@ -31,8 +31,30 @@ public sealed class RuleRegistryTests
     {
         IReadOnlyDictionary<string, List<string>> aliases = RuleRegistry.GetAliases();
 
-        // CSLINT001 (TrailingWhitespace) has no third-party aliases
-        Assert.False(aliases.ContainsKey("CSLINT001"));
+        // CSLINT003 (LineEnding) has no third-party aliases
+        Assert.False(aliases.ContainsKey("CSLINT003"));
+    }
+
+    [Theory]
+    [InlineData("SA1027", "CSLINT002")]
+    [InlineData("SA1028", "CSLINT001")]
+    [InlineData("SA1101", "CSLINT204")]
+    [InlineData("SA1121", "CSLINT208")]
+    [InlineData("SA1124", "CSLINT006")]
+    [InlineData("SA1206", "CSLINT205")]
+    [InlineData("SA1303", "CSLINT105")]
+    [InlineData("SA1312", "CSLINT103")]
+    [InlineData("SA1400", "CSLINT206")]
+    [InlineData("SA1500", "CSLINT202")]
+    [InlineData("SA1503", "CSLINT228")]
+    [InlineData("SA1507", "CSLINT008")]
+    [InlineData("SA1518", "CSLINT004")]
+    public void GetAliases_ContainsNewStyleCopMappings(string styleCopId, string cslintId)
+    {
+        IReadOnlyDictionary<string, List<string>> aliases = RuleRegistry.GetAliases();
+
+        Assert.True(aliases.ContainsKey(cslintId));
+        Assert.Contains(styleCopId, aliases[cslintId]);
     }
 
     [Fact]

@@ -91,4 +91,4 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ### Pragma alias additions for already-covered rules
 
-- [ ] **Add pragma aliases** for existing rules that already cover StyleCop equivalents: SA1027→CSLINT002, SA1028→CSLINT001, SA1121→CSLINT208, SA1124→CSLINT006, SA1206→CSLINT205, SA1312→CSLINT103, SA1400→CSLINT206, SA1500→CSLINT202, SA1503→CSLINT228, SA1507→CSLINT008, SA1518→CSLINT004
+- [x] **Add pragma aliases** for existing rules that already cover StyleCop equivalents: SA1027→CSLINT002, SA1028→CSLINT001, SA1101→CSLINT204, SA1121→CSLINT208, SA1124→CSLINT006, SA1206→CSLINT205, SA1303→CSLINT105, SA1312→CSLINT103, SA1400→CSLINT206, SA1500→CSLINT202, SA1503→CSLINT228, SA1507→CSLINT008, SA1518→CSLINT004

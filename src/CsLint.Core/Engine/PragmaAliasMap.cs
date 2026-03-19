@@ -6,10 +6,23 @@ internal static class PragmaAliasMap
         new(StringComparer.OrdinalIgnoreCase)
         {
             // StyleCop
+            ["SA1027"] = ["CSLINT002"],
+            ["SA1028"] = ["CSLINT001"],
+            ["SA1101"] = ["CSLINT204"],
+            ["SA1121"] = ["CSLINT208"],
+            ["SA1124"] = ["CSLINT006"],
+            ["SA1206"] = ["CSLINT205"],
             ["SA1300"] = ["CSLINT102"],
             ["SA1302"] = ["CSLINT101"],
+            ["SA1303"] = ["CSLINT105"],
             ["SA1306"] = ["CSLINT104"],
+            ["SA1312"] = ["CSLINT103"],
             ["SA1313"] = ["CSLINT103"],
+            ["SA1400"] = ["CSLINT206"],
+            ["SA1500"] = ["CSLINT202"],
+            ["SA1503"] = ["CSLINT228"],
+            ["SA1507"] = ["CSLINT008"],
+            ["SA1518"] = ["CSLINT004"],
 
             // Microsoft IDE
             ["IDE0003"] = ["CSLINT204"],

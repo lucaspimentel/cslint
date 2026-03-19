@@ -8,14 +8,14 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 
 | CsLint ID | Description | editorconfig Key | Third-Party IDs |
 |---|---|---|---|
-| CSLINT001 | Trailing whitespace | `trim_trailing_whitespace` | -- |
-| CSLINT002 | Indentation | `indent_style`, `indent_size` | -- |
+| CSLINT001 | Trailing whitespace | `trim_trailing_whitespace` | SA1028 |
+| CSLINT002 | Indentation | `indent_style`, `indent_size` | SA1027 |
 | CSLINT003 | Line endings | `end_of_line` | -- |
-| CSLINT004 | Final newline | `insert_final_newline` | -- |
+| CSLINT004 | Final newline | `insert_final_newline` | SA1518 |
 | CSLINT005 | Max line length | `max_line_length` | -- |
-| CSLINT006 | No `#region` directives | `csharp_no_region_directives` | -- |
+| CSLINT006 | No `#region` directives | `csharp_no_region_directives` | SA1124 |
 | CSLINT007 | File header | `file_header_template` | IDE0073 |
-| CSLINT008 | No multiple blank lines | `csharp_no_multiple_blank_lines` | IDE2000 |
+| CSLINT008 | No multiple blank lines | `csharp_no_multiple_blank_lines` | SA1507, IDE2000 |
 
 ### Tier 2 -- Naming Conventions
 
@@ -24,9 +24,9 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT100 | Type naming (PascalCase) | `dotnet_naming_rule` | -- |
 | CSLINT101 | Interface prefix (`I`) | `dotnet_naming_rule` | SA1302 |
 | CSLINT102 | Member naming (PascalCase) | `dotnet_naming_rule` | SA1300, IDE1006 |
-| CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1313, IDE1006 |
+| CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1312, SA1313, IDE1006 |
 | CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
-| CSLINT105 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | -- |
+| CSLINT105 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | SA1303 |
 
 ### Tier 3 -- Style Preferences
 
@@ -34,13 +34,13 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 |---|---|---|---|
 | CSLINT200 | `var` preference | `csharp_style_var_*` | IDE0007, IDE0008 |
 | CSLINT201 | Expression-bodied members | `csharp_style_expression_bodied_*` | IDE0021--IDE0027 |
-| CSLINT202 | Brace preference | `csharp_prefer_braces` | IDE0011 |
+| CSLINT202 | Brace preference | `csharp_prefer_braces` | SA1500, IDE0011 |
 | CSLINT203 | Namespace declarations | `csharp_style_namespace_declarations` | IDE0160, IDE0161 |
-| CSLINT204 | `this.` qualification | `dotnet_style_qualification_for_*` | IDE0003, IDE0009 |
-| CSLINT205 | Modifier ordering | `csharp_preferred_modifier_order` | IDE0036 |
-| CSLINT206 | Accessibility modifiers | `dotnet_style_require_accessibility_modifiers` | IDE0040 |
+| CSLINT204 | `this.` qualification | `dotnet_style_qualification_for_*` | SA1101, IDE0003, IDE0009 |
+| CSLINT205 | Modifier ordering | `csharp_preferred_modifier_order` | SA1206, IDE0036 |
+| CSLINT206 | Accessibility modifiers | `dotnet_style_require_accessibility_modifiers` | SA1400, IDE0040 |
 | CSLINT207 | Using directive placement | `csharp_using_directive_placement` | IDE0065 |
-| CSLINT208 | Predefined type preferences | `dotnet_style_predefined_type_for_*` | IDE0049 |
+| CSLINT208 | Predefined type preferences | `dotnet_style_predefined_type_for_*` | SA1121, IDE0049 |
 | CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0019, IDE0020, IDE0038, IDE0066 |
 | CSLINT210 | Null checking | `csharp_style_*_null_check` | IDE0029--IDE0031, IDE0041 |
 | CSLINT211 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | IDE0063 |
@@ -60,7 +60,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT225 | Simplify interpolation | `dotnet_style_prefer_simplified_interpolation` | IDE0071 |
 | CSLINT226 | Index operator (`^`) | `csharp_style_prefer_index_operator` | IDE0056 |
 | CSLINT227 | Range operator (`..`) | `csharp_style_prefer_range_operator` | IDE0057 |
-| CSLINT228 | Embedded statements on own line | `csharp_style_allow_embedded_statements_on_same_line` | IDE2001 |
+| CSLINT228 | Embedded statements on own line | `csharp_style_allow_embedded_statements_on_same_line` | SA1503, IDE2001 |
 | CSLINT229 | No blank line between consecutive braces | `csharp_style_allow_blank_lines_between_consecutive_braces` | IDE2002 |
 | CSLINT230 | Blank line required after block | `csharp_style_allow_blank_line_after_block` | IDE2003 |
 | CSLINT231 | No blank line after constructor initializer colon | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer` | IDE2004 |
@@ -94,10 +94,23 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 
 | Third-Party ID | CsLint ID(s) | Source |
 |---|---|---|
+| SA1027 | CSLINT002 | StyleCop |
+| SA1028 | CSLINT001 | StyleCop |
+| SA1101 | CSLINT204 | StyleCop |
+| SA1121 | CSLINT208 | StyleCop |
+| SA1124 | CSLINT006 | StyleCop |
+| SA1206 | CSLINT205 | StyleCop |
 | SA1300 | CSLINT102 | StyleCop |
 | SA1302 | CSLINT101 | StyleCop |
+| SA1303 | CSLINT105 | StyleCop |
 | SA1306 | CSLINT104 | StyleCop |
+| SA1312 | CSLINT103 | StyleCop |
 | SA1313 | CSLINT103 | StyleCop |
+| SA1400 | CSLINT206 | StyleCop |
+| SA1500 | CSLINT202 | StyleCop |
+| SA1503 | CSLINT228 | StyleCop |
+| SA1507 | CSLINT008 | StyleCop |
+| SA1518 | CSLINT004 | StyleCop |
 | IDE0003, IDE0009 | CSLINT204 | Microsoft |
 | IDE0007, IDE0008 | CSLINT200 | Microsoft |
 | IDE0011 | CSLINT202 | Microsoft |
