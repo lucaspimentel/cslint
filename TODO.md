@@ -28,3 +28,67 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
   - Trade-off: simple-name matching only (no semantic model), so name collisions could suppress diagnostics on unrelated types — rare in practice
   - Single-file mode (`FileLinter.LintFile`) would fall back to current behavior (flag everything)
   - Main cost is architectural: breaks the clean file-at-a-time design for marginal gain on an `Info`-severity rule
+
+## StyleCop rule candidates
+
+Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/documentation
+
+### Spacing rules (Tier 3, syntax-only)
+
+- [ ] **SA1000 — Keyword spacing** (Tier 3) — enforce space after control-flow keywords (`if (`, `for (`, `while (`) and no space after expression keywords (`typeof(`, `nameof(`, `sizeof(`). Alias: SA1000
+- [ ] **SA1001 — Comma spacing** (Tier 3) — no space before comma, single space after comma. Alias: SA1001
+- [ ] **SA1002 — Semicolon spacing** (Tier 3) — no space before semicolon in `for` statements, space after when followed by next clause. Alias: SA1002
+- [ ] **SA1003 — Operator spacing** (Tier 3) — binary operators must have single space on both sides, unary operators no space between operator and operand. Alias: SA1003
+- [ ] **SA1005 — Single-line comment spacing** (Tier 3) — `//` must be followed by a single space before comment text. Alias: SA1005
+- [ ] **SA1008/SA1009 — Parenthesis spacing** (Tier 3) — no space after opening paren, no space before closing paren. Aliases: SA1008, SA1009
+- [ ] **SA1012/SA1013 — Brace spacing** (Tier 3) — correct spacing around opening/closing braces. Aliases: SA1012, SA1013
+- [ ] **SA1024 — Colon spacing** (Tier 3) — colons in base lists, conditional expressions, etc. must have correct spacing. Alias: SA1024
+- [ ] **SA1025 — No multiple whitespace** (Tier 3) — no consecutive whitespace characters in a row (except indentation). Alias: SA1025
+
+### Formatting rules (Tier 1, text-level)
+
+- [ ] **SA1412 — Store files as UTF-8** (Tier 1) — detect non-UTF-8 BOMs (UTF-16 LE/BE, UTF-32) and optionally require/forbid UTF-8 BOM. Just check first 2-4 bytes for BOM markers. Alias: SA1412
+
+### Ordering rules (Tier 3, syntax-only)
+
+- [ ] **SA1201 — Element ordering** (Tier 3) — enforce member ordering within types: fields → constructors → properties → indexers → methods → etc. Alias: SA1201
+- [ ] **SA1202 — Element access ordering** (Tier 3) — enforce access modifier ordering: public → internal → protected internal → protected → private. Alias: SA1202
+- [ ] **SA1203 — Constants before fields** (Tier 3) — constants must appear before non-constant fields. Alias: SA1203
+- [ ] **SA1204 — Static before instance** (Tier 3) — static members must appear before instance members. Alias: SA1204
+- [ ] **SA1214 — Readonly before non-readonly** (Tier 3) — readonly fields must appear before mutable fields. Alias: SA1214
+- [ ] **SA1212 — Property accessor ordering** (Tier 3) — get accessor must appear before set accessor. Alias: SA1212
+- [ ] **SA1213 — Event accessor ordering** (Tier 3) — add accessor must appear before remove accessor. Alias: SA1213
+- [ ] **SA1208/SA1210 — Using directive ordering** (Tier 3) — System usings first, alphabetical ordering. Enhance existing CSLINT207. Aliases: SA1208, SA1209, SA1210, SA1211, SA1216, SA1217
+
+### Readability rules (Tier 3, syntax-only)
+
+- [ ] **SA1106 — No empty statements** (Tier 3) — flag empty statements (lone semicolons). Alias: SA1106
+- [ ] **SA1107 — Single statement per line** (Tier 3) — no multiple statements on one line. Alias: SA1107
+- [ ] **SA1131 — No Yoda conditions** (Tier 3) — constant must not appear on left side of comparison. Alias: SA1131
+- [ ] **SA1132 — No combined field declarations** (Tier 3) — each field must be declared on its own line. Alias: SA1132
+- [ ] **SA1133 — No combined attributes** (Tier 3) — each attribute must be in its own attribute list. Alias: SA1133
+- [ ] **SA1134 — Attributes on own line** (Tier 3) — attributes must not share line with the element declaration. Alias: SA1134
+- [ ] **SA1136 — Enum values on separate lines** (Tier 3) — each enum member must be on its own line. Alias: SA1136
+
+### Layout rules (Tier 3, syntax-only)
+
+- [ ] **SA1505 — No blank line after opening brace** (Tier 3) — opening braces must not be followed by a blank line. Alias: SA1505
+- [ ] **SA1508 — No blank line before closing brace** (Tier 3) — closing braces must not be preceded by a blank line. Alias: SA1508
+- [ ] **SA1509 — No blank line before opening brace** (Tier 3) — opening braces must not be preceded by a blank line. Alias: SA1509
+- [ ] **SA1516 — Elements separated by blank line** (Tier 3) — adjacent elements (methods, properties, etc.) must be separated by a blank line. Alias: SA1516
+- [ ] **SA1517 — No blank lines at start of file** (Tier 1) — code must not start with blank lines. Alias: SA1517
+
+### Maintainability rules (Tier 3, syntax-only)
+
+- [ ] **SA1401 — Fields must be private** (Tier 3) — non-private fields (except const/static readonly) should be flagged. Alias: SA1401
+- [ ] **SA1402 — Single type per file** (Tier 3) — each file may only contain a single type declaration. Alias: SA1402
+- [ ] **SA1413 — Trailing commas in multi-line initializers** (Tier 3) — multi-line initializers/enums should use trailing commas. Alias: SA1413
+
+### Naming rules (Tier 2, syntax walker)
+
+- [ ] **SA1314 — Type parameter names must begin with T** (Tier 2) — generic type parameter names must start with capital T. Alias: SA1314
+- [ ] **SA1304/SA1307/SA1311 — Accessible/readonly/static field casing** (Tier 2) — enhance CSLINT104 FieldNamingRule to handle non-private readonly and static readonly fields requiring PascalCase. Aliases: SA1304, SA1307, SA1311
+
+### Pragma alias additions for already-covered rules
+
+- [ ] **Add pragma aliases** for existing rules that already cover StyleCop equivalents: SA1027→CSLINT002, SA1028→CSLINT001, SA1121→CSLINT208, SA1124→CSLINT006, SA1206→CSLINT205, SA1312→CSLINT103, SA1400→CSLINT206, SA1500→CSLINT202, SA1503→CSLINT228, SA1507→CSLINT008, SA1518→CSLINT004
