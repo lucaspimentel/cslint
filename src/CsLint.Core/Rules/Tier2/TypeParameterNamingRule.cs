@@ -27,7 +27,7 @@ public sealed class TypeParameterNamingRule : IRuleDefinition, INamingRuleHandle
     {
         string name = node.Identifier.ValueText;
 
-        if (name.Length >= 1 && name[0] == 'T' && (name.Length == 1 || char.IsUpper(name[1])))
+        if (name.Length >= 1 && name[0] == 'T' && (name.Length == 1 || char.IsUpper(name[1]) || char.IsDigit(name[1])))
         {
             return;
         }

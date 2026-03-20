@@ -30,6 +30,8 @@ public class TypeParameterNamingRuleTests
     [InlineData("class C<TKey> { }")]
     [InlineData("class C<TValue> { }")]
     [InlineData("class C<T, TKey, TValue> { }")]
+    [InlineData("class C<T0> { }")]
+    [InlineData("class C<T0, T1, T2> { }")]
     public void Analyze_TypeParameterStartingWithT_ReturnsNoDiagnostics(string source)
     {
         RuleContext context = TestHelper.CreateContext(source, DefaultConfig());
