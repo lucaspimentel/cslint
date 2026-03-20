@@ -29,6 +29,11 @@ internal static class PragmaAliasMap
             ["SA1133"] = ["CSLINT244"],
             ["SA1134"] = ["CSLINT245"],
             ["SA1136"] = ["CSLINT246"],
+            ["SA1505"] = ["CSLINT247"],
+            ["SA1508"] = ["CSLINT248"],
+            ["SA1509"] = ["CSLINT249"],
+            ["SA1516"] = ["CSLINT250"],
+            ["SA1517"] = ["CSLINT009"],
             ["SA1518"] = ["CSLINT004"],
 
             // Microsoft IDE

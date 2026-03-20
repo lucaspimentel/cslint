@@ -27,6 +27,7 @@ public sealed class RuleRegistry
         registry.Register(new NoRegionDirectivesRule());
         registry.Register(new FileHeaderRule());
         registry.Register(new MultipleBlankLinesRule());
+        registry.Register(new NoBlankLinesAtStartOfFileRule());
 
         // Tier 2: Naming conventions (syntax walker)
         registry.Register(new TypeNamingRule());
@@ -85,6 +86,10 @@ public sealed class RuleRegistry
         registry.Register(new NoCombinedAttributesRule());
         registry.Register(new AttributesOnOwnLineRule());
         registry.Register(new EnumValuesOnSeparateLinesRule());
+        registry.Register(new NoBlankLineAfterOpeningBraceRule());
+        registry.Register(new NoBlankLineBeforeClosingBraceRule());
+        registry.Register(new NoBlankLineBeforeOpeningBraceRule());
+        registry.Register(new ElementsSeparatedByBlankLineRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

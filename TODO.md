@@ -72,11 +72,11 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ### Layout rules (Tier 3, syntax-only)
 
-- [ ] **SA1505 — No blank line after opening brace** (Tier 3) — opening braces must not be followed by a blank line. Alias: SA1505
-- [ ] **SA1508 — No blank line before closing brace** (Tier 3) — closing braces must not be preceded by a blank line. Alias: SA1508
-- [ ] **SA1509 — No blank line before opening brace** (Tier 3) — opening braces must not be preceded by a blank line. Alias: SA1509
-- [ ] **SA1516 — Elements separated by blank line** (Tier 3) — adjacent elements (methods, properties, etc.) must be separated by a blank line. Alias: SA1516
-- [ ] **SA1517 — No blank lines at start of file** (Tier 1) — code must not start with blank lines. Alias: SA1517
+- [x] **SA1505 — No blank line after opening brace** (Tier 3) — opening braces must not be followed by a blank line. Alias: SA1505 — implemented as CSLINT247
+- [x] **SA1508 — No blank line before closing brace** (Tier 3) — closing braces must not be preceded by a blank line. Alias: SA1508 — implemented as CSLINT248
+- [x] **SA1509 — No blank line before opening brace** (Tier 3) — opening braces must not be preceded by a blank line. Alias: SA1509 — implemented as CSLINT249
+- [x] **SA1516 — Elements separated by blank line** (Tier 3) — adjacent elements (methods, properties, etc.) must be separated by a blank line. Alias: SA1516 — implemented as CSLINT250
+- [x] **SA1517 — No blank lines at start of file** (Tier 1) — code must not start with blank lines. Alias: SA1517 — implemented as CSLINT009
 
 ### Maintainability rules (Tier 3, syntax-only)
 
