@@ -35,15 +35,15 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ### Spacing rules (Tier 3, syntax-only)
 
-- [ ] **SA1000 — Keyword spacing** (Tier 3) — enforce space after control-flow keywords (`if (`, `for (`, `while (`) and no space after expression keywords (`typeof(`, `nameof(`, `sizeof(`). Alias: SA1000
-- [ ] **SA1001 — Comma spacing** (Tier 3) — no space before comma, single space after comma. Alias: SA1001
-- [ ] **SA1002 — Semicolon spacing** (Tier 3) — no space before semicolon in `for` statements, space after when followed by next clause. Alias: SA1002
-- [ ] **SA1003 — Operator spacing** (Tier 3) — binary operators must have single space on both sides, unary operators no space between operator and operand. Alias: SA1003
-- [ ] **SA1005 — Single-line comment spacing** (Tier 3) — `//` must be followed by a single space before comment text. Alias: SA1005
-- [ ] **SA1008/SA1009 — Parenthesis spacing** (Tier 3) — no space after opening paren, no space before closing paren. Aliases: SA1008, SA1009
-- [ ] **SA1012/SA1013 — Brace spacing** (Tier 3) — correct spacing around opening/closing braces. Aliases: SA1012, SA1013
-- [ ] **SA1024 — Colon spacing** (Tier 3) — colons in base lists, conditional expressions, etc. must have correct spacing. Alias: SA1024
-- [ ] **SA1025 — No multiple whitespace** (Tier 3) — no consecutive whitespace characters in a row (except indentation). Alias: SA1025
+- [x] **SA1000 — Keyword spacing** (Tier 3) — enforce space after control-flow keywords (`if (`, `for (`, `while (`) and no space after expression keywords (`typeof(`, `sizeof(`). Alias: SA1000 — implemented as CSLINT254
+- [x] **SA1001 — Comma spacing** (Tier 3) — no space before comma, single space after comma. Alias: SA1001 — implemented as CSLINT255
+- [x] **SA1002 — Semicolon spacing** (Tier 3) — no space before semicolon in `for` statements, space after when followed by next clause. Alias: SA1002 — implemented as CSLINT256
+- [x] **SA1003 — Operator spacing** (Tier 3) — binary operators must have single space on both sides, unary operators no space between operator and operand. Alias: SA1003 — implemented as CSLINT257
+- [x] **SA1005 — Single-line comment spacing** (Tier 3) — `//` must be followed by a single space before comment text. Alias: SA1005 — implemented as CSLINT258
+- [x] **SA1008/SA1009 — Parenthesis spacing** (Tier 3) — no space after opening paren, no space before closing paren. Aliases: SA1008, SA1009 — implemented as CSLINT259
+- [x] **SA1012/SA1013 — Brace spacing** (Tier 3) — correct spacing around opening/closing braces. Aliases: SA1012, SA1013 — implemented as CSLINT260
+- [x] **SA1024 — Colon spacing** (Tier 3) — colons in base lists, conditional expressions, etc. must have correct spacing. Alias: SA1024 — implemented as CSLINT261
+- [x] **SA1025 — No multiple whitespace** (Tier 3) — no consecutive whitespace characters in a row (except indentation). Alias: SA1025 — implemented as CSLINT262
 
 ### Formatting rules (Tier 1, text-level)
 

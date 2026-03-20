@@ -94,6 +94,15 @@ public sealed class RuleRegistry
         registry.Register(new FieldsMustBePrivateRule());
         registry.Register(new SingleTypePerFileRule());
         registry.Register(new TrailingCommasRule());
+        registry.Register(new KeywordSpacingRule());
+        registry.Register(new CommaSpacingRule());
+        registry.Register(new SemicolonSpacingRule());
+        registry.Register(new OperatorSpacingRule());
+        registry.Register(new CommentSpacingRule());
+        registry.Register(new ParenthesisSpacingRule());
+        registry.Register(new BraceSpacingRule());
+        registry.Register(new ColonSpacingRule());
+        registry.Register(new NoMultipleWhitespaceRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

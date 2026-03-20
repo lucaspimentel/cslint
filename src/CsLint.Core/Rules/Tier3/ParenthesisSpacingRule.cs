@@ -1,0 +1,119 @@
+using Cslint.Core.Config;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+
+namespace Cslint.Core.Rules.Tier3;
+
+public sealed class ParenthesisSpacingRule : IRuleDefinition
+{
+    private const string ConfigKey = "csharp_parenthesis_spacing";
+
+    public string RuleId => "CSLINT259";
+
+    public string Name => "ParenthesisSpacing";
+
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+
+    public LintSeverity DefaultSeverity => LintSeverity.Warning;
+
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        if (!IsEnabled(context.Configuration))
+        {
+            return [];
+        }
+
+        var diagnostics = new List<LintDiagnostic>();
+        SyntaxToken token = context.Root.GetFirstToken();
+
+        while (token != default)
+        {
+            if (token.IsKind(SyntaxKind.OpenParenToken))
+            {
+                // No space after opening paren
+                if (HasTrailingSpace(token))
+                {
+                    SyntaxToken next = token.GetNextToken();
+
+                    // Allow space if followed by newline (multi-line expression)
+                    if (next != default && !next.IsKind(SyntaxKind.CloseParenToken))
+                    {
+                        if (!HasTrailingNewline(token))
+                        {
+                            FileLinePositionSpan span = token.GetLocation().GetLineSpan();
+
+                            diagnostics.Add(
+                                new LintDiagnostic
+                                {
+                                    RuleId = RuleId,
+                                    Message = "No space should appear after an opening parenthesis",
+                                    Severity = DefaultSeverity,
+                                    FilePath = span.Path,
+                                    Line = span.StartLinePosition.Line + 1,
+                                    Column = span.StartLinePosition.Character + 1,
+                                });
+                        }
+                    }
+                }
+            }
+            else if (token.IsKind(SyntaxKind.CloseParenToken))
+            {
+                // No space before closing paren
+                SyntaxToken previous = token.GetPreviousToken();
+
+                if (previous != default && !previous.IsKind(SyntaxKind.OpenParenToken) &&
+                    HasTrailingSpace(previous) && !HasTrailingNewline(previous))
+                {
+                    FileLinePositionSpan span = token.GetLocation().GetLineSpan();
+
+                    diagnostics.Add(
+                        new LintDiagnostic
+                        {
+                            RuleId = RuleId,
+                            Message = "No space should appear before a closing parenthesis",
+                            Severity = DefaultSeverity,
+                            FilePath = span.Path,
+                            Line = span.StartLinePosition.Line + 1,
+                            Column = span.StartLinePosition.Character + 1,
+                        });
+                }
+            }
+
+            token = token.GetNextToken();
+        }
+
+        return diagnostics;
+    }
+
+    private static bool HasTrailingSpace(SyntaxToken token)
+    {
+        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
+        {
+            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool HasTrailingNewline(SyntaxToken token)
+    {
+        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
+        {
+            if (trivia.IsKind(SyntaxKind.EndOfLineTrivia))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
