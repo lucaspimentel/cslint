@@ -13,7 +13,7 @@
 
     <!-- NuGet -->
     <PackageId>cslint</PackageId>
-    <Version>1.3.0</Version>
+    <Version>1.3.1</Version>
     <Authors>Lucas Pimentel</Authors>
     <Description>A fast C# linter that reads rules from .editorconfig. Uses Roslyn syntax-only parsing for fast single-file linting.</Description>
     <Copyright>Copyright (c) Lucas Pimentel 2026</Copyright>

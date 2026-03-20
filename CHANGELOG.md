@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.3.1] - 2026-03-20
 
 ### Fixed
 - Fix CSLINT106 false positives on type parameters with digit suffixes (e.g., `T0`, `T1`, `T2`)
