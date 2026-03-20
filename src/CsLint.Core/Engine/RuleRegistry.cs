@@ -121,6 +121,7 @@ public sealed class RuleRegistry
         registry.Register(new SelfAssignmentRule());
         registry.Register(new UnnecessaryCastRule());
         registry.Register(new RedundantAwaitRule());
+        registry.Register(new UnusedPrivateMemberRule());
 #endif
 
         return registry;

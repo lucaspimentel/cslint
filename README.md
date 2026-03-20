@@ -103,7 +103,7 @@ Naming conventions: PascalCase types/members, `I`-prefix interfaces, camelCase p
 Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, member ordering, and more.
 
 ### Tier 4 — Semantic (requires `--semantic`)
-Rules that use the Roslyn semantic model: unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await.
+Rules that use the Roslyn semantic model: unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await, unused private members.
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the complete rule reference with editorconfig keys and analyzer ID mappings.
 

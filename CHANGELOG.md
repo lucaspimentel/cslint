@@ -19,6 +19,7 @@
 - Add 13 StyleCop pragma aliases for already-covered rules (SA1027, SA1028, SA1101, SA1121, SA1124, SA1206, SA1303, SA1312, SA1400, SA1500, SA1503, SA1507, SA1518)
 - Add 22 pragma aliases for new StyleCop rules (SA1000–SA1136, SA1401–SA1517)
 - Add 12 pragma aliases for ordering rules (SA1201–SA1204, SA1208–SA1211, SA1214, SA1216, SA1217)
+- Add CSLINT308 — unused private member detection (fields, methods, properties, events) with pragma aliases IDE0051, IDE0052, CS0169, CS0414
 
 ### Changed
 - Enhance CSLINT104 (FieldNamingRule) to check non-private readonly and static readonly fields for PascalCase (SA1304, SA1307, SA1311)

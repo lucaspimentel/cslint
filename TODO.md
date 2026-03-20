@@ -15,7 +15,7 @@ Full analysis: [docs/rule-mappings.md — Future Candidates](docs/rule-mappings.
 - [x] **Unreachable code** — surface CS0162 from `SemanticModel.GetDiagnostics()` — implemented as CSLINT302
 - [x] **Unnecessary casts** — detect redundant casts where both types are in-source or BCL (symbol resolution reliable) — implemented as CSLINT306
 - [x] **Redundant await** — detect `async` methods that just `return await` a single call; `Task`/`ValueTask` are BCL so symbol resolution is reliable — implemented as CSLINT307
-- [ ] **Unused private members** — fields/methods/properties with `private` access declared but never referenced within the compilation
+- [x] **Unused private members** — fields/methods/properties with `private` access declared but never referenced within the compilation — implemented as CSLINT308
 - [x] **Duplicate enum values** — constant value analysis is purely local, no external type resolution needed — implemented as CSLINT303
 - [x] **Self-assignment detection** (`x = x`) — symbol equality check, no external type resolution needed — implemented as CSLINT304
 - [x] **Empty catch blocks** — catch blocks that swallow exceptions without logging/rethrowing; structural check on catch clause body — implemented as CSLINT305

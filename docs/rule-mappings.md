@@ -120,6 +120,7 @@ These rules use the Roslyn semantic model and are only active when the `--semant
 | CSLINT304 | Self-assignment | `dotnet_diagnostic.CSLINT304.severity` | CS1717 |
 | CSLINT306 | Unnecessary cast | `dotnet_diagnostic.CSLINT306.severity` | IDE0004 |
 | CSLINT307 | Redundant await | `dotnet_diagnostic.CSLINT307.severity` | -- |
+| CSLINT308 | Unused private member | `dotnet_diagnostic.CSLINT308.severity` | IDE0051, IDE0052, CS0169, CS0414 |
 
 ## Pragma Alias Support
 
@@ -218,6 +219,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE2005 | CSLINT232 | Microsoft |
 | IDE2006 | CSLINT233 | Microsoft |
 | IDE0037 | CSLINT234 | Microsoft |
+| IDE0051 | CSLINT308 | Microsoft |
+| IDE0052 | CSLINT308 | Microsoft |
 | IDE0075 | CSLINT235 | Microsoft |
 | IDE0170 | CSLINT236 | Microsoft |
 | CA1821 | CSLINT237 | Microsoft |
@@ -226,7 +229,9 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0004 | CSLINT306 | Microsoft |
 | IDE0005 | CSLINT300 | Microsoft |
 | CS0162 | CSLINT302 | C# compiler |
+| CS0169 | CSLINT308 | C# compiler |
 | CS0219 | CSLINT301 | C# compiler |
+| CS0414 | CSLINT308 | C# compiler |
 | CS1717 | CSLINT304 | C# compiler |
 | CA1069 | CSLINT303 | Microsoft |
 
@@ -247,7 +252,7 @@ These rules can be implemented with syntax-only parsing:
 
 These rules require type information, flow analysis, or semantic model and are not currently implemented (some may become Tier 4 candidates in the future):
 
-IDE0001, IDE0002, IDE0010, IDE0016, IDE0018, IDE0032, IDE0033, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0050, IDE0051, IDE0052, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380, IDE1005
+IDE0001, IDE0002, IDE0010, IDE0016, IDE0018, IDE0032, IDE0033, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0050, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380, IDE1005
 
 ### Not Applicable
 
