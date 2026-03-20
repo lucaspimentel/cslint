@@ -99,6 +99,12 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT261 | Colon spacing | `csharp_colon_spacing` | SA1024 |
 | CSLINT262 | No multiple whitespace | `csharp_no_multiple_whitespace` | SA1025 |
 | CSLINT263 | Accessor ordering | `csharp_accessor_ordering` | SA1212, SA1213 |
+| CSLINT264 | Readonly fields before mutable | `csharp_readonly_before_mutable` | SA1214 |
+| CSLINT265 | Constants before fields | `csharp_constants_before_fields` | SA1203 |
+| CSLINT266 | Static members before instance | `csharp_static_before_instance` | SA1204 |
+| CSLINT267 | Element access modifier ordering | `csharp_element_access_ordering` | SA1202 |
+| CSLINT268 | Element kind ordering | `csharp_element_ordering` | SA1201 |
+| CSLINT269 | Using directive ordering | `csharp_using_directive_ordering` | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
@@ -142,8 +148,14 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | SA1133 | CSLINT244 | StyleCop |
 | SA1134 | CSLINT245 | StyleCop |
 | SA1136 | CSLINT246 | StyleCop |
-| SA1212, SA1213 | CSLINT263 | StyleCop |
+| SA1201 | CSLINT268 | StyleCop |
+| SA1202 | CSLINT267 | StyleCop |
+| SA1203 | CSLINT265 | StyleCop |
+| SA1204 | CSLINT266 | StyleCop |
 | SA1206 | CSLINT205 | StyleCop |
+| SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 | CSLINT269 | StyleCop |
+| SA1212, SA1213 | CSLINT263 | StyleCop |
+| SA1214 | CSLINT264 | StyleCop |
 | SA1300 | CSLINT102 | StyleCop |
 | SA1302 | CSLINT101 | StyleCop |
 | SA1303 | CSLINT105 | StyleCop |

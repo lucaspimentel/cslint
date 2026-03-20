@@ -4,6 +4,12 @@
 
 ### Added
 - Add CSLINT263 — accessor ordering: get before set/init in properties, add before remove in events (SA1212, SA1213)
+- Add CSLINT264 — readonly fields must appear before mutable fields (SA1214)
+- Add CSLINT265 — constant fields must appear before non-constant fields (SA1203)
+- Add CSLINT266 — static members must appear before instance members of the same kind (SA1204)
+- Add CSLINT267 — element access modifier ordering: public → internal → protected → private (SA1202)
+- Add CSLINT268 — element kind ordering: fields → constructors → properties → methods → nested types (SA1201)
+- Add CSLINT269 — using directive ordering: System first, alphabetical, regular → static → alias (SA1208, SA1209, SA1210, SA1211, SA1216, SA1217)
 - Add CSLINT010 — store files as UTF-8 encoding check (SA1412), with pragma alias SA1412
 - Add 7 StyleCop readability rules: CSLINT240 (no empty statements), CSLINT241 (single statement per line), CSLINT242 (no Yoda conditions), CSLINT243 (no combined field declarations), CSLINT244 (no combined attributes), CSLINT245 (attributes on own line), CSLINT246 (enum values on separate lines)
 - Add 5 StyleCop layout rules: CSLINT009 (no blank lines at start of file), CSLINT247 (no blank line after opening brace), CSLINT248 (no blank line before closing brace), CSLINT249 (no blank line before opening brace), CSLINT250 (elements separated by blank line)
@@ -12,6 +18,7 @@
 - Add 9 StyleCop spacing rules: CSLINT254 (keyword spacing), CSLINT255 (comma spacing), CSLINT256 (semicolon spacing), CSLINT257 (operator spacing), CSLINT258 (comment spacing), CSLINT259 (parenthesis spacing), CSLINT260 (brace spacing), CSLINT261 (colon spacing), CSLINT262 (no multiple whitespace)
 - Add 13 StyleCop pragma aliases for already-covered rules (SA1027, SA1028, SA1101, SA1121, SA1124, SA1206, SA1303, SA1312, SA1400, SA1500, SA1503, SA1507, SA1518)
 - Add 22 pragma aliases for new StyleCop rules (SA1000–SA1136, SA1401–SA1517)
+- Add 12 pragma aliases for ordering rules (SA1201–SA1204, SA1208–SA1211, SA1214, SA1216, SA1217)
 
 ### Changed
 - Enhance CSLINT104 (FieldNamingRule) to check non-private readonly and static readonly fields for PascalCase (SA1304, SA1307, SA1311)

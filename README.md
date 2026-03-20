@@ -100,7 +100,7 @@ Text-level checks: indentation, line endings, whitespace, max line length, `#reg
 Naming conventions: PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.
 
 ### Tier 3 — Style
-Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, and more.
+Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, member ordering, and more.
 
 ### Tier 4 — Semantic (requires `--semantic`)
 Rules that use the Roslyn semantic model: unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await.

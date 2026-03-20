@@ -105,6 +105,12 @@ public sealed class RuleRegistry
         registry.Register(new ColonSpacingRule());
         registry.Register(new NoMultipleWhitespaceRule());
         registry.Register(new AccessorOrderingRule());
+        registry.Register(new ReadonlyFieldOrderRule());
+        registry.Register(new ConstantFieldOrderRule());
+        registry.Register(new StaticMemberOrderRule());
+        registry.Register(new ElementAccessOrderRule());
+        registry.Register(new ElementOrderRule());
+        registry.Register(new UsingDirectiveOrderRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

@@ -32,7 +32,7 @@ Four projects in `CsLint.slnx`:
 
 - **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length, no `#region` directives, file header, multiple blank lines, no blank lines at start of file, UTF-8 encoding). No syntax tree needed.
 - **Tier2** (`Rules/Tier2/`) — naming convention checks using `CSharpSyntaxWalker` (type naming, interface prefix, member naming, field naming, type parameter naming, etc.). Shared `NamingHelper` utility.
-- **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, sealed types, empty catch blocks, spacing, readability, layout, maintainability rules, etc.).
+- **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, sealed types, empty catch blocks, spacing, readability, layout, maintainability, ordering rules, etc.).
 - **Tier4** (`Rules/Tier4/`) — semantic analysis rules requiring Roslyn `SemanticModel` (unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await). Only active with `--semantic` flag.
 
 ### Config key conventions by tier
