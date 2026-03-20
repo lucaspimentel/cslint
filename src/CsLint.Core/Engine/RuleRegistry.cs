@@ -104,6 +104,7 @@ public sealed class RuleRegistry
         registry.Register(new BraceSpacingRule());
         registry.Register(new ColonSpacingRule());
         registry.Register(new NoMultipleWhitespaceRule());
+        registry.Register(new AccessorOrderingRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

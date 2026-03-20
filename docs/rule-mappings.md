@@ -98,6 +98,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT260 | Brace spacing | `csharp_brace_spacing` | SA1012, SA1013 |
 | CSLINT261 | Colon spacing | `csharp_colon_spacing` | SA1024 |
 | CSLINT262 | No multiple whitespace | `csharp_no_multiple_whitespace` | SA1025 |
+| CSLINT263 | Accessor ordering | `csharp_accessor_ordering` | SA1212, SA1213 |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
@@ -141,6 +142,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | SA1133 | CSLINT244 | StyleCop |
 | SA1134 | CSLINT245 | StyleCop |
 | SA1136 | CSLINT246 | StyleCop |
+| SA1212, SA1213 | CSLINT263 | StyleCop |
 | SA1206 | CSLINT205 | StyleCop |
 | SA1300 | CSLINT102 | StyleCop |
 | SA1302 | CSLINT101 | StyleCop |

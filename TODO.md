@@ -56,8 +56,8 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 - [ ] **SA1203 — Constants before fields** (Tier 3) — constants must appear before non-constant fields. Alias: SA1203
 - [ ] **SA1204 — Static before instance** (Tier 3) — static members must appear before instance members. Alias: SA1204
 - [ ] **SA1214 — Readonly before non-readonly** (Tier 3) — readonly fields must appear before mutable fields. Alias: SA1214
-- [ ] **SA1212 — Property accessor ordering** (Tier 3) — get accessor must appear before set accessor. Alias: SA1212
-- [ ] **SA1213 — Event accessor ordering** (Tier 3) — add accessor must appear before remove accessor. Alias: SA1213
+- [x] **SA1212 — Property accessor ordering** (Tier 3) — get accessor must appear before set accessor. Alias: SA1212
+- [x] **SA1213 — Event accessor ordering** (Tier 3) — add accessor must appear before remove accessor. Alias: SA1213
 - [ ] **SA1208/SA1210 — Using directive ordering** (Tier 3) — System usings first, alphabetical ordering. Enhance existing CSLINT207. Aliases: SA1208, SA1209, SA1210, SA1211, SA1216, SA1217
 
 ### Readability rules (Tier 3, syntax-only)

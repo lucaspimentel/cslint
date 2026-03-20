@@ -20,6 +20,8 @@ internal static class PragmaAliasMap
             ["SA1024"] = ["CSLINT261"],
             ["SA1025"] = ["CSLINT262"],
             ["SA1101"] = ["CSLINT204"],
+            ["SA1212"] = ["CSLINT263"],
+            ["SA1213"] = ["CSLINT263"],
             ["SA1121"] = ["CSLINT208"],
             ["SA1124"] = ["CSLINT006"],
             ["SA1206"] = ["CSLINT205"],
