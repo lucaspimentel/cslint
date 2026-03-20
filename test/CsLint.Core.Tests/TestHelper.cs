@@ -11,7 +11,8 @@ internal static class TestHelper
     public static RuleContext CreateContext(
         string source,
         LintConfiguration? configuration = null,
-        string filePath = "test.cs")
+        string filePath = "test.cs",
+        byte[]? filePrefix = null)
     {
         SourceText sourceText = SourceText.From(source);
         SyntaxTree tree = CSharpSyntaxTree.ParseText(sourceText, path: filePath);
@@ -23,6 +24,7 @@ internal static class TestHelper
             SyntaxTree = tree,
             Root = (CSharpSyntaxNode)tree.GetRoot(),
             Configuration = configuration ?? LintConfiguration.Empty,
+            FilePrefix = filePrefix,
         };
     }
 }

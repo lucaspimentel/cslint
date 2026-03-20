@@ -17,6 +17,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT007 | File header | `file_header_template` | IDE0073 |
 | CSLINT008 | No multiple blank lines | `csharp_no_multiple_blank_lines` | SA1507, IDE2000 |
 | CSLINT009 | No blank lines at start of file | `csharp_no_blank_lines_at_start_of_file` | SA1517 |
+| CSLINT010 | Store files as UTF-8 | `csharp_store_files_as_utf8` | SA1412 |
 
 ### Tier 2 -- Naming Conventions
 
@@ -154,6 +155,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | SA1400 | CSLINT206 | StyleCop |
 | SA1401 | CSLINT251 | StyleCop |
 | SA1402 | CSLINT252 | StyleCop |
+| SA1412 | CSLINT010 | StyleCop |
 | SA1413 | CSLINT253 | StyleCop |
 | SA1500 | CSLINT202 | StyleCop |
 | SA1503 | CSLINT228 | StyleCop |

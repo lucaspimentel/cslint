@@ -94,7 +94,7 @@ cslint --version
 CsLint implements a subset of rules from Microsoft's [.NET code analysis framework](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/categories), including IDE code style analyzers and StyleCop (SA) rules. Rules are read from your `.editorconfig` and organized into four tiers:
 
 ### Tier 1 — Formatting
-Text-level checks: indentation, line endings, whitespace, max line length, `#region`, file headers.
+Text-level checks: indentation, line endings, whitespace, max line length, `#region`, file headers, UTF-8 encoding.
 
 ### Tier 2 — Naming
 Naming conventions: PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.

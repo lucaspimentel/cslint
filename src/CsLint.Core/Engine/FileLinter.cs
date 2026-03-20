@@ -22,16 +22,18 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
     public IReadOnlyList<LintDiagnostic> LintFile(string filePath)
     {
         string fullPath = Path.GetFullPath(filePath);
+        byte[] filePrefix = ReadFilePrefix(fullPath, 4);
         string source = File.ReadAllText(fullPath);
         LintConfiguration config = configProvider.GetConfiguration(fullPath);
 
-        return LintSource(fullPath, source, config);
+        return LintSource(fullPath, source, config, filePrefix);
     }
 
     public IReadOnlyList<LintDiagnostic> LintSource(
         string filePath,
         string source,
-        LintConfiguration configuration)
+        LintConfiguration configuration,
+        byte[]? filePrefix = null)
     {
         SyntaxTree syntaxTree;
         SourceText sourceText;
@@ -61,6 +63,7 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
             SyntaxTree = syntaxTree,
             Root = root,
             Configuration = configuration,
+            FilePrefix = filePrefix,
         };
 
         var diagnostics = new List<LintDiagnostic>();
@@ -169,6 +172,14 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         }
 
         return diagnostics;
+    }
+
+    private static byte[] ReadFilePrefix(string filePath, int length)
+    {
+        using FileStream fs = File.OpenRead(filePath);
+        var buffer = new byte[length];
+        int bytesRead = fs.ReadAtLeast(buffer, length, throwOnEndOfStream: false);
+        return bytesRead < length ? buffer[..bytesRead] : buffer;
     }
 
     private static void ApplySeverityOverrides(

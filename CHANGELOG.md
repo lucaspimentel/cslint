@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- Add CSLINT010 — store files as UTF-8 encoding check (SA1412), with pragma alias SA1412
 - Add 7 StyleCop readability rules: CSLINT240 (no empty statements), CSLINT241 (single statement per line), CSLINT242 (no Yoda conditions), CSLINT243 (no combined field declarations), CSLINT244 (no combined attributes), CSLINT245 (attributes on own line), CSLINT246 (enum values on separate lines)
 - Add 5 StyleCop layout rules: CSLINT009 (no blank lines at start of file), CSLINT247 (no blank line after opening brace), CSLINT248 (no blank line before closing brace), CSLINT249 (no blank line before opening brace), CSLINT250 (elements separated by blank line)
 - Add 3 StyleCop maintainability rules: CSLINT251 (fields must be private), CSLINT252 (single type per file), CSLINT253 (trailing commas in multi-line initializers)

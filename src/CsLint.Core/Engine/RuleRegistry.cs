@@ -28,6 +28,7 @@ public sealed class RuleRegistry
         registry.Register(new FileHeaderRule());
         registry.Register(new MultipleBlankLinesRule());
         registry.Register(new NoBlankLinesAtStartOfFileRule());
+        registry.Register(new Utf8FileEncodingRule());
 
         // Tier 2: Naming conventions (syntax walker)
         registry.Register(new TypeNamingRule());

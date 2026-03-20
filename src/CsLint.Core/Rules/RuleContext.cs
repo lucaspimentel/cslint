@@ -19,6 +19,8 @@ public sealed class RuleContext
 
     public required LintConfiguration Configuration { get; init; }
 
+    public byte[]? FilePrefix { get; init; }
+
 #if SEMANTIC
     public SemanticModel? SemanticModel { get; init; }
 #endif

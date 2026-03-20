@@ -47,7 +47,7 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ### Formatting rules (Tier 1, text-level)
 
-- [ ] **SA1412 — Store files as UTF-8** (Tier 1) — detect non-UTF-8 BOMs (UTF-16 LE/BE, UTF-32) and optionally require/forbid UTF-8 BOM. Just check first 2-4 bytes for BOM markers. Alias: SA1412
+- [x] **SA1412 — Store files as UTF-8** (Tier 1) — detect non-UTF-8 BOMs (UTF-16 LE/BE, UTF-32) and optionally require/forbid UTF-8 BOM. Just check first 2-4 bytes for BOM markers. Alias: SA1412 — implemented as CSLINT010
 
 ### Ordering rules (Tier 3, syntax-only)
 
