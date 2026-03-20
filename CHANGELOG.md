@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.3.0] - 2026-03-20
 
 ### Added
 - Add CSLINT263 — accessor ordering: get before set/init in properties, add before remove in events (SA1212, SA1213)
