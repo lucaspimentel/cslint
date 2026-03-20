@@ -62,13 +62,13 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ### Readability rules (Tier 3, syntax-only)
 
-- [ ] **SA1106 — No empty statements** (Tier 3) — flag empty statements (lone semicolons). Alias: SA1106
-- [ ] **SA1107 — Single statement per line** (Tier 3) — no multiple statements on one line. Alias: SA1107
-- [ ] **SA1131 — No Yoda conditions** (Tier 3) — constant must not appear on left side of comparison. Alias: SA1131
-- [ ] **SA1132 — No combined field declarations** (Tier 3) — each field must be declared on its own line. Alias: SA1132
-- [ ] **SA1133 — No combined attributes** (Tier 3) — each attribute must be in its own attribute list. Alias: SA1133
-- [ ] **SA1134 — Attributes on own line** (Tier 3) — attributes must not share line with the element declaration. Alias: SA1134
-- [ ] **SA1136 — Enum values on separate lines** (Tier 3) — each enum member must be on its own line. Alias: SA1136
+- [x] **SA1106 — No empty statements** (Tier 3) — flag empty statements (lone semicolons). Alias: SA1106 — implemented as CSLINT240
+- [x] **SA1107 — Single statement per line** (Tier 3) — no multiple statements on one line. Alias: SA1107 — implemented as CSLINT241
+- [x] **SA1131 — No Yoda conditions** (Tier 3) — constant must not appear on left side of comparison. Alias: SA1131 — implemented as CSLINT242
+- [x] **SA1132 — No combined field declarations** (Tier 3) — each field must be declared on its own line. Alias: SA1132 — implemented as CSLINT243
+- [x] **SA1133 — No combined attributes** (Tier 3) — each attribute must be in its own attribute list. Alias: SA1133 — implemented as CSLINT244
+- [x] **SA1134 — Attributes on own line** (Tier 3) — attributes must not share line with the element declaration. Alias: SA1134 — implemented as CSLINT245
+- [x] **SA1136 — Enum values on separate lines** (Tier 3) — each enum member must be on its own line. Alias: SA1136 — implemented as CSLINT246
 
 ### Layout rules (Tier 3, syntax-only)
 

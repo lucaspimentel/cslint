@@ -78,6 +78,13 @@ public sealed class RuleRegistry
         registry.Register(new UnnecessaryInitializationRule());
         registry.Register(new SealedTypePreferenceRule());
         registry.Register(new EmptyCatchBlockRule());
+        registry.Register(new NoEmptyStatementsRule());
+        registry.Register(new SingleStatementPerLineRule());
+        registry.Register(new NoYodaConditionsRule());
+        registry.Register(new NoCombinedFieldDeclarationsRule());
+        registry.Register(new NoCombinedAttributesRule());
+        registry.Register(new AttributesOnOwnLineRule());
+        registry.Register(new EnumValuesOnSeparateLinesRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis
