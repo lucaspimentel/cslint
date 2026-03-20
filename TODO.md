@@ -80,9 +80,9 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ### Maintainability rules (Tier 3, syntax-only)
 
-- [ ] **SA1401 — Fields must be private** (Tier 3) — non-private fields (except const/static readonly) should be flagged. Alias: SA1401
-- [ ] **SA1402 — Single type per file** (Tier 3) — each file may only contain a single type declaration. Alias: SA1402
-- [ ] **SA1413 — Trailing commas in multi-line initializers** (Tier 3) — multi-line initializers/enums should use trailing commas. Alias: SA1413
+- [x] **SA1401 — Fields must be private** (Tier 3) — non-private fields (except const/static readonly) should be flagged. Alias: SA1401 — implemented as CSLINT251
+- [x] **SA1402 — Single type per file** (Tier 3) — each file may only contain a single type declaration. Alias: SA1402 — implemented as CSLINT252
+- [x] **SA1413 — Trailing commas in multi-line initializers** (Tier 3) — multi-line initializers/enums should use trailing commas. Alias: SA1413 — implemented as CSLINT253
 
 ### Naming rules (Tier 2, syntax walker)
 

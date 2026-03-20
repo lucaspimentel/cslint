@@ -33,6 +33,9 @@ internal static class PragmaAliasMap
             ["SA1508"] = ["CSLINT248"],
             ["SA1509"] = ["CSLINT249"],
             ["SA1516"] = ["CSLINT250"],
+            ["SA1401"] = ["CSLINT251"],
+            ["SA1402"] = ["CSLINT252"],
+            ["SA1413"] = ["CSLINT253"],
             ["SA1517"] = ["CSLINT009"],
             ["SA1518"] = ["CSLINT004"],
 

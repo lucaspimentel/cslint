@@ -90,6 +90,9 @@ public sealed class RuleRegistry
         registry.Register(new NoBlankLineBeforeClosingBraceRule());
         registry.Register(new NoBlankLineBeforeOpeningBraceRule());
         registry.Register(new ElementsSeparatedByBlankLineRule());
+        registry.Register(new FieldsMustBePrivateRule());
+        registry.Register(new SingleTypePerFileRule());
+        registry.Register(new TrailingCommasRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis
