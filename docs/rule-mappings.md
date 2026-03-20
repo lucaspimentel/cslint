@@ -16,6 +16,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT006 | No `#region` directives | `csharp_no_region_directives` | SA1124 |
 | CSLINT007 | File header | `file_header_template` | IDE0073 |
 | CSLINT008 | No multiple blank lines | `csharp_no_multiple_blank_lines` | SA1507, IDE2000 |
+| CSLINT009 | No blank lines at start of file | `csharp_no_blank_lines_at_start_of_file` | SA1517 |
 
 ### Tier 2 -- Naming Conventions
 
@@ -27,6 +28,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1312, SA1313, IDE1006 |
 | CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
 | CSLINT105 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | SA1303 |
+| CSLINT106 | Type parameter naming (T prefix) | `dotnet_naming_rule` | SA1314 |
 
 ### Tier 3 -- Style Preferences
 
@@ -72,6 +74,29 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT237 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
 | CSLINT238 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization` | CA1805 |
 | CSLINT239 | Prefer sealed types | `csharp_prefer_sealed_types` | CA1852 |
+| CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
+| CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
+| CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
+| CSLINT243 | No combined field declarations | `csharp_no_combined_field_declarations` | SA1132 |
+| CSLINT244 | No combined attributes | `csharp_no_combined_attributes` | SA1133 |
+| CSLINT245 | Attributes on own line | `csharp_attributes_on_own_line` | SA1134 |
+| CSLINT246 | Enum values on separate lines | `csharp_enum_values_on_separate_lines` | SA1136 |
+| CSLINT247 | No blank line after opening brace | `csharp_no_blank_line_after_opening_brace` | SA1505 |
+| CSLINT248 | No blank line before closing brace | `csharp_no_blank_line_before_closing_brace` | SA1508 |
+| CSLINT249 | No blank line before opening brace | `csharp_no_blank_line_before_opening_brace` | SA1509 |
+| CSLINT250 | Elements separated by blank line | `csharp_elements_separated_by_blank_line` | SA1516 |
+| CSLINT251 | Fields must be private | `csharp_fields_must_be_private` | SA1401 |
+| CSLINT252 | Single type per file | `csharp_single_type_per_file` | SA1402 |
+| CSLINT253 | Trailing commas in multi-line initializers | `csharp_trailing_commas_in_multi_line_initializers` | SA1413 |
+| CSLINT254 | Keyword spacing | `csharp_keyword_spacing` | SA1000 |
+| CSLINT255 | Comma spacing | `csharp_comma_spacing` | SA1001 |
+| CSLINT256 | Semicolon spacing | `csharp_semicolon_spacing` | SA1002 |
+| CSLINT257 | Operator spacing | `csharp_operator_spacing` | SA1003 |
+| CSLINT258 | Single-line comment spacing | `csharp_comment_spacing` | SA1005 |
+| CSLINT259 | Parenthesis spacing | `csharp_parenthesis_spacing` | SA1008, SA1009 |
+| CSLINT260 | Brace spacing | `csharp_brace_spacing` | SA1012, SA1013 |
+| CSLINT261 | Colon spacing | `csharp_colon_spacing` | SA1024 |
+| CSLINT262 | No multiple whitespace | `csharp_no_multiple_whitespace` | SA1025 |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
@@ -94,22 +119,50 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 
 | Third-Party ID | CsLint ID(s) | Source |
 |---|---|---|
+| SA1000 | CSLINT254 | StyleCop |
+| SA1001 | CSLINT255 | StyleCop |
+| SA1002 | CSLINT256 | StyleCop |
+| SA1003 | CSLINT257 | StyleCop |
+| SA1005 | CSLINT258 | StyleCop |
+| SA1008, SA1009 | CSLINT259 | StyleCop |
+| SA1012, SA1013 | CSLINT260 | StyleCop |
+| SA1024 | CSLINT261 | StyleCop |
+| SA1025 | CSLINT262 | StyleCop |
 | SA1027 | CSLINT002 | StyleCop |
 | SA1028 | CSLINT001 | StyleCop |
 | SA1101 | CSLINT204 | StyleCop |
+| SA1106 | CSLINT240 | StyleCop |
+| SA1107 | CSLINT241 | StyleCop |
 | SA1121 | CSLINT208 | StyleCop |
 | SA1124 | CSLINT006 | StyleCop |
+| SA1131 | CSLINT242 | StyleCop |
+| SA1132 | CSLINT243 | StyleCop |
+| SA1133 | CSLINT244 | StyleCop |
+| SA1134 | CSLINT245 | StyleCop |
+| SA1136 | CSLINT246 | StyleCop |
 | SA1206 | CSLINT205 | StyleCop |
 | SA1300 | CSLINT102 | StyleCop |
 | SA1302 | CSLINT101 | StyleCop |
 | SA1303 | CSLINT105 | StyleCop |
+| SA1304 | CSLINT104 | StyleCop |
 | SA1306 | CSLINT104 | StyleCop |
+| SA1307 | CSLINT104 | StyleCop |
+| SA1311 | CSLINT104 | StyleCop |
 | SA1312 | CSLINT103 | StyleCop |
 | SA1313 | CSLINT103 | StyleCop |
+| SA1314 | CSLINT106 | StyleCop |
 | SA1400 | CSLINT206 | StyleCop |
+| SA1401 | CSLINT251 | StyleCop |
+| SA1402 | CSLINT252 | StyleCop |
+| SA1413 | CSLINT253 | StyleCop |
 | SA1500 | CSLINT202 | StyleCop |
 | SA1503 | CSLINT228 | StyleCop |
+| SA1505 | CSLINT247 | StyleCop |
 | SA1507 | CSLINT008 | StyleCop |
+| SA1508 | CSLINT248 | StyleCop |
+| SA1509 | CSLINT249 | StyleCop |
+| SA1516 | CSLINT250 | StyleCop |
+| SA1517 | CSLINT009 | StyleCop |
 | SA1518 | CSLINT004 | StyleCop |
 | IDE0003, IDE0009 | CSLINT204 | Microsoft |
 | IDE0007, IDE0008 | CSLINT200 | Microsoft |
