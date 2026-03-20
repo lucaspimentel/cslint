@@ -26,9 +26,8 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
 
     void INamingRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
     {
-        // Only check private/internal instance fields (not const, not static, not events)
-        if (node.Modifiers.Any(SyntaxKind.ConstKeyword) ||
-            node.Modifiers.Any(SyntaxKind.StaticKeyword))
+        // Skip const fields (handled by ConstantNamingRule)
+        if (node.Modifiers.Any(SyntaxKind.ConstKeyword))
         {
             return;
         }
@@ -43,24 +42,44 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
                          !node.Modifiers.Any(SyntaxKind.ProtectedKeyword) &&
                          !node.Modifiers.Any(SyntaxKind.InternalKeyword);
 
-        if (!isPrivate)
-        {
-            return;
-        }
+        bool isStatic = node.Modifiers.Any(SyntaxKind.StaticKeyword);
+        bool isReadOnly = node.Modifiers.Any(SyntaxKind.ReadOnlyKeyword);
 
+        if (isPrivate && !isStatic)
+        {
+            // Private instance fields: _camelCase (CSLINT104)
+            CheckFields(node, diagnostics, NamingHelper.IsUnderscoreCamelCase,
+                "CSLINT104", "Private field", "_camelCase");
+        }
+        else if (!isPrivate && (isReadOnly || isStatic))
+        {
+            // Non-private readonly or static readonly fields: PascalCase (SA1304/SA1307/SA1311)
+            CheckFields(node, diagnostics, NamingHelper.IsPascalCase,
+                "CSLINT104", "Accessible field", "PascalCase");
+        }
+    }
+
+    private static void CheckFields(
+        FieldDeclarationSyntax node,
+        List<LintDiagnostic> diagnostics,
+        Func<string, bool> isValidName,
+        string ruleId,
+        string fieldKind,
+        string expectedCase)
+    {
         foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
         {
             string name = variable.Identifier.ValueText;
 
-            if (!NamingHelper.IsUnderscoreCamelCase(name))
+            if (!isValidName(name))
             {
                 FileLinePositionSpan span = variable.Identifier.GetLocation().GetLineSpan();
 
                 diagnostics.Add(
                     new LintDiagnostic
                     {
-                        RuleId = "CSLINT104",
-                        Message = $"Private field '{name}' should use _camelCase",
+                        RuleId = ruleId,
+                        Message = $"{fieldKind} '{name}' should use {expectedCase}",
                         Severity = LintSeverity.Warning,
                         FilePath = span.Path,
                         Line = span.StartLinePosition.Line + 1,

@@ -53,6 +53,36 @@ public class FieldNamingRuleTests
     }
 
     [Theory]
+    [InlineData("class C { public readonly int count; }", "count")]
+    [InlineData("class C { internal static int count; }", "count")]
+    [InlineData("class C { public static readonly int count; }", "count")]
+    [InlineData("class C { protected readonly int myValue; }", "myValue")]
+    public void Analyze_NonPrivateReadOnlyOrStaticField_NotPascalCase_ReturnsDiagnostic(string source, string name)
+    {
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT104", diagnostics[0].RuleId);
+        Assert.Contains(name, diagnostics[0].Message);
+    }
+
+    [Theory]
+    [InlineData("class C { public readonly int Count; }")]
+    [InlineData("class C { internal static int Count; }")]
+    [InlineData("class C { public static readonly int MaxValue; }")]
+    [InlineData("class C { protected readonly int Value; }")]
+    public void Analyze_NonPrivateReadOnlyOrStaticField_PascalCase_ReturnsNoDiagnostics(string source)
+    {
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Theory]
     [InlineData("[StructLayout(LayoutKind.Sequential)] struct MEMORYSTATUSEX { int dwLength; long ullTotalPhys; }")]
     [InlineData("[System.Runtime.InteropServices.StructLayout(LayoutKind.Sequential)] struct MEMORYSTATUSEX { int dwLength; }")]
     [InlineData("[StructLayoutAttribute(LayoutKind.Sequential)] struct MEMORYSTATUSEX { int dwLength; }")]

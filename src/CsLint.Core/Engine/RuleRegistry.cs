@@ -36,6 +36,7 @@ public sealed class RuleRegistry
         registry.Register(new ParameterLocalNamingRule());
         registry.Register(new FieldNamingRule());
         registry.Register(new ConstantNamingRule());
+        registry.Register(new TypeParameterNamingRule());
 
         // Tier 3: Style preferences (syntax tree analysis)
         registry.Register(new VarPreferenceRule());

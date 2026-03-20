@@ -18,4 +18,5 @@ internal interface INamingRuleHandler
     void VisitParameter(ParameterSyntax node, List<LintDiagnostic> diagnostics) { }
     void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node, List<LintDiagnostic> diagnostics) { }
     void VisitForEachStatement(ForEachStatementSyntax node, List<LintDiagnostic> diagnostics) { }
+    void VisitTypeParameter(TypeParameterSyntax node, List<LintDiagnostic> diagnostics) { }
 }

@@ -145,4 +145,14 @@ internal sealed class CombinedNamingWalker(IReadOnlyList<INamingRuleHandler> han
 
         base.VisitForEachStatement(node);
     }
+
+    public override void VisitTypeParameter(Microsoft.CodeAnalysis.CSharp.Syntax.TypeParameterSyntax node)
+    {
+        foreach (INamingRuleHandler handler in handlers)
+        {
+            handler.VisitTypeParameter(node, Diagnostics);
+        }
+
+        base.VisitTypeParameter(node);
+    }
 }

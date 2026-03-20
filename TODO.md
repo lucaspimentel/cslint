@@ -86,8 +86,8 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ### Naming rules (Tier 2, syntax walker)
 
-- [ ] **SA1314 — Type parameter names must begin with T** (Tier 2) — generic type parameter names must start with capital T. Alias: SA1314
-- [ ] **SA1304/SA1307/SA1311 — Accessible/readonly/static field casing** (Tier 2) — enhance CSLINT104 FieldNamingRule to handle non-private readonly and static readonly fields requiring PascalCase. Aliases: SA1304, SA1307, SA1311
+- [x] **SA1314 — Type parameter names must begin with T** (Tier 2) — generic type parameter names must start with capital T. Alias: SA1314 — implemented as CSLINT106
+- [x] **SA1304/SA1307/SA1311 — Accessible/readonly/static field casing** (Tier 2) — enhance CSLINT104 FieldNamingRule to handle non-private readonly and static readonly fields requiring PascalCase. Aliases: SA1304, SA1307, SA1311 — enhanced in CSLINT104
 
 ### Pragma alias additions for already-covered rules
 
