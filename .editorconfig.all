@@ -1,5 +1,4 @@
 # .editorconfig with ALL CsLint rules enabled
-# Use with: dotnet run --project src/CsLint.Cli -- --semantic [path]
 
 root = true
 
