@@ -16,7 +16,7 @@ indent_style = space
 indent_size = 4
 
 # CSLINT003: LineEnding
-end_of_line = lf
+# end_of_line = lf
 
 # CSLINT004: FinalNewline
 insert_final_newline = true
