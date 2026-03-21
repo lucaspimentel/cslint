@@ -17,6 +17,19 @@ public sealed class NoYodaConditionsRule : IRuleDefinition, IDescendantNodeHandl
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static bool IsComparisonOperator(SyntaxKind kind) =>
+        kind is SyntaxKind.EqualsExpression
+            or SyntaxKind.NotEqualsExpression
+            or SyntaxKind.LessThanExpression
+            or SyntaxKind.GreaterThanExpression
+            or SyntaxKind.LessThanOrEqualExpression
+            or SyntaxKind.GreaterThanOrEqualExpression;
+
+    private static bool IsLiteral(ExpressionSyntax expression) =>
+        expression is LiteralExpressionSyntax
+            or DefaultExpressionSyntax
+            || expression.IsKind(SyntaxKind.DefaultLiteralExpression);
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -79,17 +92,4 @@ public sealed class NoYodaConditionsRule : IRuleDefinition, IDescendantNodeHandl
                 });
         }
     }
-
-    private static bool IsComparisonOperator(SyntaxKind kind) =>
-        kind is SyntaxKind.EqualsExpression
-            or SyntaxKind.NotEqualsExpression
-            or SyntaxKind.LessThanExpression
-            or SyntaxKind.GreaterThanExpression
-            or SyntaxKind.LessThanOrEqualExpression
-            or SyntaxKind.GreaterThanOrEqualExpression;
-
-    private static bool IsLiteral(ExpressionSyntax expression) =>
-        expression is LiteralExpressionSyntax
-            or DefaultExpressionSyntax
-            || expression.IsKind(SyntaxKind.DefaultLiteralExpression);
 }

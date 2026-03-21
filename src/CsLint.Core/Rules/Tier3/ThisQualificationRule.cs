@@ -20,6 +20,19 @@ public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHand
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsActive(LintConfiguration config)
+    {
+        (string? fieldPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_field");
+        (string? propPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_property");
+        (string? methodPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_method");
+        (string? eventPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_event");
+
+        return string.Equals(fieldPref, "false", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(propPref, "false", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(methodPref, "false", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(eventPref, "false", StringComparison.OrdinalIgnoreCase);
+    }
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_qualification_for_field") is not null ||
         configuration.GetValue("dotnet_style_qualification_for_property") is not null ||
@@ -69,18 +82,5 @@ public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHand
                     Column = span.StartLinePosition.Character + 1,
                 });
         }
-    }
-
-    private static bool IsActive(LintConfiguration config)
-    {
-        (string? fieldPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_field");
-        (string? propPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_property");
-        (string? methodPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_method");
-        (string? eventPref, string? _) = config.GetValueWithSeverity("dotnet_style_qualification_for_event");
-
-        return string.Equals(fieldPref, "false", StringComparison.OrdinalIgnoreCase) ||
-               string.Equals(propPref, "false", StringComparison.OrdinalIgnoreCase) ||
-               string.Equals(methodPref, "false", StringComparison.OrdinalIgnoreCase) ||
-               string.Equals(eventPref, "false", StringComparison.OrdinalIgnoreCase);
     }
 }

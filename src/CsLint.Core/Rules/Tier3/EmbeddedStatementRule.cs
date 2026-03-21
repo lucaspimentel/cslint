@@ -16,6 +16,9 @@ public sealed class EmbeddedStatementRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsActive(LintConfiguration config) =>
+        string.Equals(config.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase);
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ConfigKey) is not null;
 
@@ -103,9 +106,6 @@ public sealed class EmbeddedStatementRule : IRuleDefinition, IStyleRuleHandler
             CheckEmbeddedStatement(node.Statement, node.CloseParenToken, diagnostics);
         }
     }
-
-    private static bool IsActive(LintConfiguration config) =>
-        string.Equals(config.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase);
 
     private void CheckEmbeddedStatement(
         StatementSyntax statement,

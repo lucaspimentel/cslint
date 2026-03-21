@@ -28,71 +28,6 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
-    public bool IsEnabled(LintConfiguration configuration)
-    {
-        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        var walker = new CombinedStyleWalker([this], context.Configuration);
-        walker.Visit(context.Root);
-        return walker.Diagnostics;
-    }
-
-    void IStyleRuleHandler.VisitFieldDeclaration(
-        FieldDeclarationSyntax node,
-        LintConfiguration config,
-        List<LintDiagnostic> diagnostics)
-    {
-        (string? pref, string? _) = config.GetValueWithSeverity(ConfigKey);
-
-        if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
-        {
-            return;
-        }
-
-        VariableDeclarationSyntax declaration = node.Declaration;
-        TypeSyntax typeSyntax = declaration.Type;
-
-        // Skip var — can't resolve inferred types without semantic model
-        if (typeSyntax.IsVar)
-        {
-            return;
-        }
-
-        string typeText = typeSyntax.ToString();
-
-        foreach (VariableDeclaratorSyntax declarator in declaration.Variables)
-        {
-            if (declarator.Initializer is not { } initializer)
-            {
-                continue;
-            }
-
-            ExpressionSyntax value = initializer.Value;
-
-            if (!IsUnnecessaryDefault(typeText, value))
-            {
-                continue;
-            }
-
-            FileLinePositionSpan span = initializer.EqualsToken.GetLocation().GetLineSpan();
-
-            diagnostics.Add(
-                new LintDiagnostic
-                {
-                    RuleId = RuleId,
-                    Message = $"Do not initialize field '{declarator.Identifier.Text}' to its default value",
-                    Severity = LintSeverity.Info,
-                    FilePath = span.Path,
-                    Line = span.StartLinePosition.Line + 1,
-                    Column = span.StartLinePosition.Character + 1,
-                });
-        }
-    }
-
     private static bool IsUnnecessaryDefault(string typeText, ExpressionSyntax value)
     {
         // default or default(T) is always unnecessary for any explicit type
@@ -182,5 +117,70 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
             decimal m => m == 0m,
             _ => false,
         };
+    }
+
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        var walker = new CombinedStyleWalker([this], context.Configuration);
+        walker.Visit(context.Root);
+        return walker.Diagnostics;
+    }
+
+    void IStyleRuleHandler.VisitFieldDeclaration(
+        FieldDeclarationSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
+    {
+        (string? pref, string? _) = config.GetValueWithSeverity(ConfigKey);
+
+        if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        VariableDeclarationSyntax declaration = node.Declaration;
+        TypeSyntax typeSyntax = declaration.Type;
+
+        // Skip var — can't resolve inferred types without semantic model
+        if (typeSyntax.IsVar)
+        {
+            return;
+        }
+
+        string typeText = typeSyntax.ToString();
+
+        foreach (VariableDeclaratorSyntax declarator in declaration.Variables)
+        {
+            if (declarator.Initializer is not { } initializer)
+            {
+                continue;
+            }
+
+            ExpressionSyntax value = initializer.Value;
+
+            if (!IsUnnecessaryDefault(typeText, value))
+            {
+                continue;
+            }
+
+            FileLinePositionSpan span = initializer.EqualsToken.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = RuleId,
+                    Message = $"Do not initialize field '{declarator.Identifier.Text}' to its default value",
+                    Severity = LintSeverity.Info,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
+        }
     }
 }

@@ -127,8 +127,8 @@ public sealed class RuleRegistry
         return registry;
     }
 
-    public void Register(IRuleDefinition rule) => _rules.Add(rule);
-
     public static IReadOnlyDictionary<string, List<string>> GetAliases() =>
         PragmaAliasMap.GetAliasesByCslintId();
+
+    public void Register(IRuleDefinition rule) => _rules.Add(rule);
 }

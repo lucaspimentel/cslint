@@ -16,6 +16,32 @@ public sealed class SingleTypePerFileRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static void CollectTopLevelTypes(MemberDeclarationSyntax member, List<TypeDeclarationSyntax> types)
+    {
+        switch (member)
+        {
+            case TypeDeclarationSyntax typeDecl:
+                types.Add(typeDecl);
+                break;
+
+            case NamespaceDeclarationSyntax nsDecl:
+                foreach (MemberDeclarationSyntax nsMember in nsDecl.Members)
+                {
+                    CollectTopLevelTypes(nsMember, types);
+                }
+
+                break;
+
+            case FileScopedNamespaceDeclarationSyntax fileNsDecl:
+                foreach (MemberDeclarationSyntax nsMember in fileNsDecl.Members)
+                {
+                    CollectTopLevelTypes(nsMember, types);
+                }
+
+                break;
+        }
+    }
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -68,31 +94,5 @@ public sealed class SingleTypePerFileRule : IRuleDefinition
         }
 
         return diagnostics;
-    }
-
-    private static void CollectTopLevelTypes(MemberDeclarationSyntax member, List<TypeDeclarationSyntax> types)
-    {
-        switch (member)
-        {
-            case TypeDeclarationSyntax typeDecl:
-                types.Add(typeDecl);
-                break;
-
-            case NamespaceDeclarationSyntax nsDecl:
-                foreach (MemberDeclarationSyntax nsMember in nsDecl.Members)
-                {
-                    CollectTopLevelTypes(nsMember, types);
-                }
-
-                break;
-
-            case FileScopedNamespaceDeclarationSyntax fileNsDecl:
-                foreach (MemberDeclarationSyntax nsMember in fileNsDecl.Members)
-                {
-                    CollectTopLevelTypes(nsMember, types);
-                }
-
-                break;
-        }
     }
 }

@@ -15,6 +15,10 @@ public sealed class SimplifiedBooleanExpressionRule : IRuleDefinition, IStyleRul
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsBooleanLiteral(ExpressionSyntax expression) =>
+        expression is LiteralExpressionSyntax literal &&
+        (literal.IsKind(SyntaxKind.TrueLiteralExpression) || literal.IsKind(SyntaxKind.FalseLiteralExpression));
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_prefer_simplified_boolean_expressions") is not null;
 
@@ -58,8 +62,4 @@ public sealed class SimplifiedBooleanExpressionRule : IRuleDefinition, IStyleRul
                 Column = span.StartLinePosition.Character + 1,
             });
     }
-
-    private static bool IsBooleanLiteral(ExpressionSyntax expression) =>
-        expression is LiteralExpressionSyntax literal &&
-        (literal.IsKind(SyntaxKind.TrueLiteralExpression) || literal.IsKind(SyntaxKind.FalseLiteralExpression));
 }

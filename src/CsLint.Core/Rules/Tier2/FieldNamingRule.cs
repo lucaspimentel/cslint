@@ -15,50 +15,6 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        var walker = new CombinedNamingWalker([this]);
-        walker.Visit(context.Root);
-        return walker.Diagnostics;
-    }
-
-    void INamingRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        // Skip const fields (handled by ConstantNamingRule)
-        if (node.Modifiers.Any(SyntaxKind.ConstKeyword))
-        {
-            return;
-        }
-
-        // Skip fields in [StructLayout] types — field names must match native APIs
-        if (HasStructLayoutAttribute(node))
-        {
-            return;
-        }
-
-        bool isPrivate = !node.Modifiers.Any(SyntaxKind.PublicKeyword) &&
-                         !node.Modifiers.Any(SyntaxKind.ProtectedKeyword) &&
-                         !node.Modifiers.Any(SyntaxKind.InternalKeyword);
-
-        bool isStatic = node.Modifiers.Any(SyntaxKind.StaticKeyword);
-        bool isReadOnly = node.Modifiers.Any(SyntaxKind.ReadOnlyKeyword);
-
-        if (isPrivate && !isStatic)
-        {
-            // Private instance fields: _camelCase (CSLINT104)
-            CheckFields(node, diagnostics, NamingHelper.IsUnderscoreCamelCase,
-                "CSLINT104", "Private field", "_camelCase");
-        }
-        else if (!isPrivate && (isReadOnly || isStatic))
-        {
-            // Non-private readonly or static readonly fields: PascalCase (SA1304/SA1307/SA1311)
-            CheckFields(node, diagnostics, NamingHelper.IsPascalCase,
-                "CSLINT104", "Accessible field", "PascalCase");
-        }
-    }
-
     private static void CheckFields(
         FieldDeclarationSyntax node,
         List<LintDiagnostic> diagnostics,
@@ -112,5 +68,49 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
         }
 
         return false;
+    }
+
+    public bool IsEnabled(LintConfiguration configuration) => true;
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        var walker = new CombinedNamingWalker([this]);
+        walker.Visit(context.Root);
+        return walker.Diagnostics;
+    }
+
+    void INamingRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        // Skip const fields (handled by ConstantNamingRule)
+        if (node.Modifiers.Any(SyntaxKind.ConstKeyword))
+        {
+            return;
+        }
+
+        // Skip fields in [StructLayout] types — field names must match native APIs
+        if (HasStructLayoutAttribute(node))
+        {
+            return;
+        }
+
+        bool isPrivate = !node.Modifiers.Any(SyntaxKind.PublicKeyword) &&
+                         !node.Modifiers.Any(SyntaxKind.ProtectedKeyword) &&
+                         !node.Modifiers.Any(SyntaxKind.InternalKeyword);
+
+        bool isStatic = node.Modifiers.Any(SyntaxKind.StaticKeyword);
+        bool isReadOnly = node.Modifiers.Any(SyntaxKind.ReadOnlyKeyword);
+
+        if (isPrivate && !isStatic)
+        {
+            // Private instance fields: _camelCase (CSLINT104)
+            CheckFields(node, diagnostics, NamingHelper.IsUnderscoreCamelCase,
+                "CSLINT104", "Private field", "_camelCase");
+        }
+        else if (!isPrivate && (isReadOnly || isStatic))
+        {
+            // Non-private readonly or static readonly fields: PascalCase (SA1304/SA1307/SA1311)
+            CheckFields(node, diagnostics, NamingHelper.IsPascalCase,
+                "CSLINT104", "Accessible field", "PascalCase");
+        }
     }
 }

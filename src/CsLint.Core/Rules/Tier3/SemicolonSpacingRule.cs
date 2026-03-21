@@ -16,6 +16,19 @@ public sealed class SemicolonSpacingRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static bool HasTrailingSpace(SyntaxToken token)
+    {
+        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
+        {
+            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -60,18 +73,5 @@ public sealed class SemicolonSpacingRule : IRuleDefinition
         }
 
         return diagnostics;
-    }
-
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

@@ -14,6 +14,27 @@ public sealed class TypeNamingRule : IRuleDefinition, INamingRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
+    {
+        string name = identifier.ValueText;
+
+        if (!NamingHelper.IsPascalCase(name))
+        {
+            FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = "CSLINT100",
+                    Message = $"{kind} '{name}' should use PascalCase",
+                    Severity = LintSeverity.Warning,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
+        }
+    }
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
@@ -37,25 +58,4 @@ public sealed class TypeNamingRule : IRuleDefinition, INamingRuleHandler
 
     void INamingRuleHandler.VisitDelegateDeclaration(DelegateDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
         CheckName(node.Identifier, "delegate", diagnostics);
-
-    private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
-    {
-        string name = identifier.ValueText;
-
-        if (!NamingHelper.IsPascalCase(name))
-        {
-            FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
-
-            diagnostics.Add(
-                new LintDiagnostic
-                {
-                    RuleId = "CSLINT100",
-                    Message = $"{kind} '{name}' should use PascalCase",
-                    Severity = LintSeverity.Warning,
-                    FilePath = span.Path,
-                    Line = span.StartLinePosition.Line + 1,
-                    Column = span.StartLinePosition.Character + 1,
-                });
-        }
-    }
 }

@@ -17,6 +17,34 @@ public sealed class FieldsMustBePrivateRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static bool HasModifier(SyntaxTokenList modifiers, SyntaxKind kind)
+    {
+        foreach (SyntaxToken modifier in modifiers)
+        {
+            if (modifier.IsKind(kind))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool HasAnyAccessModifier(SyntaxTokenList modifiers)
+    {
+        foreach (SyntaxToken modifier in modifiers)
+        {
+            if (modifier.IsKind(SyntaxKind.PublicKeyword) ||
+                modifier.IsKind(SyntaxKind.InternalKeyword) ||
+                modifier.IsKind(SyntaxKind.ProtectedKeyword))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -78,33 +106,5 @@ public sealed class FieldsMustBePrivateRule : IRuleDefinition, IStyleRuleHandler
                 Line = span.StartLinePosition.Line + 1,
                 Column = span.StartLinePosition.Character + 1,
             });
-    }
-
-    private static bool HasModifier(SyntaxTokenList modifiers, SyntaxKind kind)
-    {
-        foreach (SyntaxToken modifier in modifiers)
-        {
-            if (modifier.IsKind(kind))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool HasAnyAccessModifier(SyntaxTokenList modifiers)
-    {
-        foreach (SyntaxToken modifier in modifiers)
-        {
-            if (modifier.IsKind(SyntaxKind.PublicKeyword) ||
-                modifier.IsKind(SyntaxKind.InternalKeyword) ||
-                modifier.IsKind(SyntaxKind.ProtectedKeyword))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

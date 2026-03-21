@@ -17,6 +17,26 @@ public sealed class BlankLineAfterBlockRule : IRuleDefinition, IDescendantNodeHa
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsJumpStatement(StatementSyntax statement) =>
+        statement is ReturnStatementSyntax
+            or ThrowStatementSyntax
+            or BreakStatementSyntax
+            or ContinueStatementSyntax;
+
+    private static bool EndsWithBlock(StatementSyntax statement)
+    {
+        SyntaxToken lastToken = statement.GetLastToken();
+
+        // The statement must end with a closing brace
+        if (!lastToken.IsKind(SyntaxKind.CloseBraceToken))
+        {
+            return false;
+        }
+
+        // Verify it's from a block (not e.g. an object initializer)
+        return lastToken.Parent is BlockSyntax or SwitchStatementSyntax;
+    }
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ConfigKey) is not null;
 
@@ -109,25 +129,5 @@ public sealed class BlankLineAfterBlockRule : IRuleDefinition, IDescendantNodeHa
                     Column = span.StartLinePosition.Character + 1,
                 });
         }
-    }
-
-    private static bool IsJumpStatement(StatementSyntax statement) =>
-        statement is ReturnStatementSyntax
-            or ThrowStatementSyntax
-            or BreakStatementSyntax
-            or ContinueStatementSyntax;
-
-    private static bool EndsWithBlock(StatementSyntax statement)
-    {
-        SyntaxToken lastToken = statement.GetLastToken();
-
-        // The statement must end with a closing brace
-        if (!lastToken.IsKind(SyntaxKind.CloseBraceToken))
-        {
-            return false;
-        }
-
-        // Verify it's from a block (not e.g. an object initializer)
-        return lastToken.Parent is BlockSyntax or SwitchStatementSyntax;
     }
 }

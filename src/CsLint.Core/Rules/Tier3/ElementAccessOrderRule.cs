@@ -17,79 +17,6 @@ public sealed class ElementAccessOrderRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration)
-    {
-        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        if (!IsEnabled(context.Configuration))
-        {
-            return [];
-        }
-
-        List<LintDiagnostic>? diagnostics = null;
-
-        foreach (TypeDeclarationSyntax typeDecl in context.Root.DescendantNodes().OfType<TypeDeclarationSyntax>())
-        {
-            // Group members by kind, then check access ordering within each group
-            var membersByKind = new Dictionary<SyntaxKind, List<MemberDeclarationSyntax>>();
-
-            foreach (MemberDeclarationSyntax member in typeDecl.Members)
-            {
-                SyntaxKind kind = GetMemberKind(member);
-
-                if (kind == SyntaxKind.None)
-                {
-                    continue;
-                }
-
-                if (!membersByKind.TryGetValue(kind, out List<MemberDeclarationSyntax>? list))
-                {
-                    list = [];
-                    membersByKind[kind] = list;
-                }
-
-                list.Add(member);
-            }
-
-            foreach ((SyntaxKind _, List<MemberDeclarationSyntax> members) in membersByKind)
-            {
-                int highestAccessRank = -1;
-
-                foreach (MemberDeclarationSyntax member in members)
-                {
-                    int rank = GetAccessRank(member.Modifiers);
-
-                    if (rank < highestAccessRank)
-                    {
-                        string accessLabel = GetAccessLabel(member.Modifiers);
-                        FileLinePositionSpan span = GetMemberLocation(member);
-
-                        (diagnostics ??= []).Add(
-                            new LintDiagnostic
-                            {
-                                RuleId = RuleId,
-                                Message = $"A {accessLabel} member must not follow a less visible member of the same kind",
-                                Severity = LintSeverity.Warning,
-                                FilePath = span.Path,
-                                Line = span.StartLinePosition.Line + 1,
-                                Column = span.StartLinePosition.Character + 1,
-                            });
-                    }
-                    else
-                    {
-                        highestAccessRank = rank;
-                    }
-                }
-            }
-        }
-
-        return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
-    }
-
     /// <summary>
     /// Returns a numeric rank for access modifier ordering:
     /// public (0) → internal (1) → protected internal (2) → protected (3) → private protected (4) → private (5) → implicit private (6).
@@ -207,4 +134,82 @@ public sealed class ElementAccessOrderRule : IRuleDefinition
             DelegateDeclarationSyntax del => del.Identifier.GetLocation().GetLineSpan(),
             _ => member.GetLocation().GetLineSpan(),
         };
+
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        if (!IsEnabled(context.Configuration))
+        {
+            return [];
+        }
+
+        List<LintDiagnostic>? diagnostics = null;
+
+        foreach (TypeDeclarationSyntax typeDecl in context.Root.DescendantNodes().OfType<TypeDeclarationSyntax>())
+        {
+            // Group members by kind and static/instance, then check access ordering within each group
+            var membersByGroup = new Dictionary<(SyntaxKind Kind, bool IsStatic), List<MemberDeclarationSyntax>>();
+
+            foreach (MemberDeclarationSyntax member in typeDecl.Members)
+            {
+                SyntaxKind kind = GetMemberKind(member);
+
+                if (kind == SyntaxKind.None)
+                {
+                    continue;
+                }
+
+                bool isStatic = member.Modifiers.Any(SyntaxKind.StaticKeyword) ||
+                                member.Modifiers.Any(SyntaxKind.ConstKeyword);
+
+                (SyntaxKind, bool) key = (kind, isStatic);
+
+                if (!membersByGroup.TryGetValue(key, out List<MemberDeclarationSyntax>? list))
+                {
+                    list = [];
+                    membersByGroup[key] = list;
+                }
+
+                list.Add(member);
+            }
+
+            foreach (((SyntaxKind, bool) _, List<MemberDeclarationSyntax> members) in membersByGroup)
+            {
+                int highestAccessRank = -1;
+
+                foreach (MemberDeclarationSyntax member in members)
+                {
+                    int rank = GetAccessRank(member.Modifiers);
+
+                    if (rank < highestAccessRank)
+                    {
+                        string accessLabel = GetAccessLabel(member.Modifiers);
+                        FileLinePositionSpan span = GetMemberLocation(member);
+
+                        (diagnostics ??= []).Add(
+                            new LintDiagnostic
+                            {
+                                RuleId = RuleId,
+                                Message = $"A {accessLabel} member must not follow a less visible member of the same kind",
+                                Severity = LintSeverity.Warning,
+                                FilePath = span.Path,
+                                Line = span.StartLinePosition.Line + 1,
+                                Column = span.StartLinePosition.Character + 1,
+                            });
+                    }
+                    else
+                    {
+                        highestAccessRank = rank;
+                    }
+                }
+            }
+        }
+
+        return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
+    }
 }

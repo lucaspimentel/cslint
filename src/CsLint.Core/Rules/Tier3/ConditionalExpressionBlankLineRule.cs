@@ -16,6 +16,9 @@ public sealed class ConditionalExpressionBlankLineRule : IRuleDefinition, IStyle
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsActive(LintConfiguration config) =>
+        string.Equals(config.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase);
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ConfigKey) is not null;
 
@@ -51,9 +54,6 @@ public sealed class ConditionalExpressionBlankLineRule : IRuleDefinition, IStyle
             AddDiagnostic(node.ColonToken, "No blank line allowed after ':' in conditional expression", diagnostics);
         }
     }
-
-    private static bool IsActive(LintConfiguration config) =>
-        string.Equals(config.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase);
 
     private void AddDiagnostic(SyntaxToken token, string message, List<LintDiagnostic> diagnostics)
     {

@@ -14,40 +14,6 @@ public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        var walker = new CombinedNamingWalker([this]);
-        walker.Visit(context.Root);
-        return walker.Diagnostics;
-    }
-
-    void INamingRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        // Skip P/Invoke methods — they must match native function names
-        if (HasPInvokeAttribute(node))
-        {
-            return;
-        }
-
-        CheckName(node.Identifier, "method", diagnostics);
-    }
-
-    void INamingRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckName(node.Identifier, "property", diagnostics);
-
-    void INamingRuleHandler.VisitEventDeclaration(EventDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
-        CheckName(node.Identifier, "event", diagnostics);
-
-    void INamingRuleHandler.VisitEventFieldDeclaration(EventFieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
-        {
-            CheckName(variable.Identifier, "event", diagnostics);
-        }
-    }
-
     private static bool HasPInvokeAttribute(MethodDeclarationSyntax node)
     {
         foreach (AttributeListSyntax attrList in node.AttributeLists)
@@ -89,6 +55,40 @@ public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
                     Line = span.StartLinePosition.Line + 1,
                     Column = span.StartLinePosition.Character + 1,
                 });
+        }
+    }
+
+    public bool IsEnabled(LintConfiguration configuration) => true;
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        var walker = new CombinedNamingWalker([this]);
+        walker.Visit(context.Root);
+        return walker.Diagnostics;
+    }
+
+    void INamingRuleHandler.VisitMethodDeclaration(MethodDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        // Skip P/Invoke methods — they must match native function names
+        if (HasPInvokeAttribute(node))
+        {
+            return;
+        }
+
+        CheckName(node.Identifier, "method", diagnostics);
+    }
+
+    void INamingRuleHandler.VisitPropertyDeclaration(PropertyDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "property", diagnostics);
+
+    void INamingRuleHandler.VisitEventDeclaration(EventDeclarationSyntax node, List<LintDiagnostic> diagnostics) =>
+        CheckName(node.Identifier, "event", diagnostics);
+
+    void INamingRuleHandler.VisitEventFieldDeclaration(EventFieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
+        {
+            CheckName(variable.Identifier, "event", diagnostics);
         }
     }
 }

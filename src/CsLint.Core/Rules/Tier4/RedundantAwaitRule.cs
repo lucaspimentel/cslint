@@ -16,6 +16,58 @@ internal sealed class RedundantAwaitRule : IRuleDefinition, ISemanticRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool HasAsyncModifier(SyntaxTokenList modifiers) =>
+        modifiers.Any(SyntaxKind.AsyncKeyword);
+
+    private static AwaitExpressionSyntax? GetSingleAwait(BlockSyntax? body, ArrowExpressionClauseSyntax? expressionBody)
+    {
+        if (body is not null)
+        {
+            return GetSingleAwaitFromBlock(body);
+        }
+
+        if (expressionBody?.Expression is AwaitExpressionSyntax awaitExpr)
+        {
+            return awaitExpr;
+        }
+
+        return null;
+    }
+
+    private static AwaitExpressionSyntax? GetSingleAwaitFromBlock(BlockSyntax body)
+    {
+        if (body.Statements.Count != 1)
+        {
+            return null;
+        }
+
+        if (body.Statements[0] is not ReturnStatementSyntax { Expression: AwaitExpressionSyntax awaitExpr })
+        {
+            return null;
+        }
+
+        // Skip if the block contains try/catch/finally or using statements
+        if (body.DescendantNodes().Any(
+                n => n is TryStatementSyntax
+                    or UsingStatementSyntax
+                    or LocalDeclarationStatementSyntax { UsingKeyword.RawKind: not 0 }))
+        {
+            return null;
+        }
+
+        return awaitExpr;
+    }
+
+    private static bool HasConfigureAwait(AwaitExpressionSyntax awaitExpr) =>
+        awaitExpr.Expression is InvocationExpressionSyntax
+        {
+            Expression: MemberAccessExpressionSyntax { Name.Identifier.Text: "ConfigureAwait" }
+        };
+
+    private static bool IsValueTask(ITypeSymbol type) =>
+        type.Name == "ValueTask" &&
+        type.ContainingNamespace is { Name: "Tasks", ContainingNamespace.Name: "Threading", ContainingNamespace.ContainingNamespace.Name: "System" };
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetSeverityForKey("dotnet_diagnostic.CSLINT307.severity") != LintSeverity.None;
 
@@ -47,9 +99,6 @@ internal sealed class RedundantAwaitRule : IRuleDefinition, ISemanticRuleHandler
             }
         }
     }
-
-    private static bool HasAsyncModifier(SyntaxTokenList modifiers) =>
-        modifiers.Any(SyntaxKind.AsyncKeyword);
 
     private void CheckMethodLike(
         BlockSyntax? body,
@@ -134,55 +183,6 @@ internal sealed class RedundantAwaitRule : IRuleDefinition, ISemanticRuleHandler
 
         ReportDiagnostic(awaitExpr, "lambda", context.FilePath, diagnostics);
     }
-
-    private static AwaitExpressionSyntax? GetSingleAwait(BlockSyntax? body, ArrowExpressionClauseSyntax? expressionBody)
-    {
-        if (body is not null)
-        {
-            return GetSingleAwaitFromBlock(body);
-        }
-
-        if (expressionBody?.Expression is AwaitExpressionSyntax awaitExpr)
-        {
-            return awaitExpr;
-        }
-
-        return null;
-    }
-
-    private static AwaitExpressionSyntax? GetSingleAwaitFromBlock(BlockSyntax body)
-    {
-        if (body.Statements.Count != 1)
-        {
-            return null;
-        }
-
-        if (body.Statements[0] is not ReturnStatementSyntax { Expression: AwaitExpressionSyntax awaitExpr })
-        {
-            return null;
-        }
-
-        // Skip if the block contains try/catch/finally or using statements
-        if (body.DescendantNodes().Any(
-                n => n is TryStatementSyntax
-                    or UsingStatementSyntax
-                    or LocalDeclarationStatementSyntax { UsingKeyword.RawKind: not 0 }))
-        {
-            return null;
-        }
-
-        return awaitExpr;
-    }
-
-    private static bool HasConfigureAwait(AwaitExpressionSyntax awaitExpr) =>
-        awaitExpr.Expression is InvocationExpressionSyntax
-        {
-            Expression: MemberAccessExpressionSyntax { Name.Identifier.Text: "ConfigureAwait" }
-        };
-
-    private static bool IsValueTask(ITypeSymbol type) =>
-        type.Name == "ValueTask" &&
-        type.ContainingNamespace is { Name: "Tasks", ContainingNamespace.Name: "Threading", ContainingNamespace.ContainingNamespace.Name: "System" };
 
     private void ReportDiagnostic(AwaitExpressionSyntax awaitExpr, string memberName, string filePath, List<LintDiagnostic> diagnostics)
     {

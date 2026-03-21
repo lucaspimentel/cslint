@@ -19,6 +19,62 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
     public CSharpCompilation? Compilation { get; set; }
 #endif
 
+    private static byte[] ReadFilePrefix(string filePath, int length)
+    {
+        using FileStream fs = File.OpenRead(filePath);
+        var buffer = new byte[length];
+        int bytesRead = fs.ReadAtLeast(buffer, length, throwOnEndOfStream: false);
+        return bytesRead < length ? buffer[..bytesRead] : buffer;
+    }
+
+    private static void ApplySeverityOverrides(
+        List<LintDiagnostic> diagnostics,
+        IReadOnlyList<IRuleDefinition> rules,
+        LintConfiguration configuration)
+    {
+        // Build a map of ruleId -> effective severity
+        Dictionary<string, LintSeverity>? severityByRule = null;
+
+        foreach (IRuleDefinition rule in rules)
+        {
+            LintSeverity? mostSevere = null;
+
+            foreach (string key in rule.ConfigKeys)
+            {
+                LintSeverity? parsed = configuration.GetSeverityForKey(key);
+
+                if (parsed is not null && (mostSevere is null || parsed > mostSevere))
+                {
+                    mostSevere = parsed;
+                }
+            }
+
+            if (mostSevere is not null)
+            {
+                severityByRule ??= new Dictionary<string, LintSeverity>();
+                severityByRule[rule.RuleId] = mostSevere.Value;
+            }
+        }
+
+        if (severityByRule is null)
+        {
+            return;
+        }
+
+        // Remove suppressed diagnostics and update severity on remaining ones
+        diagnostics.RemoveAll(d =>
+            severityByRule.TryGetValue(d.RuleId, out LintSeverity severity) &&
+            severity == LintSeverity.None);
+
+        foreach (LintDiagnostic diagnostic in diagnostics)
+        {
+            if (severityByRule.TryGetValue(diagnostic.RuleId, out LintSeverity severity))
+            {
+                diagnostic.Severity = severity;
+            }
+        }
+    }
+
     public IReadOnlyList<LintDiagnostic> LintFile(string filePath)
     {
         string fullPath = Path.GetFullPath(filePath);
@@ -172,61 +228,5 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
         }
 
         return diagnostics;
-    }
-
-    private static byte[] ReadFilePrefix(string filePath, int length)
-    {
-        using FileStream fs = File.OpenRead(filePath);
-        var buffer = new byte[length];
-        int bytesRead = fs.ReadAtLeast(buffer, length, throwOnEndOfStream: false);
-        return bytesRead < length ? buffer[..bytesRead] : buffer;
-    }
-
-    private static void ApplySeverityOverrides(
-        List<LintDiagnostic> diagnostics,
-        IReadOnlyList<IRuleDefinition> rules,
-        LintConfiguration configuration)
-    {
-        // Build a map of ruleId -> effective severity
-        Dictionary<string, LintSeverity>? severityByRule = null;
-
-        foreach (IRuleDefinition rule in rules)
-        {
-            LintSeverity? mostSevere = null;
-
-            foreach (string key in rule.ConfigKeys)
-            {
-                LintSeverity? parsed = configuration.GetSeverityForKey(key);
-
-                if (parsed is not null && (mostSevere is null || parsed > mostSevere))
-                {
-                    mostSevere = parsed;
-                }
-            }
-
-            if (mostSevere is not null)
-            {
-                severityByRule ??= new Dictionary<string, LintSeverity>();
-                severityByRule[rule.RuleId] = mostSevere.Value;
-            }
-        }
-
-        if (severityByRule is null)
-        {
-            return;
-        }
-
-        // Remove suppressed diagnostics and update severity on remaining ones
-        diagnostics.RemoveAll(d =>
-            severityByRule.TryGetValue(d.RuleId, out LintSeverity severity) &&
-            severity == LintSeverity.None);
-
-        foreach (LintDiagnostic diagnostic in diagnostics)
-        {
-            if (severityByRule.TryGetValue(diagnostic.RuleId, out LintSeverity severity))
-            {
-                diagnostic.Severity = severity;
-            }
-        }
     }
 }

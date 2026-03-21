@@ -14,6 +14,33 @@ public sealed class Utf8FileEncodingRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static string? DetectNonUtf8Bom(byte[] prefix)
+    {
+        // Check UTF-32 LE before UTF-16 LE (shares first 2 bytes)
+        if (prefix.Length >= 4 && prefix[0] == 0xFF && prefix[1] == 0xFE && prefix[2] == 0x00 && prefix[3] == 0x00)
+        {
+            return "UTF-32 LE";
+        }
+
+        if (prefix.Length >= 4 && prefix[0] == 0x00 && prefix[1] == 0x00 && prefix[2] == 0xFE && prefix[3] == 0xFF)
+        {
+            return "UTF-32 BE";
+        }
+
+        if (prefix.Length >= 2 && prefix[0] == 0xFF && prefix[1] == 0xFE)
+        {
+            return "UTF-16 LE";
+        }
+
+        if (prefix.Length >= 2 && prefix[0] == 0xFE && prefix[1] == 0xFF)
+        {
+            return "UTF-16 BE";
+        }
+
+        // UTF-8 BOM (EF BB BF) and no BOM are both accepted
+        return null;
+    }
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetBool(ConfigKey);
 
@@ -43,32 +70,5 @@ public sealed class Utf8FileEncodingRule : IRuleDefinition
                 Column = 1,
             },
         ];
-    }
-
-    private static string? DetectNonUtf8Bom(byte[] prefix)
-    {
-        // Check UTF-32 LE before UTF-16 LE (shares first 2 bytes)
-        if (prefix.Length >= 4 && prefix[0] == 0xFF && prefix[1] == 0xFE && prefix[2] == 0x00 && prefix[3] == 0x00)
-        {
-            return "UTF-32 LE";
-        }
-
-        if (prefix.Length >= 4 && prefix[0] == 0x00 && prefix[1] == 0x00 && prefix[2] == 0xFE && prefix[3] == 0xFF)
-        {
-            return "UTF-32 BE";
-        }
-
-        if (prefix.Length >= 2 && prefix[0] == 0xFF && prefix[1] == 0xFE)
-        {
-            return "UTF-16 LE";
-        }
-
-        if (prefix.Length >= 2 && prefix[0] == 0xFE && prefix[1] == 0xFF)
-        {
-            return "UTF-16 BE";
-        }
-
-        // UTF-8 BOM (EF BB BF) and no BOM are both accepted
-        return null;
     }
 }

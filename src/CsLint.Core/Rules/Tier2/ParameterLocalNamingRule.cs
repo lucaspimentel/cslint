@@ -15,6 +15,32 @@ public sealed class ParameterLocalNamingRule : IRuleDefinition, INamingRuleHandl
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
+    {
+        string name = identifier.ValueText;
+
+        if (string.IsNullOrEmpty(name))
+        {
+            return;
+        }
+
+        if (!NamingHelper.IsCamelCase(name))
+        {
+            FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = "CSLINT103",
+                    Message = $"{kind} '{name}' should use camelCase",
+                    Severity = LintSeverity.Warning,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
+        }
+    }
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
@@ -59,30 +85,4 @@ public sealed class ParameterLocalNamingRule : IRuleDefinition, INamingRuleHandl
 
     void INamingRuleHandler.VisitForEachStatement(ForEachStatementSyntax node, List<LintDiagnostic> diagnostics) =>
         CheckName(node.Identifier, "local variable", diagnostics);
-
-    private static void CheckName(SyntaxToken identifier, string kind, List<LintDiagnostic> diagnostics)
-    {
-        string name = identifier.ValueText;
-
-        if (string.IsNullOrEmpty(name))
-        {
-            return;
-        }
-
-        if (!NamingHelper.IsCamelCase(name))
-        {
-            FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
-
-            diagnostics.Add(
-                new LintDiagnostic
-                {
-                    RuleId = "CSLINT103",
-                    Message = $"{kind} '{name}' should use camelCase",
-                    Severity = LintSeverity.Warning,
-                    FilePath = span.Path,
-                    Line = span.StartLinePosition.Line + 1,
-                    Column = span.StartLinePosition.Character + 1,
-                });
-        }
-    }
 }

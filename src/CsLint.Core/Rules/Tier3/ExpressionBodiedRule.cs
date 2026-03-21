@@ -20,6 +20,48 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static void CheckExpressionBody(
+        ArrowExpressionClauseSyntax? expressionBody,
+        BlockSyntax? body,
+        SyntaxToken identifier,
+        string? preference,
+        string kind,
+        List<LintDiagnostic> diagnostics)
+    {
+        if (preference is null)
+        {
+            return;
+        }
+
+        bool preferExpression = string.Equals(preference, "true", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(preference, "when_on_single_line", StringComparison.OrdinalIgnoreCase);
+
+        if (preferExpression && expressionBody is null && body is not null && IsSingleStatement(body))
+        {
+            AddDiagnostic(identifier, $"{kind} can use expression body", diagnostics);
+        }
+    }
+
+    private static bool IsSingleStatement(BlockSyntax block) =>
+        block.Statements.Count == 1 &&
+        block.Statements[0] is ReturnStatementSyntax or ExpressionStatementSyntax;
+
+    private static void AddDiagnostic(SyntaxToken token, string message, List<LintDiagnostic> diagnostics)
+    {
+        FileLinePositionSpan span = token.GetLocation().GetLineSpan();
+
+        diagnostics.Add(
+            new LintDiagnostic
+            {
+                RuleId = "CSLINT201",
+                Message = message,
+                Severity = LintSeverity.Info,
+                FilePath = span.Path,
+                Line = span.StartLinePosition.Line + 1,
+                Column = span.StartLinePosition.Character + 1,
+            });
+    }
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_expression_bodied_methods") is not null ||
         configuration.GetValue("csharp_style_expression_bodied_properties") is not null ||
@@ -61,47 +103,5 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
                 }
             }
         }
-    }
-
-    private static void CheckExpressionBody(
-        ArrowExpressionClauseSyntax? expressionBody,
-        BlockSyntax? body,
-        SyntaxToken identifier,
-        string? preference,
-        string kind,
-        List<LintDiagnostic> diagnostics)
-    {
-        if (preference is null)
-        {
-            return;
-        }
-
-        bool preferExpression = string.Equals(preference, "true", StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(preference, "when_on_single_line", StringComparison.OrdinalIgnoreCase);
-
-        if (preferExpression && expressionBody is null && body is not null && IsSingleStatement(body))
-        {
-            AddDiagnostic(identifier, $"{kind} can use expression body", diagnostics);
-        }
-    }
-
-    private static bool IsSingleStatement(BlockSyntax block) =>
-        block.Statements.Count == 1 &&
-        block.Statements[0] is ReturnStatementSyntax or ExpressionStatementSyntax;
-
-    private static void AddDiagnostic(SyntaxToken token, string message, List<LintDiagnostic> diagnostics)
-    {
-        FileLinePositionSpan span = token.GetLocation().GetLineSpan();
-
-        diagnostics.Add(
-            new LintDiagnostic
-            {
-                RuleId = "CSLINT201",
-                Message = message,
-                Severity = LintSeverity.Info,
-                FilePath = span.Path,
-                Line = span.StartLinePosition.Line + 1,
-                Column = span.StartLinePosition.Character + 1,
-            });
     }
 }

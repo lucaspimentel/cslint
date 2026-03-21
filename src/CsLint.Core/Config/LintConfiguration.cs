@@ -7,7 +7,19 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
 {
     private readonly ConcurrentDictionary<string, (string? value, string? severity)> _severityCache = new();
 
+    public static LintConfiguration Empty { get; } = new(new Dictionary<string, string>());
+
     public IReadOnlyDictionary<string, string> Properties => properties;
+
+    public static LintSeverity? ParseSeverity(string? severity) =>
+        severity?.ToLowerInvariant() switch
+        {
+            "error" => LintSeverity.Error,
+            "warning" => LintSeverity.Warning,
+            "suggestion" => LintSeverity.Info,
+            "silent" or "none" => LintSeverity.None,
+            _ => null,
+        };
 
     public string? GetValue(string key) =>
         properties.TryGetValue(key, out string? value) ? value : null;
@@ -63,16 +75,4 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
         (string? _, string? severity) = GetValueWithSeverity(key);
         return ParseSeverity(severity);
     }
-
-    public static LintSeverity? ParseSeverity(string? severity) =>
-        severity?.ToLowerInvariant() switch
-        {
-            "error" => LintSeverity.Error,
-            "warning" => LintSeverity.Warning,
-            "suggestion" => LintSeverity.Info,
-            "silent" or "none" => LintSeverity.None,
-            _ => null,
-        };
-
-    public static LintConfiguration Empty { get; } = new(new Dictionary<string, string>());
 }

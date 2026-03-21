@@ -6,6 +6,13 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
 {
+    private static readonly HashSet<string> FrameworkTypeNames = new(StringComparer.Ordinal)
+    {
+        "Int16", "Int32", "Int64", "UInt16", "UInt32", "UInt64",
+        "Single", "Double", "Decimal", "Boolean", "Char", "String",
+        "Byte", "SByte", "Object",
+    };
+
     public string RuleId => "CSLINT208";
 
     public string Name => "PredefinedType";
@@ -18,12 +25,46 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
-    private static readonly HashSet<string> FrameworkTypeNames = new(StringComparer.Ordinal)
+    private static bool IsInTypePosition(SyntaxNode node)
     {
-        "Int16", "Int32", "Int64", "UInt16", "UInt32", "UInt64",
-        "Single", "Double", "Decimal", "Boolean", "Char", "String",
-        "Byte", "SByte", "Object",
-    };
+        SyntaxNode? parent = node.Parent;
+
+        return parent switch
+        {
+            VariableDeclarationSyntax v => v.Type == node,
+            ParameterSyntax p => p.Type == node,
+            PropertyDeclarationSyntax p => p.Type == node,
+            MethodDeclarationSyntax m => m.ReturnType == node,
+            CastExpressionSyntax c => c.Type == node,
+            TypeOfExpressionSyntax t => t.Type == node,
+            ArrayTypeSyntax a => a.ElementType == node,
+            NullableTypeSyntax n => n.ElementType == node,
+            ObjectCreationExpressionSyntax o => o.Type == node,
+            BaseTypeSyntax b => b.Type == node,
+            TypeConstraintSyntax t => t.Type == node,
+            TypeArgumentListSyntax => true,
+            EventDeclarationSyntax e => e.Type == node,
+            EventFieldDeclarationSyntax => false,
+            FieldDeclarationSyntax => false,
+            _ => false,
+        };
+    }
+
+    private static void AddDiagnostic(List<LintDiagnostic> diagnostics, SyntaxToken identifier, string filePath)
+    {
+        FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
+
+        diagnostics.Add(
+            new LintDiagnostic
+            {
+                RuleId = "CSLINT208",
+                Message = $"Use predefined type keyword instead of '{identifier.Text}'",
+                Severity = LintSeverity.Info,
+                FilePath = filePath,
+                Line = span.StartLinePosition.Line + 1,
+                Column = span.StartLinePosition.Character + 1,
+            });
+    }
 
     public bool IsEnabled(LintConfiguration configuration)
     {
@@ -99,46 +140,5 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
                 break;
             }
         }
-    }
-
-    private static bool IsInTypePosition(SyntaxNode node)
-    {
-        SyntaxNode? parent = node.Parent;
-
-        return parent switch
-        {
-            VariableDeclarationSyntax v => v.Type == node,
-            ParameterSyntax p => p.Type == node,
-            PropertyDeclarationSyntax p => p.Type == node,
-            MethodDeclarationSyntax m => m.ReturnType == node,
-            CastExpressionSyntax c => c.Type == node,
-            TypeOfExpressionSyntax t => t.Type == node,
-            ArrayTypeSyntax a => a.ElementType == node,
-            NullableTypeSyntax n => n.ElementType == node,
-            ObjectCreationExpressionSyntax o => o.Type == node,
-            BaseTypeSyntax b => b.Type == node,
-            TypeConstraintSyntax t => t.Type == node,
-            TypeArgumentListSyntax => true,
-            EventDeclarationSyntax e => e.Type == node,
-            EventFieldDeclarationSyntax => false,
-            FieldDeclarationSyntax => false,
-            _ => false,
-        };
-    }
-
-    private static void AddDiagnostic(List<LintDiagnostic> diagnostics, SyntaxToken identifier, string filePath)
-    {
-        FileLinePositionSpan span = identifier.GetLocation().GetLineSpan();
-
-        diagnostics.Add(
-            new LintDiagnostic
-            {
-                RuleId = "CSLINT208",
-                Message = $"Use predefined type keyword instead of '{identifier.Text}'",
-                Severity = LintSeverity.Info,
-                FilePath = filePath,
-                Line = span.StartLinePosition.Line + 1,
-                Column = span.StartLinePosition.Character + 1,
-            });
     }
 }

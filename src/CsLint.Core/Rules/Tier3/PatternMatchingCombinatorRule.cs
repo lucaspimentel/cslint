@@ -15,6 +15,45 @@ public sealed class PatternMatchingCombinatorRule : IRuleDefinition, IDescendant
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool TryGetComparedVariable(ExpressionSyntax expr, out string? variableName)
+    {
+        variableName = null;
+
+        // Strip parentheses
+        while (expr is ParenthesizedExpressionSyntax paren)
+        {
+            expr = paren.Expression;
+        }
+
+        // Relational: x < 10, x >= 5, etc.
+        if (expr is BinaryExpressionSyntax binary &&
+            binary.Kind() is SyntaxKind.LessThanExpression
+                          or SyntaxKind.LessThanOrEqualExpression
+                          or SyntaxKind.GreaterThanExpression
+                          or SyntaxKind.GreaterThanOrEqualExpression
+                          or SyntaxKind.EqualsExpression
+                          or SyntaxKind.NotEqualsExpression &&
+            IsConstantCompatible(binary.Right))
+        {
+            variableName = binary.Left.WithoutTrivia().ToFullString();
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns true if the expression can be used in a C# relational pattern (compile-time constant).
+    /// </summary>
+    private static bool IsConstantCompatible(ExpressionSyntax expr) =>
+        expr is LiteralExpressionSyntax ||
+        (expr is PrefixUnaryExpressionSyntax prefix &&
+         prefix.Kind() is SyntaxKind.UnaryMinusExpression &&
+         prefix.Operand is LiteralExpressionSyntax) ||
+        expr is DefaultExpressionSyntax ||
+        expr.Kind() is SyntaxKind.DefaultLiteralExpression ||
+        expr is SizeOfExpressionSyntax;
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_prefer_pattern_matching") is not null;
 
@@ -93,43 +132,4 @@ public sealed class PatternMatchingCombinatorRule : IRuleDefinition, IDescendant
                 Column = span.StartLinePosition.Character + 1,
             });
     }
-
-    private static bool TryGetComparedVariable(ExpressionSyntax expr, out string? variableName)
-    {
-        variableName = null;
-
-        // Strip parentheses
-        while (expr is ParenthesizedExpressionSyntax paren)
-        {
-            expr = paren.Expression;
-        }
-
-        // Relational: x < 10, x >= 5, etc.
-        if (expr is BinaryExpressionSyntax binary &&
-            binary.Kind() is SyntaxKind.LessThanExpression
-                          or SyntaxKind.LessThanOrEqualExpression
-                          or SyntaxKind.GreaterThanExpression
-                          or SyntaxKind.GreaterThanOrEqualExpression
-                          or SyntaxKind.EqualsExpression
-                          or SyntaxKind.NotEqualsExpression &&
-            IsConstantCompatible(binary.Right))
-        {
-            variableName = binary.Left.WithoutTrivia().ToFullString();
-            return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Returns true if the expression can be used in a C# relational pattern (compile-time constant).
-    /// </summary>
-    private static bool IsConstantCompatible(ExpressionSyntax expr) =>
-        expr is LiteralExpressionSyntax ||
-        (expr is PrefixUnaryExpressionSyntax prefix &&
-         prefix.Kind() is SyntaxKind.UnaryMinusExpression &&
-         prefix.Operand is LiteralExpressionSyntax) ||
-        expr is DefaultExpressionSyntax ||
-        expr.Kind() is SyntaxKind.DefaultLiteralExpression ||
-        expr is SizeOfExpressionSyntax;
 }

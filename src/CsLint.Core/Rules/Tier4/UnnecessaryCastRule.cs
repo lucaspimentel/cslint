@@ -16,6 +16,51 @@ internal sealed class UnnecessaryCastRule : IRuleDefinition, ISemanticRuleHandle
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static bool IsArithmeticOperand(CastExpressionSyntax cast) =>
+        cast.Parent is BinaryExpressionSyntax binary &&
+        binary.Kind() is SyntaxKind.AddExpression
+            or SyntaxKind.SubtractExpression
+            or SyntaxKind.MultiplyExpression
+            or SyntaxKind.DivideExpression
+            or SyntaxKind.ModuloExpression;
+
+    private static bool IsMethodArgument(CastExpressionSyntax cast, SemanticModel model)
+    {
+        if (cast.Parent is not ArgumentSyntax)
+        {
+            return false;
+        }
+
+        // Find the containing invocation
+        SyntaxNode? invocation = cast.Parent.Parent?.Parent;
+
+        if (invocation is not InvocationExpressionSyntax inv)
+        {
+            return false;
+        }
+
+        SymbolInfo symbolInfo = model.GetSymbolInfo(inv);
+
+        // If we can't resolve the method, be conservative — assume the cast is needed
+        if (symbolInfo.Symbol is not IMethodSymbol method)
+        {
+            return true;
+        }
+
+        // Check if the method has overloads with the same parameter count —
+        // if so, the cast may be needed for disambiguation
+        INamedTypeSymbol? containingType = method.ContainingType;
+
+        if (containingType is null)
+        {
+            return true;
+        }
+
+        return containingType.GetMembers(method.Name)
+            .OfType<IMethodSymbol>()
+            .Count(m => m.Parameters.Length == method.Parameters.Length) > 1;
+    }
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetSeverityForKey("dotnet_diagnostic.CSLINT306.severity") != LintSeverity.None;
 
@@ -89,51 +134,6 @@ internal sealed class UnnecessaryCastRule : IRuleDefinition, ISemanticRuleHandle
                 ReportDiagnostic(cast, context.FilePath, diagnostics);
             }
         }
-    }
-
-    private static bool IsArithmeticOperand(CastExpressionSyntax cast) =>
-        cast.Parent is BinaryExpressionSyntax binary &&
-        binary.Kind() is SyntaxKind.AddExpression
-            or SyntaxKind.SubtractExpression
-            or SyntaxKind.MultiplyExpression
-            or SyntaxKind.DivideExpression
-            or SyntaxKind.ModuloExpression;
-
-    private static bool IsMethodArgument(CastExpressionSyntax cast, SemanticModel model)
-    {
-        if (cast.Parent is not ArgumentSyntax)
-        {
-            return false;
-        }
-
-        // Find the containing invocation
-        SyntaxNode? invocation = cast.Parent.Parent?.Parent;
-
-        if (invocation is not InvocationExpressionSyntax inv)
-        {
-            return false;
-        }
-
-        SymbolInfo symbolInfo = model.GetSymbolInfo(inv);
-
-        // If we can't resolve the method, be conservative — assume the cast is needed
-        if (symbolInfo.Symbol is not IMethodSymbol method)
-        {
-            return true;
-        }
-
-        // Check if the method has overloads with the same parameter count —
-        // if so, the cast may be needed for disambiguation
-        INamedTypeSymbol? containingType = method.ContainingType;
-
-        if (containingType is null)
-        {
-            return true;
-        }
-
-        return containingType.GetMembers(method.Name)
-            .OfType<IMethodSymbol>()
-            .Count(m => m.Parameters.Length == method.Parameters.Length) > 1;
     }
 
     private void ReportDiagnostic(CastExpressionSyntax cast, string filePath, List<LintDiagnostic> diagnostics)

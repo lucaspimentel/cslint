@@ -17,6 +17,12 @@ public sealed class TrailingCommasRule : IRuleDefinition, IDescendantNodeHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsMultiLine(SyntaxNode node)
+    {
+        FileLinePositionSpan span = node.GetLocation().GetLineSpan();
+        return span.StartLinePosition.Line != span.EndLinePosition.Line;
+    }
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -129,11 +135,5 @@ public sealed class TrailingCommasRule : IRuleDefinition, IDescendantNodeHandler
                     Column = span.EndLinePosition.Character + 1,
                 });
         }
-    }
-
-    private static bool IsMultiLine(SyntaxNode node)
-    {
-        FileLinePositionSpan span = node.GetLocation().GetLineSpan();
-        return span.StartLinePosition.Line != span.EndLinePosition.Line;
     }
 }

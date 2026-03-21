@@ -14,6 +14,12 @@ public sealed class TargetTypedNewRule : IRuleDefinition, IDescendantNodeHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool TypeNamesMatch(TypeSyntax declaredType, TypeSyntax createdType) =>
+        string.Equals(
+            declaredType.ToString().TrimEnd('?'),
+            createdType.ToString().TrimEnd('?'),
+            StringComparison.Ordinal);
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_style_implicit_object_creation_when_type_is_apparent") is not null;
 
@@ -74,12 +80,6 @@ public sealed class TargetTypedNewRule : IRuleDefinition, IDescendantNodeHandler
             return;
         }
     }
-
-    private static bool TypeNamesMatch(TypeSyntax declaredType, TypeSyntax createdType) =>
-        string.Equals(
-            declaredType.ToString().TrimEnd('?'),
-            createdType.ToString().TrimEnd('?'),
-            StringComparison.Ordinal);
 
     private void AddDiagnostic(
         ObjectCreationExpressionSyntax node,

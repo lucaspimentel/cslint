@@ -14,6 +14,9 @@ public sealed class UsingDirectivePlacementRule : IRuleDefinition, IDescendantNo
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool HasNamespace(SyntaxNode root) =>
+        root.DescendantNodes().Any(n => n is NamespaceDeclarationSyntax);
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_using_directive_placement") is not null;
 
@@ -90,7 +93,4 @@ public sealed class UsingDirectivePlacementRule : IRuleDefinition, IDescendantNo
                 });
         }
     }
-
-    private static bool HasNamespace(SyntaxNode root) =>
-        root.DescendantNodes().Any(n => n is NamespaceDeclarationSyntax);
 }

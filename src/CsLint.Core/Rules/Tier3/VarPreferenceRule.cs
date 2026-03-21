@@ -20,80 +20,6 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
-    public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue("csharp_style_var_when_type_is_apparent") is not null ||
-        configuration.GetValue("csharp_style_var_for_built_in_types") is not null ||
-        configuration.GetValue("csharp_style_var_elsewhere") is not null;
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        var walker = new CombinedStyleWalker([this], context.Configuration);
-        walker.Visit(context.Root);
-        return walker.Diagnostics;
-    }
-
-    void IStyleRuleHandler.VisitLocalDeclarationStatement(
-        LocalDeclarationStatementSyntax node,
-        LintConfiguration config,
-        List<LintDiagnostic> diagnostics)
-    {
-        if (node.Modifiers.Any(SyntaxKind.ConstKeyword))
-        {
-            return;
-        }
-
-        bool usesVar = node.Declaration.Type.IsVar;
-        VariableDeclaratorSyntax? declarator = node.Declaration.Variables.FirstOrDefault();
-
-        if (declarator?.Initializer is null)
-        {
-            return;
-        }
-
-        ExpressionSyntax initializer = declarator.Initializer.Value;
-
-        // null and default literals cannot have their type inferred — skip entirely
-        if (initializer.IsKind(SyntaxKind.NullLiteralExpression) ||
-            initializer.IsKind(SyntaxKind.DefaultLiteralExpression))
-        {
-            return;
-        }
-
-        bool isApparent = IsTypeApparent(initializer);
-        bool isLiteral = initializer is LiteralExpressionSyntax;
-
-        (string? varForBuiltIn, string? _) = config.GetValueWithSeverity("csharp_style_var_for_built_in_types");
-        (string? varWhenApparent, string? _) = config.GetValueWithSeverity("csharp_style_var_when_type_is_apparent");
-        (string? varElsewhere, string? _) = config.GetValueWithSeverity("csharp_style_var_elsewhere");
-
-        if (usesVar)
-        {
-            if (isLiteral && string.Equals(varForBuiltIn, "false", StringComparison.OrdinalIgnoreCase))
-            {
-                AddDiagnostic(node.Declaration.Type, "Use explicit type instead of 'var' for built-in types", diagnostics);
-            }
-            else if (!isApparent && string.Equals(varElsewhere, "false", StringComparison.OrdinalIgnoreCase))
-            {
-                AddDiagnostic(node.Declaration.Type, "Use explicit type instead of 'var' when type is not apparent", diagnostics);
-            }
-        }
-        else
-        {
-            bool isBuiltIn = IsBuiltInType(node.Declaration.Type);
-
-            if (isApparent && string.Equals(varWhenApparent, "true", StringComparison.OrdinalIgnoreCase))
-            {
-                AddDiagnostic(node.Declaration.Type, "Use 'var' when type is apparent from the right-hand side", diagnostics);
-            }
-            else if (isBuiltIn && isLiteral &&
-                     LiteralMatchesDeclaredType(initializer, node.Declaration.Type) &&
-                     string.Equals(varForBuiltIn, "true", StringComparison.OrdinalIgnoreCase))
-            {
-                AddDiagnostic(node.Declaration.Type, "Use 'var' for built-in types", diagnostics);
-            }
-        }
-    }
-
     private static bool IsTypeApparent(ExpressionSyntax expression) =>
         expression is ObjectCreationExpressionSyntax or
                       ImplicitObjectCreationExpressionSyntax or
@@ -197,5 +123,79 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
                 Line = span.StartLinePosition.Line + 1,
                 Column = span.StartLinePosition.Character + 1,
             });
+    }
+
+    public bool IsEnabled(LintConfiguration configuration) =>
+        configuration.GetValue("csharp_style_var_when_type_is_apparent") is not null ||
+        configuration.GetValue("csharp_style_var_for_built_in_types") is not null ||
+        configuration.GetValue("csharp_style_var_elsewhere") is not null;
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        var walker = new CombinedStyleWalker([this], context.Configuration);
+        walker.Visit(context.Root);
+        return walker.Diagnostics;
+    }
+
+    void IStyleRuleHandler.VisitLocalDeclarationStatement(
+        LocalDeclarationStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
+    {
+        if (node.Modifiers.Any(SyntaxKind.ConstKeyword))
+        {
+            return;
+        }
+
+        bool usesVar = node.Declaration.Type.IsVar;
+        VariableDeclaratorSyntax? declarator = node.Declaration.Variables.FirstOrDefault();
+
+        if (declarator?.Initializer is null)
+        {
+            return;
+        }
+
+        ExpressionSyntax initializer = declarator.Initializer.Value;
+
+        // null and default literals cannot have their type inferred — skip entirely
+        if (initializer.IsKind(SyntaxKind.NullLiteralExpression) ||
+            initializer.IsKind(SyntaxKind.DefaultLiteralExpression))
+        {
+            return;
+        }
+
+        bool isApparent = IsTypeApparent(initializer);
+        bool isLiteral = initializer is LiteralExpressionSyntax;
+
+        (string? varForBuiltIn, string? _) = config.GetValueWithSeverity("csharp_style_var_for_built_in_types");
+        (string? varWhenApparent, string? _) = config.GetValueWithSeverity("csharp_style_var_when_type_is_apparent");
+        (string? varElsewhere, string? _) = config.GetValueWithSeverity("csharp_style_var_elsewhere");
+
+        if (usesVar)
+        {
+            if (isLiteral && string.Equals(varForBuiltIn, "false", StringComparison.OrdinalIgnoreCase))
+            {
+                AddDiagnostic(node.Declaration.Type, "Use explicit type instead of 'var' for built-in types", diagnostics);
+            }
+            else if (!isApparent && string.Equals(varElsewhere, "false", StringComparison.OrdinalIgnoreCase))
+            {
+                AddDiagnostic(node.Declaration.Type, "Use explicit type instead of 'var' when type is not apparent", diagnostics);
+            }
+        }
+        else
+        {
+            bool isBuiltIn = IsBuiltInType(node.Declaration.Type);
+
+            if (isApparent && string.Equals(varWhenApparent, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                AddDiagnostic(node.Declaration.Type, "Use 'var' when type is apparent from the right-hand side", diagnostics);
+            }
+            else if (isBuiltIn && isLiteral &&
+                     LiteralMatchesDeclaredType(initializer, node.Declaration.Type) &&
+                     string.Equals(varForBuiltIn, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                AddDiagnostic(node.Declaration.Type, "Use 'var' for built-in types", diagnostics);
+            }
+        }
     }
 }

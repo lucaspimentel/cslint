@@ -17,62 +17,6 @@ public sealed class ElementOrderRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration)
-    {
-        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        if (!IsEnabled(context.Configuration))
-        {
-            return [];
-        }
-
-        List<LintDiagnostic>? diagnostics = null;
-
-        foreach (TypeDeclarationSyntax typeDecl in context.Root.DescendantNodes().OfType<TypeDeclarationSyntax>())
-        {
-            int highestKindRank = -1;
-            string? highestKindName = null;
-
-            foreach (MemberDeclarationSyntax member in typeDecl.Members)
-            {
-                int rank = GetKindRank(member);
-
-                if (rank < 0)
-                {
-                    continue;
-                }
-
-                if (rank < highestKindRank)
-                {
-                    string kindName = GetKindName(member);
-                    FileLinePositionSpan span = GetMemberLocation(member);
-
-                    (diagnostics ??= []).Add(
-                        new LintDiagnostic
-                        {
-                            RuleId = RuleId,
-                            Message = $"A {kindName} must not follow a {highestKindName}",
-                            Severity = LintSeverity.Warning,
-                            FilePath = span.Path,
-                            Line = span.StartLinePosition.Line + 1,
-                            Column = span.StartLinePosition.Character + 1,
-                        });
-                }
-                else if (rank > highestKindRank)
-                {
-                    highestKindRank = rank;
-                    highestKindName = GetKindName(member);
-                }
-            }
-        }
-
-        return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
-    }
-
     /// <summary>
     /// Returns canonical ordering rank per SA1201:
     /// const field (0) → field (1) → constructor (2) → destructor (3) → delegate (4) →
@@ -143,4 +87,60 @@ public sealed class ElementOrderRule : IRuleDefinition
             EnumDeclarationSyntax en => en.Identifier.GetLocation().GetLineSpan(),
             _ => member.GetLocation().GetLineSpan(),
         };
+
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        if (!IsEnabled(context.Configuration))
+        {
+            return [];
+        }
+
+        List<LintDiagnostic>? diagnostics = null;
+
+        foreach (TypeDeclarationSyntax typeDecl in context.Root.DescendantNodes().OfType<TypeDeclarationSyntax>())
+        {
+            int highestKindRank = -1;
+            string? highestKindName = null;
+
+            foreach (MemberDeclarationSyntax member in typeDecl.Members)
+            {
+                int rank = GetKindRank(member);
+
+                if (rank < 0)
+                {
+                    continue;
+                }
+
+                if (rank < highestKindRank)
+                {
+                    string kindName = GetKindName(member);
+                    FileLinePositionSpan span = GetMemberLocation(member);
+
+                    (diagnostics ??= []).Add(
+                        new LintDiagnostic
+                        {
+                            RuleId = RuleId,
+                            Message = $"A {kindName} must not follow a {highestKindName}",
+                            Severity = LintSeverity.Warning,
+                            FilePath = span.Path,
+                            Line = span.StartLinePosition.Line + 1,
+                            Column = span.StartLinePosition.Character + 1,
+                        });
+                }
+                else if (rank > highestKindRank)
+                {
+                    highestKindRank = rank;
+                    highestKindName = GetKindName(member);
+                }
+            }
+        }
+
+        return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
+    }
 }

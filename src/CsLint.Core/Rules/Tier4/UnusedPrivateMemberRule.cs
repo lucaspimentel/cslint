@@ -16,83 +16,6 @@ internal sealed class UnusedPrivateMemberRule : IRuleDefinition, ISemanticRuleHa
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetSeverityForKey("dotnet_diagnostic.CSLINT308.severity") != LintSeverity.None;
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
-
-    public void Analyze(RuleContext context, SemanticModel model, List<LintDiagnostic> diagnostics)
-    {
-        // Bail out if compilation has missing references — false positive mitigation
-        if (HasMissingReferences(model))
-        {
-            return;
-        }
-
-        var privateMembers = new Dictionary<ISymbol, SyntaxNode>(SymbolEqualityComparer.Default);
-
-        CollectPrivateMembers(context.Root, model, privateMembers);
-
-        if (privateMembers.Count == 0)
-        {
-            return;
-        }
-
-        // Walk all identifier references and remove matched symbols
-        foreach (IdentifierNameSyntax identifier in context.Root.DescendantNodes().OfType<IdentifierNameSyntax>())
-        {
-            SymbolInfo symbolInfo = model.GetSymbolInfo(identifier);
-            ISymbol? referencedSymbol = symbolInfo.Symbol;
-
-            if (referencedSymbol is null)
-            {
-                // Check candidates (e.g. overload resolution ambiguity)
-                foreach (ISymbol candidate in symbolInfo.CandidateSymbols)
-                {
-                    privateMembers.Remove(candidate);
-                }
-
-                continue;
-            }
-
-            // For properties accessed via accessors, resolve to the containing property
-            if (referencedSymbol is IMethodSymbol { AssociatedSymbol: not null } accessor)
-            {
-                privateMembers.Remove(accessor.AssociatedSymbol);
-            }
-
-            privateMembers.Remove(referencedSymbol);
-
-            if (privateMembers.Count == 0)
-            {
-                return;
-            }
-        }
-
-        // Report remaining unused members
-        foreach ((ISymbol symbol, SyntaxNode node) in privateMembers)
-        {
-            SyntaxToken identifier = GetIdentifier(node);
-
-            if (identifier == default)
-            {
-                continue;
-            }
-
-            LinePosition start = identifier.GetLocation().GetLineSpan().StartLinePosition;
-
-            diagnostics.Add(new LintDiagnostic
-            {
-                RuleId = RuleId,
-                Message = $"Private member '{symbol.Name}' is declared but never used",
-                Severity = DefaultSeverity,
-                FilePath = context.FilePath,
-                Line = start.Line + 1,
-                Column = start.Character + 1,
-            });
-        }
-    }
-
     private static bool HasMissingReferences(SemanticModel model)
     {
         foreach (Diagnostic diagnostic in model.GetDiagnostics())
@@ -273,4 +196,81 @@ internal sealed class UnusedPrivateMemberRule : IRuleDefinition, ISemanticRuleHa
             EventDeclarationSyntax e => e.Identifier,
             _ => default,
         };
+
+    public bool IsEnabled(LintConfiguration configuration) =>
+        configuration.GetSeverityForKey("dotnet_diagnostic.CSLINT308.severity") != LintSeverity.None;
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
+
+    public void Analyze(RuleContext context, SemanticModel model, List<LintDiagnostic> diagnostics)
+    {
+        // Bail out if compilation has missing references — false positive mitigation
+        if (HasMissingReferences(model))
+        {
+            return;
+        }
+
+        var privateMembers = new Dictionary<ISymbol, SyntaxNode>(SymbolEqualityComparer.Default);
+
+        CollectPrivateMembers(context.Root, model, privateMembers);
+
+        if (privateMembers.Count == 0)
+        {
+            return;
+        }
+
+        // Walk all identifier references and remove matched symbols
+        foreach (IdentifierNameSyntax identifier in context.Root.DescendantNodes().OfType<IdentifierNameSyntax>())
+        {
+            SymbolInfo symbolInfo = model.GetSymbolInfo(identifier);
+            ISymbol? referencedSymbol = symbolInfo.Symbol;
+
+            if (referencedSymbol is null)
+            {
+                // Check candidates (e.g. overload resolution ambiguity)
+                foreach (ISymbol candidate in symbolInfo.CandidateSymbols)
+                {
+                    privateMembers.Remove(candidate);
+                }
+
+                continue;
+            }
+
+            // For properties accessed via accessors, resolve to the containing property
+            if (referencedSymbol is IMethodSymbol { AssociatedSymbol: not null } accessor)
+            {
+                privateMembers.Remove(accessor.AssociatedSymbol);
+            }
+
+            privateMembers.Remove(referencedSymbol);
+
+            if (privateMembers.Count == 0)
+            {
+                return;
+            }
+        }
+
+        // Report remaining unused members
+        foreach ((ISymbol symbol, SyntaxNode node) in privateMembers)
+        {
+            SyntaxToken identifier = GetIdentifier(node);
+
+            if (identifier == default)
+            {
+                continue;
+            }
+
+            LinePosition start = identifier.GetLocation().GetLineSpan().StartLinePosition;
+
+            diagnostics.Add(new LintDiagnostic
+            {
+                RuleId = RuleId,
+                Message = $"Private member '{symbol.Name}' is declared but never used",
+                Severity = DefaultSeverity,
+                FilePath = context.FilePath,
+                Line = start.Line + 1,
+                Column = start.Character + 1,
+            });
+        }
+    }
 }

@@ -15,63 +15,6 @@ public sealed class PatternMatchingRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        var walker = new CombinedStyleWalker([this], context.Configuration);
-        walker.Visit(context.Root);
-        return walker.Diagnostics;
-    }
-
-    void IStyleRuleHandler.VisitIfStatement(
-        IfStatementSyntax node,
-        LintConfiguration config,
-        List<LintDiagnostic> diagnostics)
-    {
-        // Case 1: Intra-statement — if (x is Type) { ...(Type)x... }
-        if (node.Condition is BinaryExpressionSyntax
-            {
-                RawKind: (int)SyntaxKind.IsExpression,
-                Left: var isLeft,
-                Right: TypeSyntax,
-            })
-        {
-            string isTarget = isLeft.ToString();
-
-            bool hasCast = node.Statement.DescendantNodes()
-                .OfType<CastExpressionSyntax>()
-                .Any(c => c.Expression.ToString() == isTarget);
-
-            if (hasCast)
-            {
-                ReportDiagnostic(node, diagnostics);
-            }
-        }
-
-        // Case 2: Guard clause — if (!(x is Type)) return; followed by (Type)x
-        if (node.Else is null
-            && IsJumpStatement(node.Statement)
-            && TryGetNegatedIsExpression(node.Condition, out string? guardTarget, out string? guardType)
-            && node.Parent is BlockSyntax block)
-        {
-            int ifIndex = block.Statements.IndexOf(node);
-
-            for (int i = ifIndex + 1; i < block.Statements.Count; i++)
-            {
-                bool hasCast = block.Statements[i].DescendantNodes()
-                    .OfType<CastExpressionSyntax>()
-                    .Any(c => c.Type.ToString() == guardType && c.Expression.ToString() == guardTarget);
-
-                if (hasCast)
-                {
-                    ReportDiagnostic(node, diagnostics);
-                    break;
-                }
-            }
-        }
-    }
-
     private static void ReportDiagnostic(IfStatementSyntax node, List<LintDiagnostic> diagnostics)
     {
         FileLinePositionSpan span = node.IfKeyword.GetLocation().GetLineSpan();
@@ -146,5 +89,62 @@ public sealed class PatternMatchingRule : IRuleDefinition, IStyleRuleHandler
         target = null;
         type = null;
         return false;
+    }
+
+    public bool IsEnabled(LintConfiguration configuration) => true;
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        var walker = new CombinedStyleWalker([this], context.Configuration);
+        walker.Visit(context.Root);
+        return walker.Diagnostics;
+    }
+
+    void IStyleRuleHandler.VisitIfStatement(
+        IfStatementSyntax node,
+        LintConfiguration config,
+        List<LintDiagnostic> diagnostics)
+    {
+        // Case 1: Intra-statement — if (x is Type) { ...(Type)x... }
+        if (node.Condition is BinaryExpressionSyntax
+            {
+                RawKind: (int)SyntaxKind.IsExpression,
+                Left: var isLeft,
+                Right: TypeSyntax,
+            })
+        {
+            string isTarget = isLeft.ToString();
+
+            bool hasCast = node.Statement.DescendantNodes()
+                .OfType<CastExpressionSyntax>()
+                .Any(c => c.Expression.ToString() == isTarget);
+
+            if (hasCast)
+            {
+                ReportDiagnostic(node, diagnostics);
+            }
+        }
+
+        // Case 2: Guard clause — if (!(x is Type)) return; followed by (Type)x
+        if (node.Else is null
+            && IsJumpStatement(node.Statement)
+            && TryGetNegatedIsExpression(node.Condition, out string? guardTarget, out string? guardType)
+            && node.Parent is BlockSyntax block)
+        {
+            int ifIndex = block.Statements.IndexOf(node);
+
+            for (int i = ifIndex + 1; i < block.Statements.Count; i++)
+            {
+                bool hasCast = block.Statements[i].DescendantNodes()
+                    .OfType<CastExpressionSyntax>()
+                    .Any(c => c.Type.ToString() == guardType && c.Expression.ToString() == guardTarget);
+
+                if (hasCast)
+                {
+                    ReportDiagnostic(node, diagnostics);
+                    break;
+                }
+            }
+        }
     }
 }

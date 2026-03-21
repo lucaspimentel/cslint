@@ -14,6 +14,31 @@ public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsActive(LintConfiguration config)
+    {
+        (string? pref, string? _) = config.GetValueWithSeverity("csharp_prefer_braces");
+        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static void CheckStatement(StatementSyntax statement, SyntaxToken keyword, List<LintDiagnostic> diagnostics)
+    {
+        if (statement is not BlockSyntax)
+        {
+            FileLinePositionSpan span = keyword.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = "CSLINT202",
+                    Message = "Prefer braces for control flow statements",
+                    Severity = LintSeverity.Warning,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
+        }
+    }
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("csharp_prefer_braces") is not null;
 
@@ -101,31 +126,6 @@ public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
         if (IsActive(config) && node.Statement is not UsingStatementSyntax)
         {
             CheckStatement(node.Statement, node.UsingKeyword, diagnostics);
-        }
-    }
-
-    private static bool IsActive(LintConfiguration config)
-    {
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_prefer_braces");
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
-
-    private static void CheckStatement(StatementSyntax statement, SyntaxToken keyword, List<LintDiagnostic> diagnostics)
-    {
-        if (statement is not BlockSyntax)
-        {
-            FileLinePositionSpan span = keyword.GetLocation().GetLineSpan();
-
-            diagnostics.Add(
-                new LintDiagnostic
-                {
-                    RuleId = "CSLINT202",
-                    Message = "Prefer braces for control flow statements",
-                    Severity = LintSeverity.Warning,
-                    FilePath = span.Path,
-                    Line = span.StartLinePosition.Line + 1,
-                    Column = span.StartLinePosition.Character + 1,
-                });
         }
     }
 }

@@ -17,6 +17,34 @@ public sealed class StaticMemberOrderRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static SyntaxKind GetMemberKind(MemberDeclarationSyntax member) =>
+        member switch
+        {
+            FieldDeclarationSyntax => SyntaxKind.FieldDeclaration,
+            ConstructorDeclarationSyntax => SyntaxKind.ConstructorDeclaration,
+            MethodDeclarationSyntax => SyntaxKind.MethodDeclaration,
+            PropertyDeclarationSyntax => SyntaxKind.PropertyDeclaration,
+            EventDeclarationSyntax => SyntaxKind.EventDeclaration,
+            EventFieldDeclarationSyntax => SyntaxKind.EventFieldDeclaration,
+            IndexerDeclarationSyntax => SyntaxKind.IndexerDeclaration,
+            OperatorDeclarationSyntax => SyntaxKind.OperatorDeclaration,
+            _ => SyntaxKind.None,
+        };
+
+    private static FileLinePositionSpan GetMemberLocation(MemberDeclarationSyntax member) =>
+        member switch
+        {
+            FieldDeclarationSyntax f => f.Declaration.Variables[0].Identifier.GetLocation().GetLineSpan(),
+            ConstructorDeclarationSyntax c => c.Identifier.GetLocation().GetLineSpan(),
+            MethodDeclarationSyntax m => m.Identifier.GetLocation().GetLineSpan(),
+            PropertyDeclarationSyntax p => p.Identifier.GetLocation().GetLineSpan(),
+            EventDeclarationSyntax e => e.Identifier.GetLocation().GetLineSpan(),
+            EventFieldDeclarationSyntax ef => ef.Declaration.Variables[0].Identifier.GetLocation().GetLineSpan(),
+            IndexerDeclarationSyntax i => i.ThisKeyword.GetLocation().GetLineSpan(),
+            OperatorDeclarationSyntax o => o.OperatorToken.GetLocation().GetLineSpan(),
+            _ => member.GetLocation().GetLineSpan(),
+        };
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -98,32 +126,4 @@ public sealed class StaticMemberOrderRule : IRuleDefinition
 
         return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
     }
-
-    private static SyntaxKind GetMemberKind(MemberDeclarationSyntax member) =>
-        member switch
-        {
-            FieldDeclarationSyntax => SyntaxKind.FieldDeclaration,
-            ConstructorDeclarationSyntax => SyntaxKind.ConstructorDeclaration,
-            MethodDeclarationSyntax => SyntaxKind.MethodDeclaration,
-            PropertyDeclarationSyntax => SyntaxKind.PropertyDeclaration,
-            EventDeclarationSyntax => SyntaxKind.EventDeclaration,
-            EventFieldDeclarationSyntax => SyntaxKind.EventFieldDeclaration,
-            IndexerDeclarationSyntax => SyntaxKind.IndexerDeclaration,
-            OperatorDeclarationSyntax => SyntaxKind.OperatorDeclaration,
-            _ => SyntaxKind.None,
-        };
-
-    private static FileLinePositionSpan GetMemberLocation(MemberDeclarationSyntax member) =>
-        member switch
-        {
-            FieldDeclarationSyntax f => f.Declaration.Variables[0].Identifier.GetLocation().GetLineSpan(),
-            ConstructorDeclarationSyntax c => c.Identifier.GetLocation().GetLineSpan(),
-            MethodDeclarationSyntax m => m.Identifier.GetLocation().GetLineSpan(),
-            PropertyDeclarationSyntax p => p.Identifier.GetLocation().GetLineSpan(),
-            EventDeclarationSyntax e => e.Identifier.GetLocation().GetLineSpan(),
-            EventFieldDeclarationSyntax ef => ef.Declaration.Variables[0].Identifier.GetLocation().GetLineSpan(),
-            IndexerDeclarationSyntax i => i.ThisKeyword.GetLocation().GetLineSpan(),
-            OperatorDeclarationSyntax o => o.OperatorToken.GetLocation().GetLineSpan(),
-            _ => member.GetLocation().GetLineSpan(),
-        };
 }

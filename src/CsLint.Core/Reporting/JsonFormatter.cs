@@ -6,6 +6,14 @@ namespace Cslint.Core.Reporting;
 
 public sealed class JsonFormatter : IOutputFormatter
 {
+    private static string SeverityToString(LintSeverity severity) => severity switch
+    {
+        LintSeverity.Error => "error",
+        LintSeverity.Warning => "warning",
+        LintSeverity.Info => "info",
+        _ => "none",
+    };
+
     public string Format(IReadOnlyList<LintDiagnostic> diagnostics)
     {
         using var stream = new MemoryStream();
@@ -30,12 +38,4 @@ public sealed class JsonFormatter : IOutputFormatter
 
         return Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Position);
     }
-
-    private static string SeverityToString(LintSeverity severity) => severity switch
-    {
-        LintSeverity.Error => "error",
-        LintSeverity.Warning => "warning",
-        LintSeverity.Info => "info",
-        _ => "none",
-    };
 }

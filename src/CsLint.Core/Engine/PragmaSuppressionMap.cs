@@ -95,6 +95,33 @@ public sealed class PragmaSuppressionMap
         return new PragmaSuppressionMap(suppressedRanges);
     }
 
+    private static void CloseRange(
+        Dictionary<string, int> openRanges,
+        Dictionary<string, List<(int Start, int End)>> suppressedRanges,
+        string id,
+        int endLine)
+    {
+        if (openRanges.Remove(id, out int startLine))
+        {
+            AddRange(suppressedRanges, id, startLine, endLine);
+        }
+    }
+
+    private static void AddRange(
+        Dictionary<string, List<(int Start, int End)>> suppressedRanges,
+        string id,
+        int start,
+        int end)
+    {
+        if (!suppressedRanges.TryGetValue(id, out List<(int Start, int End)>? list))
+        {
+            list = [];
+            suppressedRanges[id] = list;
+        }
+
+        list.Add((start, end));
+    }
+
     public bool IsSuppressed(string ruleId, int line)
     {
         // Check rule-specific suppressions
@@ -122,32 +149,5 @@ public sealed class PragmaSuppressionMap
         }
 
         return false;
-    }
-
-    private static void CloseRange(
-        Dictionary<string, int> openRanges,
-        Dictionary<string, List<(int Start, int End)>> suppressedRanges,
-        string id,
-        int endLine)
-    {
-        if (openRanges.Remove(id, out int startLine))
-        {
-            AddRange(suppressedRanges, id, startLine, endLine);
-        }
-    }
-
-    private static void AddRange(
-        Dictionary<string, List<(int Start, int End)>> suppressedRanges,
-        string id,
-        int start,
-        int end)
-    {
-        if (!suppressedRanges.TryGetValue(id, out List<(int Start, int End)>? list))
-        {
-            list = [];
-            suppressedRanges[id] = list;
-        }
-
-        list.Add((start, end));
     }
 }

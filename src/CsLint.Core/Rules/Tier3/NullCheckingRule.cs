@@ -15,6 +15,83 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool TryGetNullCheckedIdentifier(ExpressionSyntax expression, out string? identifier)
+    {
+        if (expression is BinaryExpressionSyntax binary && binary.IsKind(SyntaxKind.NotEqualsExpression))
+        {
+            if (binary.Right.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Left) is IdentifierNameSyntax leftId)
+            {
+                identifier = leftId.Identifier.Text;
+                return true;
+            }
+
+            if (binary.Left.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Right) is IdentifierNameSyntax rightId)
+            {
+                identifier = rightId.Identifier.Text;
+                return true;
+            }
+        }
+
+        identifier = null;
+        return false;
+    }
+
+    private static ExpressionSyntax StripParentheses(ExpressionSyntax expression)
+    {
+        while (expression is ParenthesizedExpressionSyntax paren)
+        {
+            expression = paren.Expression;
+        }
+
+        return expression;
+    }
+
+    private static bool TryGetNullCheckedIdentifierFromEquality(ExpressionSyntax expression, out string? identifier)
+    {
+        if (expression is BinaryExpressionSyntax binary && binary.IsKind(SyntaxKind.EqualsExpression))
+        {
+            if (binary.Right.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Left) is IdentifierNameSyntax leftId)
+            {
+                identifier = leftId.Identifier.Text;
+                return true;
+            }
+
+            if (binary.Left.IsKind(SyntaxKind.NullLiteralExpression) &&
+                StripParentheses(binary.Right) is IdentifierNameSyntax rightId)
+            {
+                identifier = rightId.Identifier.Text;
+                return true;
+            }
+        }
+
+        identifier = null;
+        return false;
+    }
+
+    private static bool NextStatementUsesIdentifier(StatementSyntax statement, string identifierName)
+    {
+        // Assignment: `_field = identifier;`
+        if (statement is ExpressionStatementSyntax { Expression: AssignmentExpressionSyntax assignment } &&
+            StripParentheses(assignment.Right) is IdentifierNameSyntax assignId &&
+            assignId.Identifier.Text == identifierName)
+        {
+            return true;
+        }
+
+        // Return: `return identifier;`
+        if (statement is ReturnStatementSyntax { Expression: { } returnExpr } &&
+            StripParentheses(returnExpr) is IdentifierNameSyntax returnId &&
+            returnId.Identifier.Text == identifierName)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public bool IsEnabled(LintConfiguration configuration) => true;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
@@ -96,82 +173,4 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
                 Column = span.StartLinePosition.Character + 1,
             });
     }
-
-    private static bool TryGetNullCheckedIdentifier(ExpressionSyntax expression, out string? identifier)
-    {
-        if (expression is BinaryExpressionSyntax binary && binary.IsKind(SyntaxKind.NotEqualsExpression))
-        {
-            if (binary.Right.IsKind(SyntaxKind.NullLiteralExpression) &&
-                StripParentheses(binary.Left) is IdentifierNameSyntax leftId)
-            {
-                identifier = leftId.Identifier.Text;
-                return true;
-            }
-
-            if (binary.Left.IsKind(SyntaxKind.NullLiteralExpression) &&
-                StripParentheses(binary.Right) is IdentifierNameSyntax rightId)
-            {
-                identifier = rightId.Identifier.Text;
-                return true;
-            }
-        }
-
-        identifier = null;
-        return false;
-    }
-
-    private static ExpressionSyntax StripParentheses(ExpressionSyntax expression)
-    {
-        while (expression is ParenthesizedExpressionSyntax paren)
-        {
-            expression = paren.Expression;
-        }
-
-        return expression;
-    }
-
-    private static bool TryGetNullCheckedIdentifierFromEquality(ExpressionSyntax expression, out string? identifier)
-    {
-        if (expression is BinaryExpressionSyntax binary && binary.IsKind(SyntaxKind.EqualsExpression))
-        {
-            if (binary.Right.IsKind(SyntaxKind.NullLiteralExpression) &&
-                StripParentheses(binary.Left) is IdentifierNameSyntax leftId)
-            {
-                identifier = leftId.Identifier.Text;
-                return true;
-            }
-
-            if (binary.Left.IsKind(SyntaxKind.NullLiteralExpression) &&
-                StripParentheses(binary.Right) is IdentifierNameSyntax rightId)
-            {
-                identifier = rightId.Identifier.Text;
-                return true;
-            }
-        }
-
-        identifier = null;
-        return false;
-    }
-
-    private static bool NextStatementUsesIdentifier(StatementSyntax statement, string identifierName)
-    {
-        // Assignment: `_field = identifier;`
-        if (statement is ExpressionStatementSyntax { Expression: AssignmentExpressionSyntax assignment } &&
-            StripParentheses(assignment.Right) is IdentifierNameSyntax assignId &&
-            assignId.Identifier.Text == identifierName)
-        {
-            return true;
-        }
-
-        // Return: `return identifier;`
-        if (statement is ReturnStatementSyntax { Expression: { } returnExpr } &&
-            StripParentheses(returnExpr) is IdentifierNameSyntax returnId &&
-            returnId.Identifier.Text == identifierName)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
 }

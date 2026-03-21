@@ -9,9 +9,6 @@ namespace Cslint.Core.Engine;
 
 public sealed class DirectoryLinter
 {
-    private readonly FileLinter _fileLinter;
-    private readonly IFileSystem _fileSystem;
-
     private static readonly HashSet<string> SkippedExtensions = new(StringComparer.OrdinalIgnoreCase)
     {
         ".g.cs",
@@ -29,10 +26,68 @@ public sealed class DirectoryLinter
         "node_modules",
     };
 
+    private readonly FileLinter _fileLinter;
+
+    private readonly IFileSystem _fileSystem;
+
     public DirectoryLinter(FileLinter fileLinter, IFileSystem? fileSystem = null)
     {
         _fileLinter = fileLinter;
         _fileSystem = fileSystem ?? new DefaultFileSystem();
+    }
+
+    private static IEnumerable<string> EnumerateFiles(string directoryPath, IReadOnlyList<string>? excludeGlobs, IFileSystem fileSystem)
+    {
+        Matcher? excludeMatcher = null;
+
+        if (excludeGlobs is { Count: > 0 })
+        {
+            excludeMatcher = new Matcher();
+            excludeMatcher.AddIncludePatterns(excludeGlobs.Select(p => p.Replace('\\', '/')));
+        }
+
+        return fileSystem.EnumerateFiles(directoryPath, "*.cs", SearchOption.AllDirectories)
+            .Where(file =>
+            {
+                // Skip generated files
+                string fileName = Path.GetFileName(file);
+
+                foreach (string ext in SkippedExtensions)
+                {
+                    if (fileName.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
+                }
+
+                // Skip excluded directories
+                string? dir = Path.GetDirectoryName(file);
+
+                while (dir is not null && dir.Length >= directoryPath.Length)
+                {
+                    string dirName = Path.GetFileName(dir);
+
+                    if (SkippedDirectories.Contains(dirName))
+                    {
+                        return false;
+                    }
+
+                    dir = Path.GetDirectoryName(dir);
+                }
+
+                // Apply exclude globs against the relative path
+                if (excludeMatcher is not null)
+                {
+                    string relativePath = Path.GetRelativePath(directoryPath, file).Replace('\\', '/');
+
+                    if (excludeMatcher.Match(relativePath).HasMatches)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
     }
 
     public async Task<IReadOnlyList<LintDiagnostic>> LintDirectoryAsync(
@@ -103,59 +158,5 @@ public sealed class DirectoryLinter
             .ThenBy(d => d.Line)
             .ThenBy(d => d.Column)
             .ToList();
-    }
-
-    private static IEnumerable<string> EnumerateFiles(string directoryPath, IReadOnlyList<string>? excludeGlobs, IFileSystem fileSystem)
-    {
-        Matcher? excludeMatcher = null;
-
-        if (excludeGlobs is { Count: > 0 })
-        {
-            excludeMatcher = new Matcher();
-            excludeMatcher.AddIncludePatterns(excludeGlobs.Select(p => p.Replace('\\', '/')));
-        }
-
-        return fileSystem.EnumerateFiles(directoryPath, "*.cs", SearchOption.AllDirectories)
-            .Where(file =>
-            {
-                // Skip generated files
-                string fileName = Path.GetFileName(file);
-
-                foreach (string ext in SkippedExtensions)
-                {
-                    if (fileName.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return false;
-                    }
-                }
-
-                // Skip excluded directories
-                string? dir = Path.GetDirectoryName(file);
-
-                while (dir is not null && dir.Length >= directoryPath.Length)
-                {
-                    string dirName = Path.GetFileName(dir);
-
-                    if (SkippedDirectories.Contains(dirName))
-                    {
-                        return false;
-                    }
-
-                    dir = Path.GetDirectoryName(dir);
-                }
-
-                // Apply exclude globs against the relative path
-                if (excludeMatcher is not null)
-                {
-                    string relativePath = Path.GetRelativePath(directoryPath, file).Replace('\\', '/');
-
-                    if (excludeMatcher.Match(relativePath).HasMatches)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            });
     }
 }

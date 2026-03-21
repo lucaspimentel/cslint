@@ -14,6 +14,22 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
+    private static bool IsMethodChained(SyntaxNode node) =>
+        node.Parent is MemberAccessExpressionSyntax;
+
+    private static bool IsInsideAttribute(SyntaxNode node)
+    {
+        for (SyntaxNode? current = node.Parent; current is not null; current = current.Parent)
+        {
+            if (current is AttributeArgumentSyntax)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue("dotnet_style_prefer_collection_expression") is not null;
 
@@ -64,9 +80,6 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
         }
     }
 
-    private static bool IsMethodChained(SyntaxNode node) =>
-        node.Parent is MemberAccessExpressionSyntax;
-
     private void CheckEmptyInvocation(
         InvocationExpressionSyntax invocation,
         string filePath,
@@ -100,19 +113,6 @@ public sealed class CollectionExpressionRule : IRuleDefinition, IDescendantNodeH
         }
 
         AddDiagnostic(invocation, $"Use collection expression instead of '{identifier.Identifier.Text}.Empty<T>()'", filePath, diagnostics);
-    }
-
-    private static bool IsInsideAttribute(SyntaxNode node)
-    {
-        for (SyntaxNode? current = node.Parent; current is not null; current = current.Parent)
-        {
-            if (current is AttributeArgumentSyntax)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void AddDiagnostic(

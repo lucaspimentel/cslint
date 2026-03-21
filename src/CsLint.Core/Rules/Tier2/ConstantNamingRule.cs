@@ -15,28 +15,6 @@ public sealed class ConstantNamingRule : IRuleDefinition, INamingRuleHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
-
-    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
-    {
-        var walker = new CombinedNamingWalker([this]);
-        walker.Visit(context.Root);
-        return walker.Diagnostics;
-    }
-
-    void INamingRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
-    {
-        if (!node.Modifiers.Any(SyntaxKind.ConstKeyword))
-        {
-            return;
-        }
-
-        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
-        {
-            CheckConstant(variable.Identifier, diagnostics);
-        }
-    }
-
     private static void CheckConstant(SyntaxToken identifier, List<LintDiagnostic> diagnostics)
     {
         string name = identifier.ValueText;
@@ -56,6 +34,28 @@ public sealed class ConstantNamingRule : IRuleDefinition, INamingRuleHandler
                     Line = span.StartLinePosition.Line + 1,
                     Column = span.StartLinePosition.Character + 1,
                 });
+        }
+    }
+
+    public bool IsEnabled(LintConfiguration configuration) => true;
+
+    public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
+    {
+        var walker = new CombinedNamingWalker([this]);
+        walker.Visit(context.Root);
+        return walker.Diagnostics;
+    }
+
+    void INamingRuleHandler.VisitFieldDeclaration(FieldDeclarationSyntax node, List<LintDiagnostic> diagnostics)
+    {
+        if (!node.Modifiers.Any(SyntaxKind.ConstKeyword))
+        {
+            return;
+        }
+
+        foreach (VariableDeclaratorSyntax variable in node.Declaration.Variables)
+        {
+            CheckConstant(variable.Identifier, diagnostics);
         }
     }
 }

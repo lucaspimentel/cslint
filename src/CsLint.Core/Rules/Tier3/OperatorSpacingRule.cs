@@ -17,6 +17,47 @@ public sealed class OperatorSpacingRule : IRuleDefinition, IDescendantNodeHandle
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static bool HasLeadingSpace(SyntaxToken token)
+    {
+        // Check leading trivia of the operator token
+        foreach (SyntaxTrivia trivia in token.LeadingTrivia)
+        {
+            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
+            {
+                return true;
+            }
+        }
+
+        // Also check trailing trivia of the previous token (Roslyn often puts the space there)
+        SyntaxToken previous = token.GetPreviousToken();
+
+        if (previous != default)
+        {
+            foreach (SyntaxTrivia trivia in previous.TrailingTrivia)
+            {
+                if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static bool HasTrailingSpace(SyntaxToken token)
+    {
+        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
+        {
+            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -71,47 +112,6 @@ public sealed class OperatorSpacingRule : IRuleDefinition, IDescendantNodeHandle
         {
             ReportDiagnostic(operatorToken, "Binary operator should be followed by a space", filePath, diagnostics);
         }
-    }
-
-    private static bool HasLeadingSpace(SyntaxToken token)
-    {
-        // Check leading trivia of the operator token
-        foreach (SyntaxTrivia trivia in token.LeadingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-            {
-                return true;
-            }
-        }
-
-        // Also check trailing trivia of the previous token (Roslyn often puts the space there)
-        SyntaxToken previous = token.GetPreviousToken();
-
-        if (previous != default)
-        {
-            foreach (SyntaxTrivia trivia in previous.TrailingTrivia)
-            {
-                if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void ReportDiagnostic(SyntaxToken token, string message, string filePath, List<LintDiagnostic> diagnostics)

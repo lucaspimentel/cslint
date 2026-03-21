@@ -17,6 +17,9 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    private static string GetUsingName(UsingDirectiveSyntax u) =>
+        u.NamespaceOrType?.ToString() ?? u.Name?.ToString() ?? string.Empty;
+
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -79,7 +82,7 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
             }
         }
 
-        // Check group ordering: regular → static → alias
+        // Check group ordering: regular -> static -> alias
         // Find the last regular, first static, first alias positions
         CheckGroupOrdering(regular, staticUsings, aliasUsings, ref diagnostics);
 
@@ -296,7 +299,4 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
             prev = name;
         }
     }
-
-    private static string GetUsingName(UsingDirectiveSyntax u) =>
-        u.NamespaceOrType?.ToString() ?? u.Name?.ToString() ?? string.Empty;
 }
