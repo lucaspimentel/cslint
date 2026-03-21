@@ -92,7 +92,7 @@ public sealed class KeywordSpacingRule : IRuleDefinition
     {
         foreach (SyntaxTrivia trivia in token.TrailingTrivia)
         {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
+            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
             {
                 return true;
             }

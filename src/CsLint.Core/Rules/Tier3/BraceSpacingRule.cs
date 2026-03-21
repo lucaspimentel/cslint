@@ -36,6 +36,13 @@ public sealed class BraceSpacingRule : IRuleDefinition
         {
             if (token.IsKind(SyntaxKind.OpenBraceToken))
             {
+                // Skip string interpolation braces
+                if (token.Parent?.IsKind(SyntaxKind.Interpolation) == true)
+                {
+                    token = token.GetNextToken();
+                    continue;
+                }
+
                 // Space before opening brace (unless at start of line)
                 SyntaxToken previous = token.GetPreviousToken();
 
@@ -57,6 +64,13 @@ public sealed class BraceSpacingRule : IRuleDefinition
             }
             else if (token.IsKind(SyntaxKind.CloseBraceToken))
             {
+                // Skip string interpolation braces
+                if (token.Parent?.IsKind(SyntaxKind.Interpolation) == true)
+                {
+                    token = token.GetNextToken();
+                    continue;
+                }
+
                 // Space after closing brace (unless followed by semicolon, comma, paren, or newline)
                 SyntaxToken next = token.GetNextToken();
 

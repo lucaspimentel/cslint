@@ -62,6 +62,67 @@ public class KeywordSpacingRuleTests
         Assert.Empty(diagnostics);
     }
 
+    [Fact]
+    public void Analyze_KeywordFollowedByNewline_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C
+            {
+                void M()
+                {
+                    if (true)
+                    {
+                    }
+                    else
+                    {
+                    }
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_SwitchExpressionFollowedByNewline_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C
+            {
+                string M(int x) => x switch
+                {
+                    1 => "one",
+                    _ => "other",
+                };
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_ReturnFollowedByNewline_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C
+            {
+                int[] M() { return
+                    new[] { 1, 2, 3 }; }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
     [Theory]
     [InlineData("false")]
     [InlineData(null)]

@@ -36,6 +36,28 @@ public class BraceSpacingRuleTests
         Assert.Empty(diagnostics);
     }
 
+    [Fact]
+    public void Analyze_StringInterpolationBraces_ReturnsNoDiagnostics()
+    {
+        string source = """class C { string M(string name) { return $"Hello {name}!"; } }""";
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_MultipleInterpolationBraces_ReturnsNoDiagnostics()
+    {
+        string source = """class C { string M(int a, int b) { return $"{a} + {b} = {a + b}"; } }""";
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
     [Theory]
     [InlineData("false")]
     [InlineData(null)]
