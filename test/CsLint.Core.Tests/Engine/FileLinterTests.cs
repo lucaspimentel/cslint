@@ -5,7 +5,7 @@ using Moq;
 
 namespace Cslint.Core.Tests.Engine;
 
-public class FileLinterTests
+public sealed class FileLinterTests
 {
     [Fact]
     public void LintSource_WithEnabledRule_ReturnsLintDiagnostics()
@@ -169,6 +169,70 @@ public class FileLinterTests
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
 
         Assert.NotEmpty(diagnostics);
+        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+    }
+
+    [Fact]
+    public void LintSource_RuleFilter_OnlyRunsSpecifiedRules()
+    {
+        // Enable two rules via config, but filter to only one
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["trim_trailing_whitespace"] = "true",
+                ["insert_final_newline"] = "true",
+            });
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object)
+        {
+            RuleFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "CSLINT001" },
+            SkipEnabledCheck = true,
+        };
+
+        // Source has trailing whitespace (CSLINT001) and no final newline (CSLINT002)
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   ", config);
+
+        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT002");
+    }
+
+    [Fact]
+    public void LintSource_SkipEnabledCheck_RunsRuleEvenWhenConfigDisabled()
+    {
+        // Config does not enable the rule
+        var config = new LintConfiguration(new Dictionary<string, string>());
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object)
+        {
+            RuleFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "CSLINT001" },
+            SkipEnabledCheck = true,
+        };
+
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+    }
+
+    [Fact]
+    public void LintSource_SkipEnabledCheckWithoutFilter_RunsAllRules()
+    {
+        // Empty config — normally no Tier1 rules would be enabled
+        var config = new LintConfiguration(new Dictionary<string, string>());
+
+        RuleRegistry registry = RuleRegistry.CreateDefault();
+        var mockProvider = new Mock<IConfigProvider>();
+        var linter = new FileLinter(registry, mockProvider.Object)
+        {
+            SkipEnabledCheck = true,
+        };
+
+        IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "class Foo { }   \n", config);
+
+        // With all rules force-enabled, we should get trailing whitespace at minimum
         Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
     }
 }

@@ -50,6 +50,11 @@ var summaryOption = new Option<bool>("--summary")
     Description = "Show a summary of diagnostics grouped by rule ID",
 };
 
+var rulesOption = new Option<string>("--rules")
+{
+    Description = "Comma-separated rule IDs to run (e.g., CSLINT266,CSLINT268), or 'all' to enable every rule. Ignores .editorconfig when set.",
+};
+
 var versionOption = new Option<bool>("--version")
 {
     Description = "Show version information and exit",
@@ -65,6 +70,7 @@ var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorcon
     showConfigOption,
     semanticOption,
     summaryOption,
+    rulesOption,
     versionOption,
 };
 
@@ -131,9 +137,50 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
 #endif
 
     RuleRegistry registry = RuleRegistry.CreateDefault();
+    string? rulesValue = parseResult.GetValue(rulesOption);
+
+    HashSet<string>? ruleFilter = null;
+    bool skipEnabledCheck = false;
+
+    if (rulesValue is not null)
+    {
+        if (string.Equals(rulesValue, "all", StringComparison.OrdinalIgnoreCase))
+        {
+            skipEnabledCheck = true;
+        }
+        else
+        {
+            var knownIds = new HashSet<string>(registry.Rules.Select(r => r.RuleId), StringComparer.OrdinalIgnoreCase);
+            string[] requested = rulesValue.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            if (requested.Length == 0)
+            {
+                Console.Error.WriteLine("--rules requires at least one rule ID or 'all'.");
+                return 2;
+            }
+
+            ruleFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (string id in requested)
+            {
+                if (!knownIds.Contains(id))
+                {
+                    Console.Error.WriteLine($"Unknown rule ID: {id}");
+                    return 2;
+                }
+
+                ruleFilter.Add(id);
+            }
+
+            skipEnabledCheck = true;
+        }
+    }
+
     var configProvider = new EditorConfigProvider();
     var fileLinter = new FileLinter(registry, configProvider)
     {
+        RuleFilter = ruleFilter,
+        SkipEnabledCheck = skipEnabledCheck,
 #if SEMANTIC
         EnableSemantic = semantic,
 #endif

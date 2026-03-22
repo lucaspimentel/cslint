@@ -13,6 +13,10 @@ namespace Cslint.Core.Engine;
 
 public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProvider)
 {
+    public HashSet<string>? RuleFilter { get; set; }
+
+    public bool SkipEnabledCheck { get; set; }
+
 #if SEMANTIC
     public bool EnableSemantic { get; set; }
 
@@ -135,7 +139,12 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
 
         foreach (IRuleDefinition rule in registry.Rules)
         {
-            if (!rule.IsEnabled(configuration))
+            if (RuleFilter is not null && !RuleFilter.Contains(rule.RuleId))
+            {
+                continue;
+            }
+
+            if (!SkipEnabledCheck && !rule.IsEnabled(configuration))
             {
                 continue;
             }
