@@ -82,6 +82,13 @@ public sealed class FieldsMustBePrivateRule : IRuleDefinition, IStyleRuleHandler
             return;
         }
 
+        // Skip struct fields — public fields are common and accepted in structs
+        // (value-type data carriers, interop, etc.)
+        if (node.Parent is StructDeclarationSyntax)
+        {
+            return;
+        }
+
         // Skip private fields (including implicitly private — no access modifier)
         if (HasModifier(node.Modifiers, SyntaxKind.PrivateKeyword))
         {

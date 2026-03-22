@@ -4,7 +4,7 @@ using Cslint.Core.Rules.Tier3;
 
 namespace Cslint.Core.Tests.Rules.Tier3;
 
-public class FieldsMustBePrivateRuleTests
+public sealed class FieldsMustBePrivateRuleTests
 {
     private readonly FieldsMustBePrivateRule _rule = new();
 
@@ -39,6 +39,23 @@ public class FieldsMustBePrivateRuleTests
     public void Analyze_PrivateOrExemptField_ReturnsNoDiagnostics(string field)
     {
         string source = $"class C {{ {field} }}";
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Analyze_StructField_ReturnsNoDiagnostics()
+    {
+        string source = """
+            struct Point
+            {
+                public int X;
+                public int Y;
+            }
+            """;
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
