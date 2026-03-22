@@ -71,6 +71,7 @@ $baseUrl = "https://github.com/$GitHubOwner/$GitHubRepo"
 
 # Determine download URL and version
 $downloadUrl = $null
+$checksumsUrl = $null
 $actualVersion = $null
 
 try {
@@ -91,12 +92,19 @@ try {
         }
 
         $downloadUrl = $asset.browser_download_url
+
+        $checksumsAsset = $release.assets | Where-Object { $_.name -eq 'checksums.txt' }
+        if ($checksumsAsset) {
+            $checksumsUrl = $checksumsAsset.browser_download_url
+        }
+
         Write-Host "Latest version: $actualVersion" -ForegroundColor Cyan
     } else {
         $actualVersion = $Version
         $tag = "v$($Version.TrimStart('v'))"
         $assetName = "$ProjectName-$rid.$archiveExt"
         $downloadUrl = "$baseUrl/releases/download/$tag/$assetName"
+        $checksumsUrl = "$baseUrl/releases/download/$tag/checksums.txt"
 
         Write-Host "Version: $actualVersion" -ForegroundColor Cyan
     }
@@ -149,6 +157,35 @@ try {
     }
 
     Write-Host "Download complete!" -ForegroundColor Green
+
+    # Verify checksum
+    if ($checksumsUrl) {
+        Write-Host "Verifying checksum..." -ForegroundColor Cyan
+        try {
+            $checksumsContent = Invoke-RestMethod -Uri $checksumsUrl -ErrorAction Stop
+            $expectedLine = $checksumsContent -split "`n" | Where-Object { $_ -match [regex]::Escape($assetName) } | Select-Object -First 1
+
+            if ($expectedLine) {
+                $expectedHash = ($expectedLine -split '\s+')[0].Trim()
+                $actualHash = (Get-FileHash -Path $archivePath -Algorithm SHA256).Hash
+
+                if ($actualHash -ne $expectedHash) {
+                    Write-Host "Error: Checksum verification failed!" -ForegroundColor Red
+                    Write-Host "  Expected: $expectedHash" -ForegroundColor Red
+                    Write-Host "  Actual:   $actualHash" -ForegroundColor Red
+                    exit 1
+                }
+
+                Write-Host "Checksum verified." -ForegroundColor Green
+            } else {
+                Write-Host "Warning: No checksum found for '$assetName' in checksums.txt. Skipping verification." -ForegroundColor Yellow
+            }
+        } catch {
+            Write-Host "Warning: Could not download checksums.txt. Skipping verification." -ForegroundColor Yellow
+        }
+    } else {
+        Write-Host "Warning: No checksums.txt available for this release. Skipping verification." -ForegroundColor Yellow
+    }
 
     # Extract archive
     $extractPath = Join-Path $tempDir 'extract'
