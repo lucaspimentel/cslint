@@ -91,7 +91,7 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 
 ## CLI improvements
 
-- [ ] **Allow passing multiple paths** — accept multiple path arguments on the command line (currently only a single `Argument<string>("path")` in `src/CsLint.Cli/Program.cs`). Would need to change to `Argument<string[]>` and update `DirectoryLinter`/`FileLinter` orchestration to iterate over all provided paths.
+- [x] **Allow passing multiple paths** — accept multiple path arguments on the command line. Changed to `Argument<string[]>` with `ZeroOrMore` arity and updated lint orchestration to iterate over all provided paths.
 
 ### Pragma alias additions for already-covered rules
 

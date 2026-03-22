@@ -57,6 +57,9 @@ cslint path/to/File.cs
 # Lint a directory (recursively)
 cslint src/
 
+# Lint multiple paths
+cslint src/ProjectA src/ProjectB path/to/File.cs
+
 # Output as JSON or SARIF
 cslint src/ --format json
 cslint src/ --format sarif

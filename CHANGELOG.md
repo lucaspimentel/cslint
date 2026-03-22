@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- Accept multiple path arguments on the command line (e.g., `cslint src/ProjectA src/ProjectB`)
+
 ## [1.3.1] - 2026-03-20
 
 ### Fixed

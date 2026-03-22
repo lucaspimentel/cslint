@@ -13,9 +13,9 @@ dotnet build              # build all projects
 dotnet test               # run all tests
 dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests"  # run a single test class
 dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests.DetectsTrailingSpaces"  # single test method
-dotnet run --project src/CsLint.Cli -- [path]  # lint a file or directory (defaults to CWD)
+dotnet run --project src/CsLint.Cli -- [path...]  # lint files or directories (defaults to CWD)
 dotnet run --project src/CsLint.Cli -- --list-rules  # list all available rules
-dotnet run --project src/CsLint.Cli -- --semantic [path]  # lint with semantic analysis (Tier 4 rules)
+dotnet run --project src/CsLint.Cli -- --semantic [path...]  # lint with semantic analysis (Tier 4 rules)
 dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .editorconfig settings for a path
 ```
 

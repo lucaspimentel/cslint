@@ -7,10 +7,10 @@ using Cslint.Core.Engine;
 using Cslint.Core.Reporting;
 using Cslint.Core.Rules;
 
-var pathArgument = new Argument<string>("path")
+var pathArgument = new Argument<string[]>("path")
 {
-    Description = "Path to a C# file or directory to lint",
-    DefaultValueFactory = _ => ".",
+    Description = "One or more paths to C# files or directories to lint",
+    Arity = ArgumentArity.ZeroOrMore,
 };
 
 var formatOption = new Option<string>("--format")
@@ -81,11 +81,24 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
         return PrintRuleList();
     }
 
+    string[]? paths = parseResult.GetValue(pathArgument);
+
+    if (paths is null or { Length: 0 })
+    {
+        paths = ["."];
+    }
+
     bool showConfig = parseResult.GetValue(showConfigOption);
 
     if (showConfig)
     {
-        string configPath = Path.GetFullPath(parseResult.GetValue(pathArgument)!);
+        if (paths.Length > 1)
+        {
+            Console.Error.WriteLine("--show-config accepts only a single path.");
+            return 2;
+        }
+
+        string configPath = Path.GetFullPath(paths[0]);
 
         // editorconfig resolves by file extension, so use a dummy .cs file for directories
         if (Directory.Exists(configPath))
@@ -98,7 +111,6 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
         return PrintConfig(config);
     }
 
-    string path = parseResult.GetValue(pathArgument)!;
     string format = parseResult.GetValue(formatOption)!;
     string severity = parseResult.GetValue(severityOption)!;
     string[]? excludePatterns = parseResult.GetValue(excludeOption);
@@ -134,38 +146,53 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
         _ => LintSeverity.Info,
     };
 
-    string fullPath = Path.GetFullPath(path);
-    IReadOnlyList<LintDiagnostic> diagnostics;
+    var allDiagnostics = new List<LintDiagnostic>();
+    bool hasError = false;
 
-    if (File.Exists(fullPath))
+    foreach (string path in paths)
     {
-        diagnostics = fileLinter.LintFile(fullPath);
+        string fullPath = Path.GetFullPath(path);
+
+        if (File.Exists(fullPath))
+        {
+            allDiagnostics.AddRange(fileLinter.LintFile(fullPath));
+        }
+        else if (Directory.Exists(fullPath))
+        {
+            var directoryLinter = new DirectoryLinter(fileLinter);
+            IReadOnlyList<LintDiagnostic> diagnostics = await directoryLinter.LintDirectoryAsync(fullPath, excludePatterns, cancellationToken);
+            allDiagnostics.AddRange(diagnostics);
+        }
+        else
+        {
+            Console.Error.WriteLine($"Path not found: {fullPath}");
+            hasError = true;
+        }
     }
-    else if (Directory.Exists(fullPath))
+
+    if (hasError && allDiagnostics.Count == 0)
     {
-        var directoryLinter = new DirectoryLinter(fileLinter);
-        diagnostics = await directoryLinter.LintDirectoryAsync(fullPath, excludePatterns, cancellationToken);
-    }
-    else
-    {
-        Console.Error.WriteLine($"Path not found: {fullPath}");
         return 2;
     }
 
     // Filter by severity
-    if (minSeverity > LintSeverity.Info)
-    {
-        diagnostics = diagnostics.Where(d => d.Severity >= minSeverity).ToList();
-    }
+    IReadOnlyList<LintDiagnostic> filteredDiagnostics = minSeverity > LintSeverity.Info
+        ? allDiagnostics.Where(d => d.Severity >= minSeverity).ToList()
+        : allDiagnostics;
 
-    string output = formatter.Format(diagnostics);
+    string output = formatter.Format(filteredDiagnostics);
 
     if (!string.IsNullOrEmpty(output))
     {
         Console.Write(output);
     }
 
-    return diagnostics.Count > 0 ? 1 : 0;
+    if (hasError)
+    {
+        return 2;
+    }
+
+    return filteredDiagnostics.Count > 0 ? 1 : 0;
 });
 
 ParseResult result = rootCommand.Parse(args);
