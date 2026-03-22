@@ -6,17 +6,28 @@ using Cslint.Core.Rules;
 namespace Cslint.Benchmarks;
 
 [MemoryDiagnoser]
-public class LintBenchmarks
+public sealed class LintBenchmarks
 {
     private string _tracerSettingsSource = null!;
+
     private string _tracerSettingsPath = null!;
+
     private string _duckTypeSource = null!;
+
     private string _duckTypePath = null!;
+
     private string _repoRoot = null!;
+
     private FileLinter _linter = null!;
-    private FileLinter _semanticLinter = null!;
+
     private DirectoryLinter _directoryLinter = null!;
+
+#if SEMANTIC
+    private FileLinter _semanticLinter = null!;
+
     private DirectoryLinter _semanticDirectoryLinter = null!;
+#endif
+
     private LintConfiguration _fixtureConfig = null!;
 
     [GlobalSetup]
@@ -42,9 +53,11 @@ public class LintBenchmarks
         RuleRegistry registry = RuleRegistry.CreateDefault();
         _fixtureConfig = configProvider.GetConfiguration(_tracerSettingsPath);
         _linter = new FileLinter(registry, configProvider);
-        _semanticLinter = new FileLinter(registry, configProvider) { EnableSemantic = true };
         _directoryLinter = new DirectoryLinter(_linter);
+#if SEMANTIC
+        _semanticLinter = new FileLinter(registry, configProvider) { EnableSemantic = true };
         _semanticDirectoryLinter = new DirectoryLinter(_semanticLinter);
+#endif
     }
 
     [Benchmark]
@@ -61,6 +74,7 @@ public class LintBenchmarks
         return diagnostics.Count;
     }
 
+#if SEMANTIC
     [Benchmark]
     public int LintTracerSettings_Semantic()
     {
@@ -74,18 +88,21 @@ public class LintBenchmarks
         IReadOnlyList<LintDiagnostic> diagnostics = _semanticLinter.LintSource(_duckTypePath, _duckTypeSource, _fixtureConfig);
         return diagnostics.Count;
     }
+#endif
+
+#if SEMANTIC
+    [Benchmark]
+    public int LintSelf_Semantic()
+    {
+        IReadOnlyList<LintDiagnostic> diagnostics = _semanticDirectoryLinter.LintDirectoryAsync(_repoRoot).GetAwaiter().GetResult();
+        return diagnostics.Count;
+    }
+#endif
 
     [Benchmark]
     public int LintSelf()
     {
         IReadOnlyList<LintDiagnostic> diagnostics = _directoryLinter.LintDirectoryAsync(_repoRoot).GetAwaiter().GetResult();
-        return diagnostics.Count;
-    }
-
-    [Benchmark]
-    public int LintSelf_Semantic()
-    {
-        IReadOnlyList<LintDiagnostic> diagnostics = _semanticDirectoryLinter.LintDirectoryAsync(_repoRoot).GetAwaiter().GetResult();
         return diagnostics.Count;
     }
 }
