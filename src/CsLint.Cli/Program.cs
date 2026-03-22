@@ -45,6 +45,11 @@ var semanticOption = new Option<bool>("--semantic")
     Description = "Enable semantic analysis for advanced rules",
 };
 
+var summaryOption = new Option<bool>("--summary")
+{
+    Description = "Show a summary of diagnostics grouped by rule ID",
+};
+
 var versionOption = new Option<bool>("--version")
 {
     Description = "Show version information and exit",
@@ -59,6 +64,7 @@ var rootCommand = new RootCommand("Cslint - Fast C# linter respecting .editorcon
     listRulesOption,
     showConfigOption,
     semanticOption,
+    summaryOption,
     versionOption,
 };
 
@@ -116,6 +122,7 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
     string[]? excludePatterns = parseResult.GetValue(excludeOption);
 
     bool semantic = parseResult.GetValue(semanticOption);
+    bool summary = parseResult.GetValue(summaryOption);
 #if !SEMANTIC
     if (semantic)
     {
@@ -180,11 +187,18 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
         ? allDiagnostics.Where(d => d.Severity >= minSeverity).ToList()
         : allDiagnostics;
 
-    string output = formatter.Format(filteredDiagnostics);
-
-    if (!string.IsNullOrEmpty(output))
+    if (summary)
     {
-        Console.Write(output);
+        PrintSummary(filteredDiagnostics, registry);
+    }
+    else
+    {
+        string output = formatter.Format(filteredDiagnostics);
+
+        if (!string.IsNullOrEmpty(output))
+        {
+            Console.Write(output);
+        }
     }
 
     if (hasError)
@@ -243,6 +257,39 @@ static int PrintRuleList()
 
     Console.WriteLine(Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Position));
     return 0;
+}
+
+static void PrintSummary(IReadOnlyList<LintDiagnostic> diagnostics, RuleRegistry registry)
+{
+    if (diagnostics.Count == 0)
+    {
+        return;
+    }
+
+    Dictionary<string, string> ruleNames = registry.Rules.ToDictionary(r => r.RuleId, r => r.Name);
+
+    List<(string RuleId, string Name, int Count)> groups = diagnostics
+        .GroupBy(d => d.RuleId)
+        .Select(g => (RuleId: g.Key, Name: ruleNames.GetValueOrDefault(g.Key, ""), Count: g.Count()))
+        .OrderByDescending(g => g.Count)
+        .ThenBy(g => g.RuleId, StringComparer.Ordinal)
+        .ToList();
+
+    int maxIdLen = Math.Max("Rule".Length, groups.Max(g => g.RuleId.Length));
+    int maxNameLen = Math.Max("Name".Length, groups.Max(g => g.Name.Length));
+    int maxCountLen = Math.Max("Count".Length, diagnostics.Count.ToString().Length);
+    int lineWidth = maxIdLen + 2 + maxNameLen + 2 + maxCountLen;
+
+    Console.WriteLine($"{"Rule".PadRight(maxIdLen)}  {"Name".PadRight(maxNameLen)}  {"Count".PadLeft(maxCountLen)}");
+    Console.WriteLine(new string('\u2500', lineWidth));
+
+    foreach ((string ruleId, string name, int count) in groups)
+    {
+        Console.WriteLine($"{ruleId.PadRight(maxIdLen)}  {name.PadRight(maxNameLen)}  {count.ToString().PadLeft(maxCountLen)}");
+    }
+
+    Console.WriteLine(new string('\u2500', lineWidth));
+    Console.WriteLine($"{"Total".PadRight(maxIdLen)}  {"".PadRight(maxNameLen)}  {diagnostics.Count.ToString().PadLeft(maxCountLen)}");
 }
 
 static int PrintConfig(LintConfiguration config)
