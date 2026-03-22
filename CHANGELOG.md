@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] - 2026-03-22
+
+### Fixed
+- Fix CSLINT238 false positives on `const` fields (constants require an initializer, so `const int X = 0` is not unnecessary)
+- Fix CSLINT251 false positives on struct fields (public fields are common and accepted in structs)
+
 ## [1.4.0] - 2026-03-22
 
 ### Added
