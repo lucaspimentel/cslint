@@ -8,6 +8,7 @@ namespace Cslint.Core.Rules.Tier3;
 public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
 {
     private string? _cachedOrderStr;
+
     private Dictionary<string, int>? _cachedOrderMap;
 
     public string RuleId => "CSLINT205";
@@ -35,30 +36,6 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
         walker.Visit(context.Root);
         return walker.Diagnostics;
     }
-
-    void IStyleRuleHandler.VisitClassDeclaration(
-        ClassDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, config, diagnostics);
-
-    void IStyleRuleHandler.VisitStructDeclaration(
-        StructDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, config, diagnostics);
-
-    void IStyleRuleHandler.VisitMethodDeclaration(
-        MethodDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, config, diagnostics);
-
-    void IStyleRuleHandler.VisitPropertyDeclaration(
-        PropertyDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, config, diagnostics);
-
-    void IStyleRuleHandler.VisitFieldDeclaration(
-        FieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, config, diagnostics);
-
-    void IStyleRuleHandler.VisitEventFieldDeclaration(
-        EventFieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
-        CheckModifiers(node.Modifiers, config, diagnostics);
 
     private void CheckModifiers(
         SyntaxTokenList modifiers,
@@ -130,4 +107,28 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
 
         return orderMap;
     }
+
+    void IStyleRuleHandler.VisitClassDeclaration(
+        ClassDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitStructDeclaration(
+        StructDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitMethodDeclaration(
+        MethodDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitPropertyDeclaration(
+        PropertyDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitFieldDeclaration(
+        FieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
+
+    void IStyleRuleHandler.VisitEventFieldDeclaration(
+        EventFieldDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) =>
+        CheckModifiers(node.Modifiers, config, diagnostics);
 }

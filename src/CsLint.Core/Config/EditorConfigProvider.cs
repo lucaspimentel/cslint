@@ -6,6 +6,7 @@ namespace Cslint.Core.Config;
 public sealed class EditorConfigProvider : IConfigProvider
 {
     private readonly ConcurrentDictionary<string, LintConfiguration> _cache = new(StringComparer.OrdinalIgnoreCase);
+
     private readonly EditorConfigParser _parser = new();
 
     public LintConfiguration GetConfiguration(string filePath)
