@@ -16,6 +16,8 @@ dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests.DetectsTrai
 dotnet run --project src/CsLint.Cli -- [path...]  # lint files or directories (defaults to CWD)
 dotnet run --project src/CsLint.Cli -- --list-rules  # list all available rules
 dotnet run --project src/CsLint.Cli -- --semantic [path...]  # lint with semantic analysis (Tier 4 rules)
+dotnet run --project src/CsLint.Cli -- --rules CSLINT266,CSLINT268 [path...]  # run only specific rules, ignoring .editorconfig
+dotnet run --project src/CsLint.Cli -- --rules all [path...]  # run all rules, ignoring .editorconfig
 dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .editorconfig settings for a path
 ```
 

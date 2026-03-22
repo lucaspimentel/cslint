@@ -73,6 +73,12 @@ cslint src/ --exclude "**/Generated/*.cs" --exclude "**/*.g.cs"
 # Enable semantic analysis (Tier 4 rules)
 cslint src/ --semantic
 
+# Run only specific rules, ignoring .editorconfig
+cslint src/ --rules CSLINT266,CSLINT268
+
+# Run all rules, ignoring .editorconfig
+cslint src/ --rules all
+
 # List all available rules
 cslint --list-rules
 
