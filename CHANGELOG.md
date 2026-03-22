@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.5.0] - 2026-03-22
 
 ### Added
 - Add `--rules` CLI option to run specific rules ignoring `.editorconfig` (e.g., `--rules CSLINT266,CSLINT268` or `--rules all`)
