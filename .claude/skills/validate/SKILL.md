@@ -35,15 +35,17 @@ If the path is ambiguous, ask the user to clarify before running.
 Run CsLint with `--format json`, save the output, then run the analysis script:
 
 ```bash
-dotnet run --project src/CsLint.Cli -- --format json <path> [--exclude <exclude-pattern>] 2>/dev/null > "$TEMP/cslint-validate.json"
+dotnet run --project src/CsLint.Cli -- --format json <path> [--exclude <exclude-pattern>] 2>/dev/null > cslint-validate.json
 ```
+
+Write the JSON output to the current directory (not `$TEMP` — that path doesn't work reliably on Windows with Git Bash). Clean up `cslint-validate.json` when done.
 
 CsLint exits 0 (clean), 1 (violations found), or 2 (error). Exit code 1 is expected — it means violations were found, which is what we want to analyze. If exit code is 2, report the error and stop.
 
 Then run the bundled analysis script to get a summary and flag suspicious patterns:
 
 ```bash
-python "${SKILL_DIR}/scripts/analyze.py" "$TEMP/cslint-validate.json"
+python "${SKILL_DIR}/scripts/analyze.py" cslint-validate.json
 ```
 
 `${SKILL_DIR}` is the directory containing this SKILL.md file.
@@ -56,10 +58,10 @@ The script prints:
 To get file:line details for specific rules (useful for investigation):
 
 ```bash
-python "${SKILL_DIR}/scripts/analyze.py" "$TEMP/cslint-validate.json" --details CSLINT210 CSLINT104
+python "${SKILL_DIR}/scripts/analyze.py" cslint-validate.json --details-only CSLINT210 CSLINT104
 ```
 
-Use `--details` with no rule IDs to print all violations, or pass specific rule IDs to filter.
+Use `--details-only` (not `--details`) to skip the summary and print only file:line violations — this works well with piping and `head`. Pass rule IDs to filter, or omit them to print all violations.
 
 ## Step 2 — Investigate suspicious patterns
 
@@ -74,9 +76,22 @@ Use `--details` on rules that look suspicious from the summary, then **read the 
 - Fields in interop/P/Invoke structs — names must match native APIs
 - Local constants flagged by the class-level constant rule
 
+**Modifier-sensitive rules (rules that should behave differently based on modifiers):**
+- `const` fields flagged by rules that only apply to mutable fields (e.g., unnecessary initialization — constants *require* an initializer)
+- `static readonly` fields flagged by instance-only rules
+- Fields in structs flagged by class-only rules (e.g., "field should be private" — struct fields are commonly public for data carriers, interop, etc.)
+
+**Context-sensitive rules (rules that should consider the containing type/scope):**
+- Fields in `[StructLayout]` interop structs — must be public for marshaling
+- Members in test classes or test harnesses — may follow different conventions
+- Members in nested private types — encapsulation is already provided by the outer type
+
 **Style rules (CSLINT200+):**
 - Rule suggestion doesn't apply to the actual code pattern (e.g., suggesting `??` on a ternary that returns different types)
 - Extremely high violation counts for a single rule vs others (outlier)
+
+**Concentration pattern:**
+- If >80% of a rule's violations come from <3 files, it often indicates a context the rule doesn't handle (interop files, generated code, lookup tables with alignment whitespace, etc.)
 
 Group confirmed false positives by root cause. A single bug in CsLint can produce many false positives.
 
