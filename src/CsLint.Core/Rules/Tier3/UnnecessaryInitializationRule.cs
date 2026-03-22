@@ -144,6 +144,12 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
             return;
         }
 
+        // Skip const fields — constants require an initializer
+        if (node.Modifiers.Any(SyntaxKind.ConstKeyword))
+        {
+            return;
+        }
+
         VariableDeclarationSyntax declaration = node.Declaration;
         TypeSyntax typeSyntax = declaration.Type;
 

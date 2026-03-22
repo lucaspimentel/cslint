@@ -4,7 +4,7 @@ using Cslint.Core.Rules.Tier3;
 
 namespace Cslint.Core.Tests.Rules.Tier3;
 
-public class UnnecessaryInitializationRuleTests
+public sealed class UnnecessaryInitializationRuleTests
 {
     private readonly UnnecessaryInitializationRule _rule = new();
 
@@ -111,6 +111,30 @@ public class UnnecessaryInitializationRuleTests
             class Foo
             {
                 int _x;
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_no_unnecessary_initialization"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Theory]
+    [InlineData("int", "0")]
+    [InlineData("byte", "0")]
+    [InlineData("bool", "false")]
+    [InlineData("string", "null")]
+    public void Analyze_ConstField_ReturnsNoDiagnostics(string type, string value)
+    {
+        string source = $$"""
+            class Foo
+            {
+                const {{type}} _x = {{value}};
             }
             """;
         var config = new LintConfiguration(new Dictionary<string, string>
