@@ -1,7 +1,7 @@
 using System.CommandLine;
 using System.Reflection;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 using Cslint.Core.Config;
 using Cslint.Core.Engine;
 using Cslint.Core.Reporting;

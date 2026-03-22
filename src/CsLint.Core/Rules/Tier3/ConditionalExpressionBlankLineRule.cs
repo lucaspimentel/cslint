@@ -34,6 +34,22 @@ public sealed class ConditionalExpressionBlankLineRule : IRuleDefinition, IStyle
         return walker.Diagnostics;
     }
 
+    private void AddDiagnostic(SyntaxToken token, string message, List<LintDiagnostic> diagnostics)
+    {
+        FileLinePositionSpan span = token.GetLocation().GetLineSpan();
+
+        diagnostics.Add(
+            new LintDiagnostic
+            {
+                RuleId = RuleId,
+                Message = message,
+                Severity = LintSeverity.Warning,
+                FilePath = span.Path,
+                Line = span.StartLinePosition.Line + 1,
+                Column = span.StartLinePosition.Character + 1,
+            });
+    }
+
     void IStyleRuleHandler.VisitConditionalExpression(
         ConditionalExpressionSyntax node,
         LintConfiguration config,
@@ -53,21 +69,5 @@ public sealed class ConditionalExpressionBlankLineRule : IRuleDefinition, IStyle
         {
             AddDiagnostic(node.ColonToken, "No blank line allowed after ':' in conditional expression", diagnostics);
         }
-    }
-
-    private void AddDiagnostic(SyntaxToken token, string message, List<LintDiagnostic> diagnostics)
-    {
-        FileLinePositionSpan span = token.GetLocation().GetLineSpan();
-
-        diagnostics.Add(
-            new LintDiagnostic
-            {
-                RuleId = RuleId,
-                Message = message,
-                Severity = LintSeverity.Warning,
-                FilePath = span.Path,
-                Line = span.StartLinePosition.Line + 1,
-                Column = span.StartLinePosition.Character + 1,
-            });
     }
 }

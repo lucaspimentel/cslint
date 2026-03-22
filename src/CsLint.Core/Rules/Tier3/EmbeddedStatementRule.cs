@@ -34,6 +34,34 @@ public sealed class EmbeddedStatementRule : IRuleDefinition, IStyleRuleHandler
         return walker.Diagnostics;
     }
 
+    private void CheckEmbeddedStatement(
+        StatementSyntax statement,
+        SyntaxToken precedingToken,
+        List<LintDiagnostic> diagnostics)
+    {
+        if (statement is BlockSyntax)
+        {
+            return;
+        }
+
+        FileLinePositionSpan precedingSpan = precedingToken.GetLocation().GetLineSpan();
+        FileLinePositionSpan statementSpan = statement.GetLocation().GetLineSpan();
+
+        if (precedingSpan.StartLinePosition.Line == statementSpan.StartLinePosition.Line)
+        {
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = RuleId,
+                    Message = "Embedded statement must be on its own line",
+                    Severity = LintSeverity.Warning,
+                    FilePath = statementSpan.Path,
+                    Line = statementSpan.StartLinePosition.Line + 1,
+                    Column = statementSpan.StartLinePosition.Character + 1,
+                });
+        }
+    }
+
     void IStyleRuleHandler.VisitIfStatement(
         IfStatementSyntax node,
         LintConfiguration config,
@@ -104,34 +132,6 @@ public sealed class EmbeddedStatementRule : IRuleDefinition, IStyleRuleHandler
         if (IsActive(config))
         {
             CheckEmbeddedStatement(node.Statement, node.CloseParenToken, diagnostics);
-        }
-    }
-
-    private void CheckEmbeddedStatement(
-        StatementSyntax statement,
-        SyntaxToken precedingToken,
-        List<LintDiagnostic> diagnostics)
-    {
-        if (statement is BlockSyntax)
-        {
-            return;
-        }
-
-        FileLinePositionSpan precedingSpan = precedingToken.GetLocation().GetLineSpan();
-        FileLinePositionSpan statementSpan = statement.GetLocation().GetLineSpan();
-
-        if (precedingSpan.StartLinePosition.Line == statementSpan.StartLinePosition.Line)
-        {
-            diagnostics.Add(
-                new LintDiagnostic
-                {
-                    RuleId = RuleId,
-                    Message = "Embedded statement must be on its own line",
-                    Severity = LintSeverity.Warning,
-                    FilePath = statementSpan.Path,
-                    Line = statementSpan.StartLinePosition.Line + 1,
-                    Column = statementSpan.StartLinePosition.Character + 1,
-                });
         }
     }
 }

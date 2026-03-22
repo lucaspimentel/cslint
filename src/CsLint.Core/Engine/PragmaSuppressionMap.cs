@@ -12,12 +12,12 @@ public sealed class PragmaSuppressionMap
 
     private readonly Dictionary<string, List<(int Start, int End)>> _suppressedRanges;
 
-    public bool HasSuppressions => _suppressedRanges.Count > 0;
-
     private PragmaSuppressionMap(Dictionary<string, List<(int Start, int End)>> suppressedRanges)
     {
         _suppressedRanges = suppressedRanges;
     }
+
+    public bool HasSuppressions => _suppressedRanges.Count > 0;
 
     public static PragmaSuppressionMap Build(CSharpSyntaxNode root)
     {

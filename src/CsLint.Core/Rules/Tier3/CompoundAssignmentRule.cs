@@ -7,17 +7,6 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class CompoundAssignmentRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT214";
-
-    public string Name => "CompoundAssignment";
-
-    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_prefer_compound_assignment"];
-
-    public LintSeverity DefaultSeverity => LintSeverity.Info;
-
-    public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue("dotnet_style_prefer_compound_assignment") is not null;
-
     private static readonly Dictionary<SyntaxKind, string> SupportedOperators = new()
     {
         [SyntaxKind.AddExpression] = "+=",
@@ -32,6 +21,17 @@ public sealed class CompoundAssignmentRule : IRuleDefinition, IDescendantNodeHan
         [SyntaxKind.RightShiftExpression] = ">>=",
         [SyntaxKind.CoalesceExpression] = "??=",
     };
+
+    public string RuleId => "CSLINT214";
+
+    public string Name => "CompoundAssignment";
+
+    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_prefer_compound_assignment"];
+
+    public LintSeverity DefaultSeverity => LintSeverity.Info;
+
+    public bool IsEnabled(LintConfiguration configuration) =>
+        configuration.GetValue("dotnet_style_prefer_compound_assignment") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

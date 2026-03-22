@@ -104,11 +104,14 @@ public sealed class FileLinter(RuleRegistry registry, IConfigProvider configProv
             sourceText = syntaxTree.GetText();
         }
         else
-#endif
         {
             sourceText = SourceText.From(source);
             syntaxTree = CSharpSyntaxTree.ParseText(sourceText, path: filePath);
         }
+#else
+        sourceText = SourceText.From(source);
+        syntaxTree = CSharpSyntaxTree.ParseText(sourceText, path: filePath);
+#endif
 
         var root = (CSharpSyntaxNode)syntaxTree.GetRoot();
 
