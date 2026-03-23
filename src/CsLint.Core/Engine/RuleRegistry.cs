@@ -120,6 +120,9 @@ public sealed class RuleRegistry
         registry.Register(new LocalOverAnonymousFunctionRule());
         registry.Register(new SortSystemDirectivesFirstRule());
         registry.Register(new SeparateImportDirectiveGroupsRule());
+        registry.Register(new MethodGroupConversionRule());
+        registry.Register(new TopLevelStatementsRule());
+        registry.Register(new NamespaceMatchFolderRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

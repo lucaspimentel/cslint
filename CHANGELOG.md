@@ -19,8 +19,12 @@
 - Accept `dotnet_style_coalesce_expression`, `dotnet_style_null_propagation`, `dotnet_style_prefer_is_null_check_over_reference_equality_method`, and `csharp_style_throw_expression` for CSLINT210
 - Add `GetFirstValue()` helper to `LintConfiguration` for fallback config key lookups
 - Add IDE0016 pragma alias to CSLINT210
+- Add IDE0200 — method group conversion (`csharp_style_prefer_method_group_conversion`)
+- Add IDE0210 — top-level statements preference (`csharp_style_prefer_top_level_statements`)
+- Add IDE0130 — namespace match folder (`dotnet_style_namespace_match_folder`)
 
 ### Changed
+- New rules with 1:1 standard mappings now use the standard IDE diagnostic ID directly (e.g., `IDE0200`) instead of `CSLINT*` IDs
 - Use ASCII hyphens instead of Unicode box-drawing characters in `--summary` table separators
 - Fix IDE0019 pragma alias (was incorrectly mapped to CSLINT209, now CSLINT270)
 - Fix IDE0066 pragma alias (was incorrectly mapped to CSLINT209, now CSLINT273)

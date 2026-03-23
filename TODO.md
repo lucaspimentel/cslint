@@ -120,8 +120,8 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **`csharp_style_pattern_matching_over_as_with_null_check`** (IDE0019) — pattern matching over `as` with null check — implemented as CSLINT270
 - [ ] **`csharp_style_deconstructed_variable_declaration`** (IDE0042) — deconstruct variable declaration
 - [x] **`csharp_style_prefer_local_over_anonymous_function`** (IDE0039) — local function over lambda — implemented as CSLINT276
-- [ ] **`csharp_style_prefer_method_group_conversion`** (IDE0200) — remove unnecessary lambda
-- [ ] **`csharp_style_prefer_top_level_statements`** (IDE0210/IDE0211) — top-level statements preference
+- [x] **`csharp_style_prefer_method_group_conversion`** (IDE0200) — remove unnecessary lambda — implemented as IDE0200
+- [x] **`csharp_style_prefer_top_level_statements`** (IDE0210/IDE0211) — top-level statements preference — implemented as IDE0210
 - [ ] **`csharp_style_prefer_readonly_struct`** (IDE0250) — struct can be made readonly
 - [ ] **`csharp_style_prefer_readonly_struct_member`** (IDE0251) — member can be made readonly
 - [ ] **`csharp_prefer_static_local_function`** (IDE0062) — make local function static
@@ -139,7 +139,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **`csharp_style_prefer_implicitly_typed_lambda_expression`** (IDE0350)
 - [ ] **`csharp_style_prefer_simple_property_accessors`** (IDE0360)
 - [ ] **`dotnet_style_prefer_foreach_explicit_cast_in_source`** (IDE0220)
-- [ ] **`dotnet_style_namespace_match_folder`** (IDE0130)
+- [x] **`dotnet_style_namespace_match_folder`** (IDE0130) — implemented as IDE0130
 - [ ] **`dotnet_style_prefer_inferred_tuple_names`** (IDE0037)
 - [ ] **`dotnet_style_explicit_tuple_names`** (IDE0033)
 - [ ] **`csharp_style_unused_value_expression_statement_preference`** (IDE0058)

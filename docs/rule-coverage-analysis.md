@@ -67,8 +67,11 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 |-----------|------|----------------|-----------------|
 | CSLINT277 | SortSystemDirectivesFirst | `dotnet_sort_system_directives_first` | (IDE0055) |
 | CSLINT278 | SeparateImportDirectiveGroups | `dotnet_separate_import_directive_groups` | (IDE0055) |
+| IDE0130 | NamespaceMatchFolder | `dotnet_style_namespace_match_folder` | IDE0130 |
+| IDE0200 | MethodGroupConversion | `csharp_style_prefer_method_group_conversion` | IDE0200 |
+| IDE0210 | TopLevelStatements | `csharp_style_prefer_top_level_statements` | IDE0210 |
 
-**Total: 45 rules using standard keys**
+**Total: 48 rules using standard keys**
 
 ---
 
@@ -140,8 +143,8 @@ None — CsLint covers all universal EditorConfig properties.
 | `csharp_style_throw_expression` | IDE0016 | (now covered by CSLINT210 as config key + pragma alias) |
 | `csharp_style_deconstructed_variable_declaration` | IDE0042 | Deconstruct variable declaration |
 | `csharp_style_conditional_delegate_call` | IDE1005 | (now implemented as CSLINT271) |
-| `csharp_style_prefer_method_group_conversion` | IDE0200 | Remove unnecessary lambda expression |
-| `csharp_style_prefer_top_level_statements` | IDE0210/IDE0211 | Top-level statements preference |
+| `csharp_style_prefer_method_group_conversion` | IDE0200 | (now implemented as IDE0200) |
+| `csharp_style_prefer_top_level_statements` | IDE0210/IDE0211 | (now implemented as IDE0210) |
 | `csharp_style_prefer_readonly_struct` | IDE0250 | Struct can be made readonly |
 | `csharp_style_prefer_readonly_struct_member` | IDE0251 | Member can be made readonly |
 | `csharp_style_prefer_null_check_over_type_check` | IDE0150 | Prefer null check over type check |
@@ -160,7 +163,7 @@ None — CsLint covers all universal EditorConfig properties.
 | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 | Inferred tuple names |
 | `dotnet_style_explicit_tuple_names` | IDE0033 | Use explicitly provided tuple name |
 | `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach |
-| `dotnet_style_namespace_match_folder` | IDE0130 | Namespace match folder structure |
+| `dotnet_style_namespace_match_folder` | IDE0130 | (now implemented as IDE0130) |
 | `dotnet_style_parentheses_in_arithmetic_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_relational_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_other_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
@@ -255,6 +258,6 @@ These standard rules already have CsLint equivalents but CsLint uses `dotnet_dia
 |----------|-------|
 | Supported with standard key | 45 |
 | Supported with custom key (standard equivalent exists) | 16 (9 now also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | ~22 + ~37 formatting |
+| Standard rules not supported (style/syntax — would be Tier 3) | ~19 + ~37 formatting |
 | Standard rules not supported (other IDE rules) | ~22 |
 | Standard naming system not supported (configurable 3-part) | 1 (the full system) |
