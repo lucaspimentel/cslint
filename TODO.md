@@ -114,10 +114,10 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 - [ ] **`dotnet_style_readonly_field`** (IDE0044) — add readonly modifier
 - [ ] **`csharp_style_throw_expression`** (IDE0016) — use throw expression
-- [ ] **`csharp_style_inlined_variable_declaration`** (IDE0018) — inline variable declaration
-- [ ] **`csharp_style_conditional_delegate_call`** (IDE1005) — use `?.Invoke()`
-- [ ] **`csharp_style_prefer_switch_expression`** (IDE0066) — use switch expression
-- [ ] **`csharp_style_pattern_matching_over_as_with_null_check`** (IDE0019) — pattern matching over `as` with null check
+- [x] **`csharp_style_inlined_variable_declaration`** (IDE0018) — inline variable declaration — implemented as CSLINT272
+- [x] **`csharp_style_conditional_delegate_call`** (IDE1005) — use `?.Invoke()` — implemented as CSLINT271
+- [x] **`csharp_style_prefer_switch_expression`** (IDE0066) — use switch expression — implemented as CSLINT273
+- [x] **`csharp_style_pattern_matching_over_as_with_null_check`** (IDE0019) — pattern matching over `as` with null check — implemented as CSLINT270
 - [ ] **`csharp_style_deconstructed_variable_declaration`** (IDE0042) — deconstruct variable declaration
 - [ ] **`csharp_style_prefer_local_over_anonymous_function`** (IDE0039) — local function over lambda
 - [ ] **`csharp_style_prefer_method_group_conversion`** (IDE0200) — remove unnecessary lambda

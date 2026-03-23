@@ -252,7 +252,7 @@ public class PragmaSuppressionMapTests
     [InlineData("IDE0065", "CSLINT207")]
     [InlineData("IDE0160", "CSLINT203")]
     [InlineData("IDE0003", "CSLINT204")]
-    [InlineData("IDE0019", "CSLINT209")]
+    [InlineData("IDE0019", "CSLINT270")]
     [InlineData("IDE0029", "CSLINT210")]
     [InlineData("IDE0041", "CSLINT210")]
     public void IdeAlias_SuppressesMappedCslintRule(string ideId, string expectedCslintId)
