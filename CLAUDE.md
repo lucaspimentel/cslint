@@ -35,7 +35,7 @@ Four projects in `CsLint.slnx`:
 
 - **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length, no `#region` directives, file header, multiple blank lines, no blank lines at start of file, UTF-8 encoding). No syntax tree needed.
 - **Tier2** (`Rules/Tier2/`) — naming convention checks using `CSharpSyntaxWalker` (type naming, interface prefix, member naming, field naming, type parameter naming, etc.). Shared `NamingHelper` utility.
-- **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, sealed types, empty catch blocks, spacing, readability, layout, maintainability, ordering rules, etc.).
+- **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, pattern matching, null checking, conditional expressions, sealed types, empty catch blocks, spacing, readability, layout, maintainability, ordering rules, using directive formatting, etc.).
 - **Tier4** (`Rules/Tier4/`) — semantic analysis rules requiring Roslyn `SemanticModel` (unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await, unused private members). Only active with `--semantic` flag.
 
 ### Config key conventions by tier
@@ -43,6 +43,7 @@ Four projects in `CsLint.slnx`:
 - **Tier 1–3** use `.editorconfig` style keys with `value:severity` format parsed by `GetValueWithSeverity()`:
   - `csharp_prefer_braces = true:warning` — value is a preference, severity is after `:`
   - `IsEnabled` checks `string.Equals(pref, "true", ...)` — rule is opt-in (disabled when key absent)
+  - Some rules accept multiple config keys (standard + CsLint aliases) via `GetFirstValue()` — CsLint key takes precedence
 - **Tier 4** use `dotnet_diagnostic.CSLINT*.severity` keys where the raw value *is* the severity:
   - `dotnet_diagnostic.CSLINT300.severity = warning` — no colon-separated value
   - `IsEnabled` checks `GetSeverityForKey(...) != LintSeverity.None` — rule is enabled by default (active when key absent)

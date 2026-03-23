@@ -105,6 +105,15 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT267 | Element access modifier ordering | `csharp_element_access_ordering` | SA1202 |
 | CSLINT268 | Element kind ordering | `csharp_element_ordering` | SA1201 |
 | CSLINT269 | Using directive ordering | `csharp_using_directive_ordering` | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 |
+| CSLINT270 | Pattern matching over `as` with null check | `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 |
+| CSLINT271 | Conditional delegate call | `csharp_style_conditional_delegate_call` | IDE1005 |
+| CSLINT272 | Inlined variable declaration | `csharp_style_inlined_variable_declaration` | IDE0018 |
+| CSLINT273 | Switch expression preference | `csharp_style_prefer_switch_expression` | IDE0066 |
+| CSLINT274 | Conditional expression over assignment | `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 |
+| CSLINT275 | Conditional expression over return | `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 |
+| CSLINT276 | Local function over anonymous function | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
+| CSLINT277 | Sort System directives first | `dotnet_sort_system_directives_first` | -- |
+| CSLINT278 | Separate import directive groups | `dotnet_separate_import_directive_groups` | -- |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
@@ -185,19 +194,26 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0007, IDE0008 | CSLINT200 | Microsoft |
 | IDE0011 | CSLINT202 | Microsoft |
 | IDE0017 | CSLINT215 | Microsoft |
-| IDE0019, IDE0020, IDE0038, IDE0066 | CSLINT209 | Microsoft |
+| IDE0016 | CSLINT210 | Microsoft |
+| IDE0018 | CSLINT272 | Microsoft |
+| IDE0019 | CSLINT270 | Microsoft |
+| IDE0020, IDE0038 | CSLINT209 | Microsoft |
 | IDE0021--IDE0027 | CSLINT201 | Microsoft |
 | IDE0028 | CSLINT216 | Microsoft |
 | IDE0029--IDE0031, IDE0041 | CSLINT210 | Microsoft |
 | IDE0034 | CSLINT213 | Microsoft |
 | IDE0036 | CSLINT205 | Microsoft |
+| IDE0039 | CSLINT276 | Microsoft |
 | IDE0040 | CSLINT206 | Microsoft |
+| IDE0045 | CSLINT274 | Microsoft |
+| IDE0046 | CSLINT275 | Microsoft |
 | IDE0049 | CSLINT208 | Microsoft |
 | IDE0053 | CSLINT217 | Microsoft |
 | IDE0054, IDE0074 | CSLINT214 | Microsoft |
 | IDE0061 | CSLINT218 | Microsoft |
 | IDE0063 | CSLINT211 | Microsoft |
 | IDE0065 | CSLINT207 | Microsoft |
+| IDE0066 | CSLINT273 | Microsoft |
 | IDE0073 | CSLINT007 | Microsoft |
 | IDE0078 | CSLINT220 | Microsoft |
 | IDE0083 | CSLINT219 | Microsoft |
@@ -210,6 +226,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0230 | CSLINT224 | Microsoft |
 | IDE0290 | CSLINT221 | Microsoft |
 | IDE0300--IDE0305 | CSLINT222 | Microsoft |
+| IDE1005 | CSLINT271 | Microsoft |
 | IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
 | IDE2000 | CSLINT008 | Microsoft |
 | IDE2001 | CSLINT228 | Microsoft |
@@ -252,7 +269,7 @@ These rules can be implemented with syntax-only parsing:
 
 These rules require type information, flow analysis, or semantic model and are not currently implemented (some may become Tier 4 candidates in the future):
 
-IDE0001, IDE0002, IDE0010, IDE0016, IDE0018, IDE0032, IDE0033, IDE0035, IDE0039, IDE0042, IDE0044, IDE0045, IDE0046, IDE0050, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380, IDE1005
+IDE0001, IDE0002, IDE0010, IDE0032, IDE0033, IDE0035, IDE0042, IDE0044, IDE0050, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0130, IDE0140, IDE0150, IDE0200, IDE0210, IDE0211, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380
 
 ### Not Applicable
 

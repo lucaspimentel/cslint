@@ -2,8 +2,28 @@
 
 ## [Unreleased]
 
+### Added
+- Add CSLINT270 — pattern matching over `as` with null check (`csharp_style_pattern_matching_over_as_with_null_check`, IDE0019)
+- Add CSLINT271 — conditional delegate call (`csharp_style_conditional_delegate_call`, IDE1005)
+- Add CSLINT272 — inlined variable declaration (`csharp_style_inlined_variable_declaration`, IDE0018)
+- Add CSLINT273 — switch expression preference (`csharp_style_prefer_switch_expression`, IDE0066)
+- Add CSLINT274 — conditional expression over assignment (`dotnet_style_prefer_conditional_expression_over_assignment`, IDE0045)
+- Add CSLINT275 — conditional expression over return (`dotnet_style_prefer_conditional_expression_over_return`, IDE0046)
+- Add CSLINT276 — local function over anonymous function (`csharp_style_prefer_local_over_anonymous_function`, IDE0039)
+- Add CSLINT277 — sort System directives first (`dotnet_sort_system_directives_first`)
+- Add CSLINT278 — separate import directive groups (`dotnet_separate_import_directive_groups`)
+- Accept standard `_experimental` suffix keys for CSLINT228–233 blank line rules (IDE2001–IDE2006)
+- Accept `dotnet_style_allow_statement_immediately_after_block_experimental` for CSLINT230 (IDE2003)
+- Accept `dotnet_style_allow_multiple_blank_lines_experimental` for CSLINT008 (IDE2000)
+- Accept `charset = utf-8` / `utf-8-bom` for CSLINT010
+- Accept `dotnet_style_coalesce_expression`, `dotnet_style_null_propagation`, `dotnet_style_prefer_is_null_check_over_reference_equality_method`, and `csharp_style_throw_expression` for CSLINT210
+- Add `GetFirstValue()` helper to `LintConfiguration` for fallback config key lookups
+- Add IDE0016 pragma alias to CSLINT210
+
 ### Changed
 - Use ASCII hyphens instead of Unicode box-drawing characters in `--summary` table separators
+- Fix IDE0019 pragma alias (was incorrectly mapped to CSLINT209, now CSLINT270)
+- Fix IDE0066 pragma alias (was incorrectly mapped to CSLINT209, now CSLINT273)
 
 ## [1.5.0] - 2026-03-22
 

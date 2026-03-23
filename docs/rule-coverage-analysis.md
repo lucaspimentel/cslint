@@ -53,8 +53,22 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | CSLINT234 | InferredMemberName | `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
 | CSLINT235 | SimplifiedBooleanExpression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
 | CSLINT236 | ExtendedPropertyPattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
+| CSLINT270 | PatternMatchingAs | `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 |
+| CSLINT271 | ConditionalDelegateCall | `csharp_style_conditional_delegate_call` | IDE1005 |
+| CSLINT272 | InlinedVariableDeclaration | `csharp_style_inlined_variable_declaration` | IDE0018 |
+| CSLINT273 | SwitchExpressionPreference | `csharp_style_prefer_switch_expression` | IDE0066 |
+| CSLINT274 | ConditionalExpressionAssignment | `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 |
+| CSLINT275 | ConditionalExpressionReturn | `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 |
+| CSLINT276 | LocalOverAnonymousFunction | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
 
-**Total: 36 rules using standard keys**
+### Tier 3 — Formatting (standard key)
+
+| CsLint ID | Rule | Standard Key(s) | Standard Rule ID |
+|-----------|------|----------------|-----------------|
+| CSLINT277 | SortSystemDirectivesFirst | `dotnet_sort_system_directives_first` | (IDE0055) |
+| CSLINT278 | SeparateImportDirectiveGroups | `dotnet_separate_import_directive_groups` | (IDE0055) |
+
+**Total: 45 rules using standard keys**
 
 ---
 
@@ -123,12 +137,9 @@ None — CsLint covers all universal EditorConfig properties.
 | Standard Key | Standard Rule ID | Description |
 |-------------|-----------------|-------------|
 | `dotnet_style_readonly_field` | IDE0044 | Add readonly modifier |
-| `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 | Pattern matching over `as` with null check |
-| `csharp_style_throw_expression` | IDE0016 | Use throw expression |
-| `csharp_style_inlined_variable_declaration` | IDE0018 | Inline variable declaration |
+| `csharp_style_throw_expression` | IDE0016 | (now covered by CSLINT210 as config key + pragma alias) |
 | `csharp_style_deconstructed_variable_declaration` | IDE0042 | Deconstruct variable declaration |
-| `csharp_style_prefer_local_over_anonymous_function` | IDE0039 | Use local function instead of lambda |
-| `csharp_style_conditional_delegate_call` | IDE1005 | Use conditional delegate call |
+| `csharp_style_conditional_delegate_call` | IDE1005 | (now implemented as CSLINT271) |
 | `csharp_style_prefer_method_group_conversion` | IDE0200 | Remove unnecessary lambda expression |
 | `csharp_style_prefer_top_level_statements` | IDE0210/IDE0211 | Top-level statements preference |
 | `csharp_style_prefer_readonly_struct` | IDE0250 | Struct can be made readonly |
@@ -144,8 +155,8 @@ None — CsLint covers all universal EditorConfig properties.
 | `csharp_style_unused_value_assignment_preference` | IDE0059 | Remove unnecessary value assignment |
 | `dotnet_code_quality_unused_parameters` | IDE0060 | Remove unused parameter |
 | `dotnet_style_prefer_auto_properties` | IDE0032 | Use auto property |
-| `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 | Conditional expression for assignment |
-| `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 | Conditional expression for return |
+| `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 | (now implemented as CSLINT274) |
+| `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 | (now implemented as CSLINT275) |
 | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 | Inferred tuple names |
 | `dotnet_style_explicit_tuple_names` | IDE0033 | Use explicitly provided tuple name |
 | `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach |
@@ -154,7 +165,7 @@ None — CsLint covers all universal EditorConfig properties.
 | `dotnet_style_parentheses_in_relational_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_other_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_other_operators` | IDE0047/IDE0048 | Parentheses preferences |
-| `csharp_style_prefer_switch_expression` | IDE0066 | Use switch expression |
+| `csharp_style_prefer_switch_expression` | IDE0066 | (now implemented as CSLINT273) |
 | `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | (now accepted by CSLINT008) |
 | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental` | IDE2004 | (now accepted by CSLINT231) |
 | `csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental` | IDE2005 | (now accepted by CSLINT232) |
@@ -204,8 +215,8 @@ None — CsLint covers all universal EditorConfig properties.
 | `csharp_space_between_square_brackets` | Space between square brackets |
 | `csharp_preserve_single_line_statements` | Preserve single line statements |
 | `csharp_preserve_single_line_blocks` | Preserve single line blocks |
-| `dotnet_sort_system_directives_first` | Sort System directives first |
-| `dotnet_separate_import_directive_groups` | Separate import directive groups |
+| `dotnet_sort_system_directives_first` | (now implemented as CSLINT277) |
+| `dotnet_separate_import_directive_groups` | (now implemented as CSLINT278) |
 
 ### Would be Tier 4 (semantic analysis)
 
@@ -242,8 +253,8 @@ These standard rules already have CsLint equivalents but CsLint uses `dotnet_dia
 
 | Category | Count |
 |----------|-------|
-| Supported with standard key | 36 |
-| Supported with custom key (standard equivalent exists) | 16 |
-| Standard rules not supported (style/syntax — would be Tier 3) | ~33 + ~39 formatting |
+| Supported with standard key | 45 |
+| Supported with custom key (standard equivalent exists) | 16 (9 now also accept standard key) |
+| Standard rules not supported (style/syntax — would be Tier 3) | ~22 + ~37 formatting |
 | Standard rules not supported (other IDE rules) | ~22 |
 | Standard naming system not supported (configurable 3-part) | 1 (the full system) |
