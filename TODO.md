@@ -148,7 +148,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 ### Implement Tier 3 formatting rules — IDE0055 (~39 rules)
 
-- [ ] **New-line rules** (7) — `csharp_new_line_before_open_brace`, `_before_else`, `_before_catch`, `_before_finally`, `_before_members_in_object_initializers`, `_before_members_in_anonymous_types`, `_between_query_expression_clauses`
+- [x] **New-line rules** (7) — CSLINT279 (`csharp_new_line_before_open_brace`), CSLINT280 (`_before_else`), CSLINT281 (`_before_catch`), CSLINT282 (`_before_finally`), CSLINT283 (`_before_members_in_object_initializers`), CSLINT284 (`_before_members_in_anonymous_types`), CSLINT285 (`_between_query_expression_clauses`)
 - [ ] **Indentation rules** (6) — `csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`
 - [ ] **Spacing rules** (22) — 10 standard keys now accepted by existing CSLINT254-261 rules; remaining 12 need new rules: `csharp_space_after_cast`, method declaration/call parenthesis spacing (6 keys), dot spacing (2 keys), square bracket spacing (3 keys), `_around_declaration_statements`
 - [ ] **Wrap/preserve rules** (2) — `csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`

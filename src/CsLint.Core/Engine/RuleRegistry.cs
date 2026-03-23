@@ -123,6 +123,13 @@ public sealed class RuleRegistry
         registry.Register(new MethodGroupConversionRule());
         registry.Register(new TopLevelStatementsRule());
         registry.Register(new NamespaceMatchFolderRule());
+        registry.Register(new NewLineBeforeOpenBraceRule());
+        registry.Register(new NewLineBeforeElseRule());
+        registry.Register(new NewLineBeforeCatchRule());
+        registry.Register(new NewLineBeforeFinallyRule());
+        registry.Register(new NewLineInObjectInitializerRule());
+        registry.Register(new NewLineInAnonymousTypeRule());
+        registry.Register(new NewLineInQueryExpressionRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis
