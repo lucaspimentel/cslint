@@ -6,11 +6,13 @@ public sealed class Utf8FileEncodingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_store_files_as_utf8";
 
+    private const string StandardKey = "charset";
+
     public string RuleId => "CSLINT010";
 
     public string Name => "Utf8FileEncoding";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -41,8 +43,17 @@ public sealed class Utf8FileEncodingRule : IRuleDefinition
         return null;
     }
 
-    public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetBool(ConfigKey);
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        if (configuration.GetValue(ConfigKey) is not null)
+        {
+            return configuration.GetBool(ConfigKey);
+        }
+
+        string? charset = configuration.GetValue(StandardKey);
+        return charset is not null
+            && charset.StartsWith("utf-8", StringComparison.OrdinalIgnoreCase);
+    }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

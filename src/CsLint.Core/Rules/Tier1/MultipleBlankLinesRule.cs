@@ -4,16 +4,30 @@ namespace Cslint.Core.Rules.Tier1;
 
 public sealed class MultipleBlankLinesRule : IRuleDefinition
 {
+    private const string ConfigKey = "csharp_no_multiple_blank_lines";
+
+    private const string StandardKey = "dotnet_style_allow_multiple_blank_lines_experimental";
+
     public string RuleId => "CSLINT008";
 
     public string Name => "MultipleBlankLines";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_no_multiple_blank_lines"];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetBool("csharp_no_multiple_blank_lines");
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        // CsLint key: true = disallow multiple blank lines
+        if (configuration.GetValue(ConfigKey) is not null)
+        {
+            return configuration.GetBool(ConfigKey);
+        }
+
+        // Standard key: false = disallow multiple blank lines (inverted semantics)
+        (string? value, string? _) = configuration.GetValueWithSeverity(StandardKey);
+        return string.Equals(value, "false", StringComparison.OrdinalIgnoreCase);
+    }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

@@ -79,4 +79,64 @@ public class MultipleBlankLinesRuleTests
 
         Assert.False(_rule.IsEnabled(config));
     }
+
+    [Theory]
+    [InlineData("false:warning")]
+    [InlineData("false:error")]
+    [InlineData("false:suggestion")]
+    public void IsEnabled_StandardKeyFalse_ReturnsTrue(string value)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["dotnet_style_allow_multiple_blank_lines_experimental"] = value,
+            });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Theory]
+    [InlineData("true:warning")]
+    [InlineData("true:silent")]
+    public void IsEnabled_StandardKeyTrue_ReturnsFalse(string value)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["dotnet_style_allow_multiple_blank_lines_experimental"] = value,
+            });
+
+        Assert.False(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_CsLintKeyTakesPrecedence()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["csharp_no_multiple_blank_lines"] = "false",
+                ["dotnet_style_allow_multiple_blank_lines_experimental"] = "false:warning",
+            });
+
+        // CsLint key says disabled, should take precedence over standard key
+        Assert.False(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void Analyze_StandardKey_DetectsViolation()
+    {
+        string source = "class Foo { }\n\n\nclass Bar { }\n";
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["dotnet_style_allow_multiple_blank_lines_experimental"] = "false:warning",
+            });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT008", diagnostics[0].RuleId);
+    }
 }

@@ -7,11 +7,22 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
 {
+    private const string ConfigKey = "dotnet_style_null_checking";
+
+    private const string CoalesceKey = "dotnet_style_coalesce_expression";
+
+    private const string NullPropagationKey = "dotnet_style_null_propagation";
+
+    private const string IsNullCheckKey = "dotnet_style_prefer_is_null_check_over_reference_equality_method";
+
+    private static readonly string[] StandardKeys = [CoalesceKey, NullPropagationKey, IsNullCheckKey];
+
     public string RuleId => "CSLINT210";
 
     public string Name => "NullChecking";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_style_null_checking"];
+    public IReadOnlyList<string> ConfigKeys { get; } =
+        [ConfigKey, CoalesceKey, NullPropagationKey, IsNullCheckKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
@@ -92,7 +103,35 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
         return false;
     }
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
+    public bool IsEnabled(LintConfiguration configuration)
+    {
+        // CsLint key takes precedence
+        if (configuration.GetValue(ConfigKey) is not null)
+        {
+            return configuration.GetBool(ConfigKey);
+        }
+
+        // Check standard keys — if any is explicitly true, enable; if any present but none true, disable
+        bool anyKeyPresent = false;
+
+        foreach (string key in StandardKeys)
+        {
+            (string? value, string? _) = configuration.GetValueWithSeverity(key);
+
+            if (value is not null)
+            {
+                anyKeyPresent = true;
+
+                if (string.Equals(value, "true", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+        }
+
+        // No keys present → default to enabled (preserve current behavior)
+        return !anyKeyPresent;
+    }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

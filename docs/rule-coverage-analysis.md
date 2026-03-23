@@ -64,10 +64,10 @@ These CsLint rules cover functionality that has a standard .editorconfig key, bu
 
 ### Tier 1
 
-| CsLint ID | Rule | CsLint Key | Standard Key | Standard Rule ID | Notes |
+| CsLint ID | Rule | CsLint Key | Standard Key (also accepted) | Standard Rule ID | Notes |
 |-----------|------|-----------|-------------|-----------------|-------|
-| CSLINT008 | MultipleBlankLines | `csharp_no_multiple_blank_lines` | `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | CsLint uses boolean opt-in; standard uses `true`/`false` with `_experimental` suffix |
-| CSLINT010 | Utf8FileEncoding | `csharp_store_files_as_utf8` | `charset = utf-8` | (universal) | Standard uses `charset` key; CsLint uses custom boolean key |
+| CSLINT008 | MultipleBlankLines | `csharp_no_multiple_blank_lines` | `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | Inverted semantics: CsLint `true` = standard `false`; both accepted |
+| CSLINT010 | Utf8FileEncoding | `csharp_store_files_as_utf8` | `charset = utf-8` / `utf-8-bom` | (universal) | Both keys accepted; `charset` enables when value starts with `utf-8` |
 
 ### Tier 2 — Naming Rules
 
@@ -99,10 +99,10 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 
 | CsLint ID | Rule | CsLint Key | Standard Key | Standard Rule ID |
 |-----------|------|-----------|-------------|-----------------|
-| CSLINT210 | NullChecking | `dotnet_style_null_checking` | `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041) | IDE0029/IDE0031/IDE0041 |
+| CSLINT210 | NullChecking | `dotnet_style_null_checking` | `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041) — all accepted | IDE0029/IDE0031/IDE0041 |
 | CSLINT230 | BlankLineAfterBlock | `csharp_style_allow_blank_line_after_block` | `dotnet_style_allow_statement_immediately_after_block_experimental` (also accepted) | IDE2003 |
 
-**Total: 16 rules using custom keys (6 now also accept the standard key)**
+**Total: 16 rules using custom keys (9 now also accept the standard key)**
 
 ---
 
@@ -155,7 +155,7 @@ None — CsLint covers all universal EditorConfig properties.
 | `dotnet_style_parentheses_in_other_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_other_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `csharp_style_prefer_switch_expression` | IDE0066 | Use switch expression |
-| `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | (CsLint has CSLINT008 with different key) |
+| `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | (now accepted by CSLINT008) |
 | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental` | IDE2004 | (now accepted by CSLINT231) |
 | `csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental` | IDE2005 | (now accepted by CSLINT232) |
 | `csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental` | IDE2006 | (now accepted by CSLINT233) |

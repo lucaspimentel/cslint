@@ -81,4 +81,55 @@ public class Utf8FileEncodingRuleTests
 
         Assert.False(_rule.IsEnabled(config));
     }
+
+    [Theory]
+    [InlineData("utf-8")]
+    [InlineData("utf-8-bom")]
+    [InlineData("UTF-8")]
+    public void IsEnabled_StandardCharsetUtf8_ReturnsTrue(string charset)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["charset"] = charset });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Theory]
+    [InlineData("latin1")]
+    [InlineData("utf-16le")]
+    public void IsEnabled_StandardCharsetNonUtf8_ReturnsFalse(string charset)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["charset"] = charset });
+
+        Assert.False(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_CsLintKeyTakesPrecedence()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["csharp_store_files_as_utf8"] = "false",
+                ["charset"] = "utf-8",
+            });
+
+        // CsLint key says disabled, should take precedence
+        Assert.False(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void Analyze_StandardCharsetKey_DetectsNonUtf8()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["charset"] = "utf-8" });
+        RuleContext context = TestHelper.CreateContext(
+            "class Foo { }", config, filePrefix: [0xFF, 0xFE]);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT010", diagnostics[0].RuleId);
+    }
 }

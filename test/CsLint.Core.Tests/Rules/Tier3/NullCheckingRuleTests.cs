@@ -1,3 +1,4 @@
+using Cslint.Core.Config;
 using Cslint.Core.Rules;
 using Cslint.Core.Rules.Tier3;
 
@@ -105,5 +106,71 @@ public class NullCheckingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void IsEnabled_NoKeysPresent_ReturnsTrue()
+    {
+        var config = new LintConfiguration(new Dictionary<string, string>());
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_CsLintKeyTrue_ReturnsTrue()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["dotnet_style_null_checking"] = "true" });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_CsLintKeyFalse_ReturnsFalse()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["dotnet_style_null_checking"] = "false" });
+
+        Assert.False(_rule.IsEnabled(config));
+    }
+
+    [Theory]
+    [InlineData("dotnet_style_coalesce_expression")]
+    [InlineData("dotnet_style_null_propagation")]
+    [InlineData("dotnet_style_prefer_is_null_check_over_reference_equality_method")]
+    public void IsEnabled_StandardKeyTrue_ReturnsTrue(string key)
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { [key] = "true:warning" });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_AllStandardKeysFalse_ReturnsFalse()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["dotnet_style_coalesce_expression"] = "false:none",
+                ["dotnet_style_null_propagation"] = "false:none",
+                ["dotnet_style_prefer_is_null_check_over_reference_equality_method"] = "false:none",
+            });
+
+        Assert.False(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_CsLintKeyTakesPrecedence()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["dotnet_style_null_checking"] = "false",
+                ["dotnet_style_coalesce_expression"] = "true:warning",
+            });
+
+        // CsLint key says disabled, should take precedence
+        Assert.False(_rule.IsEnabled(config));
     }
 }
