@@ -149,9 +149,9 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 ### Implement Tier 3 formatting rules — IDE0055 (~39 rules)
 
 - [x] **New-line rules** (7) — CSLINT279 (`csharp_new_line_before_open_brace`), CSLINT280 (`_before_else`), CSLINT281 (`_before_catch`), CSLINT282 (`_before_finally`), CSLINT283 (`_before_members_in_object_initializers`), CSLINT284 (`_before_members_in_anonymous_types`), CSLINT285 (`_between_query_expression_clauses`)
-- [ ] **Indentation rules** (6) — `csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`
+- [x] **Indentation rules** (6) — CSLINT292 (`csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`)
 - [x] **Spacing rules** (22) — 10 standard keys accepted by existing CSLINT254-261 rules + 6 new rules: CSLINT286 (cast), CSLINT287 (method decl), CSLINT288 (method call), CSLINT289 (dot), CSLINT290 (square bracket), CSLINT291 (declaration statement)
-- [ ] **Wrap/preserve rules** (2) — `csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`
+- [x] **Wrap/preserve rules** (2) — CSLINT293 (`csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`)
 - [x] **Using directive formatting** (2) — `dotnet_sort_system_directives_first` (CSLINT277), `dotnet_separate_import_directive_groups` (CSLINT278)
 
 ### Support standard naming convention system (IDE1006)

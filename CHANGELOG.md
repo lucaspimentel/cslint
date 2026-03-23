@@ -30,6 +30,8 @@
 - Add IDE0130 — namespace match folder (`dotnet_style_namespace_match_folder`)
 - Add CSLINT279–285 — 7 new-line formatting rules (`csharp_new_line_before_open_brace`, `_before_else`, `_before_catch`, `_before_finally`, `_before_members_in_object_initializers`, `_before_members_in_anonymous_types`, `_between_query_expression_clauses`)
 - Add CSLINT286–291 — 6 spacing rules (`csharp_space_after_cast`, method declaration/call parenthesis spacing, dot spacing, square bracket spacing, declaration statement spacing)
+- Add CSLINT292 — indentation formatting (`csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`)
+- Add CSLINT293 — preserve single-line formatting (`csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`)
 
 ### Changed
 - New rules with 1:1 standard mappings now use the standard IDE diagnostic ID directly (e.g., `IDE0200`) instead of `CSLINT*` IDs

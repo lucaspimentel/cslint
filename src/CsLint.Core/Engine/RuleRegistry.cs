@@ -136,6 +136,8 @@ public sealed class RuleRegistry
         registry.Register(new DotSpacingRule());
         registry.Register(new SquareBracketSpacingRule());
         registry.Register(new DeclarationStatementSpacingRule());
+        registry.Register(new IndentationFormattingRule());
+        registry.Register(new PreserveSingleLineRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

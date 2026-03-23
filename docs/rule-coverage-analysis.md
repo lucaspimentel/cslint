@@ -188,12 +188,12 @@ None — CsLint covers all universal EditorConfig properties.
 | `csharp_new_line_before_members_in_object_initializers` | (now implemented as CSLINT283) |
 | `csharp_new_line_before_members_in_anonymous_types` | (now implemented as CSLINT284) |
 | `csharp_new_line_between_query_expression_clauses` | (now implemented as CSLINT285) |
-| `csharp_indent_case_contents` | Indent case contents |
-| `csharp_indent_switch_labels` | Indent switch labels |
-| `csharp_indent_labels` | Indent labels |
-| `csharp_indent_block_contents` | Indent block contents |
-| `csharp_indent_braces` | Indent braces |
-| `csharp_indent_case_contents_when_block` | Indent case contents when block |
+| `csharp_indent_case_contents` | (now implemented as CSLINT292) |
+| `csharp_indent_switch_labels` | (now implemented as CSLINT292) |
+| `csharp_indent_labels` | (now implemented as CSLINT292) |
+| `csharp_indent_block_contents` | (now implemented as CSLINT292) |
+| `csharp_indent_braces` | (now implemented as CSLINT292) |
+| `csharp_indent_case_contents_when_block` | (now implemented as CSLINT292) |
 | `csharp_space_after_cast` | (now implemented as CSLINT286) |
 | `csharp_space_after_keywords_in_control_flow_statements` | (now accepted by CSLINT254) |
 | `csharp_space_between_parentheses` | (now accepted by CSLINT259) |
@@ -216,8 +216,8 @@ None — CsLint covers all universal EditorConfig properties.
 | `csharp_space_before_open_square_brackets` | (now implemented as CSLINT290) |
 | `csharp_space_between_empty_square_brackets` | (now implemented as CSLINT290) |
 | `csharp_space_between_square_brackets` | (now implemented as CSLINT290) |
-| `csharp_preserve_single_line_statements` | Preserve single line statements |
-| `csharp_preserve_single_line_blocks` | Preserve single line blocks |
+| `csharp_preserve_single_line_statements` | (now implemented as CSLINT293) |
+| `csharp_preserve_single_line_blocks` | (now implemented as CSLINT293) |
 | `dotnet_sort_system_directives_first` | (now implemented as CSLINT277) |
 | `dotnet_separate_import_directive_groups` | (now implemented as CSLINT278) |
 
@@ -258,6 +258,6 @@ These standard rules already have CsLint equivalents but CsLint uses `dotnet_dia
 |----------|-------|
 | Supported with standard key | 45 |
 | Supported with custom key (standard equivalent exists) | 16 (9 now also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | ~19 + ~8 formatting |
+| Standard rules not supported (style/syntax — would be Tier 3) | ~19 + 0 formatting |
 | Standard rules not supported (other IDE rules) | ~22 |
 | Standard naming system not supported (configurable 3-part) | 1 (the full system) |

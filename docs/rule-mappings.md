@@ -130,6 +130,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT289 | Dot spacing | `csharp_space_before_dot`, `csharp_space_after_dot` | -- |
 | CSLINT290 | Square bracket spacing | `csharp_space_*_square_brackets` | -- |
 | CSLINT291 | Declaration statement spacing | `csharp_space_around_declaration_statements` | -- |
+| CSLINT292 | Indentation formatting | `csharp_indent_*` | -- |
+| CSLINT293 | Preserve single-line | `csharp_preserve_single_line_*` | -- |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
