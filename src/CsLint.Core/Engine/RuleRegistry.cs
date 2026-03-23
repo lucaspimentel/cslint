@@ -130,6 +130,12 @@ public sealed class RuleRegistry
         registry.Register(new NewLineInObjectInitializerRule());
         registry.Register(new NewLineInAnonymousTypeRule());
         registry.Register(new NewLineInQueryExpressionRule());
+        registry.Register(new CastSpacingRule());
+        registry.Register(new MethodDeclarationSpacingRule());
+        registry.Register(new MethodCallSpacingRule());
+        registry.Register(new DotSpacingRule());
+        registry.Register(new SquareBracketSpacingRule());
+        registry.Register(new DeclarationStatementSpacingRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

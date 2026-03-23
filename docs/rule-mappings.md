@@ -117,6 +117,19 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0130 | Namespace match folder | `dotnet_style_namespace_match_folder` | IDE0130 |
 | IDE0200 | Method group conversion | `csharp_style_prefer_method_group_conversion` | IDE0200 |
 | IDE0210 | Top-level statements | `csharp_style_prefer_top_level_statements` | IDE0210 |
+| CSLINT279 | New line before open brace | `csharp_new_line_before_open_brace` | -- |
+| CSLINT280 | New line before else | `csharp_new_line_before_else` | -- |
+| CSLINT281 | New line before catch | `csharp_new_line_before_catch` | -- |
+| CSLINT282 | New line before finally | `csharp_new_line_before_finally` | -- |
+| CSLINT283 | New line in object initializers | `csharp_new_line_before_members_in_object_initializers` | -- |
+| CSLINT284 | New line in anonymous types | `csharp_new_line_before_members_in_anonymous_types` | -- |
+| CSLINT285 | New line in query expressions | `csharp_new_line_between_query_expression_clauses` | -- |
+| CSLINT286 | Cast spacing | `csharp_space_after_cast` | -- |
+| CSLINT287 | Method declaration spacing | `csharp_space_between_method_declaration_*` | -- |
+| CSLINT288 | Method call spacing | `csharp_space_between_method_call_*` | -- |
+| CSLINT289 | Dot spacing | `csharp_space_before_dot`, `csharp_space_after_dot` | -- |
+| CSLINT290 | Square bracket spacing | `csharp_space_*_square_brackets` | -- |
+| CSLINT291 | Declaration statement spacing | `csharp_space_around_declaration_statements` | -- |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
