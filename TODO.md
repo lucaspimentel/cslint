@@ -96,3 +96,68 @@ Reference: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/docu
 ### Pragma alias additions for already-covered rules
 
 - [x] **Add pragma aliases** for existing rules that already cover StyleCop equivalents: SA1027→CSLINT002, SA1028→CSLINT001, SA1101→CSLINT204, SA1121→CSLINT208, SA1124→CSLINT006, SA1206→CSLINT205, SA1303→CSLINT105, SA1312→CSLINT103, SA1400→CSLINT206, SA1500→CSLINT202, SA1503→CSLINT228, SA1507→CSLINT008, SA1518→CSLINT004
+
+## Standard .editorconfig rule coverage
+
+Goal: support as many standard .editorconfig rules as possible using standard key names and diagnostic ID aliases. See [docs/rule-coverage-analysis.md](docs/rule-coverage-analysis.md) and [docs/standard-editorconfig-rules.md](docs/standard-editorconfig-rules.md) for full details.
+
+### Migrate custom-key rules to accept standard keys (16 rules)
+
+- [ ] **CSLINT008 MultipleBlankLines** — also accept `dotnet_style_allow_multiple_blank_lines_experimental` (standard key)
+- [ ] **CSLINT010 Utf8FileEncoding** — also accept `charset = utf-8` (universal editorconfig key)
+- [ ] **CSLINT228–233 experimental blank line rules** — also accept the `_experimental` suffix variants of their keys (IDE2001–IDE2006)
+- [ ] **CSLINT210 NullChecking** — also accept `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041)
+- [ ] **CSLINT230 BlankLineAfterBlock** — also accept `dotnet_style_allow_statement_immediately_after_block_experimental` (IDE2003)
+- [ ] **CSLINT100–106 naming rules** — also accept the standard 3-part `dotnet_naming_rule`/`dotnet_naming_symbols`/`dotnet_naming_style` system (see naming system task below)
+
+### Implement missing Tier 3 style preference rules (~33 rules)
+
+- [ ] **`dotnet_style_readonly_field`** (IDE0044) — add readonly modifier
+- [ ] **`csharp_style_throw_expression`** (IDE0016) — use throw expression
+- [ ] **`csharp_style_inlined_variable_declaration`** (IDE0018) — inline variable declaration
+- [ ] **`csharp_style_conditional_delegate_call`** (IDE1005) — use `?.Invoke()`
+- [ ] **`csharp_style_prefer_switch_expression`** (IDE0066) — use switch expression
+- [ ] **`csharp_style_pattern_matching_over_as_with_null_check`** (IDE0019) — pattern matching over `as` with null check
+- [ ] **`csharp_style_deconstructed_variable_declaration`** (IDE0042) — deconstruct variable declaration
+- [ ] **`csharp_style_prefer_local_over_anonymous_function`** (IDE0039) — local function over lambda
+- [ ] **`csharp_style_prefer_method_group_conversion`** (IDE0200) — remove unnecessary lambda
+- [ ] **`csharp_style_prefer_top_level_statements`** (IDE0210/IDE0211) — top-level statements preference
+- [ ] **`csharp_style_prefer_readonly_struct`** (IDE0250) — struct can be made readonly
+- [ ] **`csharp_style_prefer_readonly_struct_member`** (IDE0251) — member can be made readonly
+- [ ] **`csharp_prefer_static_local_function`** (IDE0062) — make local function static
+- [ ] **`dotnet_style_prefer_auto_properties`** (IDE0032) — use auto property
+- [ ] **`dotnet_style_prefer_conditional_expression_over_assignment`** (IDE0045) — ternary for assignment
+- [ ] **`dotnet_style_prefer_conditional_expression_over_return`** (IDE0046) — ternary for return
+- [ ] **`dotnet_style_parentheses_in_arithmetic_binary_operators`** (IDE0047/IDE0048) — parentheses preferences
+- [ ] **`dotnet_style_parentheses_in_relational_binary_operators`** (IDE0047/IDE0048)
+- [ ] **`dotnet_style_parentheses_in_other_binary_operators`** (IDE0047/IDE0048)
+- [ ] **`dotnet_style_parentheses_in_other_operators`** (IDE0047/IDE0048)
+- [ ] **`csharp_style_prefer_null_check_over_type_check`** (IDE0150)
+- [ ] **`csharp_prefer_static_anonymous_function`** (IDE0320)
+- [ ] **`csharp_prefer_system_threading_lock`** (IDE0330)
+- [ ] **`csharp_style_prefer_unbound_generic_type_in_nameof`** (IDE0340)
+- [ ] **`csharp_style_prefer_implicitly_typed_lambda_expression`** (IDE0350)
+- [ ] **`csharp_style_prefer_simple_property_accessors`** (IDE0360)
+- [ ] **`dotnet_style_prefer_foreach_explicit_cast_in_source`** (IDE0220)
+- [ ] **`dotnet_style_namespace_match_folder`** (IDE0130)
+- [ ] **`dotnet_style_prefer_inferred_tuple_names`** (IDE0037)
+- [ ] **`dotnet_style_explicit_tuple_names`** (IDE0033)
+- [ ] **`csharp_style_unused_value_expression_statement_preference`** (IDE0058)
+- [ ] **`csharp_style_unused_value_assignment_preference`** (IDE0059)
+- [ ] **`dotnet_code_quality_unused_parameters`** (IDE0060)
+
+### Implement Tier 3 formatting rules — IDE0055 (~39 rules)
+
+- [ ] **New-line rules** (7) — `csharp_new_line_before_open_brace`, `_before_else`, `_before_catch`, `_before_finally`, `_before_members_in_object_initializers`, `_before_members_in_anonymous_types`, `_between_query_expression_clauses`
+- [ ] **Indentation rules** (6) — `csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`
+- [ ] **Spacing rules** (22) — `csharp_space_after_cast`, `_after_keywords_in_control_flow_statements`, `_between_parentheses`, `_before/after_colon_in_inheritance_clause`, `_around_binary_operators`, method declaration/call parenthesis spacing, comma/dot/semicolon spacing, square bracket spacing, `_around_declaration_statements`
+- [ ] **Wrap/preserve rules** (2) — `csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`
+- [ ] **Using directive formatting** (2) — `dotnet_sort_system_directives_first`, `dotnet_separate_import_directive_groups`
+
+### Support standard naming convention system (IDE1006)
+
+- [ ] **Implement 3-part naming rule parser** — parse `dotnet_naming_rule.<name>.symbols`, `dotnet_naming_rule.<name>.style`, `dotnet_naming_rule.<name>.severity` linking to `dotnet_naming_symbols.<name>.*` and `dotnet_naming_style.<name>.*` definitions
+  - Support all `applicable_kinds`, `applicable_accessibilities`, `required_modifiers`
+  - Support all `capitalization` styles (`pascal_case`, `camel_case`, `first_word_upper`, `all_upper`, `all_lower`)
+  - Support `required_prefix`, `required_suffix`, `word_separator`
+  - Fall back to existing hardcoded naming rules (CSLINT100–106) when no custom naming rules are configured
