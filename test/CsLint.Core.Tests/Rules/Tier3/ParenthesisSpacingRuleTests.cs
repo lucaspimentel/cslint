@@ -78,4 +78,26 @@ public class ParenthesisSpacingRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Fact]
+    public void IsEnabled_StandardKeyFalse_ReturnsTrue()
+    {
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_space_between_parentheses"] = "false",
+        });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_StandardKeyWithContexts_ReturnsFalse()
+    {
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_space_between_parentheses"] = "control_flow_statements",
+        });
+
+        Assert.False(_rule.IsEnabled(config));
+    }
 }

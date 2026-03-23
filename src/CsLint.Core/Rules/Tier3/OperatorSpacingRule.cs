@@ -9,11 +9,13 @@ public sealed class OperatorSpacingRule : IRuleDefinition, IDescendantNodeHandle
 {
     private const string ConfigKey = "csharp_operator_spacing";
 
+    private const string StandardKey = "csharp_space_around_binary_operators";
+
     public string RuleId => "CSLINT257";
 
     public string Name => "OperatorSpacing";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -61,7 +63,15 @@ public sealed class OperatorSpacingRule : IRuleDefinition, IDescendantNodeHandle
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+
+        if (pref is not null)
+        {
+            return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+        }
+
+        // Standard key: "before_and_after" enables; "none" or "ignore" disables
+        string? standardValue = configuration.GetValue(StandardKey);
+        return string.Equals(standardValue, "before_and_after", StringComparison.OrdinalIgnoreCase);
     }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

@@ -8,11 +8,15 @@ public sealed class ColonSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_colon_spacing";
 
+    private const string StandardBeforeKey = "csharp_space_before_colon_in_inheritance_clause";
+
+    private const string StandardAfterKey = "csharp_space_after_colon_in_inheritance_clause";
+
     public string RuleId => "CSLINT261";
 
     public string Name => "ColonSpacing";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardBeforeKey, StandardAfterKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -52,7 +56,14 @@ public sealed class ColonSpacingRule : IRuleDefinition
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+
+        if (pref is not null)
+        {
+            return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+        }
+
+        return configuration.GetBool(StandardBeforeKey)
+            || configuration.GetBool(StandardAfterKey);
     }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

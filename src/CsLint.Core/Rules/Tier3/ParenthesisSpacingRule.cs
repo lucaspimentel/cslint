@@ -8,11 +8,13 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_parenthesis_spacing";
 
+    private const string StandardKey = "csharp_space_between_parentheses";
+
     public string RuleId => "CSLINT259";
 
     public string Name => "ParenthesisSpacing";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -45,7 +47,15 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+
+        if (pref is not null)
+        {
+            return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+        }
+
+        // Standard key: "false" means no spaces (matches our no-space check)
+        string? standardValue = configuration.GetValue(StandardKey);
+        return string.Equals(standardValue, "false", StringComparison.OrdinalIgnoreCase);
     }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

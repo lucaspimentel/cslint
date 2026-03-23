@@ -56,4 +56,14 @@ public class ColonSpacingRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Theory]
+    [InlineData("csharp_space_before_colon_in_inheritance_clause")]
+    [InlineData("csharp_space_after_colon_in_inheritance_clause")]
+    public void IsEnabled_StandardKey_ReturnsTrue(string key)
+    {
+        var config = new LintConfiguration(new Dictionary<string, string> { [key] = "true" });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
 }

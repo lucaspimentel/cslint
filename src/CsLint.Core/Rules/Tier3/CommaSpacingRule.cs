@@ -8,11 +8,15 @@ public sealed class CommaSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_comma_spacing";
 
+    private const string StandardAfterKey = "csharp_space_after_comma";
+
+    private const string StandardBeforeKey = "csharp_space_before_comma";
+
     public string RuleId => "CSLINT255";
 
     public string Name => "CommaSpacing";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardAfterKey, StandardBeforeKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -52,7 +56,15 @@ public sealed class CommaSpacingRule : IRuleDefinition
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+
+        if (pref is not null)
+        {
+            return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+        }
+
+        // Standard keys: space_after_comma=true or space_before_comma=false both enable this rule
+        return configuration.GetValue(StandardAfterKey) is not null
+            || configuration.GetValue(StandardBeforeKey) is not null;
     }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

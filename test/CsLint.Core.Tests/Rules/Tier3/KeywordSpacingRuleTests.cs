@@ -143,4 +143,27 @@ public class KeywordSpacingRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Fact]
+    public void IsEnabled_StandardKey_ReturnsTrue()
+    {
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_space_after_keywords_in_control_flow_statements"] = "true",
+        });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Fact]
+    public void IsEnabled_CsLintKeyTakesPrecedence()
+    {
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_keyword_spacing"] = "false",
+            ["csharp_space_after_keywords_in_control_flow_statements"] = "true",
+        });
+
+        Assert.False(_rule.IsEnabled(config));
+    }
 }

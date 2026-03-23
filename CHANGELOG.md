@@ -19,6 +19,12 @@
 - Accept `dotnet_style_coalesce_expression`, `dotnet_style_null_propagation`, `dotnet_style_prefer_is_null_check_over_reference_equality_method`, and `csharp_style_throw_expression` for CSLINT210
 - Add `GetFirstValue()` helper to `LintConfiguration` for fallback config key lookups
 - Add IDE0016 pragma alias to CSLINT210
+- Accept `csharp_space_after_keywords_in_control_flow_statements` for CSLINT254
+- Accept `csharp_space_after_comma` and `csharp_space_before_comma` for CSLINT255
+- Accept `csharp_space_before_semicolon_in_for_statement` and `csharp_space_after_semicolon_in_for_statement` for CSLINT256
+- Accept `csharp_space_around_binary_operators` for CSLINT257
+- Accept `csharp_space_between_parentheses` for CSLINT259
+- Accept `csharp_space_before_colon_in_inheritance_clause` and `csharp_space_after_colon_in_inheritance_clause` for CSLINT261
 - Add IDE0200 — method group conversion (`csharp_style_prefer_method_group_conversion`)
 - Add IDE0210 — top-level statements preference (`csharp_style_prefer_top_level_statements`)
 - Add IDE0130 — namespace match folder (`dotnet_style_namespace_match_folder`)

@@ -67,4 +67,14 @@ public class CommaSpacingRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Theory]
+    [InlineData("csharp_space_after_comma", "true")]
+    [InlineData("csharp_space_before_comma", "false")]
+    public void IsEnabled_StandardKey_ReturnsTrue(string key, string value)
+    {
+        var config = new LintConfiguration(new Dictionary<string, string> { [key] = value });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
 }

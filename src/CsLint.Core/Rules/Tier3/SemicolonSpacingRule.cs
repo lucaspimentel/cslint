@@ -8,11 +8,15 @@ public sealed class SemicolonSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_semicolon_spacing";
 
+    private const string StandardBeforeKey = "csharp_space_before_semicolon_in_for_statement";
+
+    private const string StandardAfterKey = "csharp_space_after_semicolon_in_for_statement";
+
     public string RuleId => "CSLINT256";
 
     public string Name => "SemicolonSpacing";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardBeforeKey, StandardAfterKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -32,7 +36,14 @@ public sealed class SemicolonSpacingRule : IRuleDefinition
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+
+        if (pref is not null)
+        {
+            return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+        }
+
+        return configuration.GetValue(StandardBeforeKey) is not null
+            || configuration.GetValue(StandardAfterKey) is not null;
     }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

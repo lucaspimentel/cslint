@@ -8,6 +8,8 @@ public sealed class KeywordSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_keyword_spacing";
 
+    private const string StandardKey = "csharp_space_after_keywords_in_control_flow_statements";
+
     private static readonly HashSet<SyntaxKind> SpaceAfterKeywords =
     [
         SyntaxKind.IfKeyword,
@@ -39,7 +41,7 @@ public sealed class KeywordSpacingRule : IRuleDefinition
 
     public string Name => "KeywordSpacing";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -59,7 +61,13 @@ public sealed class KeywordSpacingRule : IRuleDefinition
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+
+        if (pref is not null)
+        {
+            return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
+        }
+
+        return configuration.GetBool(StandardKey);
     }
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)

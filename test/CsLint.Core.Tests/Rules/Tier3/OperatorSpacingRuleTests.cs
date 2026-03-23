@@ -68,4 +68,28 @@ public class OperatorSpacingRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Fact]
+    public void IsEnabled_StandardKeyBeforeAndAfter_ReturnsTrue()
+    {
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_space_around_binary_operators"] = "before_and_after",
+        });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
+
+    [Theory]
+    [InlineData("none")]
+    [InlineData("ignore")]
+    public void IsEnabled_StandardKeyDisabling_ReturnsFalse(string value)
+    {
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_space_around_binary_operators"] = value,
+        });
+
+        Assert.False(_rule.IsEnabled(config));
+    }
 }
