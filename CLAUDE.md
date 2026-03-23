@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What is CsLint?
 
-A fast C# linter that reads rules from `.editorconfig`. Uses Roslyn **syntax-only** parsing as an alternative to `dotnet format --verify-no-changes`, with opt-in semantic analysis (`--semantic`) for deeper checks.
+A fast C# linter that reads rules from `.editorconfig`. See [README.md](README.md) for usage and [docs/rule-mappings.md](docs/rule-mappings.md) for the full rule reference.
 
 ## Build & Test Commands
 
@@ -22,23 +22,7 @@ dotnet run --project src/CsLint.Cli -- --summary [path...]  # show diagnostics g
 dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .editorconfig settings for a path
 ```
 
-## Architecture
-
-Four projects in `CsLint.slnx`:
-
-- **CsLint.Core** — rules engine, config, formatters (class library)
-- **CsLint.Cli** — console app entry point using System.CommandLine
-- **CsLint.Core.Tests** — xUnit tests with Moq
-- **CsLint.Benchmarks** — BenchmarkDotNet performance benchmarks
-
-### Rules are organized in tiers
-
-- **Tier1** (`Rules/Tier1/`) — text-level formatting checks (indentation, line endings, trailing whitespace, final newline, max line length, no `#region` directives, file header, multiple blank lines, no blank lines at start of file, UTF-8 encoding). No syntax tree needed.
-- **Tier2** (`Rules/Tier2/`) — naming convention checks using `CSharpSyntaxWalker` (type naming, interface prefix, member naming, field naming, type parameter naming, etc.). Shared `NamingHelper` utility.
-- **Tier3** (`Rules/Tier3/`) — style preference checks via syntax tree analysis (`var` usage, expression-bodied members, brace style, namespace declarations, pattern matching, null checking, conditional expressions, sealed types, empty catch blocks, spacing, readability, layout, maintainability, ordering rules, using directive formatting, etc.).
-- **Tier4** (`Rules/Tier4/`) — semantic analysis rules requiring Roslyn `SemanticModel` (unused usings, unused locals, unreachable code, duplicate enum values, self-assignment, unnecessary casts, redundant await, unused private members). Only active with `--semantic` flag.
-
-### Config key conventions by tier
+## Config key conventions by tier
 
 - **Tier 1–3** use `.editorconfig` style keys with `value:severity` format parsed by `GetValueWithSeverity()`:
   - `csharp_prefer_braces = true:warning` — value is a preference, severity is after `:`
@@ -48,16 +32,14 @@ Four projects in `CsLint.slnx`:
   - `dotnet_diagnostic.CSLINT300.severity = warning` — no colon-separated value
   - `IsEnabled` checks `GetSeverityForKey(...) != LintSeverity.None` — rule is enabled by default (active when key absent)
 
-### Key design decisions
+## Key design decisions
 
 - All rules implement `IRuleDefinition` and are manually registered in `RuleRegistry` (no reflection, trim-safe)
 - Config comes from `.editorconfig` via `editorconfig` NuGet package, abstracted behind `IConfigProvider`
 - `PragmaSuppressionMap` filters diagnostics suppressed by `#pragma warning disable` directives; `PragmaAliasMap` maps third-party IDs (e.g., `SA1313`, `IDE1006`) to CsLint IDs so existing pragmas also suppress corresponding CsLint rules
 - `FileLinter` orchestrates: parse file → resolve config → run enabled rules → filter pragma suppressions
 - `DirectoryLinter` processes files in parallel via `Parallel.ForEachAsync`
-- Exit codes: 0 = clean, 1 = violations, 2 = error
-- Output formats: text (MSBuild-style), JSON, SARIF
 
-### Build settings (Directory.Build.props)
+## Build settings (Directory.Build.props)
 
 - `net10.0`, `LangVersion=latest`, `Nullable=enable`, `TreatWarningsAsErrors=true`, `UseArtifactsOutput=true`
