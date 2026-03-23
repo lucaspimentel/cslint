@@ -105,9 +105,9 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 - [ ] **CSLINT008 MultipleBlankLines** — also accept `dotnet_style_allow_multiple_blank_lines_experimental` (standard key)
 - [ ] **CSLINT010 Utf8FileEncoding** — also accept `charset = utf-8` (universal editorconfig key)
-- [ ] **CSLINT228–233 experimental blank line rules** — also accept the `_experimental` suffix variants of their keys (IDE2001–IDE2006)
+- [x] **CSLINT228–233 experimental blank line rules** — also accept the `_experimental` suffix variants of their keys (IDE2001–IDE2006)
 - [ ] **CSLINT210 NullChecking** — also accept `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041)
-- [ ] **CSLINT230 BlankLineAfterBlock** — also accept `dotnet_style_allow_statement_immediately_after_block_experimental` (IDE2003)
+- [x] **CSLINT230 BlankLineAfterBlock** — also accept `dotnet_style_allow_statement_immediately_after_block_experimental` (IDE2003)
 - [ ] **CSLINT100–106 naming rules** — also accept the standard 3-part `dotnet_naming_rule`/`dotnet_naming_symbols`/`dotnet_naming_style` system (see naming system task below)
 
 ### Implement missing Tier 3 style preference rules (~33 rules)

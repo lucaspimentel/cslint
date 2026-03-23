@@ -8,20 +8,22 @@ public sealed class ConsecutiveBracesRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_style_allow_blank_lines_between_consecutive_braces";
 
+    private const string StandardKey = ConfigKey + "_experimental";
+
     public string RuleId => "CSLINT229";
 
     public string Name => "ConsecutiveBraces";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue(ConfigKey) is not null;
+        configuration.GetFirstValue(ConfigKey, StandardKey) is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        if (!string.Equals(context.Configuration.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(context.Configuration.GetFirstValue(ConfigKey, StandardKey), "false", StringComparison.OrdinalIgnoreCase))
         {
             return [];
         }

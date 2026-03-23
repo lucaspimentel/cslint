@@ -140,4 +140,38 @@ public class ConstructorInitializerBlankLineRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Theory]
+    [InlineData("csharp_style_allow_blank_line_after_colon_in_constructor_initializer")]
+    [InlineData("csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental")]
+    public void Analyze_StandardKeyVariants_DetectsViolation(string configKey)
+    {
+        string source = """
+            class C
+            {
+                C() :
+
+                    base()
+                {
+                }
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string> { [configKey] = "false" });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT231", diagnostics[0].RuleId);
+    }
+
+    [Theory]
+    [InlineData("csharp_style_allow_blank_line_after_colon_in_constructor_initializer")]
+    [InlineData("csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental")]
+    public void IsEnabled_StandardKeyVariants_ReturnsTrue(string configKey)
+    {
+        var config = new LintConfiguration(new Dictionary<string, string> { [configKey] = "false" });
+
+        Assert.True(_rule.IsEnabled(config));
+    }
 }

@@ -8,20 +8,22 @@ public sealed class ArrowExpressionBlankLineRule : IRuleDefinition, IDescendantN
 {
     private const string ConfigKey = "csharp_style_allow_blank_line_after_token_in_arrow_expression_clause";
 
+    private const string StandardKey = ConfigKey + "_experimental";
+
     public string RuleId => "CSLINT233";
 
     public string Name => "ArrowExpressionBlankLine";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue(ConfigKey) is not null;
+        configuration.GetFirstValue(ConfigKey, StandardKey) is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        if (!string.Equals(context.Configuration.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(context.Configuration.GetFirstValue(ConfigKey, StandardKey), "false", StringComparison.OrdinalIgnoreCase))
         {
             return [];
         }

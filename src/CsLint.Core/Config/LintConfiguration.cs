@@ -24,6 +24,19 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
     public string? GetValue(string key) =>
         properties.TryGetValue(key, out string? value) ? value : null;
 
+    public string? GetFirstValue(params string[] keys)
+    {
+        foreach (string key in keys)
+        {
+            if (properties.TryGetValue(key, out string? value))
+            {
+                return value;
+            }
+        }
+
+        return null;
+    }
+
     public bool GetBool(string key, bool defaultValue = false)
     {
         (string? value, string? _) = GetValueWithSeverity(key);

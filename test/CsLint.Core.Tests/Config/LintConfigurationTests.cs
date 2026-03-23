@@ -105,4 +105,38 @@ public class LintConfigurationTests
         Assert.Equal(expectedValue, value);
         Assert.Equal(expectedSeverity, severity);
     }
+
+    [Fact]
+    public void GetFirstValue_ReturnsFirstMatchingKey()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string> { ["key_b"] = "value_b" });
+
+        string? result = config.GetFirstValue("key_a", "key_b");
+
+        Assert.Equal("value_b", result);
+    }
+
+    [Fact]
+    public void GetFirstValue_PrefersFirstKey()
+    {
+        var config = new LintConfiguration(
+            new Dictionary<string, string>
+            {
+                ["key_a"] = "value_a",
+                ["key_b"] = "value_b",
+            });
+
+        string? result = config.GetFirstValue("key_a", "key_b");
+
+        Assert.Equal("value_a", result);
+    }
+
+    [Fact]
+    public void GetFirstValue_NoMatch_ReturnsNull()
+    {
+        string? result = LintConfiguration.Empty.GetFirstValue("key_a", "key_b");
+
+        Assert.Null(result);
+    }
 }

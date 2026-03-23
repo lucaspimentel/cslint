@@ -83,11 +83,11 @@ CsLint uses simplified single-key naming rules instead of the standard 3-part `d
 | CSLINT105 | ConstantNaming | `dotnet_naming_rule.constants_should_be_pascal_case` | (same 3-part system) | Same |
 | CSLINT106 | TypeParameterNaming | `dotnet_naming_rule.type_parameters_should_begin_with_t` | (same 3-part system) | Same |
 
-### Tier 3 — Experimental blank line rules (missing `_experimental` suffix)
+### Tier 3 — Experimental blank line rules (now accept both keys)
 
-CsLint uses the same key as the standard but drops the `_experimental` suffix. Also, some use slightly different key names.
+CsLint accepts both its own key (without `_experimental` suffix) and the standard key (with `_experimental` suffix). The CsLint key takes precedence if both are present.
 
-| CsLint ID | Rule | CsLint Key | Standard Key | Standard Rule ID |
+| CsLint ID | Rule | CsLint Key | Standard Key (also accepted) | Standard Rule ID |
 |-----------|------|-----------|-------------|-----------------|
 | CSLINT228 | EmbeddedStatement | `csharp_style_allow_embedded_statements_on_same_line` | `csharp_style_allow_embedded_statements_on_same_line_experimental` | IDE2001 |
 | CSLINT229 | ConsecutiveBraces | `csharp_style_allow_blank_lines_between_consecutive_braces` | `csharp_style_allow_blank_lines_between_consecutive_braces_experimental` | IDE2002 |
@@ -100,9 +100,9 @@ CsLint uses the same key as the standard but drops the `_experimental` suffix. A
 | CsLint ID | Rule | CsLint Key | Standard Key | Standard Rule ID |
 |-----------|------|-----------|-------------|-----------------|
 | CSLINT210 | NullChecking | `dotnet_style_null_checking` | `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041) | IDE0029/IDE0031/IDE0041 |
-| CSLINT230 | BlankLineAfterBlock | `csharp_style_allow_blank_line_after_block` | `dotnet_style_allow_statement_immediately_after_block_experimental` | IDE2003 |
+| CSLINT230 | BlankLineAfterBlock | `csharp_style_allow_blank_line_after_block` | `dotnet_style_allow_statement_immediately_after_block_experimental` (also accepted) | IDE2003 |
 
-**Total: 16 rules using custom keys for standard functionality**
+**Total: 16 rules using custom keys (6 now also accept the standard key)**
 
 ---
 
@@ -156,12 +156,12 @@ None — CsLint covers all universal EditorConfig properties.
 | `dotnet_style_parentheses_in_other_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `csharp_style_prefer_switch_expression` | IDE0066 | Use switch expression |
 | `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | (CsLint has CSLINT008 with different key) |
-| `csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental` | IDE2004 | (CsLint has CSLINT231 without `_experimental`) |
-| `csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental` | IDE2005 | (CsLint has CSLINT232 without `_experimental`) |
-| `csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental` | IDE2006 | (CsLint has CSLINT233 without `_experimental`) |
-| `dotnet_style_allow_statement_immediately_after_block_experimental` | IDE2003 | (CsLint has CSLINT230 with different key) |
-| `csharp_style_allow_embedded_statements_on_same_line_experimental` | IDE2001 | (CsLint has CSLINT228 without `_experimental`) |
-| `csharp_style_allow_blank_lines_between_consecutive_braces_experimental` | IDE2002 | (CsLint has CSLINT229 without `_experimental`) |
+| `csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental` | IDE2004 | (now accepted by CSLINT231) |
+| `csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental` | IDE2005 | (now accepted by CSLINT232) |
+| `csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental` | IDE2006 | (now accepted by CSLINT233) |
+| `dotnet_style_allow_statement_immediately_after_block_experimental` | IDE2003 | (now accepted by CSLINT230) |
+| `csharp_style_allow_embedded_statements_on_same_line_experimental` | IDE2001 | (now accepted by CSLINT228) |
+| `csharp_style_allow_blank_lines_between_consecutive_braces_experimental` | IDE2002 | (now accepted by CSLINT229) |
 
 ### Would be Tier 3 (formatting — IDE0055)
 

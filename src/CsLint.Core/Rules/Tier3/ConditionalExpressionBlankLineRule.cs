@@ -8,19 +8,21 @@ public sealed class ConditionalExpressionBlankLineRule : IRuleDefinition, IStyle
 {
     private const string ConfigKey = "csharp_style_allow_blank_line_after_token_in_conditional_expression";
 
+    private const string StandardKey = ConfigKey + "_experimental";
+
     public string RuleId => "CSLINT232";
 
     public string Name => "ConditionalExpressionBlankLine";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
     private static bool IsActive(LintConfiguration config) =>
-        string.Equals(config.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase);
+        string.Equals(config.GetFirstValue(ConfigKey, StandardKey), "false", StringComparison.OrdinalIgnoreCase);
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue(ConfigKey) is not null;
+        configuration.GetFirstValue(ConfigKey, StandardKey) is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

@@ -8,19 +8,21 @@ public sealed class EmbeddedStatementRule : IRuleDefinition, IStyleRuleHandler
 {
     private const string ConfigKey = "csharp_style_allow_embedded_statements_on_same_line";
 
+    private const string StandardKey = ConfigKey + "_experimental";
+
     public string RuleId => "CSLINT228";
 
     public string Name => "EmbeddedStatement";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
     private static bool IsActive(LintConfiguration config) =>
-        string.Equals(config.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase);
+        string.Equals(config.GetFirstValue(ConfigKey, StandardKey), "false", StringComparison.OrdinalIgnoreCase);
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue(ConfigKey) is not null;
+        configuration.GetFirstValue(ConfigKey, StandardKey) is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

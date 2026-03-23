@@ -9,11 +9,13 @@ public sealed class BlankLineAfterBlockRule : IRuleDefinition, IDescendantNodeHa
 {
     private const string ConfigKey = "csharp_style_allow_blank_line_after_block";
 
+    private const string StandardKey = "dotnet_style_allow_statement_immediately_after_block_experimental";
+
     public string RuleId => "CSLINT230";
 
     public string Name => "BlankLineAfterBlock";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
@@ -38,11 +40,11 @@ public sealed class BlankLineAfterBlockRule : IRuleDefinition, IDescendantNodeHa
     }
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue(ConfigKey) is not null;
+        configuration.GetFirstValue(ConfigKey, StandardKey) is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
-        if (!string.Equals(context.Configuration.GetValue(ConfigKey), "false", StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(context.Configuration.GetFirstValue(ConfigKey, StandardKey), "false", StringComparison.OrdinalIgnoreCase))
         {
             return [];
         }
