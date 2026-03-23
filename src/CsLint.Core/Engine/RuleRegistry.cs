@@ -115,6 +115,9 @@ public sealed class RuleRegistry
         registry.Register(new ConditionalDelegateCallRule());
         registry.Register(new InlinedVariableDeclarationRule());
         registry.Register(new SwitchExpressionPreferenceRule());
+        registry.Register(new ConditionalExpressionAssignmentRule());
+        registry.Register(new ConditionalExpressionReturnRule());
+        registry.Register(new LocalOverAnonymousFunctionRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

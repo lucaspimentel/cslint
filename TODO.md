@@ -113,21 +113,21 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 ### Implement missing Tier 3 style preference rules (~33 rules)
 
 - [ ] **`dotnet_style_readonly_field`** (IDE0044) — add readonly modifier
-- [ ] **`csharp_style_throw_expression`** (IDE0016) — use throw expression
+- [x] **`csharp_style_throw_expression`** (IDE0016) — use throw expression — covered by CSLINT210, added as pragma alias + config key
 - [x] **`csharp_style_inlined_variable_declaration`** (IDE0018) — inline variable declaration — implemented as CSLINT272
 - [x] **`csharp_style_conditional_delegate_call`** (IDE1005) — use `?.Invoke()` — implemented as CSLINT271
 - [x] **`csharp_style_prefer_switch_expression`** (IDE0066) — use switch expression — implemented as CSLINT273
 - [x] **`csharp_style_pattern_matching_over_as_with_null_check`** (IDE0019) — pattern matching over `as` with null check — implemented as CSLINT270
 - [ ] **`csharp_style_deconstructed_variable_declaration`** (IDE0042) — deconstruct variable declaration
-- [ ] **`csharp_style_prefer_local_over_anonymous_function`** (IDE0039) — local function over lambda
+- [x] **`csharp_style_prefer_local_over_anonymous_function`** (IDE0039) — local function over lambda — implemented as CSLINT276
 - [ ] **`csharp_style_prefer_method_group_conversion`** (IDE0200) — remove unnecessary lambda
 - [ ] **`csharp_style_prefer_top_level_statements`** (IDE0210/IDE0211) — top-level statements preference
 - [ ] **`csharp_style_prefer_readonly_struct`** (IDE0250) — struct can be made readonly
 - [ ] **`csharp_style_prefer_readonly_struct_member`** (IDE0251) — member can be made readonly
 - [ ] **`csharp_prefer_static_local_function`** (IDE0062) — make local function static
 - [ ] **`dotnet_style_prefer_auto_properties`** (IDE0032) — use auto property
-- [ ] **`dotnet_style_prefer_conditional_expression_over_assignment`** (IDE0045) — ternary for assignment
-- [ ] **`dotnet_style_prefer_conditional_expression_over_return`** (IDE0046) — ternary for return
+- [x] **`dotnet_style_prefer_conditional_expression_over_assignment`** (IDE0045) — ternary for assignment — implemented as CSLINT274
+- [x] **`dotnet_style_prefer_conditional_expression_over_return`** (IDE0046) — ternary for return — implemented as CSLINT275
 - [ ] **`dotnet_style_parentheses_in_arithmetic_binary_operators`** (IDE0047/IDE0048) — parentheses preferences
 - [ ] **`dotnet_style_parentheses_in_relational_binary_operators`** (IDE0047/IDE0048)
 - [ ] **`dotnet_style_parentheses_in_other_binary_operators`** (IDE0047/IDE0048)

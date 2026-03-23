@@ -15,14 +15,17 @@ public sealed class NullCheckingRule : IRuleDefinition, IStyleRuleHandler
 
     private const string IsNullCheckKey = "dotnet_style_prefer_is_null_check_over_reference_equality_method";
 
-    private static readonly string[] StandardKeys = [CoalesceKey, NullPropagationKey, IsNullCheckKey];
+    private const string ThrowExpressionKey = "csharp_style_throw_expression";
+
+    private static readonly string[] StandardKeys =
+        [CoalesceKey, NullPropagationKey, IsNullCheckKey, ThrowExpressionKey];
 
     public string RuleId => "CSLINT210";
 
     public string Name => "NullChecking";
 
     public IReadOnlyList<string> ConfigKeys { get; } =
-        [ConfigKey, CoalesceKey, NullPropagationKey, IsNullCheckKey];
+        [ConfigKey, CoalesceKey, NullPropagationKey, IsNullCheckKey, ThrowExpressionKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
