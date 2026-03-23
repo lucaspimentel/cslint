@@ -133,7 +133,7 @@ None — CsLint covers all universal EditorConfig properties.
 
 | Standard Key / System | Standard Rule ID | Description |
 |-----------------------|-----------------|-------------|
-| `dotnet_naming_rule` / `dotnet_naming_symbols` / `dotnet_naming_style` (full 3-part system) | IDE1006 | CsLint has hardcoded naming rules but does NOT support the full configurable naming convention system (custom symbol groups, arbitrary styles, prefixes/suffixes, word separators, etc.) |
+| `dotnet_naming_rule` / `dotnet_naming_symbols` / `dotnet_naming_style` (full 3-part system) | IDE1006 | (now implemented as IDE1006 NamingConventionRule) |
 
 ### Would be Tier 3 (style/syntax preferences)
 
@@ -260,4 +260,4 @@ These standard rules already have CsLint equivalents but CsLint uses `dotnet_dia
 | Supported with custom key (standard equivalent exists) | 16 (9 now also accept standard key) |
 | Standard rules not supported (style/syntax — would be Tier 3) | ~19 + 0 formatting |
 | Standard rules not supported (other IDE rules) | ~22 |
-| Standard naming system not supported (configurable 3-part) | 1 (the full system) |
+| Standard naming system | 1 (now implemented as IDE1006) |

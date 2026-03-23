@@ -30,6 +30,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
 | CSLINT105 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | SA1303 |
 | CSLINT106 | Type parameter naming (T prefix) | `dotnet_naming_rule` | SA1314 |
+| IDE1006 | Standard naming conventions (3-part system) | `dotnet_naming_rule.*`, `dotnet_naming_symbols.*`, `dotnet_naming_style.*` | IDE1006 |
 
 ### Tier 3 -- Style Preferences
 

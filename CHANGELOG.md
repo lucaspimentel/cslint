@@ -32,6 +32,7 @@
 - Add CSLINT286–291 — 6 spacing rules (`csharp_space_after_cast`, method declaration/call parenthesis spacing, dot spacing, square bracket spacing, declaration statement spacing)
 - Add CSLINT292 — indentation formatting (`csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`)
 - Add CSLINT293 — preserve single-line formatting (`csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`)
+- Add IDE1006 — standard 3-part naming convention system (`dotnet_naming_rule`, `dotnet_naming_symbols`, `dotnet_naming_style`)
 
 ### Changed
 - New rules with 1:1 standard mappings now use the standard IDE diagnostic ID directly (e.g., `IDE0200`) instead of `CSLINT*` IDs

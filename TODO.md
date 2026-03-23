@@ -156,11 +156,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 ### Support standard naming convention system (IDE1006)
 
-- [ ] **Implement 3-part naming rule parser** — parse `dotnet_naming_rule.<name>.symbols`, `dotnet_naming_rule.<name>.style`, `dotnet_naming_rule.<name>.severity` linking to `dotnet_naming_symbols.<name>.*` and `dotnet_naming_style.<name>.*` definitions
-  - Support all `applicable_kinds`, `applicable_accessibilities`, `required_modifiers`
-  - Support all `capitalization` styles (`pascal_case`, `camel_case`, `first_word_upper`, `all_upper`, `all_lower`)
-  - Support `required_prefix`, `required_suffix`, `word_separator`
-  - Fall back to existing hardcoded naming rules (CSLINT100–106) when no custom naming rules are configured
+- [x] **Implement 3-part naming rule parser** — implemented as IDE1006 (NamingConventionRule + NamingConventionParser). Supports all applicable_kinds, applicable_accessibilities, required_modifiers, all capitalization styles, required_prefix/suffix. Falls back to existing CSLINT100–106 when no standard naming config is present.
 
 ### Migrate existing rules to standard diagnostic IDs
 
