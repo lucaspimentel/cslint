@@ -32,6 +32,10 @@ dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .ed
   - `dotnet_diagnostic.CSLINT300.severity = warning` — no colon-separated value
   - `IsEnabled` checks `GetSeverityForKey(...) != LintSeverity.None` — rule is enabled by default (active when key absent)
 
+## Rule ID convention
+
+New rules that map 1:1 to a standard .NET diagnostic ID must use the standard ID directly as their `RuleId` (e.g., `IDE0200`, not `CSLINT*`). The goal is drop-in replacement for `dotnet format`. Rules with no standard equivalent (SA-origin, CsLint-original) keep `CSLINT*` IDs.
+
 ## Key design decisions
 
 - All rules implement `IRuleDefinition` and are manually registered in `RuleRegistry` (no reflection, trim-safe)

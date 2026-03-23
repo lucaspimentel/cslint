@@ -161,3 +161,8 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
   - Support all `capitalization` styles (`pascal_case`, `camel_case`, `first_word_upper`, `all_upper`, `all_lower`)
   - Support `required_prefix`, `required_suffix`, `word_separator`
   - Fall back to existing hardcoded naming rules (CSLINT100–106) when no custom naming rules are configured
+
+### Migrate existing rules to standard diagnostic IDs
+
+- [ ] **Migrate 1:1 CSLINT rules to use standard IDE IDs directly** — e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT211→IDE0063, CSLINT212→IDE0090, CSLINT213→IDE0034, etc. Keep old CSLINT IDs as pragma aliases for backward compatibility
+- [ ] **Split multi-ID CSLINT rules into individual standard-ID rules** — CSLINT200 (IDE0007/IDE0008), CSLINT201 (IDE0021–IDE0027), CSLINT210 (IDE0029/IDE0031/IDE0041) each cover multiple standard diagnostics; split into separate rules so each emits the correct standard ID
