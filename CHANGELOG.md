@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-03-23
+
 ### Added
 - Add 8 expression/style rules: CSLINT270–276, IDE0200 (pattern matching over `as`, conditional delegate call, inlined variable declaration, switch expression, conditional expression over assignment/return, local over anonymous function, method group conversion)
 - Add 2 using-directive rules: CSLINT277–278 (sort System first, separate import groups)

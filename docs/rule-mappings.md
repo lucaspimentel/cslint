@@ -45,7 +45,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT206 | Accessibility modifiers | `dotnet_style_require_accessibility_modifiers` | SA1400, IDE0040 |
 | CSLINT207 | Using directive placement | `csharp_using_directive_placement` | IDE0065 |
 | CSLINT208 | Predefined type preferences | `dotnet_style_predefined_type_for_*` | SA1121, IDE0049 |
-| CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0019, IDE0020, IDE0038, IDE0066 |
+| CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0020, IDE0038 |
 | CSLINT210 | Null checking | `csharp_style_*_null_check` | IDE0029--IDE0031, IDE0041 |
 | CSLINT211 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | IDE0063 |
 | CSLINT212 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |

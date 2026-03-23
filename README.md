@@ -109,7 +109,7 @@ CsLint implements a subset of rules from Microsoft's [.NET code analysis framewo
 Text-level checks: indentation, line endings, whitespace, max line length, `#region`, file headers, UTF-8 encoding.
 
 ### Tier 2 — Naming
-Naming conventions: PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.
+Naming conventions via the standard 3-part `dotnet_naming_rule` / `dotnet_naming_symbols` / `dotnet_naming_style` system (IDE1006), plus built-in defaults for PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.
 
 ### Tier 3 — Style
 Code style preferences: `var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, member ordering, and more.
