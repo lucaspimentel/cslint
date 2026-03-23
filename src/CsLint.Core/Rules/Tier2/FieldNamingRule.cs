@@ -70,7 +70,8 @@ public sealed class FieldNamingRule : IRuleDefinition, INamingRuleHandler
         return false;
     }
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
+    public bool IsEnabled(LintConfiguration configuration) =>
+        !NamingConventionRule.HasStandardNamingConfig(configuration);
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

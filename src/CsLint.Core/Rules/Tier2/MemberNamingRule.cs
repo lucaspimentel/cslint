@@ -58,7 +58,8 @@ public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
         }
     }
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
+    public bool IsEnabled(LintConfiguration configuration) =>
+        !NamingConventionRule.HasStandardNamingConfig(configuration);
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

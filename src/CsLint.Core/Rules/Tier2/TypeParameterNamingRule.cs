@@ -14,7 +14,8 @@ public sealed class TypeParameterNamingRule : IRuleDefinition, INamingRuleHandle
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
+    public bool IsEnabled(LintConfiguration configuration) =>
+        !NamingConventionRule.HasStandardNamingConfig(configuration);
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

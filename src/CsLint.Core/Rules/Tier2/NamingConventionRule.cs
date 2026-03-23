@@ -16,6 +16,20 @@ public sealed class NamingConventionRule : IRuleDefinition, IDescendantNodeHandl
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
+    public static bool HasStandardNamingConfig(LintConfiguration configuration)
+    {
+        foreach (string key in configuration.Properties.Keys)
+        {
+            if (key.StartsWith("dotnet_naming_rule.", StringComparison.OrdinalIgnoreCase)
+                && key.EndsWith(".symbols", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static string GetSymbolKind(SyntaxNode node) =>
         node switch
         {
@@ -165,19 +179,8 @@ public sealed class NamingConventionRule : IRuleDefinition, IDescendantNodeHandl
         return desc;
     }
 
-    public bool IsEnabled(LintConfiguration configuration)
-    {
-        foreach (string key in configuration.Properties.Keys)
-        {
-            if (key.StartsWith("dotnet_naming_rule.", StringComparison.OrdinalIgnoreCase)
-                && key.EndsWith(".symbols", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    public bool IsEnabled(LintConfiguration configuration) =>
+        HasStandardNamingConfig(configuration);
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

@@ -35,6 +35,7 @@
 - Add IDE1006 — standard 3-part naming convention system (`dotnet_naming_rule`, `dotnet_naming_symbols`, `dotnet_naming_style`)
 
 ### Changed
+- Disable CSLINT100–106 hardcoded naming rules when standard 3-part naming config is present (IDE1006 takes over)
 - New rules with 1:1 standard mappings now use the standard IDE diagnostic ID directly (e.g., `IDE0200`) instead of `CSLINT*` IDs
 - Use ASCII hyphens instead of Unicode box-drawing characters in `--summary` table separators
 - Fix IDE0019 pragma alias (was incorrectly mapped to CSLINT209, now CSLINT270)
