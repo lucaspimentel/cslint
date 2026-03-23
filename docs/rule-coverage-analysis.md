@@ -181,41 +181,41 @@ None — CsLint covers all universal EditorConfig properties.
 
 | Standard Key | Description |
 |-------------|-------------|
-| `csharp_new_line_before_open_brace` | New line before open brace |
-| `csharp_new_line_before_else` | New line before else |
-| `csharp_new_line_before_catch` | New line before catch |
-| `csharp_new_line_before_finally` | New line before finally |
-| `csharp_new_line_before_members_in_object_initializers` | New line before members in object initializers |
-| `csharp_new_line_before_members_in_anonymous_types` | New line before members in anonymous types |
-| `csharp_new_line_between_query_expression_clauses` | New line between query expression clauses |
+| `csharp_new_line_before_open_brace` | (now implemented as CSLINT279) |
+| `csharp_new_line_before_else` | (now implemented as CSLINT280) |
+| `csharp_new_line_before_catch` | (now implemented as CSLINT281) |
+| `csharp_new_line_before_finally` | (now implemented as CSLINT282) |
+| `csharp_new_line_before_members_in_object_initializers` | (now implemented as CSLINT283) |
+| `csharp_new_line_before_members_in_anonymous_types` | (now implemented as CSLINT284) |
+| `csharp_new_line_between_query_expression_clauses` | (now implemented as CSLINT285) |
 | `csharp_indent_case_contents` | Indent case contents |
 | `csharp_indent_switch_labels` | Indent switch labels |
 | `csharp_indent_labels` | Indent labels |
 | `csharp_indent_block_contents` | Indent block contents |
 | `csharp_indent_braces` | Indent braces |
 | `csharp_indent_case_contents_when_block` | Indent case contents when block |
-| `csharp_space_after_cast` | Space after cast |
+| `csharp_space_after_cast` | (now implemented as CSLINT286) |
 | `csharp_space_after_keywords_in_control_flow_statements` | (now accepted by CSLINT254) |
 | `csharp_space_between_parentheses` | (now accepted by CSLINT259) |
 | `csharp_space_before_colon_in_inheritance_clause` | (now accepted by CSLINT261) |
 | `csharp_space_after_colon_in_inheritance_clause` | (now accepted by CSLINT261) |
 | `csharp_space_around_binary_operators` | (now accepted by CSLINT257) |
-| `csharp_space_between_method_declaration_parameter_list_parentheses` | Space in method declaration params |
-| `csharp_space_between_method_declaration_empty_parameter_list_parentheses` | Space in empty method declaration params |
-| `csharp_space_between_method_declaration_name_and_open_parenthesis` | Space between method name and parenthesis |
-| `csharp_space_between_method_call_parameter_list_parentheses` | Space in method call params |
-| `csharp_space_between_method_call_empty_parameter_list_parentheses` | Space in empty method call params |
-| `csharp_space_between_method_call_name_and_opening_parenthesis` | Space between call name and parenthesis |
+| `csharp_space_between_method_declaration_parameter_list_parentheses` | (now implemented as CSLINT287) |
+| `csharp_space_between_method_declaration_empty_parameter_list_parentheses` | (now implemented as CSLINT287) |
+| `csharp_space_between_method_declaration_name_and_open_parenthesis` | (now implemented as CSLINT287) |
+| `csharp_space_between_method_call_parameter_list_parentheses` | (now implemented as CSLINT288) |
+| `csharp_space_between_method_call_empty_parameter_list_parentheses` | (now implemented as CSLINT288) |
+| `csharp_space_between_method_call_name_and_opening_parenthesis` | (now implemented as CSLINT288) |
 | `csharp_space_after_comma` | (now accepted by CSLINT255) |
 | `csharp_space_before_comma` | (now accepted by CSLINT255) |
-| `csharp_space_after_dot` | Space after dot |
-| `csharp_space_before_dot` | Space before dot |
+| `csharp_space_after_dot` | (now implemented as CSLINT289) |
+| `csharp_space_before_dot` | (now implemented as CSLINT289) |
 | `csharp_space_after_semicolon_in_for_statement` | (now accepted by CSLINT256) |
 | `csharp_space_before_semicolon_in_for_statement` | (now accepted by CSLINT256) |
-| `csharp_space_around_declaration_statements` | Space around declarations |
-| `csharp_space_before_open_square_brackets` | Space before open square brackets |
-| `csharp_space_between_empty_square_brackets` | Space between empty square brackets |
-| `csharp_space_between_square_brackets` | Space between square brackets |
+| `csharp_space_around_declaration_statements` | (now implemented as CSLINT291) |
+| `csharp_space_before_open_square_brackets` | (now implemented as CSLINT290) |
+| `csharp_space_between_empty_square_brackets` | (now implemented as CSLINT290) |
+| `csharp_space_between_square_brackets` | (now implemented as CSLINT290) |
 | `csharp_preserve_single_line_statements` | Preserve single line statements |
 | `csharp_preserve_single_line_blocks` | Preserve single line blocks |
 | `dotnet_sort_system_directives_first` | (now implemented as CSLINT277) |
@@ -258,6 +258,6 @@ These standard rules already have CsLint equivalents but CsLint uses `dotnet_dia
 |----------|-------|
 | Supported with standard key | 45 |
 | Supported with custom key (standard equivalent exists) | 16 (9 now also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | ~19 + ~27 formatting |
+| Standard rules not supported (style/syntax — would be Tier 3) | ~19 + ~8 formatting |
 | Standard rules not supported (other IDE rules) | ~22 |
 | Standard naming system not supported (configurable 3-part) | 1 (the full system) |
