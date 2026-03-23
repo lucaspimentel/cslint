@@ -118,6 +118,8 @@ public sealed class RuleRegistry
         registry.Register(new ConditionalExpressionAssignmentRule());
         registry.Register(new ConditionalExpressionReturnRule());
         registry.Register(new LocalOverAnonymousFunctionRule());
+        registry.Register(new SortSystemDirectivesFirstRule());
+        registry.Register(new SeparateImportDirectiveGroupsRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

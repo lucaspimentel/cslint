@@ -152,7 +152,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **Indentation rules** (6) — `csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`
 - [ ] **Spacing rules** (22) — `csharp_space_after_cast`, `_after_keywords_in_control_flow_statements`, `_between_parentheses`, `_before/after_colon_in_inheritance_clause`, `_around_binary_operators`, method declaration/call parenthesis spacing, comma/dot/semicolon spacing, square bracket spacing, `_around_declaration_statements`
 - [ ] **Wrap/preserve rules** (2) — `csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`
-- [ ] **Using directive formatting** (2) — `dotnet_sort_system_directives_first`, `dotnet_separate_import_directive_groups`
+- [x] **Using directive formatting** (2) — `dotnet_sort_system_directives_first` (CSLINT277), `dotnet_separate_import_directive_groups` (CSLINT278)
 
 ### Support standard naming convention system (IDE1006)
 
