@@ -3,41 +3,21 @@
 ## [Unreleased]
 
 ### Added
-- Add CSLINT270 — pattern matching over `as` with null check (`csharp_style_pattern_matching_over_as_with_null_check`, IDE0019)
-- Add CSLINT271 — conditional delegate call (`csharp_style_conditional_delegate_call`, IDE1005)
-- Add CSLINT272 — inlined variable declaration (`csharp_style_inlined_variable_declaration`, IDE0018)
-- Add CSLINT273 — switch expression preference (`csharp_style_prefer_switch_expression`, IDE0066)
-- Add CSLINT274 — conditional expression over assignment (`dotnet_style_prefer_conditional_expression_over_assignment`, IDE0045)
-- Add CSLINT275 — conditional expression over return (`dotnet_style_prefer_conditional_expression_over_return`, IDE0046)
-- Add CSLINT276 — local function over anonymous function (`csharp_style_prefer_local_over_anonymous_function`, IDE0039)
-- Add CSLINT277 — sort System directives first (`dotnet_sort_system_directives_first`)
-- Add CSLINT278 — separate import directive groups (`dotnet_separate_import_directive_groups`)
-- Accept standard `_experimental` suffix keys for CSLINT228–233 blank line rules (IDE2001–IDE2006)
-- Accept `dotnet_style_allow_statement_immediately_after_block_experimental` for CSLINT230 (IDE2003)
-- Accept `dotnet_style_allow_multiple_blank_lines_experimental` for CSLINT008 (IDE2000)
-- Accept `charset = utf-8` / `utf-8-bom` for CSLINT010
-- Accept `dotnet_style_coalesce_expression`, `dotnet_style_null_propagation`, `dotnet_style_prefer_is_null_check_over_reference_equality_method`, and `csharp_style_throw_expression` for CSLINT210
-- Add `GetFirstValue()` helper to `LintConfiguration` for fallback config key lookups
-- Add IDE0016 pragma alias to CSLINT210
-- Accept `csharp_space_after_keywords_in_control_flow_statements` for CSLINT254
-- Accept `csharp_space_after_comma` and `csharp_space_before_comma` for CSLINT255
-- Accept `csharp_space_before_semicolon_in_for_statement` and `csharp_space_after_semicolon_in_for_statement` for CSLINT256
-- Accept `csharp_space_around_binary_operators` for CSLINT257
-- Accept `csharp_space_between_parentheses` for CSLINT259
-- Accept `csharp_space_before_colon_in_inheritance_clause` and `csharp_space_after_colon_in_inheritance_clause` for CSLINT261
-- Add IDE0200 — method group conversion (`csharp_style_prefer_method_group_conversion`)
-- Add IDE0210 — top-level statements preference (`csharp_style_prefer_top_level_statements`)
-- Add IDE0130 — namespace match folder (`dotnet_style_namespace_match_folder`)
-- Add CSLINT279–285 — 7 new-line formatting rules (`csharp_new_line_before_open_brace`, `_before_else`, `_before_catch`, `_before_finally`, `_before_members_in_object_initializers`, `_before_members_in_anonymous_types`, `_between_query_expression_clauses`)
-- Add CSLINT286–291 — 6 spacing rules (`csharp_space_after_cast`, method declaration/call parenthesis spacing, dot spacing, square bracket spacing, declaration statement spacing)
-- Add CSLINT292 — indentation formatting (`csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block`)
-- Add CSLINT293 — preserve single-line formatting (`csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks`)
+- Add 8 expression/style rules: CSLINT270–276, IDE0200 (pattern matching over `as`, conditional delegate call, inlined variable declaration, switch expression, conditional expression over assignment/return, local over anonymous function, method group conversion)
+- Add 2 using-directive rules: CSLINT277–278 (sort System first, separate import groups)
+- Add 7 new-line formatting rules: CSLINT279–285 (brace placement, else/catch/finally, initializers, anonymous types, query clauses)
+- Add 6 spacing rules: CSLINT286–291 (cast, method parens, dot, square bracket, declaration spacing)
+- Add 2 formatting rules: CSLINT292 (indentation), CSLINT293 (preserve single-line)
+- Add IDE0210 (top-level statements), IDE0130 (namespace match folder)
 - Add IDE1006 — standard 3-part naming convention system (`dotnet_naming_rule`, `dotnet_naming_symbols`, `dotnet_naming_style`)
+- Accept standard `.editorconfig` keys as aliases for existing rules: `_experimental` suffix keys for blank line rules (CSLINT008, CSLINT228–233), `charset` for CSLINT010, null-checking keys for CSLINT210, and standard spacing keys for CSLINT254–261
 
 ### Changed
 - Disable CSLINT100–106 hardcoded naming rules when standard 3-part naming config is present (IDE1006 takes over)
 - New rules with 1:1 standard mappings now use the standard IDE diagnostic ID directly (e.g., `IDE0200`) instead of `CSLINT*` IDs
 - Use ASCII hyphens instead of Unicode box-drawing characters in `--summary` table separators
+
+### Fixed
 - Fix IDE0019 pragma alias (was incorrectly mapped to CSLINT209, now CSLINT270)
 - Fix IDE0066 pragma alias (was incorrectly mapped to CSLINT209, now CSLINT273)
 

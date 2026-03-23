@@ -19,6 +19,12 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | CSLINT005 | MaxLineLength | `max_line_length` |
 | CSLINT007 | FileHeader | `file_header_template` |
 
+### Tier 2 — Naming (standard 3-part system)
+
+| CsLint ID | Rule | Standard Key(s) | Standard Rule ID |
+|-----------|------|----------------|-----------------|
+| IDE1006 | NamingConvention | `dotnet_naming_rule.*`, `dotnet_naming_symbols.*`, `dotnet_naming_style.*` | IDE1006 |
+
 ### Tier 3 — Code Style (exact standard key)
 
 | CsLint ID | Rule | Standard Key(s) | Standard Rule ID |
@@ -67,11 +73,26 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 |-----------|------|----------------|-----------------|
 | CSLINT277 | SortSystemDirectivesFirst | `dotnet_sort_system_directives_first` | (IDE0055) |
 | CSLINT278 | SeparateImportDirectiveGroups | `dotnet_separate_import_directive_groups` | (IDE0055) |
+| CSLINT279 | NewLineBeforeOpenBrace | `csharp_new_line_before_open_brace` | (IDE0055) |
+| CSLINT280 | NewLineBeforeElse | `csharp_new_line_before_else` | (IDE0055) |
+| CSLINT281 | NewLineBeforeCatch | `csharp_new_line_before_catch` | (IDE0055) |
+| CSLINT282 | NewLineBeforeFinally | `csharp_new_line_before_finally` | (IDE0055) |
+| CSLINT283 | NewLineBeforeMembersInObjectInitializers | `csharp_new_line_before_members_in_object_initializers` | (IDE0055) |
+| CSLINT284 | NewLineBeforeMembersInAnonymousTypes | `csharp_new_line_before_members_in_anonymous_types` | (IDE0055) |
+| CSLINT285 | NewLineBetweenQueryExpressionClauses | `csharp_new_line_between_query_expression_clauses` | (IDE0055) |
+| CSLINT286 | SpaceAfterCast | `csharp_space_after_cast` | (IDE0055) |
+| CSLINT287 | MethodDeclarationParenSpacing | `csharp_space_between_method_declaration_parameter_list_parentheses`, `_empty_parameter_list_parentheses`, `_name_and_open_parenthesis` | (IDE0055) |
+| CSLINT288 | MethodCallParenSpacing | `csharp_space_between_method_call_parameter_list_parentheses`, `_empty_parameter_list_parentheses`, `_name_and_opening_parenthesis` | (IDE0055) |
+| CSLINT289 | DotSpacing | `csharp_space_after_dot`, `csharp_space_before_dot` | (IDE0055) |
+| CSLINT290 | SquareBracketSpacing | `csharp_space_before_open_square_brackets`, `csharp_space_between_empty_square_brackets`, `csharp_space_between_square_brackets` | (IDE0055) |
+| CSLINT291 | DeclarationStatementSpacing | `csharp_space_around_declaration_statements` | (IDE0055) |
+| CSLINT292 | Indentation | `csharp_indent_case_contents`, `_switch_labels`, `_labels`, `_block_contents`, `_braces`, `_case_contents_when_block` | (IDE0055) |
+| CSLINT293 | PreserveSingleLine | `csharp_preserve_single_line_statements`, `csharp_preserve_single_line_blocks` | (IDE0055) |
 | IDE0130 | NamespaceMatchFolder | `dotnet_style_namespace_match_folder` | IDE0130 |
 | IDE0200 | MethodGroupConversion | `csharp_style_prefer_method_group_conversion` | IDE0200 |
 | IDE0210 | TopLevelStatements | `csharp_style_prefer_top_level_statements` | IDE0210 |
 
-**Total: 48 rules using standard keys**
+**Total: 64 rules using standard keys**
 
 ---
 
@@ -86,21 +107,21 @@ These CsLint rules cover functionality that has a standard .editorconfig key, bu
 | CSLINT008 | MultipleBlankLines | `csharp_no_multiple_blank_lines` | `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | Inverted semantics: CsLint `true` = standard `false`; both accepted |
 | CSLINT010 | Utf8FileEncoding | `csharp_store_files_as_utf8` | `charset = utf-8` / `utf-8-bom` | (universal) | Both keys accepted; `charset` enables when value starts with `utf-8` |
 
-### Tier 2 — Naming Rules
+### Tier 2 — Naming Rules (legacy)
 
-CsLint uses simplified single-key naming rules instead of the standard 3-part `dotnet_naming_rule` / `dotnet_naming_symbols` / `dotnet_naming_style` system. These keys look like standard naming rule names but are not actually parsed using the standard naming convention system.
+CsLint has simplified single-key naming rules that are automatically disabled when standard 3-part `dotnet_naming_rule` / `dotnet_naming_symbols` / `dotnet_naming_style` config is present (IDE1006 takes over). These legacy rules use keys that look like standard naming rule names but are parsed as single boolean toggles.
 
 | CsLint ID | Rule | CsLint Key | Standard Equivalent | Notes |
 |-----------|------|-----------|-------------------|-------|
-| CSLINT100 | TypeNaming | `dotnet_naming_rule.types_should_be_pascal_case` | `dotnet_naming_rule` + `dotnet_naming_symbols` + `dotnet_naming_style` (3-part system) | CsLint treats the full key as a single boolean toggle; standard requires defining symbol groups, styles, and rule severity separately |
-| CSLINT101 | InterfacePrefix | `dotnet_naming_rule.interface_should_begin_with_i` | (same 3-part system) | Same — simplified single-key toggle |
-| CSLINT102 | MemberNaming | `dotnet_naming_rule.members_should_be_pascal_case` | (same 3-part system) | Same |
-| CSLINT103 | ParameterLocalNaming | `dotnet_naming_rule.locals_should_be_camel_case` | (same 3-part system) | Same |
-| CSLINT104 | FieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Same |
-| CSLINT105 | ConstantNaming | `dotnet_naming_rule.constants_should_be_pascal_case` | (same 3-part system) | Same |
-| CSLINT106 | TypeParameterNaming | `dotnet_naming_rule.type_parameters_should_begin_with_t` | (same 3-part system) | Same |
+| CSLINT100 | TypeNaming | `dotnet_naming_rule.types_should_be_pascal_case` | `dotnet_naming_rule` + `dotnet_naming_symbols` + `dotnet_naming_style` (3-part system) | Disabled when IDE1006 config present |
+| CSLINT101 | InterfacePrefix | `dotnet_naming_rule.interface_should_begin_with_i` | (same 3-part system) | Disabled when IDE1006 config present |
+| CSLINT102 | MemberNaming | `dotnet_naming_rule.members_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| CSLINT103 | ParameterLocalNaming | `dotnet_naming_rule.locals_should_be_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| CSLINT104 | FieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| CSLINT105 | ConstantNaming | `dotnet_naming_rule.constants_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| CSLINT106 | TypeParameterNaming | `dotnet_naming_rule.type_parameters_should_begin_with_t` | (same 3-part system) | Disabled when IDE1006 config present |
 
-### Tier 3 — Experimental blank line rules (now accept both keys)
+### Tier 3 — Experimental blank line rules (accept both keys)
 
 CsLint accepts both its own key (without `_experimental` suffix) and the standard key (with `_experimental` suffix). The CsLint key takes precedence if both are present.
 
@@ -119,32 +140,18 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 | CSLINT210 | NullChecking | `dotnet_style_null_checking` | `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041) — all accepted | IDE0029/IDE0031/IDE0041 |
 | CSLINT230 | BlankLineAfterBlock | `csharp_style_allow_blank_line_after_block` | `dotnet_style_allow_statement_immediately_after_block_experimental` (also accepted) | IDE2003 |
 
-**Total: 16 rules using custom keys (9 now also accept the standard key)**
+**Total: 16 rules using custom keys (9 also accept the standard key)**
 
 ---
 
 ## 3. Not Supported — Standard Rules with No CsLint Equivalent
-
-### Would be Tier 1 (text-level)
-
-None — CsLint covers all universal EditorConfig properties.
-
-### Would be Tier 2 (naming)
-
-| Standard Key / System | Standard Rule ID | Description |
-|-----------------------|-----------------|-------------|
-| `dotnet_naming_rule` / `dotnet_naming_symbols` / `dotnet_naming_style` (full 3-part system) | IDE1006 | (now implemented as IDE1006 NamingConventionRule) |
 
 ### Would be Tier 3 (style/syntax preferences)
 
 | Standard Key | Standard Rule ID | Description |
 |-------------|-----------------|-------------|
 | `dotnet_style_readonly_field` | IDE0044 | Add readonly modifier |
-| `csharp_style_throw_expression` | IDE0016 | (now covered by CSLINT210 as config key + pragma alias) |
 | `csharp_style_deconstructed_variable_declaration` | IDE0042 | Deconstruct variable declaration |
-| `csharp_style_conditional_delegate_call` | IDE1005 | (now implemented as CSLINT271) |
-| `csharp_style_prefer_method_group_conversion` | IDE0200 | (now implemented as IDE0200) |
-| `csharp_style_prefer_top_level_statements` | IDE0210/IDE0211 | (now implemented as IDE0210) |
 | `csharp_style_prefer_readonly_struct` | IDE0250 | Struct can be made readonly |
 | `csharp_style_prefer_readonly_struct_member` | IDE0251 | Member can be made readonly |
 | `csharp_style_prefer_null_check_over_type_check` | IDE0150 | Prefer null check over type check |
@@ -158,72 +165,17 @@ None — CsLint covers all universal EditorConfig properties.
 | `csharp_style_unused_value_assignment_preference` | IDE0059 | Remove unnecessary value assignment |
 | `dotnet_code_quality_unused_parameters` | IDE0060 | Remove unused parameter |
 | `dotnet_style_prefer_auto_properties` | IDE0032 | Use auto property |
-| `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 | (now implemented as CSLINT274) |
-| `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 | (now implemented as CSLINT275) |
 | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 | Inferred tuple names |
 | `dotnet_style_explicit_tuple_names` | IDE0033 | Use explicitly provided tuple name |
 | `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach |
-| `dotnet_style_namespace_match_folder` | IDE0130 | (now implemented as IDE0130) |
 | `dotnet_style_parentheses_in_arithmetic_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_relational_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_other_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_other_operators` | IDE0047/IDE0048 | Parentheses preferences |
-| `csharp_style_prefer_switch_expression` | IDE0066 | (now implemented as CSLINT273) |
-| `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | (now accepted by CSLINT008) |
-| `csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental` | IDE2004 | (now accepted by CSLINT231) |
-| `csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental` | IDE2005 | (now accepted by CSLINT232) |
-| `csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental` | IDE2006 | (now accepted by CSLINT233) |
-| `dotnet_style_allow_statement_immediately_after_block_experimental` | IDE2003 | (now accepted by CSLINT230) |
-| `csharp_style_allow_embedded_statements_on_same_line_experimental` | IDE2001 | (now accepted by CSLINT228) |
-| `csharp_style_allow_blank_lines_between_consecutive_braces_experimental` | IDE2002 | (now accepted by CSLINT229) |
-
-### Would be Tier 3 (formatting — IDE0055)
-
-| Standard Key | Description |
-|-------------|-------------|
-| `csharp_new_line_before_open_brace` | (now implemented as CSLINT279) |
-| `csharp_new_line_before_else` | (now implemented as CSLINT280) |
-| `csharp_new_line_before_catch` | (now implemented as CSLINT281) |
-| `csharp_new_line_before_finally` | (now implemented as CSLINT282) |
-| `csharp_new_line_before_members_in_object_initializers` | (now implemented as CSLINT283) |
-| `csharp_new_line_before_members_in_anonymous_types` | (now implemented as CSLINT284) |
-| `csharp_new_line_between_query_expression_clauses` | (now implemented as CSLINT285) |
-| `csharp_indent_case_contents` | (now implemented as CSLINT292) |
-| `csharp_indent_switch_labels` | (now implemented as CSLINT292) |
-| `csharp_indent_labels` | (now implemented as CSLINT292) |
-| `csharp_indent_block_contents` | (now implemented as CSLINT292) |
-| `csharp_indent_braces` | (now implemented as CSLINT292) |
-| `csharp_indent_case_contents_when_block` | (now implemented as CSLINT292) |
-| `csharp_space_after_cast` | (now implemented as CSLINT286) |
-| `csharp_space_after_keywords_in_control_flow_statements` | (now accepted by CSLINT254) |
-| `csharp_space_between_parentheses` | (now accepted by CSLINT259) |
-| `csharp_space_before_colon_in_inheritance_clause` | (now accepted by CSLINT261) |
-| `csharp_space_after_colon_in_inheritance_clause` | (now accepted by CSLINT261) |
-| `csharp_space_around_binary_operators` | (now accepted by CSLINT257) |
-| `csharp_space_between_method_declaration_parameter_list_parentheses` | (now implemented as CSLINT287) |
-| `csharp_space_between_method_declaration_empty_parameter_list_parentheses` | (now implemented as CSLINT287) |
-| `csharp_space_between_method_declaration_name_and_open_parenthesis` | (now implemented as CSLINT287) |
-| `csharp_space_between_method_call_parameter_list_parentheses` | (now implemented as CSLINT288) |
-| `csharp_space_between_method_call_empty_parameter_list_parentheses` | (now implemented as CSLINT288) |
-| `csharp_space_between_method_call_name_and_opening_parenthesis` | (now implemented as CSLINT288) |
-| `csharp_space_after_comma` | (now accepted by CSLINT255) |
-| `csharp_space_before_comma` | (now accepted by CSLINT255) |
-| `csharp_space_after_dot` | (now implemented as CSLINT289) |
-| `csharp_space_before_dot` | (now implemented as CSLINT289) |
-| `csharp_space_after_semicolon_in_for_statement` | (now accepted by CSLINT256) |
-| `csharp_space_before_semicolon_in_for_statement` | (now accepted by CSLINT256) |
-| `csharp_space_around_declaration_statements` | (now implemented as CSLINT291) |
-| `csharp_space_before_open_square_brackets` | (now implemented as CSLINT290) |
-| `csharp_space_between_empty_square_brackets` | (now implemented as CSLINT290) |
-| `csharp_space_between_square_brackets` | (now implemented as CSLINT290) |
-| `csharp_preserve_single_line_statements` | (now implemented as CSLINT293) |
-| `csharp_preserve_single_line_blocks` | (now implemented as CSLINT293) |
-| `dotnet_sort_system_directives_first` | (now implemented as CSLINT277) |
-| `dotnet_separate_import_directive_groups` | (now implemented as CSLINT278) |
 
 ### Would be Tier 4 (semantic analysis)
 
-These standard rules already have CsLint equivalents but CsLint uses `dotnet_diagnostic.CSLINT###.severity` keys, which is the standard severity mechanism (not a custom key). The following standard rules have **no** CsLint equivalent at all:
+These standard rules have **no** CsLint equivalent at all:
 
 | Standard Rule ID | Description |
 |-----------------|-------------|
@@ -256,8 +208,7 @@ These standard rules already have CsLint equivalents but CsLint uses `dotnet_dia
 
 | Category | Count |
 |----------|-------|
-| Supported with standard key | 45 |
-| Supported with custom key (standard equivalent exists) | 16 (9 now also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | ~19 + 0 formatting |
-| Standard rules not supported (other IDE rules) | ~22 |
-| Standard naming system | 1 (now implemented as IDE1006) |
+| Supported with standard key | 64 |
+| Supported with custom key (standard equivalent exists) | 16 (9 also accept standard key) |
+| Standard rules not supported (style/syntax — would be Tier 3) | 22 |
+| Standard rules not supported (semantic — would be Tier 4) | 22 |
