@@ -79,6 +79,9 @@ cslint src/ --rules CSLINT266,CSLINT268
 # Run all rules, ignoring .editorconfig
 cslint src/ --rules all
 
+# Show summary of diagnostics grouped by rule
+cslint src/ --summary
+
 # List all available rules
 cslint --list-rules
 

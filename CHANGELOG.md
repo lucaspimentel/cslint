@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+- Use ASCII hyphens instead of Unicode box-drawing characters in `--summary` table separators
+
 ## [1.5.0] - 2026-03-22
 
 ### Added

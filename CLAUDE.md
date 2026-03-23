@@ -18,6 +18,7 @@ dotnet run --project src/CsLint.Cli -- --list-rules  # list all available rules
 dotnet run --project src/CsLint.Cli -- --semantic [path...]  # lint with semantic analysis (Tier 4 rules)
 dotnet run --project src/CsLint.Cli -- --rules CSLINT266,CSLINT268 [path...]  # run only specific rules, ignoring .editorconfig
 dotnet run --project src/CsLint.Cli -- --rules all [path...]  # run all rules, ignoring .editorconfig
+dotnet run --project src/CsLint.Cli -- --summary [path...]  # show diagnostics grouped by rule
 dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .editorconfig settings for a path
 ```
 

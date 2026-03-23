@@ -328,14 +328,14 @@ static void PrintSummary(IReadOnlyList<LintDiagnostic> diagnostics, RuleRegistry
     int lineWidth = maxIdLen + 2 + maxNameLen + 2 + maxCountLen;
 
     Console.WriteLine($"{"Rule".PadRight(maxIdLen)}  {"Name".PadRight(maxNameLen)}  {"Count".PadLeft(maxCountLen)}");
-    Console.WriteLine(new string('\u2500', lineWidth));
+    Console.WriteLine(new string('-', lineWidth));
 
     foreach ((string ruleId, string name, int count) in groups)
     {
         Console.WriteLine($"{ruleId.PadRight(maxIdLen)}  {name.PadRight(maxNameLen)}  {count.ToString().PadLeft(maxCountLen)}");
     }
 
-    Console.WriteLine(new string('\u2500', lineWidth));
+    Console.WriteLine(new string('-', lineWidth));
     Console.WriteLine($"{"Total".PadRight(maxIdLen)}  {"".PadRight(maxNameLen)}  {diagnostics.Count.ToString().PadLeft(maxCountLen)}");
 }
 
