@@ -11,7 +11,7 @@
 
 ## Match .NET SDK default rule enablement
 
-- [ ] **Mirror .NET SDK defaults for CA vs IDE rules** — in the .NET SDK, code quality rules (CA*) are enabled by default since .NET 5, while code style rules (IDE*) are disabled by default on command-line builds. CsLint should match this: CA-mapped rules (CSLINT237/CA1821, CSLINT238/CA1805, CSLINT239/CA1852) should be enabled by default without requiring `.editorconfig` opt-in; IDE style rules should continue requiring explicit config
+- [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Mirror .NET SDK defaults for CA vs IDE rules** — in the .NET SDK, code quality rules (CA*) are enabled by default since .NET 5, while code style rules (IDE*) are disabled by default on command-line builds. CsLint should match this: CA-mapped rules (CSLINT237/CA1821, CSLINT238/CA1805, CSLINT239/CA1852) should be enabled by default without requiring `.editorconfig` opt-in; IDE style rules should continue requiring explicit config
   - Currently all Tier 3 rules use `IsEnabled` that checks for a config key — CA rules need a different default (enabled when key absent)
   - Tier 4 rules already default to enabled (`GetSeverityForKey != None`), so the CA pattern exists
   - Reference: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview
@@ -47,5 +47,5 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 ### Migrate existing rules to standard diagnostic IDs
 
-- [ ] **Migrate 1:1 CSLINT rules to use standard IDE IDs directly** — e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT211→IDE0063, CSLINT212→IDE0090, CSLINT213→IDE0034, etc. Keep old CSLINT IDs as pragma aliases for backward compatibility
-- [ ] **Split multi-ID CSLINT rules into individual standard-ID rules** — CSLINT200 (IDE0007/IDE0008), CSLINT201 (IDE0021–IDE0027), CSLINT210 (IDE0029/IDE0031/IDE0041) each cover multiple standard diagnostics; split into separate rules so each emits the correct standard ID
+- [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Migrate 1:1 CSLINT rules to use standard IDE IDs directly** — e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT211→IDE0063, CSLINT212→IDE0090, CSLINT213→IDE0034, etc. Keep old CSLINT IDs as pragma aliases for backward compatibility
+- [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Split multi-ID CSLINT rules into individual standard-ID rules** — CSLINT200 (IDE0007/IDE0008), CSLINT201 (IDE0021–IDE0027), CSLINT210 (IDE0029/IDE0031/IDE0041) each cover multiple standard diagnostics; split into separate rules so each emits the correct standard ID
