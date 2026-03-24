@@ -135,6 +135,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT293 | Preserve single-line | `csharp_preserve_single_line_*` | -- |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 | IDE0033 | Explicit tuple names | `dotnet_style_explicit_tuple_names` | IDE0033 |
+| IDE0037 | Inferred tuple names | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 |
+| IDE0340 | Unbound generic in nameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
 
@@ -289,7 +291,7 @@ These rules can be implemented with syntax-only parsing:
 
 These rules require type information, flow analysis, or semantic model and are not currently implemented (some may become Tier 4 candidates in the future):
 
-IDE0001, IDE0002, IDE0010, IDE0032, IDE0035, IDE0042, IDE0044, IDE0050, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0140, IDE0150, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0340, IDE0350, IDE0360, IDE0370, IDE0380
+IDE0001, IDE0002, IDE0010, IDE0032, IDE0035, IDE0042, IDE0044, IDE0050, IDE0058, IDE0059, IDE0060, IDE0062, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0140, IDE0150, IDE0220, IDE0240, IDE0241, IDE0250, IDE0251, IDE0260, IDE0270, IDE0280, IDE0306, IDE0320, IDE0330, IDE0350, IDE0360, IDE0370, IDE0380
 
 ### Not Applicable
 

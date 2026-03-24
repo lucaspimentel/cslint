@@ -77,6 +77,8 @@ public sealed class RuleRegistry
         registry.Register(new ArrowExpressionBlankLineRule());
         registry.Register(new InferredMemberNameRule());
         registry.Register(new ExplicitTupleNamesRule());
+        registry.Register(new InferredTupleNamesRule());
+        registry.Register(new UnboundGenericInNameofRule());
         registry.Register(new SimplifiedBooleanExpressionRule());
         registry.Register(new ExtendedPropertyPatternRule());
         registry.Register(new EmptyFinalizerRule());

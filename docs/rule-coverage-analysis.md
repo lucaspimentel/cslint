@@ -67,6 +67,8 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | CSLINT275 | ConditionalExpressionReturn | `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 |
 | CSLINT276 | LocalOverAnonymousFunction | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
 | IDE0033 | ExplicitTupleNames | `dotnet_style_explicit_tuple_names` | IDE0033 |
+| IDE0037 | InferredTupleNames | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 |
+| IDE0340 | UnboundGenericInNameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |
 
 ### Tier 3 — Formatting (standard key)
 
@@ -155,14 +157,12 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 | `csharp_prefer_static_local_function` | IDE0062 | Make local function static |
 | `csharp_prefer_static_anonymous_function` | IDE0320 | Make anonymous function static |
 | `csharp_prefer_system_threading_lock` | IDE0330 | Prefer System.Threading.Lock |
-| `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 | Use unbound generic type |
 | `csharp_style_prefer_implicitly_typed_lambda_expression` | IDE0350 | Use implicitly typed lambda |
 | `csharp_style_prefer_simple_property_accessors` | IDE0360 | Simplify property accessor |
 | `csharp_style_unused_value_expression_statement_preference` | IDE0058 | Remove unused expression value |
 | `csharp_style_unused_value_assignment_preference` | IDE0059 | Remove unnecessary value assignment |
 | `dotnet_code_quality_unused_parameters` | IDE0060 | Remove unused parameter |
 | `dotnet_style_prefer_auto_properties` | IDE0032 | Use auto property |
-| `dotnet_style_prefer_inferred_tuple_names` | IDE0037 | Inferred tuple names |
 | `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach |
 | `dotnet_style_parentheses_in_arithmetic_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_relational_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |

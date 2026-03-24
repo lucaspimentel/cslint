@@ -4,6 +4,8 @@
 
 ### Added
 - Add IDE0033 — explicit tuple names rule (`dotnet_style_explicit_tuple_names`), flags `tuple.Item1` when named elements are available
+- Add IDE0037 — inferred tuple names rule (`dotnet_style_prefer_inferred_tuple_names`), flags redundant explicit tuple element names that match the expression
+- Add IDE0340 — unbound generic in nameof rule (`csharp_style_prefer_unbound_generic_type_in_nameof`), flags `nameof(List<int>)` → `nameof(List<>)`
 
 ## [1.6.0] - 2026-03-23
 
