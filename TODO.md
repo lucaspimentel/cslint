@@ -9,6 +9,13 @@
   - Single-file mode (`FileLinter.LintFile`) would fall back to current behavior (flag everything)
   - Main cost is architectural: breaks the clean file-at-a-time design for marginal gain on an `Info`-severity rule
 
+## Match .NET SDK default rule enablement
+
+- [ ] **Mirror .NET SDK defaults for CA vs IDE rules** — in the .NET SDK, code quality rules (CA*) are enabled by default since .NET 5, while code style rules (IDE*) are disabled by default on command-line builds. CsLint should match this: CA-mapped rules (CSLINT237/CA1821, CSLINT238/CA1805, CSLINT239/CA1852) should be enabled by default without requiring `.editorconfig` opt-in; IDE style rules should continue requiring explicit config
+  - Currently all Tier 3 rules use `IsEnabled` that checks for a config key — CA rules need a different default (enabled when key absent)
+  - Tier 4 rules already default to enabled (`GetSeverityForKey != None`), so the CA pattern exists
+  - Reference: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview
+
 ## Standard .editorconfig rule coverage
 
 Goal: support as many standard .editorconfig rules as possible using standard key names and diagnostic ID aliases. See [docs/rule-coverage-analysis.md](docs/rule-coverage-analysis.md) and [docs/standard-editorconfig-rules.md](docs/standard-editorconfig-rules.md) for full details.
