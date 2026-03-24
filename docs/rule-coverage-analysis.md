@@ -66,6 +66,7 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | CSLINT274 | ConditionalExpressionAssignment | `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 |
 | CSLINT275 | ConditionalExpressionReturn | `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 |
 | CSLINT276 | LocalOverAnonymousFunction | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
+| IDE0033 | ExplicitTupleNames | `dotnet_style_explicit_tuple_names` | IDE0033 |
 
 ### Tier 3 — Formatting (standard key)
 
@@ -91,8 +92,6 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | IDE0130 | NamespaceMatchFolder | `dotnet_style_namespace_match_folder` | IDE0130 |
 | IDE0200 | MethodGroupConversion | `csharp_style_prefer_method_group_conversion` | IDE0200 |
 | IDE0210 | TopLevelStatements | `csharp_style_prefer_top_level_statements` | IDE0210 |
-
-**Total: 64 rules using standard keys**
 
 ---
 
@@ -140,8 +139,6 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 | CSLINT210 | NullChecking | `dotnet_style_null_checking` | `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041) — all accepted | IDE0029/IDE0031/IDE0041 |
 | CSLINT230 | BlankLineAfterBlock | `csharp_style_allow_blank_line_after_block` | `dotnet_style_allow_statement_immediately_after_block_experimental` (also accepted) | IDE2003 |
 
-**Total: 16 rules using custom keys (9 also accept the standard key)**
-
 ---
 
 ## 3. Not Supported — Standard Rules with No CsLint Equivalent
@@ -166,7 +163,6 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 | `dotnet_code_quality_unused_parameters` | IDE0060 | Remove unused parameter |
 | `dotnet_style_prefer_auto_properties` | IDE0032 | Use auto property |
 | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 | Inferred tuple names |
-| `dotnet_style_explicit_tuple_names` | IDE0033 | Use explicitly provided tuple name |
 | `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach |
 | `dotnet_style_parentheses_in_arithmetic_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
 | `dotnet_style_parentheses_in_relational_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |

@@ -33,7 +33,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **`csharp_style_prefer_simple_property_accessors`** (IDE0360)
 - [ ] **`dotnet_style_prefer_foreach_explicit_cast_in_source`** (IDE0220)
 - [ ] **`dotnet_style_prefer_inferred_tuple_names`** (IDE0037)
-- [ ] **`dotnet_style_explicit_tuple_names`** (IDE0033)
+- [x] **`dotnet_style_explicit_tuple_names`** (IDE0033)
 - [ ] **`csharp_style_unused_value_expression_statement_preference`** (IDE0058)
 - [ ] **`csharp_style_unused_value_assignment_preference`** (IDE0059)
 - [ ] **`dotnet_code_quality_unused_parameters`** (IDE0060)
