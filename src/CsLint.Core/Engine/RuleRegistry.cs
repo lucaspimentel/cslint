@@ -63,6 +63,7 @@ public sealed class RuleRegistry
         registry.Register(new StaticLocalFunctionRule());
         registry.Register(new StaticAnonymousFunctionRule());
         registry.Register(new NullCheckOverTypeCheckRule());
+        registry.Register(new SystemThreadingLockRule());
         registry.Register(new PatternMatchingNotRule());
         registry.Register(new PatternMatchingCombinatorRule());
         registry.Register(new PrimaryConstructorRule());
