@@ -10,6 +10,7 @@
 - Add IDE0320 — prefer static anonymous function rule (`csharp_prefer_static_anonymous_function`), flags non-static lambdas and anonymous methods that don't capture enclosing state
 - Add IDE0150 — prefer null check over type check rule (`csharp_style_prefer_null_check_over_type_check`), flags `is object` → `is not null` and `is not object` → `is null`
 - Add IDE0330 — prefer System.Threading.Lock rule (`csharp_prefer_system_threading_lock`), flags `lock` on `object` fields, `this`, or `typeof`
+- Add IDE0350 — prefer implicitly typed lambda rule (`csharp_style_prefer_implicitly_typed_lambda_expression`), flags lambdas with explicit parameter types when implicit typing is preferred
 
 ## [1.6.0] - 2026-03-23
 

@@ -141,6 +141,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0320 | Prefer static anonymous function | `csharp_prefer_static_anonymous_function` | IDE0320 |
 | IDE0150 | Prefer null check over type check | `csharp_style_prefer_null_check_over_type_check` | IDE0150 |
 | IDE0330 | Prefer System.Threading.Lock | `csharp_prefer_system_threading_lock` | IDE0330 |
+| IDE0350 | Prefer implicitly typed lambda | `csharp_style_prefer_implicitly_typed_lambda_expression` | IDE0350 |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
 

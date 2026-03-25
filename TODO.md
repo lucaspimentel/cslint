@@ -36,7 +36,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **`csharp_prefer_static_anonymous_function`** (IDE0320)
 - [x] **`csharp_prefer_system_threading_lock`** (IDE0330)
 - [x] **`csharp_style_prefer_unbound_generic_type_in_nameof`** (IDE0340)
-- [ ] **`csharp_style_prefer_implicitly_typed_lambda_expression`** (IDE0350)
+- [x] **`csharp_style_prefer_implicitly_typed_lambda_expression`** (IDE0350)
 - [ ] **`csharp_style_prefer_simple_property_accessors`** (IDE0360)
 - [ ] **`dotnet_style_prefer_foreach_explicit_cast_in_source`** (IDE0220)
 - [x] **`dotnet_style_prefer_inferred_tuple_names`** (IDE0037)
