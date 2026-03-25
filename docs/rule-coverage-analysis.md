@@ -56,7 +56,7 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | IDE0071 | SimplifyInterpolation | `dotnet_style_prefer_simplified_interpolation` | IDE0071 |
 | IDE0056 | IndexOperator | `csharp_style_prefer_index_operator` | IDE0056 |
 | IDE0057 | RangeOperator | `csharp_style_prefer_range_operator` | IDE0057 |
-| CSLINT234 | InferredMemberName | `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
+| IDE0037 | InferredMemberName | `dotnet_style_prefer_inferred_tuple_names`, `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
 | IDE0075 | SimplifiedBooleanExpression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
 | IDE0170 | ExtendedPropertyPattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
 | IDE0019 | PatternMatchingAs | `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 |
@@ -67,7 +67,6 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | IDE0046 | ConditionalExpressionReturn | `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 |
 | IDE0039 | LocalOverAnonymousFunction | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
 | IDE0033 | ExplicitTupleNames | `dotnet_style_explicit_tuple_names` | IDE0033 |
-| IDE0037 | InferredTupleNames | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 |
 | IDE0340 | UnboundGenericInNameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |
 
 ### Tier 3 — Formatting (standard key)

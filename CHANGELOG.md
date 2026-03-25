@@ -4,6 +4,7 @@
 
 ### Changed
 - **BREAKING:** Migrate 27 rules with 1:1 standard mappings from CSLINT* to standard IDE* diagnostic IDs (e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT207→IDE0065). Old CSLINT IDs are preserved as pragma aliases for backward compatibility. The `--rules` CLI option also resolves old IDs transparently.
+- Merge CSLINT234 (InferredMemberNameRule) into IDE0037 — single rule now covers both `dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`
 - Force-disable CSLINT239 (SealedTypePreferenceRule) to prevent false positives until project-wide type hierarchy support is implemented
 
 ## [1.7.0] - 2026-03-25

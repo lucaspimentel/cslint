@@ -119,7 +119,7 @@ public static class PragmaAliasMap
             ["IDE0029"] = ["CSLINT210"],
             ["IDE0030"] = ["CSLINT210"],
             ["IDE0031"] = ["CSLINT210"],
-            ["IDE0037"] = ["CSLINT234"],
+            ["IDE0037"] = ["IDE0037"],
             ["IDE0038"] = ["CSLINT209"],
             ["IDE0041"] = ["CSLINT210"],
             ["IDE0054"] = ["CSLINT214"],

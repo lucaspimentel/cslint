@@ -70,7 +70,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT231 | No blank line after constructor initializer colon | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer` | IDE2004 |
 | CSLINT232 | No blank line after conditional expression token | `csharp_style_allow_blank_line_after_token_in_conditional_expression` | IDE2005 |
 | CSLINT233 | No blank line after arrow expression token | `csharp_style_allow_blank_line_after_token_in_arrow_expression_clause` | IDE2006 |
-| CSLINT234 | Inferred member name | `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
+| IDE0037 | Inferred member name | `dotnet_style_prefer_inferred_tuple_names`, `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
 | IDE0075 | Simplify boolean expression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
 | IDE0170 | Extended property pattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
 | CSLINT237 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
@@ -135,7 +135,6 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT293 | Preserve single-line | `csharp_preserve_single_line_*` | -- |
 | CSLINT305 | Empty catch block | `csharp_no_empty_catch_blocks` | -- |
 | IDE0033 | Explicit tuple names | `dotnet_style_explicit_tuple_names` | IDE0033 |
-| IDE0037 | Inferred tuple names | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 |
 | IDE0340 | Unbound generic in nameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |
 | IDE0062 | Prefer static local function | `csharp_prefer_static_local_function` | IDE0062 |
 | IDE0320 | Prefer static anonymous function | `csharp_prefer_static_anonymous_function` | IDE0320 |
@@ -263,7 +262,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE2004 | CSLINT231 | Microsoft |
 | IDE2005 | CSLINT232 | Microsoft |
 | IDE2006 | CSLINT233 | Microsoft |
-| IDE0037 | CSLINT234 | Microsoft |
+| IDE0037 | IDE0037 | Microsoft |
 | IDE0051 | CSLINT308 | Microsoft |
 | IDE0052 | CSLINT308 | Microsoft |
 | IDE0075 | IDE0075 | Microsoft |
