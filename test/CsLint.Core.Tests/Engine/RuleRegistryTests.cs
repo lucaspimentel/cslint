@@ -9,12 +9,9 @@ public sealed class RuleRegistryTests
     {
         IReadOnlyDictionary<string, List<string>> aliases = RuleRegistry.GetAliases();
 
-        // CSLINT201 (ExpressionBodied) should map to IDE0021-IDE0027
-        Assert.True(aliases.ContainsKey("CSLINT201"));
-        List<string> expressionBodiedAliases = aliases["CSLINT201"];
-        Assert.Contains("IDE0021", expressionBodiedAliases);
-        Assert.Contains("IDE0027", expressionBodiedAliases);
-        Assert.Equal(7, expressionBodiedAliases.Count);
+        // IDE0021 (ExpressionBodiedMethods) should have a self-referencing alias
+        Assert.True(aliases.ContainsKey("IDE0021"));
+        Assert.Contains("IDE0021", aliases["IDE0021"]);
     }
 
     [Fact]

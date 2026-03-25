@@ -29,8 +29,10 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 
 | CsLint ID | Rule | Standard Key(s) | Standard Rule ID |
 |-----------|------|----------------|-----------------|
-| CSLINT200 | VarPreference | `csharp_style_var_for_built_in_types`, `csharp_style_var_when_type_is_apparent`, `csharp_style_var_elsewhere` | IDE0007/IDE0008 |
-| CSLINT201 | ExpressionBodied | `csharp_style_expression_bodied_methods`, `csharp_style_expression_bodied_properties`, `csharp_style_expression_bodied_accessors` | IDE0021–IDE0027 |
+| IDE0007 | VarPreference | `csharp_style_var_when_type_is_apparent`, `csharp_style_var_for_built_in_types` | IDE0007 |
+| IDE0008 | ExplicitTypePreference | `csharp_style_var_for_built_in_types`, `csharp_style_var_elsewhere` | IDE0008 |
+| IDE0021 | ExpressionBodiedMethods | `csharp_style_expression_bodied_methods` | IDE0021 |
+| IDE0025 | ExpressionBodiedProperties | `csharp_style_expression_bodied_properties` | IDE0025 |
 | IDE0011 | BracePreference | `csharp_prefer_braces` | IDE0011 |
 | CSLINT203 | NamespaceDeclaration | `csharp_style_namespace_declarations` | IDE0160/IDE0161 |
 | CSLINT204 | ThisQualification | `dotnet_style_qualification_for_field`, `_property`, `_method`, `_event` | IDE0003/IDE0009 |
@@ -137,7 +139,8 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 
 | CsLint ID | Rule | CsLint Key | Standard Key | Standard Rule ID |
 |-----------|------|-----------|-------------|-----------------|
-| CSLINT210 | NullChecking | `dotnet_style_null_checking` | `dotnet_style_null_propagation` (IDE0031), `dotnet_style_coalesce_expression` (IDE0029), `dotnet_style_prefer_is_null_check_over_reference_equality_method` (IDE0041) — all accepted | IDE0029/IDE0031/IDE0041 |
+| IDE0016 | ThrowExpression | `csharp_style_throw_expression` | — | IDE0016 |
+| IDE0029 | NullCoalescing | `dotnet_style_coalesce_expression` | — | IDE0029 |
 | CSLINT230 | BlankLineAfterBlock | `csharp_style_allow_blank_line_after_block` | `dotnet_style_allow_statement_immediately_after_block_experimental` (also accepted) | IDE2003 |
 
 ---

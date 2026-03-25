@@ -6,19 +6,19 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Cslint.Core.Rules.Tier3;
 
 /// <summary>
-/// IDE0007: Use 'var' instead of explicit type.
-/// Fires when an explicit type is used but 'var' is preferred.
+/// IDE0008: Use explicit type instead of 'var'.
+/// Fires when 'var' is used but explicit type is preferred.
 /// </summary>
-public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
+public sealed class ExplicitTypePreferenceRule : IRuleDefinition, IStyleRuleHandler
 {
-    public string RuleId => "IDE0007";
+    public string RuleId => "IDE0008";
 
-    public string Name => "VarPreference";
+    public string Name => "ExplicitTypePreference";
 
     public IReadOnlyList<string> ConfigKeys { get; } =
     [
-        "csharp_style_var_when_type_is_apparent",
         "csharp_style_var_for_built_in_types",
+        "csharp_style_var_elsewhere",
     ];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
@@ -30,7 +30,7 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
         diagnostics.Add(
             new LintDiagnostic
             {
-                RuleId = "IDE0007",
+                RuleId = "IDE0008",
                 Message = message,
                 Severity = LintSeverity.Info,
                 FilePath = span.Path,
@@ -40,8 +40,8 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
     }
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue("csharp_style_var_when_type_is_apparent") is not null ||
-        configuration.GetValue("csharp_style_var_for_built_in_types") is not null;
+        configuration.GetValue("csharp_style_var_for_built_in_types") is not null ||
+        configuration.GetValue("csharp_style_var_elsewhere") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
@@ -60,7 +60,7 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
             return;
         }
 
-        if (node.Declaration.Type.IsVar)
+        if (!node.Declaration.Type.IsVar)
         {
             return;
         }
@@ -82,20 +82,17 @@ public sealed class VarPreferenceRule : IRuleDefinition, IStyleRuleHandler
 
         bool isApparent = VarTypeHelper.IsTypeApparent(initializer);
         bool isLiteral = initializer is LiteralExpressionSyntax;
-        bool isBuiltIn = VarTypeHelper.IsBuiltInType(node.Declaration.Type);
 
-        (string? varWhenApparent, string? _) = config.GetValueWithSeverity("csharp_style_var_when_type_is_apparent");
         (string? varForBuiltIn, string? _) = config.GetValueWithSeverity("csharp_style_var_for_built_in_types");
+        (string? varElsewhere, string? _) = config.GetValueWithSeverity("csharp_style_var_elsewhere");
 
-        if (isApparent && string.Equals(varWhenApparent, "true", StringComparison.OrdinalIgnoreCase))
+        if (isLiteral && string.Equals(varForBuiltIn, "false", StringComparison.OrdinalIgnoreCase))
         {
-            AddDiagnostic(node.Declaration.Type, "Use 'var' when type is apparent from the right-hand side", diagnostics);
+            AddDiagnostic(node.Declaration.Type, "Use explicit type instead of 'var' for built-in types", diagnostics);
         }
-        else if (isBuiltIn && isLiteral &&
-                 VarTypeHelper.LiteralMatchesDeclaredType(initializer, node.Declaration.Type) &&
-                 string.Equals(varForBuiltIn, "true", StringComparison.OrdinalIgnoreCase))
+        else if (!isApparent && string.Equals(varElsewhere, "false", StringComparison.OrdinalIgnoreCase))
         {
-            AddDiagnostic(node.Declaration.Type, "Use 'var' for built-in types", diagnostics);
+            AddDiagnostic(node.Declaration.Type, "Use explicit type instead of 'var' when type is not apparent", diagnostics);
         }
     }
 }

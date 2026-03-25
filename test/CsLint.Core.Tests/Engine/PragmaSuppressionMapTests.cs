@@ -242,10 +242,11 @@ public class PragmaSuppressionMapTests
     }
 
     [Theory]
-    [InlineData("IDE0007", "CSLINT200")]
-    [InlineData("IDE0008", "CSLINT200")]
+    [InlineData("IDE0007", "IDE0007")]
+    [InlineData("IDE0008", "IDE0008")]
     [InlineData("IDE0011", "IDE0011")]
-    [InlineData("IDE0021", "CSLINT201")]
+    [InlineData("IDE0021", "IDE0021")]
+    [InlineData("IDE0029", "IDE0029")]
     [InlineData("IDE0036", "IDE0036")]
     [InlineData("IDE0040", "IDE0040")]
     [InlineData("IDE0049", "IDE0049")]
@@ -253,8 +254,6 @@ public class PragmaSuppressionMapTests
     [InlineData("IDE0160", "CSLINT203")]
     [InlineData("IDE0003", "CSLINT204")]
     [InlineData("IDE0019", "IDE0019")]
-    [InlineData("IDE0029", "CSLINT210")]
-    [InlineData("IDE0041", "CSLINT210")]
     public void IdeAlias_SuppressesMappedCslintRule(string ideId, string expectedCslintId)
     {
         string source = $"#pragma warning disable {ideId}\nclass Foo {{ }}\n";

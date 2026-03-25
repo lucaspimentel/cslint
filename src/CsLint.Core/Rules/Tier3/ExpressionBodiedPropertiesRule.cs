@@ -5,42 +5,20 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
+/// <summary>
+/// IDE0025: Use expression body for properties.
+/// </summary>
+public sealed class ExpressionBodiedPropertiesRule : IRuleDefinition, IStyleRuleHandler
 {
-    public string RuleId => "CSLINT201";
+    private const string ConfigKey = "csharp_style_expression_bodied_properties";
 
-    public string Name => "ExpressionBodied";
+    public string RuleId => "IDE0025";
 
-    public IReadOnlyList<string> ConfigKeys { get; } =
-    [
-        "csharp_style_expression_bodied_methods",
-        "csharp_style_expression_bodied_properties",
-        "csharp_style_expression_bodied_accessors",
-    ];
+    public string Name => "ExpressionBodiedProperties";
+
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
-
-    private static void CheckExpressionBody(
-        ArrowExpressionClauseSyntax? expressionBody,
-        BlockSyntax? body,
-        SyntaxToken identifier,
-        string? preference,
-        string kind,
-        List<LintDiagnostic> diagnostics)
-    {
-        if (preference is null)
-        {
-            return;
-        }
-
-        bool preferExpression = string.Equals(preference, "true", StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(preference, "when_on_single_line", StringComparison.OrdinalIgnoreCase);
-
-        if (preferExpression && expressionBody is null && body is not null && IsSingleStatement(body))
-        {
-            AddDiagnostic(identifier, $"{kind} can use expression body", diagnostics);
-        }
-    }
 
     private static bool IsSingleStatement(BlockSyntax block) =>
         block.Statements.Count == 1 &&
@@ -53,7 +31,7 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
         diagnostics.Add(
             new LintDiagnostic
             {
-                RuleId = "CSLINT201",
+                RuleId = "IDE0025",
                 Message = message,
                 Severity = LintSeverity.Info,
                 FilePath = span.Path,
@@ -63,9 +41,7 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
     }
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue("csharp_style_expression_bodied_methods") is not null ||
-        configuration.GetValue("csharp_style_expression_bodied_properties") is not null ||
-        configuration.GetValue("csharp_style_expression_bodied_accessors") is not null;
+        configuration.GetValue(ConfigKey) is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
@@ -74,21 +50,12 @@ public sealed class ExpressionBodiedRule : IRuleDefinition, IStyleRuleHandler
         return walker.Diagnostics;
     }
 
-    void IStyleRuleHandler.VisitMethodDeclaration(
-        MethodDeclarationSyntax node,
-        LintConfiguration config,
-        List<LintDiagnostic> diagnostics)
-    {
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_style_expression_bodied_methods");
-        CheckExpressionBody(node.ExpressionBody, node.Body, node.Identifier, pref, "method", diagnostics);
-    }
-
     void IStyleRuleHandler.VisitPropertyDeclaration(
         PropertyDeclarationSyntax node,
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_style_expression_bodied_properties");
+        (string? pref, string? _) = config.GetValueWithSeverity(ConfigKey);
 
         if (node.ExpressionBody is null && node.AccessorList?.Accessors.Count == 1)
         {

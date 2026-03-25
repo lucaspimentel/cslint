@@ -36,8 +36,10 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 
 | CsLint ID | Description | editorconfig Key | Third-Party IDs |
 |---|---|---|---|
-| CSLINT200 | `var` preference | `csharp_style_var_*` | IDE0007, IDE0008 |
-| CSLINT201 | Expression-bodied members | `csharp_style_expression_bodied_*` | IDE0021--IDE0027 |
+| IDE0007 | Prefer `var` | `csharp_style_var_when_type_is_apparent`, `csharp_style_var_for_built_in_types` | IDE0007 |
+| IDE0008 | Prefer explicit type | `csharp_style_var_for_built_in_types`, `csharp_style_var_elsewhere` | IDE0008 |
+| IDE0021 | Expression-bodied methods | `csharp_style_expression_bodied_methods` | IDE0021 |
+| IDE0025 | Expression-bodied properties | `csharp_style_expression_bodied_properties` | IDE0025 |
 | IDE0011 | Brace preference | `csharp_prefer_braces` | SA1500, IDE0011 |
 | CSLINT203 | Namespace declarations | `csharp_style_namespace_declarations` | IDE0160, IDE0161 |
 | CSLINT204 | `this.` qualification | `dotnet_style_qualification_for_*` | SA1101, IDE0003, IDE0009 |
@@ -46,7 +48,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0065 | Using directive placement | `csharp_using_directive_placement` | IDE0065 |
 | IDE0049 | Predefined type preferences | `dotnet_style_predefined_type_for_*` | SA1121, IDE0049 |
 | CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0020, IDE0038 |
-| CSLINT210 | Null checking | `csharp_style_*_null_check` | IDE0029--IDE0031, IDE0041 |
+| IDE0016 | Throw expression | `csharp_style_throw_expression` | IDE0016 |
+| IDE0029 | Null coalescing | `dotnet_style_coalesce_expression` | IDE0029 |
 | IDE0063 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | IDE0063 |
 | IDE0090 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |
 | IDE0034 | Simplify `default` expression | `csharp_prefer_simple_default_expression` | IDE0034 |
@@ -218,16 +221,18 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | SA1517 | CSLINT009 | StyleCop |
 | SA1518 | CSLINT004 | StyleCop |
 | IDE0003, IDE0009 | CSLINT204 | Microsoft |
-| IDE0007, IDE0008 | CSLINT200 | Microsoft |
+| IDE0007 | IDE0007 | Microsoft |
+| IDE0008 | IDE0008 | Microsoft |
 | IDE0011 | IDE0011 | Microsoft |
+| IDE0016 | IDE0016 | Microsoft |
 | IDE0017 | IDE0017 | Microsoft |
-| IDE0016 | CSLINT210 | Microsoft |
 | IDE0018 | IDE0018 | Microsoft |
 | IDE0019 | IDE0019 | Microsoft |
 | IDE0020, IDE0038 | CSLINT209 | Microsoft |
-| IDE0021--IDE0027 | CSLINT201 | Microsoft |
+| IDE0021 | IDE0021 | Microsoft |
+| IDE0025 | IDE0025 | Microsoft |
 | IDE0028 | IDE0028 | Microsoft |
-| IDE0029--IDE0031, IDE0041 | CSLINT210 | Microsoft |
+| IDE0029 | IDE0029 | Microsoft |
 | IDE0034 | IDE0034 | Microsoft |
 | IDE0036 | IDE0036 | Microsoft |
 | IDE0039 | IDE0039 | Microsoft |

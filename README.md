@@ -129,17 +129,16 @@ class Foo { }   // trailing whitespace not reported
 #pragma warning restore CSLINT001
 ```
 
-- Supports single or multiple rule IDs: `#pragma warning disable CSLINT001, CSLINT200`
+- Supports single or multiple rule IDs: `#pragma warning disable CSLINT001, IDE0007`
 - `#pragma warning disable` (no IDs) suppresses all CsLint rules in that range
 - Without a matching `restore`, suppression continues to end of file
-- Third-party rule IDs (StyleCop `SA*` and Microsoft `IDE*`) are also recognized and mapped to the corresponding CsLint rules. For example:
+- Third-party rule IDs (StyleCop `SA*` and Microsoft `IDE*`) are also recognized and mapped to the corresponding CsLint rules. Legacy CSLINT IDs from older versions are still accepted. For example:
 
 | Third-Party ID | CsLint ID(s) | Rule |
 |---|---|---|
 | `SA1302` | `CSLINT101` | Interface prefix |
 | `SA1313` | `CSLINT103` | Parameter naming |
 | `SA1306` | `CSLINT104` | Field naming |
-| `IDE0007`/`IDE0008` | `CSLINT200` | `var` preference |
 | `IDE0160`/`IDE0161` | `CSLINT203` | Namespace declarations |
 | `IDE1006` | `CSLINT102`, `CSLINT103`, `CSLINT104` | General naming |
 

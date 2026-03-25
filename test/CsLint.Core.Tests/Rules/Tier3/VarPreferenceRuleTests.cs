@@ -36,22 +36,7 @@ public class VarPreferenceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT200", diagnostics[0].RuleId);
-    }
-
-    [Fact]
-    public void Analyze_VarForBuiltIn_WhenExplicitPreferred_ReturnsDiagnostic()
-    {
-        string source = "class C { void M() { var x = 42; } }";
-        var config = new LintConfiguration(new Dictionary<string, string>
-        {
-            ["csharp_style_var_for_built_in_types"] = "false",
-        });
-        RuleContext context = TestHelper.CreateContext(source, config);
-
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Single(diagnostics);
+        Assert.Equal("IDE0007", diagnostics[0].RuleId);
     }
 
     [Theory]
@@ -64,7 +49,6 @@ public class VarPreferenceRuleTests
         {
             ["csharp_style_var_when_type_is_apparent"] = "true",
             ["csharp_style_var_for_built_in_types"] = "true",
-            ["csharp_style_var_elsewhere"] = "true",
         });
         RuleContext context = TestHelper.CreateContext(source, config);
 

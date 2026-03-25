@@ -42,7 +42,9 @@ public sealed class RuleRegistry
 
         // Tier 3: Style preferences (syntax tree analysis)
         registry.Register(new VarPreferenceRule());
-        registry.Register(new ExpressionBodiedRule());
+        registry.Register(new ExplicitTypePreferenceRule());
+        registry.Register(new ExpressionBodiedMethodsRule());
+        registry.Register(new ExpressionBodiedPropertiesRule());
         registry.Register(new BracePreferenceRule());
         registry.Register(new NamespaceDeclarationRule());
         registry.Register(new ThisQualificationRule());
@@ -51,7 +53,8 @@ public sealed class RuleRegistry
         registry.Register(new UsingDirectivePlacementRule());
         registry.Register(new PredefinedTypeRule());
         registry.Register(new PatternMatchingRule());
-        registry.Register(new NullCheckingRule());
+        registry.Register(new NullCoalescingRule());
+        registry.Register(new ThrowExpressionRule());
         registry.Register(new UsingDeclarationRule());
         registry.Register(new TargetTypedNewRule());
         registry.Register(new SimpleDefaultExpressionRule());
