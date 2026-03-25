@@ -7,6 +7,7 @@
 - Add IDE0037 — inferred tuple names rule (`dotnet_style_prefer_inferred_tuple_names`), flags redundant explicit tuple element names that match the expression
 - Add IDE0340 — unbound generic in nameof rule (`csharp_style_prefer_unbound_generic_type_in_nameof`), flags `nameof(List<int>)` → `nameof(List<>)`
 - Add IDE0062 — prefer static local function rule (`csharp_prefer_static_local_function`), flags non-static local functions that don't capture enclosing state
+- Add IDE0320 — prefer static anonymous function rule (`csharp_prefer_static_anonymous_function`), flags non-static lambdas and anonymous methods that don't capture enclosing state
 
 ## [1.6.0] - 2026-03-23
 

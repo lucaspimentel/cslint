@@ -33,7 +33,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **`dotnet_style_parentheses_in_other_binary_operators`** (IDE0047/IDE0048)
 - [ ] **`dotnet_style_parentheses_in_other_operators`** (IDE0047/IDE0048)
 - [ ] **`csharp_style_prefer_null_check_over_type_check`** (IDE0150)
-- [ ] **`csharp_prefer_static_anonymous_function`** (IDE0320)
+- [x] **`csharp_prefer_static_anonymous_function`** (IDE0320)
 - [ ] **`csharp_prefer_system_threading_lock`** (IDE0330)
 - [x] **`csharp_style_prefer_unbound_generic_type_in_nameof`** (IDE0340)
 - [ ] **`csharp_style_prefer_implicitly_typed_lambda_expression`** (IDE0350)

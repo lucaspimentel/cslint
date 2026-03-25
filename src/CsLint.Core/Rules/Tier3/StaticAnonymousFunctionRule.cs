@@ -5,23 +5,23 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class StaticLocalFunctionRule : IRuleDefinition, IDescendantNodeHandler
+public sealed class StaticAnonymousFunctionRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "IDE0062";
+    public string RuleId => "IDE0320";
 
-    public string Name => "StaticLocalFunction";
+    public string Name => "StaticAnonymousFunction";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_prefer_static_local_function"];
+    public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_prefer_static_anonymous_function"];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetValue("csharp_prefer_static_local_function") is not null;
+        configuration.GetValue("csharp_prefer_static_anonymous_function") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
         (string? pref, string? _) = context.Configuration
-            .GetValueWithSeverity("csharp_prefer_static_local_function");
+            .GetValueWithSeverity("csharp_prefer_static_anonymous_function");
 
         if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
         {
@@ -44,36 +44,42 @@ public sealed class StaticLocalFunctionRule : IRuleDefinition, IDescendantNodeHa
         string filePath,
         List<LintDiagnostic> diagnostics)
     {
-        if (node is not LocalFunctionStatementSyntax localFunc)
+        if (node is not AnonymousFunctionExpressionSyntax anonFunc)
         {
             return;
         }
 
         // Already static
-        if (localFunc.Modifiers.Any(SyntaxKind.StaticKeyword))
+        if (anonFunc.Modifiers.Any(SyntaxKind.StaticKeyword))
         {
             return;
         }
 
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_prefer_static_local_function");
+        (string? pref, string? _) = config.GetValueWithSeverity("csharp_prefer_static_anonymous_function");
 
         if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
 
-        if (CaptureAnalysis.CapturesEnclosingState(localFunc))
+        if (CaptureAnalysis.CapturesEnclosingState(anonFunc))
         {
             return;
         }
 
-        FileLinePositionSpan span = localFunc.Identifier.GetLocation().GetLineSpan();
+        SyntaxToken keyword = anonFunc switch
+        {
+            AnonymousMethodExpressionSyntax a => a.DelegateKeyword,
+            _ => anonFunc.GetFirstToken(),
+        };
+
+        FileLinePositionSpan span = keyword.GetLocation().GetLineSpan();
 
         diagnostics.Add(
             new LintDiagnostic
             {
                 RuleId = RuleId,
-                Message = $"Local function '{localFunc.Identifier.Text}' can be made static",
+                Message = "Anonymous function can be made static",
                 Severity = LintSeverity.Info,
                 FilePath = filePath,
                 Line = span.StartLinePosition.Line + 1,
