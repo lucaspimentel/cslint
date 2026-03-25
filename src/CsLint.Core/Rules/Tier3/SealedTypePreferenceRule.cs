@@ -17,11 +17,10 @@ public sealed class SealedTypePreferenceRule : IRuleDefinition, IDescendantNodeH
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
-    public bool IsEnabled(LintConfiguration configuration)
-    {
-        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
+    // Force-disabled: without project-wide type hierarchy info, this rule produces
+    // false positives on base classes (flags them as "should be sealed" when they
+    // have derived types in other files). See TODO.md for the two-pass plan.
+    public bool IsEnabled(LintConfiguration configuration) => false;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
