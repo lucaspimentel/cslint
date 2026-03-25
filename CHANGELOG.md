@@ -11,6 +11,7 @@
 - Add IDE0150 — prefer null check over type check rule (`csharp_style_prefer_null_check_over_type_check`), flags `is object` → `is not null` and `is not object` → `is null`
 - Add IDE0330 — prefer System.Threading.Lock rule (`csharp_prefer_system_threading_lock`), flags `lock` on `object` fields, `this`, or `typeof`
 - Add IDE0350 — prefer implicitly typed lambda rule (`csharp_style_prefer_implicitly_typed_lambda_expression`), flags lambdas with explicit parameter types when implicit typing is preferred
+- Add IDE0360 — prefer simple property accessors rule (`csharp_style_prefer_simple_property_accessors`), flags properties with trivial get/set that can be auto-properties
 
 ## [1.6.0] - 2026-03-23
 
