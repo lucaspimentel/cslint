@@ -32,7 +32,7 @@ public class ExpressionBodiedLocalFunctionsRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT218", diagnostics[0].RuleId);
+        Assert.Equal("IDE0061", diagnostics[0].RuleId);
     }
 
     [Fact]

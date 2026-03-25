@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class SimpleDefaultExpressionRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT213";
+    public string RuleId => "IDE0034";
 
     public string Name => "SimpleDefaultExpression";
 

@@ -8,7 +8,7 @@ public sealed class ConditionalExpressionAssignmentRule : IRuleDefinition, IStyl
 {
     private const string ConfigKey = "dotnet_style_prefer_conditional_expression_over_assignment";
 
-    public string RuleId => "CSLINT274";
+    public string RuleId => "IDE0045";
 
     public string Name => "ConditionalExpressionAssignment";
 

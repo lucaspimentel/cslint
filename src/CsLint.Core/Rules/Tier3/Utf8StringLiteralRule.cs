@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class Utf8StringLiteralRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT224";
+    public string RuleId => "IDE0230";
 
     public string Name => "Utf8StringLiteral";
 

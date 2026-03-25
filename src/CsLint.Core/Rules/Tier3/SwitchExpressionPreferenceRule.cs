@@ -8,7 +8,7 @@ public sealed class SwitchExpressionPreferenceRule : IRuleDefinition, IDescendan
 {
     private const string ConfigKey = "csharp_style_prefer_switch_expression";
 
-    public string RuleId => "CSLINT273";
+    public string RuleId => "IDE0066";
 
     public string Name => "SwitchExpressionPreference";
 

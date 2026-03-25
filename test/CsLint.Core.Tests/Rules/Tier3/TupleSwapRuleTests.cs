@@ -31,7 +31,7 @@ public class TupleSwapRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT223", diagnostics[0].RuleId);
+        Assert.Equal("IDE0180", diagnostics[0].RuleId);
         Assert.Contains("tuple swap", diagnostics[0].Message);
     }
 

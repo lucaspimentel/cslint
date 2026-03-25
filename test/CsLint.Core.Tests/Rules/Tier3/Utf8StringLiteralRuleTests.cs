@@ -30,7 +30,7 @@ public class Utf8StringLiteralRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT224", diagnostics[0].RuleId);
+        Assert.Equal("IDE0230", diagnostics[0].RuleId);
     }
 
     [Fact]

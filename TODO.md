@@ -47,5 +47,6 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 ### Migrate existing rules to standard diagnostic IDs
 
-- [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Migrate 1:1 CSLINT rules to use standard IDE IDs directly** — e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT211→IDE0063, CSLINT212→IDE0090, CSLINT213→IDE0034, etc. Keep old CSLINT IDs as pragma aliases for backward compatibility
+- [x] ⚠️ **BREAKING CHANGE (major version bump)** — **Migrate 1:1 CSLINT rules to use standard IDE IDs directly** — e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT211→IDE0063, CSLINT212→IDE0090, CSLINT213→IDE0034, etc. Keep old CSLINT IDs as pragma aliases for backward compatibility. **Note:** CSLINT234 (IDE0037) excluded — conflicts with InferredTupleNamesRule; needs merge instead.
 - [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Split multi-ID CSLINT rules into individual standard-ID rules** — CSLINT200 (IDE0007/IDE0008), CSLINT201 (IDE0021–IDE0027), CSLINT210 (IDE0029/IDE0031/IDE0041) each cover multiple standard diagnostics; split into separate rules so each emits the correct standard ID
+- [ ] **Merge CSLINT234 (InferredMemberNameRule) into IDE0037 (InferredTupleNamesRule)** — both map to IDE0037 (`dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`). Merge into a single IDE0037 rule covering both config keys, then drop CSLINT234

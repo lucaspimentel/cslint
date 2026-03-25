@@ -9,7 +9,7 @@ public sealed class InlinedVariableDeclarationRule : IRuleDefinition, IDescendan
 {
     private const string ConfigKey = "csharp_style_inlined_variable_declaration";
 
-    public string RuleId => "CSLINT272";
+    public string RuleId => "IDE0018";
 
     public string Name => "InlinedVariableDeclaration";
 

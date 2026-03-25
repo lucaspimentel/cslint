@@ -30,7 +30,7 @@ public class ExpressionBodiedLambdasRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT217", diagnostics[0].RuleId);
+        Assert.Equal("IDE0053", diagnostics[0].RuleId);
     }
 
     [Fact]

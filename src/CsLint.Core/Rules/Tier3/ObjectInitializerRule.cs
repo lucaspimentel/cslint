@@ -7,7 +7,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class ObjectInitializerRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT215";
+    public string RuleId => "IDE0017";
 
     public string Name => "ObjectInitializer";
 

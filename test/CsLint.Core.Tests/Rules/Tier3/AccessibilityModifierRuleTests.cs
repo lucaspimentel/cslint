@@ -36,6 +36,6 @@ public class AccessibilityModifierRuleTests
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
-        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT206" && d.Message.Contains(kind) && d.Message.Contains(name));
+        Assert.Contains(diagnostics, d => d.RuleId == "IDE0040" && d.Message.Contains(kind) && d.Message.Contains(name));
     }
 }

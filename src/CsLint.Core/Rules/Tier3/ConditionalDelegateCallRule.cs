@@ -9,7 +9,7 @@ public sealed class ConditionalDelegateCallRule : IRuleDefinition, IStyleRuleHan
 {
     private const string ConfigKey = "csharp_style_conditional_delegate_call";
 
-    public string RuleId => "CSLINT271";
+    public string RuleId => "IDE1005";
 
     public string Name => "ConditionalDelegateCall";
 

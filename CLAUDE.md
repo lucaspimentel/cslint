@@ -16,7 +16,7 @@ dotnet test --filter "FullyQualifiedName~TrailingWhitespaceRuleTests.DetectsTrai
 dotnet run --project src/CsLint.Cli -- [path...]  # lint files or directories (defaults to CWD)
 dotnet run --project src/CsLint.Cli -- --list-rules  # list all available rules
 dotnet run --project src/CsLint.Cli -- --semantic [path...]  # lint with semantic analysis (Tier 4 rules)
-dotnet run --project src/CsLint.Cli -- --rules CSLINT266,CSLINT268 [path...]  # run only specific rules, ignoring .editorconfig
+dotnet run --project src/CsLint.Cli -- --rules IDE0011,IDE0036 [path...]  # run only specific rules, ignoring .editorconfig
 dotnet run --project src/CsLint.Cli -- --rules all [path...]  # run all rules, ignoring .editorconfig
 dotnet run --project src/CsLint.Cli -- --summary [path...]  # show diagnostics grouped by rule
 dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .editorconfig settings for a path
@@ -40,7 +40,7 @@ New rules that map 1:1 to a standard .NET diagnostic ID must use the standard ID
 
 - All rules implement `IRuleDefinition` and are manually registered in `RuleRegistry` (no reflection, trim-safe)
 - Config comes from `.editorconfig` via `editorconfig` NuGet package, abstracted behind `IConfigProvider`
-- `PragmaSuppressionMap` filters diagnostics suppressed by `#pragma warning disable` directives; `PragmaAliasMap` maps third-party IDs (e.g., `SA1313`, `IDE1006`) to CsLint IDs so existing pragmas also suppress corresponding CsLint rules
+- `PragmaSuppressionMap` filters diagnostics suppressed by `#pragma warning disable` directives; `PragmaAliasMap` maps third-party IDs (e.g., `SA1313`, `IDE1006`) and legacy CSLINT IDs to canonical rule IDs so existing pragmas still suppress the correct rules
 - `FileLinter` orchestrates: parse file → resolve config → run enabled rules → filter pragma suppressions
 - `DirectoryLinter` processes files in parallel via `Parallel.ForEachAsync`
 

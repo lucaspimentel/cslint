@@ -9,7 +9,7 @@ public sealed class PatternMatchingAsRule : IRuleDefinition, IDescendantNodeHand
 {
     private const string ConfigKey = "csharp_style_pattern_matching_over_as_with_null_check";
 
-    public string RuleId => "CSLINT270";
+    public string RuleId => "IDE0019";
 
     public string Name => "PatternMatchingAs";
 

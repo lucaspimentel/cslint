@@ -37,7 +37,7 @@ public class PatternMatchingAsRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT270", diagnostics[0].RuleId);
+        Assert.Equal("IDE0019", diagnostics[0].RuleId);
     }
 
     [Fact]

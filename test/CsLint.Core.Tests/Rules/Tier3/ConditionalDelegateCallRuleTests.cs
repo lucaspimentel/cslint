@@ -34,7 +34,7 @@ public class ConditionalDelegateCallRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT271", diagnostics[0].RuleId);
+        Assert.Equal("IDE1005", diagnostics[0].RuleId);
     }
 
     [Fact]

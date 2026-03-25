@@ -7,7 +7,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class CollectionInitializerRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT216";
+    public string RuleId => "IDE0028";
 
     public string Name => "CollectionInitializer";
 

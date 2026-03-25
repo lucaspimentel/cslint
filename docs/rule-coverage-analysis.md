@@ -17,7 +17,7 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | CSLINT003 | LineEnding | `end_of_line` |
 | CSLINT004 | FinalNewline | `insert_final_newline` |
 | CSLINT005 | MaxLineLength | `max_line_length` |
-| CSLINT007 | FileHeader | `file_header_template` |
+| IDE0073 | FileHeader | `file_header_template` | IDE0073 |
 
 ### Tier 2 — Naming (standard 3-part system)
 
@@ -31,41 +31,41 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 |-----------|------|----------------|-----------------|
 | CSLINT200 | VarPreference | `csharp_style_var_for_built_in_types`, `csharp_style_var_when_type_is_apparent`, `csharp_style_var_elsewhere` | IDE0007/IDE0008 |
 | CSLINT201 | ExpressionBodied | `csharp_style_expression_bodied_methods`, `csharp_style_expression_bodied_properties`, `csharp_style_expression_bodied_accessors` | IDE0021–IDE0027 |
-| CSLINT202 | BracePreference | `csharp_prefer_braces` | IDE0011 |
+| IDE0011 | BracePreference | `csharp_prefer_braces` | IDE0011 |
 | CSLINT203 | NamespaceDeclaration | `csharp_style_namespace_declarations` | IDE0160/IDE0161 |
 | CSLINT204 | ThisQualification | `dotnet_style_qualification_for_field`, `_property`, `_method`, `_event` | IDE0003/IDE0009 |
-| CSLINT205 | ModifierOrder | `csharp_preferred_modifier_order` | IDE0036 |
-| CSLINT206 | AccessibilityModifier | `dotnet_style_require_accessibility_modifiers` | IDE0040 |
-| CSLINT207 | UsingDirectivePlacement | `csharp_using_directive_placement` | IDE0065 |
-| CSLINT208 | PredefinedType | `dotnet_style_predefined_type_for_locals_parameters_members`, `dotnet_style_predefined_type_for_member_access` | IDE0049 |
+| IDE0036 | ModifierOrder | `csharp_preferred_modifier_order` | IDE0036 |
+| IDE0040 | AccessibilityModifier | `dotnet_style_require_accessibility_modifiers` | IDE0040 |
+| IDE0065 | UsingDirectivePlacement | `csharp_using_directive_placement` | IDE0065 |
+| IDE0049 | PredefinedType | `dotnet_style_predefined_type_for_locals_parameters_members`, `dotnet_style_predefined_type_for_member_access` | IDE0049 |
 | CSLINT209 | PatternMatching | `csharp_style_pattern_matching_over_is_with_cast_check` | IDE0020 |
-| CSLINT211 | UsingDeclaration | `csharp_prefer_simple_using_statement` | IDE0063 |
-| CSLINT212 | TargetTypedNew | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |
-| CSLINT213 | SimpleDefaultExpression | `csharp_prefer_simple_default_expression` | IDE0034 |
+| IDE0063 | UsingDeclaration | `csharp_prefer_simple_using_statement` | IDE0063 |
+| IDE0090 | TargetTypedNew | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |
+| IDE0034 | SimpleDefaultExpression | `csharp_prefer_simple_default_expression` | IDE0034 |
 | CSLINT214 | CompoundAssignment | `dotnet_style_prefer_compound_assignment` | IDE0054/IDE0074 |
-| CSLINT215 | ObjectInitializer | `dotnet_style_object_initializer` | IDE0017 |
-| CSLINT216 | CollectionInitializer | `dotnet_style_collection_initializer` | IDE0028 |
-| CSLINT217 | ExpressionBodiedLambdas | `csharp_style_expression_bodied_lambdas` | IDE0053 |
-| CSLINT218 | ExpressionBodiedLocalFunctions | `csharp_style_expression_bodied_local_functions` | IDE0061 |
+| IDE0017 | ObjectInitializer | `dotnet_style_object_initializer` | IDE0017 |
+| IDE0028 | CollectionInitializer | `dotnet_style_collection_initializer` | IDE0028 |
+| IDE0053 | ExpressionBodiedLambdas | `csharp_style_expression_bodied_lambdas` | IDE0053 |
+| IDE0061 | ExpressionBodiedLocalFunctions | `csharp_style_expression_bodied_local_functions` | IDE0061 |
 | CSLINT219 | PatternMatchingNot | `csharp_style_prefer_not_pattern` | IDE0083 |
 | CSLINT220 | PatternMatchingCombinator | `csharp_style_prefer_pattern_matching` | IDE0078 |
 | CSLINT221 | PrimaryConstructor | `csharp_style_prefer_primary_constructors` | IDE0290 |
 | CSLINT222 | CollectionExpression | `dotnet_style_prefer_collection_expression` | IDE0300–IDE0306 |
-| CSLINT223 | TupleSwap | `csharp_style_prefer_tuple_swap` | IDE0180 |
-| CSLINT224 | Utf8StringLiteral | `csharp_style_prefer_utf8_string_literals` | IDE0230 |
-| CSLINT225 | SimplifyInterpolation | `dotnet_style_prefer_simplified_interpolation` | IDE0071 |
-| CSLINT226 | IndexOperator | `csharp_style_prefer_index_operator` | IDE0056 |
-| CSLINT227 | RangeOperator | `csharp_style_prefer_range_operator` | IDE0057 |
+| IDE0180 | TupleSwap | `csharp_style_prefer_tuple_swap` | IDE0180 |
+| IDE0230 | Utf8StringLiteral | `csharp_style_prefer_utf8_string_literals` | IDE0230 |
+| IDE0071 | SimplifyInterpolation | `dotnet_style_prefer_simplified_interpolation` | IDE0071 |
+| IDE0056 | IndexOperator | `csharp_style_prefer_index_operator` | IDE0056 |
+| IDE0057 | RangeOperator | `csharp_style_prefer_range_operator` | IDE0057 |
 | CSLINT234 | InferredMemberName | `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
-| CSLINT235 | SimplifiedBooleanExpression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
-| CSLINT236 | ExtendedPropertyPattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
-| CSLINT270 | PatternMatchingAs | `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 |
-| CSLINT271 | ConditionalDelegateCall | `csharp_style_conditional_delegate_call` | IDE1005 |
-| CSLINT272 | InlinedVariableDeclaration | `csharp_style_inlined_variable_declaration` | IDE0018 |
-| CSLINT273 | SwitchExpressionPreference | `csharp_style_prefer_switch_expression` | IDE0066 |
-| CSLINT274 | ConditionalExpressionAssignment | `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 |
-| CSLINT275 | ConditionalExpressionReturn | `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 |
-| CSLINT276 | LocalOverAnonymousFunction | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
+| IDE0075 | SimplifiedBooleanExpression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
+| IDE0170 | ExtendedPropertyPattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
+| IDE0019 | PatternMatchingAs | `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 |
+| IDE1005 | ConditionalDelegateCall | `csharp_style_conditional_delegate_call` | IDE1005 |
+| IDE0018 | InlinedVariableDeclaration | `csharp_style_inlined_variable_declaration` | IDE0018 |
+| IDE0066 | SwitchExpressionPreference | `csharp_style_prefer_switch_expression` | IDE0066 |
+| IDE0045 | ConditionalExpressionAssignment | `dotnet_style_prefer_conditional_expression_over_assignment` | IDE0045 |
+| IDE0046 | ConditionalExpressionReturn | `dotnet_style_prefer_conditional_expression_over_return` | IDE0046 |
+| IDE0039 | LocalOverAnonymousFunction | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
 | IDE0033 | ExplicitTupleNames | `dotnet_style_explicit_tuple_names` | IDE0033 |
 | IDE0037 | InferredTupleNames | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 |
 | IDE0340 | UnboundGenericInNameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |

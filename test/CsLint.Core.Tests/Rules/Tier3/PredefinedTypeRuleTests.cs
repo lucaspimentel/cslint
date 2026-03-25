@@ -35,7 +35,7 @@ public class PredefinedTypeRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT208", diagnostics[0].RuleId);
+        Assert.Equal("IDE0049", diagnostics[0].RuleId);
         Assert.Contains("Int32", diagnostics[0].Message);
     }
 

@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
 {
-    public string RuleId => "CSLINT202";
+    public string RuleId => "IDE0011";
 
     public string Name => "BracePreference";
 
@@ -29,7 +29,7 @@ public sealed class BracePreferenceRule : IRuleDefinition, IStyleRuleHandler
             diagnostics.Add(
                 new LintDiagnostic
                 {
-                    RuleId = "CSLINT202",
+                    RuleId = "IDE0011",
                     Message = "Prefer braces for control flow statements",
                     Severity = LintSeverity.Warning,
                     FilePath = span.Path,

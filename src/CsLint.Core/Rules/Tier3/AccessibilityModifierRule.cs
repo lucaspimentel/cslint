@@ -7,7 +7,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class AccessibilityModifierRule : IRuleDefinition, IStyleRuleHandler
 {
-    public string RuleId => "CSLINT206";
+    public string RuleId => "IDE0040";
 
     public string Name => "AccessibilityModifier";
 
@@ -34,7 +34,7 @@ public sealed class AccessibilityModifierRule : IRuleDefinition, IStyleRuleHandl
             diagnostics.Add(
                 new LintDiagnostic
                 {
-                    RuleId = "CSLINT206",
+                    RuleId = "IDE0040",
                     Message = $"Add accessibility modifier to {kind} '{name}'",
                     Severity = LintSeverity.Warning,
                     FilePath = span.Path,

@@ -32,7 +32,7 @@ public class LocalOverAnonymousFunctionRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT276", diagnostics[0].RuleId);
+        Assert.Equal("IDE0039", diagnostics[0].RuleId);
     }
 
     [Fact]

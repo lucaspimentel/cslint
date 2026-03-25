@@ -7,7 +7,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class TupleSwapRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT223";
+    public string RuleId => "IDE0180";
 
     public string Name => "TupleSwap";
 

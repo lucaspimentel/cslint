@@ -29,7 +29,7 @@ public class SimpleDefaultExpressionRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT213", diagnostics[0].RuleId);
+        Assert.Equal("IDE0034", diagnostics[0].RuleId);
     }
 
     [Fact]

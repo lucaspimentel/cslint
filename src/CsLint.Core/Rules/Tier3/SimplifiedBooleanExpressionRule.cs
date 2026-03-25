@@ -7,7 +7,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class SimplifiedBooleanExpressionRule : IRuleDefinition, IStyleRuleHandler
 {
-    public string RuleId => "CSLINT235";
+    public string RuleId => "IDE0075";
 
     public string Name => "SimplifiedBooleanExpression";
 

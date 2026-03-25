@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class ExpressionBodiedLocalFunctionsRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT218";
+    public string RuleId => "IDE0061";
 
     public string Name => "ExpressionBodiedLocalFunctions";
 

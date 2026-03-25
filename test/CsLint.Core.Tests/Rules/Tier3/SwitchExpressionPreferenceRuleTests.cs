@@ -36,7 +36,7 @@ public class SwitchExpressionPreferenceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT273", diagnostics[0].RuleId);
+        Assert.Equal("IDE0066", diagnostics[0].RuleId);
     }
 
     [Fact]

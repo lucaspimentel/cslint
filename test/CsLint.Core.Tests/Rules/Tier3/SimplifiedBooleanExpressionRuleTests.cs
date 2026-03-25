@@ -26,7 +26,7 @@ public class SimplifiedBooleanExpressionRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT235", diagnostics[0].RuleId);
+        Assert.Equal("IDE0075", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class SimplifiedBooleanExpressionRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT235", diagnostics[0].RuleId);
+        Assert.Equal("IDE0075", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class SimplifiedBooleanExpressionRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT235", diagnostics[0].RuleId);
+        Assert.Equal("IDE0075", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -89,7 +89,7 @@ public class SimplifiedBooleanExpressionRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT235", diagnostics[0].RuleId);
+        Assert.Equal("IDE0075", diagnostics[0].RuleId);
     }
 
     [Fact]

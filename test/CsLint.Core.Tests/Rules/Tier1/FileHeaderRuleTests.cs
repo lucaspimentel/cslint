@@ -21,7 +21,7 @@ public class FileHeaderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT007", diagnostics[0].RuleId);
+        Assert.Equal("IDE0073", diagnostics[0].RuleId);
     }
 
     [Fact]

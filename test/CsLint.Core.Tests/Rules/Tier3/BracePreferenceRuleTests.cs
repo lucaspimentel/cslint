@@ -34,6 +34,6 @@ public class BracePreferenceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT202", diagnostics[0].RuleId);
+        Assert.Equal("IDE0011", diagnostics[0].RuleId);
     }
 }

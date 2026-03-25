@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+- **BREAKING:** Migrate 27 rules with 1:1 standard mappings from CSLINT* to standard IDE* diagnostic IDs (e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT207→IDE0065). Old CSLINT IDs are preserved as pragma aliases for backward compatibility. The `--rules` CLI option also resolves old IDs transparently.
+- Force-disable CSLINT239 (SealedTypePreferenceRule) to prevent false positives until project-wide type hierarchy support is implemented
+
 ## [1.7.0] - 2026-03-25
 
 ### Added

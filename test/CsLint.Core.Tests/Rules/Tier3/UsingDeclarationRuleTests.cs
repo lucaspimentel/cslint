@@ -32,7 +32,7 @@ public class UsingDeclarationRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT211", diagnostics[0].RuleId);
+        Assert.Equal("IDE0063", diagnostics[0].RuleId);
     }
 
     [Fact]

@@ -29,7 +29,7 @@ public class TargetTypedNewRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT212", diagnostics[0].RuleId);
+        Assert.Equal("IDE0090", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -119,6 +119,6 @@ public class TargetTypedNewRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT212", diagnostics[0].RuleId);
+        Assert.Equal("IDE0090", diagnostics[0].RuleId);
     }
 }

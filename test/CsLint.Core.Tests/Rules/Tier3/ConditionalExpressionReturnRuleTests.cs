@@ -34,7 +34,7 @@ public class ConditionalExpressionReturnRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT275", diagnostics[0].RuleId);
+        Assert.Equal("IDE0046", diagnostics[0].RuleId);
     }
 
     [Fact]

@@ -32,7 +32,7 @@ public class InlinedVariableDeclarationRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT272", diagnostics[0].RuleId);
+        Assert.Equal("IDE0018", diagnostics[0].RuleId);
     }
 
     [Fact]

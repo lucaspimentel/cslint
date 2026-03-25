@@ -35,6 +35,6 @@ public class ModifierOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT205", diagnostics[0].RuleId);
+        Assert.Equal("IDE0036", diagnostics[0].RuleId);
     }
 }

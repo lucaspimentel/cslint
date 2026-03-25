@@ -29,7 +29,7 @@ public class RangeOperatorRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT227", diagnostics[0].RuleId);
+        Assert.Equal("IDE0057", diagnostics[0].RuleId);
     }
 
     [Fact]

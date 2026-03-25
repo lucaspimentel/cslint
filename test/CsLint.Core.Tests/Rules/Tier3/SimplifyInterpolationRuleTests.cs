@@ -29,7 +29,7 @@ public class SimplifyInterpolationRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT225", diagnostics[0].RuleId);
+        Assert.Equal("IDE0071", diagnostics[0].RuleId);
     }
 
     [Fact]

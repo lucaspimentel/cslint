@@ -8,7 +8,7 @@ public sealed class LocalOverAnonymousFunctionRule : IRuleDefinition, IDescendan
 {
     private const string ConfigKey = "csharp_style_prefer_local_over_anonymous_function";
 
-    public string RuleId => "CSLINT276";
+    public string RuleId => "IDE0039";
 
     public string Name => "LocalOverAnonymousFunction";
 

@@ -36,6 +36,6 @@ public class UsingDirectivePlacementRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT207", diagnostics[0].RuleId);
+        Assert.Equal("IDE0065", diagnostics[0].RuleId);
     }
 }

@@ -13,7 +13,7 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
         "Byte", "SByte", "Object",
     };
 
-    public string RuleId => "CSLINT208";
+    public string RuleId => "IDE0049";
 
     public string Name => "PredefinedType";
 
@@ -57,7 +57,7 @@ public sealed class PredefinedTypeRule : IRuleDefinition, IDescendantNodeHandler
         diagnostics.Add(
             new LintDiagnostic
             {
-                RuleId = "CSLINT208",
+                RuleId = "IDE0049",
                 Message = $"Use predefined type keyword instead of '{identifier.Text}'",
                 Severity = LintSeverity.Info,
                 FilePath = filePath,

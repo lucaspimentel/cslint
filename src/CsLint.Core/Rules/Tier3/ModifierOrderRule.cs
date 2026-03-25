@@ -11,7 +11,7 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
 
     private Dictionary<string, int>? _cachedOrderMap;
 
-    public string RuleId => "CSLINT205";
+    public string RuleId => "IDE0036";
 
     public string Name => "ModifierOrder";
 
@@ -64,7 +64,7 @@ public sealed class ModifierOrderRule : IRuleDefinition, IStyleRuleHandler
                     diagnostics.Add(
                         new LintDiagnostic
                         {
-                            RuleId = "CSLINT205",
+                            RuleId = RuleId,
                             Message = "Modifiers are not in the preferred order",
                             Severity = LintSeverity.Warning,
                             FilePath = span.Path,

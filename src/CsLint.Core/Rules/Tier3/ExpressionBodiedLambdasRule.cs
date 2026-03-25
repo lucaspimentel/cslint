@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class ExpressionBodiedLambdasRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT217";
+    public string RuleId => "IDE0053";
 
     public string Name => "ExpressionBodiedLambdas";
 

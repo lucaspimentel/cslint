@@ -74,7 +74,7 @@ cslint src/ --exclude "**/Generated/*.cs" --exclude "**/*.g.cs"
 cslint src/ --semantic
 
 # Run only specific rules, ignoring .editorconfig
-cslint src/ --rules CSLINT266,CSLINT268
+cslint src/ --rules IDE0011,IDE0036
 
 # Run all rules, ignoring .editorconfig
 cslint src/ --rules all

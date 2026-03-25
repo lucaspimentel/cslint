@@ -7,7 +7,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class IndexOperatorRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT226";
+    public string RuleId => "IDE0056";
 
     public string Name => "IndexOperator";
 

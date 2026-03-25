@@ -52,7 +52,7 @@ var summaryOption = new Option<bool>("--summary")
 
 var rulesOption = new Option<string>("--rules")
 {
-    Description = "Comma-separated rule IDs to run (e.g., CSLINT266,CSLINT268), or 'all' to enable every rule. Ignores .editorconfig when set.",
+    Description = "Comma-separated rule IDs to run (e.g., IDE0011,IDE0036), or 'all' to enable every rule. Ignores .editorconfig when set.",
 };
 
 var versionOption = new Option<bool>("--version")
@@ -163,13 +163,26 @@ rootCommand.SetAction(async (parseResult, cancellationToken) =>
 
             foreach (string id in requested)
             {
-                if (!knownIds.Contains(id))
+                if (knownIds.Contains(id))
+                {
+                    ruleFilter.Add(id);
+                }
+                else if (PragmaAliasMap.TryGetMappedIds(id, out string[] mappedIds))
+                {
+                    // Resolve aliases (e.g., old CSLINT* IDs) to canonical rule IDs
+                    foreach (string mappedId in mappedIds)
+                    {
+                        if (knownIds.Contains(mappedId))
+                        {
+                            ruleFilter.Add(mappedId);
+                        }
+                    }
+                }
+                else
                 {
                     Console.Error.WriteLine($"Unknown rule ID: {id}");
                     return 2;
                 }
-
-                ruleFilter.Add(id);
             }
 
             skipEnabledCheck = true;

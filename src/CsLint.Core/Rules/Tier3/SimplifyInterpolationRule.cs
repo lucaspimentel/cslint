@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class SimplifyInterpolationRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT225";
+    public string RuleId => "IDE0071";
 
     public string Name => "SimplifyInterpolation";
 

@@ -28,7 +28,7 @@ public class ExtendedPropertyPatternRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT236", diagnostics[0].RuleId);
+        Assert.Equal("IDE0170", diagnostics[0].RuleId);
     }
 
     [Fact]

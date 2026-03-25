@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class ExtendedPropertyPatternRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT236";
+    public string RuleId => "IDE0170";
 
     public string Name => "ExtendedPropertyPattern";
 

@@ -31,7 +31,7 @@ public class IndexOperatorRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT226", diagnostics[0].RuleId);
+        Assert.Equal("IDE0056", diagnostics[0].RuleId);
         Assert.Contains(property, diagnostics[0].Message);
     }
 

@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class UsingDirectivePlacementRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT207";
+    public string RuleId => "IDE0065";
 
     public string Name => "UsingDirectivePlacement";
 

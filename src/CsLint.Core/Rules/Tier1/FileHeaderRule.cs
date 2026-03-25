@@ -4,7 +4,7 @@ namespace Cslint.Core.Rules.Tier1;
 
 public sealed class FileHeaderRule : IRuleDefinition
 {
-    public string RuleId => "CSLINT007";
+    public string RuleId => "IDE0073";
 
     public string Name => "FileHeader";
 

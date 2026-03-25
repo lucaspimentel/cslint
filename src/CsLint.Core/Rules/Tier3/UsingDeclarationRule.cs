@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class UsingDeclarationRule : IRuleDefinition, IStyleRuleHandler
 {
-    public string RuleId => "CSLINT211";
+    public string RuleId => "IDE0063";
 
     public string Name => "UsingDeclaration";
 

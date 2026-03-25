@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class TargetTypedNewRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT212";
+    public string RuleId => "IDE0090";
 
     public string Name => "TargetTypedNew";
 

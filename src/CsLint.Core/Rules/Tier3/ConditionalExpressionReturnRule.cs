@@ -8,7 +8,7 @@ public sealed class ConditionalExpressionReturnRule : IRuleDefinition, IStyleRul
 {
     private const string ConfigKey = "dotnet_style_prefer_conditional_expression_over_return";
 
-    public string RuleId => "CSLINT275";
+    public string RuleId => "IDE0046";
 
     public string Name => "ConditionalExpressionReturn";
 

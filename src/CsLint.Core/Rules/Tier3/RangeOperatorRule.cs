@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class RangeOperatorRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT227";
+    public string RuleId => "IDE0057";
 
     public string Name => "RangeOperator";
 
