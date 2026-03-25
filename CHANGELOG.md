@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Changed
+- **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.CSLINT3XX.severity = warning` to your `.editorconfig`.
 - **BREAKING:** Migrate 27 rules with 1:1 standard mappings from CSLINT* to standard IDE* diagnostic IDs (e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT207→IDE0065). Old CSLINT IDs are preserved as pragma aliases for backward compatibility. The `--rules` CLI option also resolves old IDs transparently.
 - **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008 (var/explicit type), CSLINT201→IDE0021+IDE0025 (expression-bodied methods/properties), CSLINT210→IDE0029+IDE0016 (null coalescing/throw expression)
 - Merge CSLINT234 (InferredMemberNameRule) into IDE0037 — single rule now covers both `dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`

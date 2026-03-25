@@ -30,7 +30,7 @@ dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .ed
   - Some rules accept multiple config keys (standard + CsLint aliases) via `GetFirstValue()` — CsLint key takes precedence
 - **Tier 4** use `dotnet_diagnostic.CSLINT*.severity` keys where the raw value *is* the severity:
   - `dotnet_diagnostic.CSLINT300.severity = warning` — no colon-separated value
-  - `IsEnabled` checks `GetSeverityForKey(...) != LintSeverity.None` — rule is enabled by default (active when key absent)
+  - `IsEnabled` checks `GetDiagnosticSeverity(...) is not null and not LintSeverity.None` — rule is opt-in (disabled when key absent), matching .NET SDK behavior
 
 ## Rule ID convention
 

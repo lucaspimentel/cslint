@@ -69,7 +69,7 @@ internal sealed class RedundantAwaitRule : IRuleDefinition, ISemanticRuleHandler
         type.ContainingNamespace is { Name: "Tasks", ContainingNamespace.Name: "Threading", ContainingNamespace.ContainingNamespace.Name: "System" };
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetSeverityForKey("dotnet_diagnostic.CSLINT307.severity") != LintSeverity.None;
+        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CSLINT307.severity") is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
 

@@ -88,4 +88,11 @@ public sealed class LintConfiguration(IReadOnlyDictionary<string, string> proper
         (string? _, string? severity) = GetValueWithSeverity(key);
         return ParseSeverity(severity);
     }
+
+    /// <summary>
+    /// Parses the raw value of a <c>dotnet_diagnostic.*.severity</c> key directly as a severity.
+    /// Returns <c>null</c> when the key is absent (rule not configured).
+    /// </summary>
+    public LintSeverity? GetDiagnosticSeverity(string key) =>
+        ParseSeverity(GetValue(key));
 }

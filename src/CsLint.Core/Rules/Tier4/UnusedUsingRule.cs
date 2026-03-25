@@ -16,7 +16,7 @@ internal sealed class UnusedUsingRule : IRuleDefinition, ISemanticRuleHandler
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetSeverityForKey("dotnet_diagnostic.CSLINT300.severity") != LintSeverity.None;
+        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CSLINT300.severity") is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
 

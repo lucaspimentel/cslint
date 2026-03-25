@@ -17,7 +17,7 @@ internal sealed class SelfAssignmentRule : IRuleDefinition, ISemanticRuleHandler
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetSeverityForKey("dotnet_diagnostic.CSLINT304.severity") != LintSeverity.None;
+        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CSLINT304.severity") is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
 
