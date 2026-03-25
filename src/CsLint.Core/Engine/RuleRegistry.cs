@@ -60,6 +60,7 @@ public sealed class RuleRegistry
         registry.Register(new CollectionInitializerRule());
         registry.Register(new ExpressionBodiedLambdasRule());
         registry.Register(new ExpressionBodiedLocalFunctionsRule());
+        registry.Register(new StaticLocalFunctionRule());
         registry.Register(new PatternMatchingNotRule());
         registry.Register(new PatternMatchingCombinatorRule());
         registry.Register(new PrimaryConstructorRule());

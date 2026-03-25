@@ -137,6 +137,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0033 | Explicit tuple names | `dotnet_style_explicit_tuple_names` | IDE0033 |
 | IDE0037 | Inferred tuple names | `dotnet_style_prefer_inferred_tuple_names` | IDE0037 |
 | IDE0340 | Unbound generic in nameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |
+| IDE0062 | Prefer static local function | `csharp_prefer_static_local_function` | IDE0062 |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
 
