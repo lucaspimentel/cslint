@@ -139,6 +139,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0340 | Unbound generic in nameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |
 | IDE0062 | Prefer static local function | `csharp_prefer_static_local_function` | IDE0062 |
 | IDE0320 | Prefer static anonymous function | `csharp_prefer_static_anonymous_function` | IDE0320 |
+| IDE0150 | Prefer null check over type check | `csharp_style_prefer_null_check_over_type_check` | IDE0150 |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
 
