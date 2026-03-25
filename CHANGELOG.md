@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.7.0] - 2026-03-25
 
 ### Added
 - Add IDE0033 — explicit tuple names rule (`dotnet_style_explicit_tuple_names`), flags `tuple.Item1` when named elements are available
