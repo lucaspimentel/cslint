@@ -2,12 +2,26 @@
 
 ## [Unreleased]
 
+### Added
+- Add 31 new CA code quality rules (enabled by default, matching .NET SDK behavior):
+  - Bug detection: CA2200 (rethrow), CA2011 (self-assign in setter), CA2219 (throw in finally), CA2014 (stackalloc in loop)
+  - Modifier checks: CA1012 (abstract public ctor), CA1047 (protected in sealed), CA1052 (static holder), CA1070 (virtual event)
+  - Attribute checks: CA1041 (Obsolete message), CA2019 (ThreadStatic initializer), CA2259 (ThreadStatic non-static)
+  - Declaration structure: CA1034 (nested type), CA1040 (empty interface), CA1044 (write-only property), CA1050 (type outside namespace), CA1051 (visible field), CA2211 (visible static field)
+  - Enum: CA1028 (enum base type), CA1712 (enum prefix), CA2217 (Flags values)
+  - Performance: CA1825 (zero-length array), CA1861 (constant array arg), CA2253 (numeric placeholder)
+  - Naming: CA1707 (underscores), CA1714 (Flags plural), CA1716 (keyword match), CA1720 (type name param), CA1721 (property vs Get method), CA1727 (PascalCase placeholder)
+  - Other: CA1021 (out params), CA1031 (catch Exception), CA2244 (duplicate index init), CA2245 (self-assign property)
+- Add IDE0052 — remove unread private member (assigned but never read), split from former CSLINT308
+- Add CA1715 pragma alias mapping to existing CSLINT101 (interface I prefix) and CSLINT106 (type param T prefix)
+
 ### Changed
-- **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.CSLINT3XX.severity = warning` to your `.editorconfig`.
+- **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.<ID>.severity = warning` to your `.editorconfig`.
 - **BREAKING:** Migrate 27 rules with 1:1 standard mappings from CSLINT* to standard IDE* diagnostic IDs (e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT207→IDE0065). Old CSLINT IDs are preserved as pragma aliases for backward compatibility. The `--rules` CLI option also resolves old IDs transparently.
 - **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008 (var/explicit type), CSLINT201→IDE0021+IDE0025 (expression-bodied methods/properties), CSLINT210→IDE0029+IDE0016 (null coalescing/throw expression)
+- **BREAKING:** Migrate remaining 1:1 rules to standard IDs: CSLINT239→CA1852, CSLINT300→IDE0005, CSLINT306→IDE0004, CSLINT308→IDE0051
 - Merge CSLINT234 (InferredMemberNameRule) into IDE0037 — single rule now covers both `dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`
-- Force-disable CSLINT239 (SealedTypePreferenceRule) to prevent false positives until project-wide type hierarchy support is implemented
+- Force-disable CA1852 (SealedTypePreferenceRule) to prevent false positives until project-wide type hierarchy support is implemented
 
 ## [1.7.0] - 2026-03-25
 
