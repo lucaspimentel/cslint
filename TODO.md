@@ -78,8 +78,8 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **CA1727** — Use PascalCase for named placeholders
 
 #### Performance (CA18xx)
-- [ ] **CA1825** — Avoid zero-length array allocations (detect `new T[0]`)
-- [ ] **CA1861** — Avoid constant arrays as arguments
+- [x] **CA1825** — Avoid zero-length array allocations (detect `new T[0]`)
+- [x] **CA1861** — Avoid constant arrays as arguments
 
 #### Reliability (CA20xx)
 - [x] **CA2011** — Do not assign property within its setter
@@ -93,7 +93,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **CA2219** — Do not raise exceptions in exception clauses
 - [ ] **CA2244** — Do not duplicate indexed element initializations
 - [ ] **CA2245** — Do not assign a property to itself
-- [ ] **CA2253** — Named placeholders should not be numeric values
+- [x] **CA2253** — Named placeholders should not be numeric values
 - [x] **CA2259** — Ensure ThreadStatic is only used with static fields
 
 ### Implement remaining expression-bodied and null-checking rules

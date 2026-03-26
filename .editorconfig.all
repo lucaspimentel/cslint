@@ -256,6 +256,15 @@ dotnet_diagnostic.CA1712.severity = warning
 # CA2217: DoNotMarkEnumsWithFlagsAttribute (enabled by default)
 dotnet_diagnostic.CA2217.severity = warning
 
+# CA1825: AvoidZeroLengthArrayAllocations (enabled by default)
+dotnet_diagnostic.CA1825.severity = warning
+
+# CA1861: AvoidConstantArraysAsArguments (enabled by default)
+dotnet_diagnostic.CA1861.severity = warning
+
+# CA2253: NamedPlaceholdersShouldNotBeNumeric (enabled by default)
+dotnet_diagnostic.CA2253.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 

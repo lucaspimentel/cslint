@@ -170,6 +170,9 @@ public sealed class RuleRegistry
         registry.Register(new EnumStorageShouldBeInt32Rule());
         registry.Register(new EnumValuesPrefixedWithTypeNameRule());
         registry.Register(new FlagsEnumValuesRule());
+        registry.Register(new ZeroLengthArrayRule());
+        registry.Register(new ConstantArrayAsArgumentRule());
+        registry.Register(new NumericPlaceholderRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

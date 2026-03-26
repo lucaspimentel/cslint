@@ -99,6 +99,9 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1028 | Enum storage should be Int32 | `dotnet_diagnostic.CA1028.severity` | CA1028 |
 | CA1712 | Do not prefix enum values with type name | `dotnet_diagnostic.CA1712.severity` | CA1712 |
 | CA2217 | Do not mark enums with FlagsAttribute incorrectly | `dotnet_diagnostic.CA2217.severity` | CA2217 |
+| CA1825 | Avoid zero-length array allocations | `dotnet_diagnostic.CA1825.severity` | CA1825 |
+| CA1861 | Avoid constant arrays as arguments | `dotnet_diagnostic.CA1861.severity` | CA1861 |
+| CA2253 | Named placeholders should not be numeric | `dotnet_diagnostic.CA2253.severity` | CA2253 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -324,6 +327,9 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA1028 | CA1028 | Microsoft |
 | CA1712 | CA1712 | Microsoft |
 | CA2217 | CA2217 | Microsoft |
+| CA1825 | CA1825 | Microsoft |
+| CA1861 | CA1861 | Microsoft |
+| CA2253 | CA2253 | Microsoft |
 
 ## Future Candidates
 
