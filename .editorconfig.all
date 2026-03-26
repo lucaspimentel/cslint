@@ -196,6 +196,18 @@ csharp_no_unnecessary_initialization = true:warning
 # CA1852: SealedTypePreference
 csharp_prefer_sealed_types = true:warning
 
+# CA2011: DoNotAssignPropertyWithinItsSetter (enabled by default)
+dotnet_diagnostic.CA2011.severity = warning
+
+# CA2014: DoNotUseStackallocInLoops (enabled by default)
+dotnet_diagnostic.CA2014.severity = warning
+
+# CA2200: RethrowToPreserveStackDetails (enabled by default)
+dotnet_diagnostic.CA2200.severity = warning
+
+# CA2219: DoNotRaiseExceptionsInExceptionClauses (enabled by default)
+dotnet_diagnostic.CA2219.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 

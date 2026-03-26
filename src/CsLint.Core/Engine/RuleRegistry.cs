@@ -150,6 +150,10 @@ public sealed class RuleRegistry
         registry.Register(new DeclarationStatementSpacingRule());
         registry.Register(new IndentationFormattingRule());
         registry.Register(new PreserveSingleLineRule());
+        registry.Register(new RethrowRule());
+        registry.Register(new PropertySelfAssignmentInSetterRule());
+        registry.Register(new ThrowInFinallyRule());
+        registry.Register(new StackallocInLoopRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

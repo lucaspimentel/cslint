@@ -79,6 +79,10 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1821 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
 | CA1805 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization` | CA1805 |
 | CA1852 | Prefer sealed types | `csharp_prefer_sealed_types` | CA1852 |
+| CA2011 | Do not assign property within its setter | `dotnet_diagnostic.CA2011.severity` | CA2011 |
+| CA2014 | Do not use stackalloc in loops | `dotnet_diagnostic.CA2014.severity` | CA2014 |
+| CA2200 | Rethrow to preserve stack details | `dotnet_diagnostic.CA2200.severity` | CA2200 |
+| CA2219 | Do not raise exceptions in finally clauses | `dotnet_diagnostic.CA2219.severity` | CA2219 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -284,6 +288,10 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CS0414 | IDE0052 | C# compiler |
 | CS1717 | CSLINT304 | C# compiler |
 | CA1069 | CA1069 | Microsoft |
+| CA2011 | CA2011 | Microsoft |
+| CA2014 | CA2014 | Microsoft |
+| CA2200 | CA2200 | Microsoft |
+| CA2219 | CA2219 | Microsoft |
 
 ## Future Candidates
 

@@ -82,15 +82,15 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **CA1861** — Avoid constant arrays as arguments
 
 #### Reliability (CA20xx)
-- [ ] **CA2011** — Do not assign property within its setter
-- [ ] **CA2014** — Do not use stackalloc in loops
+- [x] **CA2011** — Do not assign property within its setter
+- [x] **CA2014** — Do not use stackalloc in loops
 - [ ] **CA2019** — ThreadStatic fields should not use inline initialization
 
 #### Usage (CA21xx)
-- [ ] **CA2200** — Rethrow to preserve stack details (detect `throw ex;` in catch)
+- [x] **CA2200** — Rethrow to preserve stack details (detect `throw ex;` in catch)
 - [ ] **CA2211** — Non-constant fields should not be visible
 - [ ] **CA2217** — Do not mark enums with FlagsAttribute (values not powers of 2)
-- [ ] **CA2219** — Do not raise exceptions in exception clauses
+- [x] **CA2219** — Do not raise exceptions in exception clauses
 - [ ] **CA2244** — Do not duplicate indexed element initializations
 - [ ] **CA2245** — Do not assign a property to itself
 - [ ] **CA2253** — Named placeholders should not be numeric values
