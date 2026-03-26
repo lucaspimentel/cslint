@@ -102,6 +102,12 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1825 | Avoid zero-length array allocations | `dotnet_diagnostic.CA1825.severity` | CA1825 |
 | CA1861 | Avoid constant arrays as arguments | `dotnet_diagnostic.CA1861.severity` | CA1861 |
 | CA2253 | Named placeholders should not be numeric | `dotnet_diagnostic.CA2253.severity` | CA2253 |
+| CA1707 | Identifiers should not contain underscores | `dotnet_diagnostic.CA1707.severity` | CA1707 |
+| CA1714 | Flags enums should have plural names | `dotnet_diagnostic.CA1714.severity` | CA1714 |
+| CA1716 | Identifiers should not match keywords | `dotnet_diagnostic.CA1716.severity` | CA1716 |
+| CA1720 | Identifiers should not contain type names | `dotnet_diagnostic.CA1720.severity` | CA1720 |
+| CA1721 | Property names should not match get methods | `dotnet_diagnostic.CA1721.severity` | CA1721 |
+| CA1727 | Use PascalCase for named placeholders | `dotnet_diagnostic.CA1727.severity` | CA1727 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -330,6 +336,13 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA1825 | CA1825 | Microsoft |
 | CA1861 | CA1861 | Microsoft |
 | CA2253 | CA2253 | Microsoft |
+| CA1707 | CA1707 | Microsoft |
+| CA1714 | CA1714 | Microsoft |
+| CA1715 | CSLINT101, CSLINT106 | Microsoft |
+| CA1716 | CA1716 | Microsoft |
+| CA1720 | CA1720 | Microsoft |
+| CA1721 | CA1721 | Microsoft |
+| CA1727 | CA1727 | Microsoft |
 
 ## Future Candidates
 

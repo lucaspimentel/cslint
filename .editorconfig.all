@@ -265,6 +265,26 @@ dotnet_diagnostic.CA1861.severity = warning
 # CA2253: NamedPlaceholdersShouldNotBeNumeric (enabled by default)
 dotnet_diagnostic.CA2253.severity = warning
 
+# CA1707: IdentifiersShouldNotContainUnderscores (enabled by default)
+dotnet_diagnostic.CA1707.severity = warning
+
+# CA1714: FlagsEnumsShouldHavePluralNames (enabled by default)
+dotnet_diagnostic.CA1714.severity = warning
+
+# CA1715: covered by CSLINT101 (interface I prefix) and CSLINT106 (type param T prefix)
+
+# CA1716: IdentifiersShouldNotMatchKeywords (enabled by default)
+dotnet_diagnostic.CA1716.severity = warning
+
+# CA1720: IdentifiersShouldNotContainTypeNames (enabled by default)
+dotnet_diagnostic.CA1720.severity = warning
+
+# CA1721: PropertyNamesShouldNotMatchGetMethods (enabled by default)
+dotnet_diagnostic.CA1721.severity = warning
+
+# CA1727: UsePascalCaseForNamedPlaceholders (enabled by default)
+dotnet_diagnostic.CA1727.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 

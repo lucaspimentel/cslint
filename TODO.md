@@ -68,14 +68,14 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **CA1070** — Do not declare event fields as virtual
 
 #### Naming (CA17xx)
-- [ ] **CA1707** — Identifiers should not contain underscores
+- [x] **CA1707** — Identifiers should not contain underscores
 - [x] **CA1712** — Do not prefix enum values with type name
-- [ ] **CA1714** — Flags enums should have plural names
-- [ ] **CA1715** — Identifiers should have correct prefix (interface `I`, generic `T`)
-- [ ] **CA1716** — Identifiers should not match keywords
-- [ ] **CA1720** — Identifiers should not contain type names
-- [ ] **CA1721** — Property names should not match get methods
-- [ ] **CA1727** — Use PascalCase for named placeholders
+- [x] **CA1714** — Flags enums should have plural names
+- [x] **CA1715** — Identifiers should have correct prefix (covered by CSLINT101 + CSLINT106; pragma alias added)
+- [x] **CA1716** — Identifiers should not match keywords
+- [x] **CA1720** — Identifiers should not contain type names
+- [x] **CA1721** — Property names should not match get methods
+- [x] **CA1727** — Use PascalCase for named placeholders
 
 #### Performance (CA18xx)
 - [x] **CA1825** — Avoid zero-length array allocations (detect `new T[0]`)

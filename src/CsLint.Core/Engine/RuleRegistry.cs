@@ -173,6 +173,12 @@ public sealed class RuleRegistry
         registry.Register(new ZeroLengthArrayRule());
         registry.Register(new ConstantArrayAsArgumentRule());
         registry.Register(new NumericPlaceholderRule());
+        registry.Register(new IdentifierUnderscoreRule());
+        registry.Register(new FlagsEnumPluralNameRule());
+        registry.Register(new IdentifierMatchesKeywordRule());
+        registry.Register(new IdentifierContainsTypeNameRule());
+        registry.Register(new PropertyNameMatchesGetMethodRule());
+        registry.Register(new PascalCasePlaceholderRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis
