@@ -161,6 +161,12 @@ public sealed class RuleRegistry
         registry.Register(new ThreadStaticOnNonStaticFieldRule());
         registry.Register(new ThreadStaticWithInitializerRule());
         registry.Register(new ObsoleteWithoutMessageRule());
+        registry.Register(new EmptyInterfaceRule());
+        registry.Register(new TypeOutsideNamespaceRule());
+        registry.Register(new VisibleInstanceFieldRule());
+        registry.Register(new WriteOnlyPropertyRule());
+        registry.Register(new VisibleNonConstStaticFieldRule());
+        registry.Register(new VisibleNestedTypeRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

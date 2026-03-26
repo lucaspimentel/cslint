@@ -57,13 +57,13 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **CA1021** — Avoid out parameters on public methods
 - [ ] **CA1028** — Enum storage should be Int32
 - [ ] **CA1031** — Do not catch general exception types (detect `catch (Exception)`)
-- [ ] **CA1034** — Nested types should not be visible
-- [ ] **CA1040** — Avoid empty interfaces
+- [x] **CA1034** — Nested types should not be visible
+- [x] **CA1040** — Avoid empty interfaces
 - [x] **CA1041** — Provide ObsoleteAttribute message
-- [ ] **CA1044** — Properties should not be write only
+- [x] **CA1044** — Properties should not be write only
 - [x] **CA1047** — Do not declare protected members in sealed types
-- [ ] **CA1050** — Declare types in namespaces
-- [ ] **CA1051** — Do not declare visible instance fields
+- [x] **CA1050** — Declare types in namespaces
+- [x] **CA1051** — Do not declare visible instance fields
 - [x] **CA1052** — Static holder types should be sealed
 - [x] **CA1070** — Do not declare event fields as virtual
 
@@ -88,7 +88,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 #### Usage (CA21xx)
 - [x] **CA2200** — Rethrow to preserve stack details (detect `throw ex;` in catch)
-- [ ] **CA2211** — Non-constant fields should not be visible
+- [x] **CA2211** — Non-constant fields should not be visible
 - [ ] **CA2217** — Do not mark enums with FlagsAttribute (values not powers of 2)
 - [x] **CA2219** — Do not raise exceptions in exception clauses
 - [ ] **CA2244** — Do not duplicate indexed element initializations

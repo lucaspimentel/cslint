@@ -90,6 +90,12 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1041 | Provide ObsoleteAttribute message | `dotnet_diagnostic.CA1041.severity` | CA1041 |
 | CA2019 | ThreadStatic fields should not use inline initialization | `dotnet_diagnostic.CA2019.severity` | CA2019 |
 | CA2259 | Ensure ThreadStatic is only used with static fields | `dotnet_diagnostic.CA2259.severity` | CA2259 |
+| CA1034 | Nested types should not be visible | `dotnet_diagnostic.CA1034.severity` | CA1034 |
+| CA1040 | Avoid empty interfaces | `dotnet_diagnostic.CA1040.severity` | CA1040 |
+| CA1044 | Properties should not be write only | `dotnet_diagnostic.CA1044.severity` | CA1044 |
+| CA1050 | Declare types in namespaces | `dotnet_diagnostic.CA1050.severity` | CA1050 |
+| CA1051 | Do not declare visible instance fields | `dotnet_diagnostic.CA1051.severity` | CA1051 |
+| CA2211 | Non-constant fields should not be visible | `dotnet_diagnostic.CA2211.severity` | CA2211 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -306,6 +312,12 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA1041 | CA1041 | Microsoft |
 | CA2019 | CA2019 | Microsoft |
 | CA2259 | CA2259 | Microsoft |
+| CA1034 | CA1034 | Microsoft |
+| CA1040 | CA1040 | Microsoft |
+| CA1044 | CA1044 | Microsoft |
+| CA1050 | CA1050 | Microsoft |
+| CA1051 | CA1051 | Microsoft |
+| CA2211 | CA2211 | Microsoft |
 
 ## Future Candidates
 

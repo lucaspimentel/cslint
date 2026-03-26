@@ -195,6 +195,12 @@ public static class PragmaAliasMap
             ["CA1041"] = ["CA1041"],
             ["CA2019"] = ["CA2019"],
             ["CA2259"] = ["CA2259"],
+            ["CA1034"] = ["CA1034"],
+            ["CA1040"] = ["CA1040"],
+            ["CA1044"] = ["CA1044"],
+            ["CA1050"] = ["CA1050"],
+            ["CA1051"] = ["CA1051"],
+            ["CA2211"] = ["CA2211"],
 
             // Backward compatibility (old CSLINT IDs → new CA IDs)
             ["CSLINT237"] = ["CA1821"],

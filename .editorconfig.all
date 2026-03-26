@@ -229,6 +229,24 @@ dotnet_diagnostic.CA2019.severity = warning
 # CA2259: EnsureThreadStaticIsOnlyUsedWithStaticFields (enabled by default)
 dotnet_diagnostic.CA2259.severity = warning
 
+# CA1034: NestedTypesShouldNotBeVisible (enabled by default)
+dotnet_diagnostic.CA1034.severity = warning
+
+# CA1040: AvoidEmptyInterfaces (enabled by default)
+dotnet_diagnostic.CA1040.severity = warning
+
+# CA1044: PropertiesShouldNotBeWriteOnly (enabled by default)
+dotnet_diagnostic.CA1044.severity = warning
+
+# CA1050: DeclareTypesInNamespaces (enabled by default)
+dotnet_diagnostic.CA1050.severity = warning
+
+# CA1051: DoNotDeclareVisibleInstanceFields (enabled by default)
+dotnet_diagnostic.CA1051.severity = warning
+
+# CA2211: NonConstantFieldsShouldNotBeVisible (enabled by default)
+dotnet_diagnostic.CA2211.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 
