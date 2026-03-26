@@ -247,6 +247,15 @@ dotnet_diagnostic.CA1051.severity = warning
 # CA2211: NonConstantFieldsShouldNotBeVisible (enabled by default)
 dotnet_diagnostic.CA2211.severity = warning
 
+# CA1028: EnumStorageShouldBeInt32 (enabled by default)
+dotnet_diagnostic.CA1028.severity = warning
+
+# CA1712: DoNotPrefixEnumValuesWithTypeName (enabled by default)
+dotnet_diagnostic.CA1712.severity = warning
+
+# CA2217: DoNotMarkEnumsWithFlagsAttribute (enabled by default)
+dotnet_diagnostic.CA2217.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 

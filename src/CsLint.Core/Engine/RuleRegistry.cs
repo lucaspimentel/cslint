@@ -167,6 +167,9 @@ public sealed class RuleRegistry
         registry.Register(new WriteOnlyPropertyRule());
         registry.Register(new VisibleNonConstStaticFieldRule());
         registry.Register(new VisibleNestedTypeRule());
+        registry.Register(new EnumStorageShouldBeInt32Rule());
+        registry.Register(new EnumValuesPrefixedWithTypeNameRule());
+        registry.Register(new FlagsEnumValuesRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

@@ -96,6 +96,9 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1050 | Declare types in namespaces | `dotnet_diagnostic.CA1050.severity` | CA1050 |
 | CA1051 | Do not declare visible instance fields | `dotnet_diagnostic.CA1051.severity` | CA1051 |
 | CA2211 | Non-constant fields should not be visible | `dotnet_diagnostic.CA2211.severity` | CA2211 |
+| CA1028 | Enum storage should be Int32 | `dotnet_diagnostic.CA1028.severity` | CA1028 |
+| CA1712 | Do not prefix enum values with type name | `dotnet_diagnostic.CA1712.severity` | CA1712 |
+| CA2217 | Do not mark enums with FlagsAttribute incorrectly | `dotnet_diagnostic.CA2217.severity` | CA2217 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -318,6 +321,9 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA1050 | CA1050 | Microsoft |
 | CA1051 | CA1051 | Microsoft |
 | CA2211 | CA2211 | Microsoft |
+| CA1028 | CA1028 | Microsoft |
+| CA1712 | CA1712 | Microsoft |
+| CA2217 | CA2217 | Microsoft |
 
 ## Future Candidates
 

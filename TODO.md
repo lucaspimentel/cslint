@@ -55,7 +55,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 #### Design (CA10xx)
 - [x] **CA1012** — Abstract types should not have public constructors
 - [ ] **CA1021** — Avoid out parameters on public methods
-- [ ] **CA1028** — Enum storage should be Int32
+- [x] **CA1028** — Enum storage should be Int32
 - [ ] **CA1031** — Do not catch general exception types (detect `catch (Exception)`)
 - [x] **CA1034** — Nested types should not be visible
 - [x] **CA1040** — Avoid empty interfaces
@@ -69,7 +69,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 #### Naming (CA17xx)
 - [ ] **CA1707** — Identifiers should not contain underscores
-- [ ] **CA1712** — Do not prefix enum values with type name
+- [x] **CA1712** — Do not prefix enum values with type name
 - [ ] **CA1714** — Flags enums should have plural names
 - [ ] **CA1715** — Identifiers should have correct prefix (interface `I`, generic `T`)
 - [ ] **CA1716** — Identifiers should not match keywords
@@ -89,7 +89,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 #### Usage (CA21xx)
 - [x] **CA2200** — Rethrow to preserve stack details (detect `throw ex;` in catch)
 - [x] **CA2211** — Non-constant fields should not be visible
-- [ ] **CA2217** — Do not mark enums with FlagsAttribute (values not powers of 2)
+- [x] **CA2217** — Do not mark enums with FlagsAttribute (values not powers of 2)
 - [x] **CA2219** — Do not raise exceptions in exception clauses
 - [ ] **CA2244** — Do not duplicate indexed element initializations
 - [ ] **CA2245** — Do not assign a property to itself
