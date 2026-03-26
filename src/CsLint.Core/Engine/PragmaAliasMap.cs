@@ -180,10 +180,15 @@ public static class PragmaAliasMap
             ["CS1717"] = ["CSLINT304"],
 
             // Microsoft CA (code quality)
-            ["CA1069"] = ["CSLINT303"],
-            ["CA1821"] = ["CSLINT237"],
-            ["CA1805"] = ["CSLINT238"],
+            ["CA1069"] = ["CA1069"],
+            ["CA1821"] = ["CA1821"],
+            ["CA1805"] = ["CA1805"],
             ["CA1852"] = ["CSLINT239"],
+
+            // Backward compatibility (old CSLINT IDs → new CA IDs)
+            ["CSLINT237"] = ["CA1821"],
+            ["CSLINT238"] = ["CA1805"],
+            ["CSLINT303"] = ["CA1069"],
         };
 
     public static bool TryGetMappedIds(string id, out string[] cslintIds) =>

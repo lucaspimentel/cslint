@@ -76,8 +76,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0037 | Inferred member name | `dotnet_style_prefer_inferred_tuple_names`, `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
 | IDE0075 | Simplify boolean expression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
 | IDE0170 | Extended property pattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
-| CSLINT237 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
-| CSLINT238 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization` | CA1805 |
+| CA1821 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
+| CA1805 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization` | CA1805 |
 | CSLINT239 | Prefer sealed types | `csharp_prefer_sealed_types` | CA1852 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
@@ -155,7 +155,7 @@ These rules use the Roslyn semantic model and are only active when the `--semant
 | CSLINT300 | Unused using directive | `dotnet_diagnostic.CSLINT300.severity` | IDE0005, CS8019 |
 | CSLINT301 | Unused local variable | `dotnet_diagnostic.CSLINT301.severity` | CS0219 |
 | CSLINT302 | Unreachable code | `dotnet_diagnostic.CSLINT302.severity` | CS0162 |
-| CSLINT303 | Duplicate enum values | `dotnet_diagnostic.CSLINT303.severity` | CA1069 |
+| CA1069 | Duplicate enum values | `dotnet_diagnostic.CA1069.severity` | CA1069 |
 | CSLINT304 | Self-assignment | `dotnet_diagnostic.CSLINT304.severity` | CS1717 |
 | CSLINT306 | Unnecessary cast | `dotnet_diagnostic.CSLINT306.severity` | IDE0004 |
 | CSLINT307 | Redundant await | `dotnet_diagnostic.CSLINT307.severity` | -- |
@@ -272,8 +272,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0052 | CSLINT308 | Microsoft |
 | IDE0075 | IDE0075 | Microsoft |
 | IDE0170 | IDE0170 | Microsoft |
-| CA1821 | CSLINT237 | Microsoft |
-| CA1805 | CSLINT238 | Microsoft |
+| CA1821 | CA1821 | Microsoft |
+| CA1805 | CA1805 | Microsoft |
 | CA1852 | CSLINT239 | Microsoft |
 | IDE0004 | CSLINT306 | Microsoft |
 | IDE0005 | CSLINT300 | Microsoft |
@@ -282,7 +282,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CS0219 | CSLINT301 | C# compiler |
 | CS0414 | CSLINT308 | C# compiler |
 | CS1717 | CSLINT304 | C# compiler |
-| CA1069 | CSLINT303 | Microsoft |
+| CA1069 | CA1069 | Microsoft |
 
 ## Future Candidates
 

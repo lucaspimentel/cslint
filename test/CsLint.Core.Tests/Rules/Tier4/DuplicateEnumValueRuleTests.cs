@@ -26,7 +26,7 @@ public class DuplicateEnumValueRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT303", diagnostic.RuleId);
+        Assert.Equal("CA1069", diagnostic.RuleId);
         Assert.Contains("Blue", diagnostic.Message);
         Assert.Contains("Red", diagnostic.Message);
     }
@@ -49,7 +49,7 @@ public class DuplicateEnumValueRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT303", diagnostic.RuleId);
+        Assert.Equal("CA1069", diagnostic.RuleId);
         Assert.Contains("C", diagnostic.Message);
         Assert.Contains("B", diagnostic.Message);
     }
@@ -92,7 +92,7 @@ public class DuplicateEnumValueRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT303", diagnostic.RuleId);
+        Assert.Equal("CA1069", diagnostic.RuleId);
         Assert.Contains("B", diagnostic.Message);
         Assert.Contains("A", diagnostic.Message);
     }

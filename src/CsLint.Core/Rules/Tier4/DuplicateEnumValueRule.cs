@@ -7,16 +7,16 @@ namespace Cslint.Core.Rules.Tier4;
 
 internal sealed class DuplicateEnumValueRule : IRuleDefinition, ISemanticRuleHandler
 {
-    public string RuleId => "CSLINT303";
+    public string RuleId => "CA1069";
 
     public string Name => "DuplicateEnumValue";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.CSLINT303.severity"];
+    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.CA1069.severity"];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CSLINT303.severity") is not null and not LintSeverity.None;
+        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CA1069.severity") is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
 

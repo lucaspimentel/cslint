@@ -187,10 +187,10 @@ dotnet_style_prefer_simplified_boolean_expressions = true:warning
 # CSLINT236: ExtendedPropertyPattern
 csharp_style_prefer_extended_property_pattern = true:warning
 
-# CSLINT237: EmptyFinalizer
+# CA1821: EmptyFinalizer
 csharp_no_empty_finalizers = true:warning
 
-# CSLINT238: UnnecessaryInitialization
+# CA1805: UnnecessaryInitialization
 csharp_no_unnecessary_initialization = true:warning
 
 # CSLINT239: SealedTypePreference
@@ -302,8 +302,8 @@ dotnet_diagnostic.CSLINT301.severity = warning
 # CSLINT302: UnreachableCode
 dotnet_diagnostic.CSLINT302.severity = warning
 
-# CSLINT303: DuplicateEnumValue
-dotnet_diagnostic.CSLINT303.severity = warning
+# CA1069: DuplicateEnumValue
+dotnet_diagnostic.CA1069.severity = warning
 
 # CSLINT304: SelfAssignment
 dotnet_diagnostic.CSLINT304.severity = warning

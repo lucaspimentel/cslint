@@ -53,7 +53,7 @@ public sealed class UnnecessaryInitializationRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT238", diagnostics[0].RuleId);
+        Assert.Equal("CA1805", diagnostics[0].RuleId);
     }
 
     [Theory]

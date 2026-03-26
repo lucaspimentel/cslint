@@ -20,7 +20,7 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
         "string", "object",
     };
 
-    public string RuleId => "CSLINT238";
+    public string RuleId => "CA1805";
 
     public string Name => "UnnecessaryInitialization";
 

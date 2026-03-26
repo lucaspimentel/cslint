@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class EmptyFinalizerRule : IRuleDefinition, IStyleRuleHandler
 {
-    public string RuleId => "CSLINT237";
+    public string RuleId => "CA1821";
 
     public string Name => "EmptyFinalizer";
 

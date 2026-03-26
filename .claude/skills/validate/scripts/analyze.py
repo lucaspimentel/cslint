@@ -99,8 +99,8 @@ def find_suspicious(data: list[dict]) -> dict[str, list[dict]]:
         if any(p in fp for p in (".g.cs", ".Generated.", "AssemblyInfo.cs", ".designer.cs")):
             suspicious["generated_file"].append(d)
 
-        # CSLINT238: "Do not initialize field" on const fields (constants require initializers)
-        if rid == "CSLINT238" and "Do not initialize field" in msg:
+        # CA1805: "Do not initialize field" on const fields (constants require initializers)
+        if rid == "CA1805" and "Do not initialize field" in msg:
             suspicious["possible_const_field_init"].append(d)
 
         # CSLINT251: "Field should be private" — may be in struct/interop context

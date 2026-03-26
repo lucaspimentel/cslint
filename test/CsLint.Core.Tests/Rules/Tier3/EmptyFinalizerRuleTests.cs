@@ -29,7 +29,7 @@ public class EmptyFinalizerRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT237", diagnostics[0].RuleId);
+        Assert.Equal("CA1821", diagnostics[0].RuleId);
     }
 
     [Fact]

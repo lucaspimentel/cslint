@@ -91,7 +91,8 @@ public sealed class PatternMatchingRule : IRuleDefinition, IStyleRuleHandler
         return false;
     }
 
-    public bool IsEnabled(LintConfiguration configuration) => true;
+    public bool IsEnabled(LintConfiguration configuration) =>
+        configuration.GetValue("csharp_style_pattern_matching_over_is_with_cast_check") is not null;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
