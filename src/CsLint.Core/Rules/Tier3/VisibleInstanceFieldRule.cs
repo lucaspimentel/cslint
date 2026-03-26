@@ -39,6 +39,12 @@ public sealed class VisibleInstanceFieldRule : IRuleDefinition
             return false;
         }
 
+        // Skip fields in structs — public fields are standard practice for structs
+        if (field.Parent is StructDeclarationSyntax or RecordDeclarationSyntax { ClassOrStructKeyword.RawKind: (int)SyntaxKind.StructKeyword })
+        {
+            return false;
+        }
+
         // Must be public or protected
         return HasModifier(field.Modifiers, SyntaxKind.PublicKeyword) ||
             HasModifier(field.Modifiers, SyntaxKind.ProtectedKeyword);

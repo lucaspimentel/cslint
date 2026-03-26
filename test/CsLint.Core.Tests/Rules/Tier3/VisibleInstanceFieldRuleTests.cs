@@ -26,6 +26,9 @@ public class VisibleInstanceFieldRuleTests
     [InlineData("class C { internal int Field; }")]
     [InlineData("class C { public static int Field; }")]
     [InlineData("class C { public const int Field = 0; }")]
+    [InlineData("struct S { public int Field; }")]
+    [InlineData("readonly struct S { public readonly int Field; }")]
+    [InlineData("record struct S(int X) { public int Field; }")]
     public void Analyze_NonVisibleOrStaticField_NoDiagnostic(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

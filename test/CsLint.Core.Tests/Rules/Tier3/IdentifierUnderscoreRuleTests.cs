@@ -12,7 +12,6 @@ public class IdentifierUnderscoreRuleTests
     [InlineData("namespace N; class C { public void Do_Work() { } }")]
     [InlineData("namespace N; class C { public int My_Prop { get; } }")]
     [InlineData("namespace N; public class My_Class { }")]
-    [InlineData("namespace N; enum E { Value_One }")]
     public void Analyze_UnderscoreInIdentifier_ReturnsDiagnostic(
         string source)
     {
@@ -28,6 +27,7 @@ public class IdentifierUnderscoreRuleTests
     [InlineData("namespace N; class C { private int _field; }")]
     [InlineData("namespace N; class C { private void Do_Work() { } }")]
     [InlineData("namespace N; class C { public void DoWork() { } }")]
+    [InlineData("namespace N; enum E { Value_One }")]
     public void Analyze_PrivateOrNoUnderscore_NoDiagnostic(string source)
     {
         RuleContext context = TestHelper.CreateContext(source);

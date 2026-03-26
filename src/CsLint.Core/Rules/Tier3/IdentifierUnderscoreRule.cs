@@ -75,10 +75,7 @@ public sealed class IdentifierUnderscoreRule : IRuleDefinition
                     Report(typeDecl.Identifier, context.FilePath, ref diagnostics);
                     break;
 
-                case EnumMemberDeclarationSyntax enumMember
-                    when enumMember.Identifier.Text.Contains('_'):
-                    Report(enumMember.Identifier, context.FilePath, ref diagnostics);
-                    break;
+                // Enum members are excluded from CA1707 per .NET SDK behavior
             }
         }
 
