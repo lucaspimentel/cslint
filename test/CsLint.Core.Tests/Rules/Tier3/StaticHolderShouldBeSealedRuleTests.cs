@@ -141,6 +141,23 @@ public class StaticHolderShouldBeSealedRuleTests
     }
 
     [Fact]
+    public void Analyze_PartialClass_NoDiagnostic()
+    {
+        // Partial classes may have instance members in other files
+        const string source = """
+            partial class C
+            {
+                public static void DoWork() { }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
     public void Analyze_AbstractClass_NoDiagnostic()
     {
         const string source = """

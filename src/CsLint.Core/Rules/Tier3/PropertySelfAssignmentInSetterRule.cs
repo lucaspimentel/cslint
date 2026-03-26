@@ -36,6 +36,13 @@ public sealed class PropertySelfAssignmentInSetterRule : IRuleDefinition
                 continue;
             }
 
+            // Skip explicit interface implementations — the setter
+            // delegates to the class's own property, not self-assignment
+            if (property.ExplicitInterfaceSpecifier is not null)
+            {
+                continue;
+            }
+
             foreach (AccessorDeclarationSyntax accessor in property.AccessorList.Accessors)
             {
                 if (!accessor.IsKind(SyntaxKind.SetAccessorDeclaration) &&

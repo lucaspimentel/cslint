@@ -38,6 +38,13 @@ public sealed class PropertySelfAssignmentRule : IRuleDefinition
                 continue;
             }
 
+            // Skip assignments inside object initializers —
+            // new Foo { X = X } assigns from this.X to target.X
+            if (assignment.Parent is InitializerExpressionSyntax)
+            {
+                continue;
+            }
+
             // Match: X = X or this.X = this.X or obj.X = obj.X
             string leftText = assignment.Left.ToString();
             string rightText = assignment.Right.ToString();

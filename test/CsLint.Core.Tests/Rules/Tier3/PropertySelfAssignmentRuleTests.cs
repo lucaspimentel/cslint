@@ -57,6 +57,32 @@ public class PropertySelfAssignmentRuleTests
     }
 
     [Fact]
+    public void Analyze_ObjectInitializer_NoDiagnostic()
+    {
+        const string source = """
+            namespace N;
+
+            class Tags
+            {
+                public string Name { get; set; }
+            }
+
+            class C
+            {
+                public string Name { get; set; }
+
+                void M()
+                {
+                    var t = new Tags { Name = Name };
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        Assert.Empty(_rule.Analyze(context));
+    }
+
+    [Fact]
     public void Analyze_AssignmentInPropertySetter_NoDiagnostic()
     {
         // CA2011 handles this case

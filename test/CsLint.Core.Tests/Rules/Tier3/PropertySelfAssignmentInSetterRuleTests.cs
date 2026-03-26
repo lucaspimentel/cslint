@@ -113,6 +113,30 @@ public class PropertySelfAssignmentInSetterRuleTests
     }
 
     [Fact]
+    public void Analyze_ExplicitInterfaceImplementation_NoDiagnostic()
+    {
+        const string source = """
+            interface IFoo { int Value { get; set; } }
+
+            class C : IFoo
+            {
+                public int Value { get; set; }
+
+                int IFoo.Value
+                {
+                    get => Value;
+                    set => Value = value;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
     public void Analyze_Disabled_NoDiagnostic()
     {
         const string source = """

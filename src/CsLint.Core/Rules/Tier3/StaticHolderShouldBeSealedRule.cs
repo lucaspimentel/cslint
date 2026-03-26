@@ -104,7 +104,8 @@ public sealed class StaticHolderShouldBeSealedRule : IRuleDefinition
             // Skip if already static, sealed, or abstract
             if (HasModifier(classDecl.Modifiers, SyntaxKind.StaticKeyword) ||
                 HasModifier(classDecl.Modifiers, SyntaxKind.SealedKeyword) ||
-                HasModifier(classDecl.Modifiers, SyntaxKind.AbstractKeyword))
+                HasModifier(classDecl.Modifiers, SyntaxKind.AbstractKeyword) ||
+                HasModifier(classDecl.Modifiers, SyntaxKind.PartialKeyword))
             {
                 continue;
             }
