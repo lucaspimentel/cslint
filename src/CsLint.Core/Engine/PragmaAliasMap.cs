@@ -129,8 +129,8 @@ public static class PragmaAliasMap
             ["IDE0305"] = ["CSLINT222"],
             ["IDE0004"] = ["IDE0004"],
             ["IDE0005"] = ["IDE0005"],
-            ["IDE0051"] = ["CSLINT308"],
-            ["IDE0052"] = ["CSLINT308"],
+            ["IDE0051"] = ["IDE0051"],
+            ["IDE0052"] = ["IDE0052"],
             ["IDE1006"] = ["CSLINT102", "CSLINT103", "CSLINT104"],
             ["IDE2000"] = ["CSLINT008"],
             ["IDE2001"] = ["CSLINT228"],
@@ -174,9 +174,9 @@ public static class PragmaAliasMap
 
             // C# compiler
             ["CS0162"] = ["CSLINT302"],
-            ["CS0169"] = ["CSLINT308"],
+            ["CS0169"] = ["IDE0051"],
             ["CS0219"] = ["CSLINT301"],
-            ["CS0414"] = ["CSLINT308"],
+            ["CS0414"] = ["IDE0052"],
             ["CS1717"] = ["CSLINT304"],
 
             // Microsoft CA (code quality)
@@ -194,6 +194,7 @@ public static class PragmaAliasMap
             // Backward compatibility (old CSLINT IDs → new IDE IDs)
             ["CSLINT300"] = ["IDE0005"],
             ["CSLINT306"] = ["IDE0004"],
+            ["CSLINT308"] = ["IDE0051", "IDE0052"],
         };
 
     public static bool TryGetMappedIds(string id, out string[] cslintIds) =>

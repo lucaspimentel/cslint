@@ -161,6 +161,7 @@ public sealed class RuleRegistry
         registry.Register(new UnnecessaryCastRule());
         registry.Register(new RedundantAwaitRule());
         registry.Register(new UnusedPrivateMemberRule());
+        registry.Register(new UnreadPrivateMemberRule());
 #endif
 
         return registry;

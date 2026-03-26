@@ -314,5 +314,8 @@ dotnet_diagnostic.IDE0004.severity = warning
 # CSLINT307: RedundantAwait
 dotnet_diagnostic.CSLINT307.severity = warning
 
-# CSLINT308: UnusedPrivateMember
-dotnet_diagnostic.CSLINT308.severity = warning
+# IDE0051: RemoveUnusedPrivateMember
+dotnet_diagnostic.IDE0051.severity = warning
+
+# IDE0052: RemoveUnreadPrivateMember
+dotnet_diagnostic.IDE0052.severity = warning

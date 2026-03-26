@@ -159,7 +159,8 @@ These rules use the Roslyn semantic model and are only active when the `--semant
 | CSLINT304 | Self-assignment | `dotnet_diagnostic.CSLINT304.severity` | CS1717 |
 | IDE0004 | Unnecessary cast | `dotnet_diagnostic.IDE0004.severity` | IDE0004 |
 | CSLINT307 | Redundant await | `dotnet_diagnostic.CSLINT307.severity` | -- |
-| CSLINT308 | Unused private member | `dotnet_diagnostic.CSLINT308.severity` | IDE0051, IDE0052, CS0169, CS0414 |
+| IDE0051 | Remove unused private member | `dotnet_diagnostic.IDE0051.severity` | IDE0051, CS0169 |
+| IDE0052 | Remove unread private member | `dotnet_diagnostic.IDE0052.severity` | IDE0052, CS0414 |
 
 ## Pragma Alias Support
 
@@ -268,8 +269,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE2005 | CSLINT232 | Microsoft |
 | IDE2006 | CSLINT233 | Microsoft |
 | IDE0037 | IDE0037 | Microsoft |
-| IDE0051 | CSLINT308 | Microsoft |
-| IDE0052 | CSLINT308 | Microsoft |
+| IDE0051 | IDE0051 | Microsoft |
+| IDE0052 | IDE0052 | Microsoft |
 | IDE0075 | IDE0075 | Microsoft |
 | IDE0170 | IDE0170 | Microsoft |
 | CA1821 | CA1821 | Microsoft |
@@ -278,9 +279,9 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0004 | IDE0004 | Microsoft |
 | IDE0005 | IDE0005 | Microsoft |
 | CS0162 | CSLINT302 | C# compiler |
-| CS0169 | CSLINT308 | C# compiler |
+| CS0169 | IDE0051 | C# compiler |
 | CS0219 | CSLINT301 | C# compiler |
-| CS0414 | CSLINT308 | C# compiler |
+| CS0414 | IDE0052 | C# compiler |
 | CS1717 | CSLINT304 | C# compiler |
 | CA1069 | CA1069 | Microsoft |
 

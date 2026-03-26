@@ -8,11 +8,11 @@ namespace Cslint.Core.Rules.Tier4;
 
 internal sealed class UnusedPrivateMemberRule : IRuleDefinition, ISemanticRuleHandler
 {
-    public string RuleId => "CSLINT308";
+    public string RuleId => "IDE0051";
 
-    public string Name => "UnusedPrivateMember";
+    public string Name => "RemoveUnusedPrivateMember";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.CSLINT308.severity"];
+    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.IDE0051.severity"];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -198,7 +198,7 @@ internal sealed class UnusedPrivateMemberRule : IRuleDefinition, ISemanticRuleHa
         };
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CSLINT308.severity") is not null and not LintSeverity.None;
+        configuration.GetDiagnosticSeverity("dotnet_diagnostic.IDE0051.severity") is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
 

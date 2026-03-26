@@ -26,7 +26,7 @@ public class UnusedPrivateMemberRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT308", diagnostic.RuleId);
+        Assert.Equal("IDE0051", diagnostic.RuleId);
         Assert.Contains("_unused", diagnostic.Message);
     }
 
@@ -46,7 +46,7 @@ public class UnusedPrivateMemberRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT308", diagnostic.RuleId);
+        Assert.Equal("IDE0051", diagnostic.RuleId);
         Assert.Contains("Unused", diagnostic.Message);
     }
 
@@ -66,7 +66,7 @@ public class UnusedPrivateMemberRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT308", diagnostic.RuleId);
+        Assert.Equal("IDE0051", diagnostic.RuleId);
         Assert.Contains("Unused", diagnostic.Message);
     }
 
@@ -88,7 +88,7 @@ public class UnusedPrivateMemberRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT308", diagnostic.RuleId);
+        Assert.Equal("IDE0051", diagnostic.RuleId);
         Assert.Contains("Unused", diagnostic.Message);
     }
 
