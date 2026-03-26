@@ -14,6 +14,11 @@
   - Other: CA1021 (out params), CA1031 (catch Exception), CA2244 (duplicate index init), CA2245 (self-assign property)
 - Add IDE0052 — remove unread private member (assigned but never read), split from former CSLINT308
 - Add CA1715 pragma alias mapping to existing CSLINT101 (interface I prefix) and CSLINT106 (type param T prefix)
+- Add IDE0022 — prefer block body for methods (paired with IDE0021, same `csharp_style_expression_bodied_methods` config key)
+- Add IDE0023 — expression-bodied conversion operators (`csharp_style_expression_bodied_operators`)
+- Add IDE0024 — expression-bodied operators (`csharp_style_expression_bodied_operators`)
+- Add IDE0026 — expression-bodied indexers (`csharp_style_expression_bodied_indexers`)
+- Add IDE0027 — expression-bodied accessors (`csharp_style_expression_bodied_accessors`)
 
 ### Changed
 - **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.<ID>.severity = warning` to your `.editorconfig`.

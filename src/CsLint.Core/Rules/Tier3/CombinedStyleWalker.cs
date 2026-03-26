@@ -177,4 +177,54 @@ internal sealed class CombinedStyleWalker(IReadOnlyList<IStyleRuleHandler> handl
 
         base.VisitDestructorDeclaration(node);
     }
+
+    public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
+    {
+        foreach (IStyleRuleHandler handler in handlers)
+        {
+            handler.VisitConstructorDeclaration(node, config, Diagnostics);
+        }
+
+        base.VisitConstructorDeclaration(node);
+    }
+
+    public override void VisitOperatorDeclaration(OperatorDeclarationSyntax node)
+    {
+        foreach (IStyleRuleHandler handler in handlers)
+        {
+            handler.VisitOperatorDeclaration(node, config, Diagnostics);
+        }
+
+        base.VisitOperatorDeclaration(node);
+    }
+
+    public override void VisitConversionOperatorDeclaration(ConversionOperatorDeclarationSyntax node)
+    {
+        foreach (IStyleRuleHandler handler in handlers)
+        {
+            handler.VisitConversionOperatorDeclaration(node, config, Diagnostics);
+        }
+
+        base.VisitConversionOperatorDeclaration(node);
+    }
+
+    public override void VisitIndexerDeclaration(IndexerDeclarationSyntax node)
+    {
+        foreach (IStyleRuleHandler handler in handlers)
+        {
+            handler.VisitIndexerDeclaration(node, config, Diagnostics);
+        }
+
+        base.VisitIndexerDeclaration(node);
+    }
+
+    public override void VisitAccessorDeclaration(AccessorDeclarationSyntax node)
+    {
+        foreach (IStyleRuleHandler handler in handlers)
+        {
+            handler.VisitAccessorDeclaration(node, config, Diagnostics);
+        }
+
+        base.VisitAccessorDeclaration(node);
+    }
 }

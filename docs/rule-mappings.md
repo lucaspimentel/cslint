@@ -38,8 +38,12 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 |---|---|---|---|
 | IDE0007 | Prefer `var` | `csharp_style_var_when_type_is_apparent`, `csharp_style_var_for_built_in_types` | IDE0007 |
 | IDE0008 | Prefer explicit type | `csharp_style_var_for_built_in_types`, `csharp_style_var_elsewhere` | IDE0008 |
-| IDE0021 | Expression-bodied methods | `csharp_style_expression_bodied_methods` | IDE0021 |
+| IDE0021 | Expression-bodied methods | `csharp_style_expression_bodied_methods` | IDE0021, IDE0022 |
+| IDE0023 | Expression-bodied conversion operators | `csharp_style_expression_bodied_operators` | IDE0023 |
+| IDE0024 | Expression-bodied operators | `csharp_style_expression_bodied_operators` | IDE0024 |
 | IDE0025 | Expression-bodied properties | `csharp_style_expression_bodied_properties` | IDE0025 |
+| IDE0026 | Expression-bodied indexers | `csharp_style_expression_bodied_indexers` | IDE0026 |
+| IDE0027 | Expression-bodied accessors | `csharp_style_expression_bodied_accessors` | IDE0027 |
 | IDE0011 | Brace preference | `csharp_prefer_braces` | SA1500, IDE0011 |
 | CSLINT203 | Namespace declarations | `csharp_style_namespace_declarations` | IDE0160, IDE0161 |
 | CSLINT204 | `this.` qualification | `dotnet_style_qualification_for_*` | SA1101, IDE0003, IDE0009 |

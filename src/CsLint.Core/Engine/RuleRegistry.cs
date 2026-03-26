@@ -45,6 +45,10 @@ public sealed class RuleRegistry
         registry.Register(new ExplicitTypePreferenceRule());
         registry.Register(new ExpressionBodiedMethodsRule());
         registry.Register(new ExpressionBodiedPropertiesRule());
+        registry.Register(new ExpressionBodiedOperatorsRule());
+        registry.Register(new ExpressionBodiedConversionOperatorsRule());
+        registry.Register(new ExpressionBodiedIndexersRule());
+        registry.Register(new ExpressionBodiedAccessorsRule());
         registry.Register(new BracePreferenceRule());
         registry.Register(new NamespaceDeclarationRule());
         registry.Register(new ThisQualificationRule());

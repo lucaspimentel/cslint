@@ -5,15 +5,15 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Cslint.Core.Rules.Tier3;
 
 /// <summary>
-/// IDE0021: Use expression body for methods.
+/// IDE0024: Use expression body for operators.
 /// </summary>
-public sealed class ExpressionBodiedMethodsRule : IRuleDefinition, IStyleRuleHandler
+public sealed class ExpressionBodiedOperatorsRule : IRuleDefinition, IStyleRuleHandler
 {
-    private const string ConfigKey = "csharp_style_expression_bodied_methods";
+    private const string ConfigKey = "csharp_style_expression_bodied_operators";
 
-    public string RuleId => "IDE0021";
+    public string RuleId => "IDE0024";
 
-    public string Name => "ExpressionBodiedMethods";
+    public string Name => "ExpressionBodiedOperators";
 
     public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
 
@@ -22,22 +22,6 @@ public sealed class ExpressionBodiedMethodsRule : IRuleDefinition, IStyleRuleHan
     private static bool IsSingleStatement(BlockSyntax block) =>
         block.Statements.Count == 1 &&
         block.Statements[0] is ReturnStatementSyntax or ExpressionStatementSyntax;
-
-    private static void AddDiagnostic(SyntaxToken token, string ruleId, string message, List<LintDiagnostic> diagnostics)
-    {
-        FileLinePositionSpan span = token.GetLocation().GetLineSpan();
-
-        diagnostics.Add(
-            new LintDiagnostic
-            {
-                RuleId = ruleId,
-                Message = message,
-                Severity = LintSeverity.Info,
-                FilePath = span.Path,
-                Line = span.StartLinePosition.Line + 1,
-                Column = span.StartLinePosition.Character + 1,
-            });
-    }
 
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ConfigKey) is not null;
@@ -49,8 +33,8 @@ public sealed class ExpressionBodiedMethodsRule : IRuleDefinition, IStyleRuleHan
         return walker.Diagnostics;
     }
 
-    void IStyleRuleHandler.VisitMethodDeclaration(
-        MethodDeclarationSyntax node,
+    void IStyleRuleHandler.VisitOperatorDeclaration(
+        OperatorDeclarationSyntax node,
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
@@ -66,11 +50,18 @@ public sealed class ExpressionBodiedMethodsRule : IRuleDefinition, IStyleRuleHan
 
         if (preferExpression && node.ExpressionBody is null && node.Body is not null && IsSingleStatement(node.Body))
         {
-            AddDiagnostic(node.Identifier, "IDE0021", "Method can use expression body", diagnostics);
-        }
-        else if (!preferExpression && node.ExpressionBody is not null)
-        {
-            AddDiagnostic(node.Identifier, "IDE0022", "Method can use block body", diagnostics);
+            FileLinePositionSpan span = node.OperatorToken.GetLocation().GetLineSpan();
+
+            diagnostics.Add(
+                new LintDiagnostic
+                {
+                    RuleId = "IDE0024",
+                    Message = "Operator can use expression body",
+                    Severity = LintSeverity.Info,
+                    FilePath = span.Path,
+                    Line = span.StartLinePosition.Line + 1,
+                    Column = span.StartLinePosition.Character + 1,
+                });
         }
     }
 }

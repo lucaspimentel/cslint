@@ -53,4 +53,35 @@ public class ExpressionBodiedMethodsRuleTests
 
         Assert.Empty(diagnostics);
     }
+
+    [Fact]
+    public void Analyze_ExpressionBodiedMethod_WhenBlockPreferred_ReturnsIDE0022()
+    {
+        string source = "class C { int GetValue() => 42; }";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_style_expression_bodied_methods"] = "false",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("IDE0022", diagnostics[0].RuleId);
+    }
+
+    [Fact]
+    public void Analyze_BlockBodyMethod_WhenBlockPreferred_ReturnsNoDiagnostics()
+    {
+        string source = "class C { int GetValue() { return 42; } }";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_style_expression_bodied_methods"] = "false",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
 }

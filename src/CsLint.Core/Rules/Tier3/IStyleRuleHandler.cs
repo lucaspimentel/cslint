@@ -38,4 +38,14 @@ internal interface IStyleRuleHandler
     void VisitConditionalExpression(ConditionalExpressionSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
 
     void VisitDestructorDeclaration(DestructorDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
+
+    void VisitConstructorDeclaration(ConstructorDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
+
+    void VisitOperatorDeclaration(OperatorDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
+
+    void VisitConversionOperatorDeclaration(ConversionOperatorDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
+
+    void VisitIndexerDeclaration(IndexerDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
+
+    void VisitAccessorDeclaration(AccessorDeclarationSyntax node, LintConfiguration config, List<LintDiagnostic> diagnostics) { }
 }
