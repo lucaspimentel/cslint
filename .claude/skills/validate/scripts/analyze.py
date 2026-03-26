@@ -153,7 +153,7 @@ def find_suspicious(data: list[dict]) -> dict[str, list[dict]]:
     # Suggestion rules with outlier counts (5x+ median suggests rule is too aggressive)
     suggestion_rules = {
         "CSLINT200", "CSLINT201", "CSLINT208", "CSLINT209", "CSLINT210",
-        "CSLINT216", "CSLINT218", "CSLINT220", "CSLINT222", "CSLINT306",
+        "CSLINT216", "CSLINT218", "CSLINT220", "CSLINT222", "IDE0004",
     }
     suggestion_counts = {rid: len(items) for rid, items in by_rule.items() if rid in suggestion_rules and len(items) > 0}
     if len(suggestion_counts) >= 3:

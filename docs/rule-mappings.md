@@ -78,7 +78,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0170 | Extended property pattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
 | CA1821 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
 | CA1805 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization` | CA1805 |
-| CSLINT239 | Prefer sealed types | `csharp_prefer_sealed_types` | CA1852 |
+| CA1852 | Prefer sealed types | `csharp_prefer_sealed_types` | CA1852 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -152,12 +152,12 @@ These rules use the Roslyn semantic model and are only active when the `--semant
 
 | CsLint ID | Description | editorconfig Key | Third-Party IDs |
 |---|---|---|---|
-| CSLINT300 | Unused using directive | `dotnet_diagnostic.CSLINT300.severity` | IDE0005, CS8019 |
+| IDE0005 | Unused using directive | `dotnet_diagnostic.IDE0005.severity` | IDE0005, CS8019 |
 | CSLINT301 | Unused local variable | `dotnet_diagnostic.CSLINT301.severity` | CS0219 |
 | CSLINT302 | Unreachable code | `dotnet_diagnostic.CSLINT302.severity` | CS0162 |
 | CA1069 | Duplicate enum values | `dotnet_diagnostic.CA1069.severity` | CA1069 |
 | CSLINT304 | Self-assignment | `dotnet_diagnostic.CSLINT304.severity` | CS1717 |
-| CSLINT306 | Unnecessary cast | `dotnet_diagnostic.CSLINT306.severity` | IDE0004 |
+| IDE0004 | Unnecessary cast | `dotnet_diagnostic.IDE0004.severity` | IDE0004 |
 | CSLINT307 | Redundant await | `dotnet_diagnostic.CSLINT307.severity` | -- |
 | CSLINT308 | Unused private member | `dotnet_diagnostic.CSLINT308.severity` | IDE0051, IDE0052, CS0169, CS0414 |
 
@@ -274,9 +274,9 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0170 | IDE0170 | Microsoft |
 | CA1821 | CA1821 | Microsoft |
 | CA1805 | CA1805 | Microsoft |
-| CA1852 | CSLINT239 | Microsoft |
-| IDE0004 | CSLINT306 | Microsoft |
-| IDE0005 | CSLINT300 | Microsoft |
+| CA1852 | CA1852 | Microsoft |
+| IDE0004 | IDE0004 | Microsoft |
+| IDE0005 | IDE0005 | Microsoft |
 | CS0162 | CSLINT302 | C# compiler |
 | CS0169 | CSLINT308 | C# compiler |
 | CS0219 | CSLINT301 | C# compiler |

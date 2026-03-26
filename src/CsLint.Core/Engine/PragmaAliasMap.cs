@@ -127,8 +127,8 @@ public static class PragmaAliasMap
             ["IDE0303"] = ["CSLINT222"],
             ["IDE0304"] = ["CSLINT222"],
             ["IDE0305"] = ["CSLINT222"],
-            ["IDE0004"] = ["CSLINT306"],
-            ["IDE0005"] = ["CSLINT300"],
+            ["IDE0004"] = ["IDE0004"],
+            ["IDE0005"] = ["IDE0005"],
             ["IDE0051"] = ["CSLINT308"],
             ["IDE0052"] = ["CSLINT308"],
             ["IDE1006"] = ["CSLINT102", "CSLINT103", "CSLINT104"],
@@ -183,12 +183,17 @@ public static class PragmaAliasMap
             ["CA1069"] = ["CA1069"],
             ["CA1821"] = ["CA1821"],
             ["CA1805"] = ["CA1805"],
-            ["CA1852"] = ["CSLINT239"],
+            ["CA1852"] = ["CA1852"],
 
             // Backward compatibility (old CSLINT IDs → new CA IDs)
             ["CSLINT237"] = ["CA1821"],
             ["CSLINT238"] = ["CA1805"],
+            ["CSLINT239"] = ["CA1852"],
             ["CSLINT303"] = ["CA1069"],
+
+            // Backward compatibility (old CSLINT IDs → new IDE IDs)
+            ["CSLINT300"] = ["IDE0005"],
+            ["CSLINT306"] = ["IDE0004"],
         };
 
     public static bool TryGetMappedIds(string id, out string[] cslintIds) =>

@@ -7,16 +7,16 @@ namespace Cslint.Core.Rules.Tier4;
 
 internal sealed class UnusedUsingRule : IRuleDefinition, ISemanticRuleHandler
 {
-    public string RuleId => "CSLINT300";
+    public string RuleId => "IDE0005";
 
     public string Name => "UnusedUsingDirective";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.CSLINT300.severity"];
+    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.IDE0005.severity"];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CSLINT300.severity") is not null and not LintSeverity.None;
+        configuration.GetDiagnosticSeverity("dotnet_diagnostic.IDE0005.severity") is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
 

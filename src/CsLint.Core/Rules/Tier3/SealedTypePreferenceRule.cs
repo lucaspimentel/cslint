@@ -9,7 +9,7 @@ public sealed class SealedTypePreferenceRule : IRuleDefinition, IDescendantNodeH
 {
     private const string ConfigKey = "csharp_prefer_sealed_types";
 
-    public string RuleId => "CSLINT239";
+    public string RuleId => "CA1852";
 
     public string Name => "SealedTypePreference";
 

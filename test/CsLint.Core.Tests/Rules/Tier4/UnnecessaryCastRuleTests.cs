@@ -29,7 +29,7 @@ public class UnnecessaryCastRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT306", diagnostic.RuleId);
+        Assert.Equal("IDE0004", diagnostic.RuleId);
         Assert.Contains("int", diagnostic.Message);
     }
 
@@ -56,7 +56,7 @@ public class UnnecessaryCastRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT306", diagnostic.RuleId);
+        Assert.Equal("IDE0004", diagnostic.RuleId);
         Assert.Contains("Base", diagnostic.Message);
     }
 
@@ -83,7 +83,7 @@ public class UnnecessaryCastRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT306", diagnostic.RuleId);
+        Assert.Equal("IDE0004", diagnostic.RuleId);
         Assert.Contains("IDisposable", diagnostic.Message);
     }
 

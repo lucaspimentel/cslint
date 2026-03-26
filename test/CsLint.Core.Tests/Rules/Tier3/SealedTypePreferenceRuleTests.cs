@@ -24,7 +24,7 @@ public class SealedTypePreferenceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT239", diagnostics[0].RuleId);
+        Assert.Equal("CA1852", diagnostics[0].RuleId);
         Assert.Equal("Type should be sealed", diagnostics[0].Message);
     }
 
@@ -67,7 +67,7 @@ public class SealedTypePreferenceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT239", diagnostics[0].RuleId);
+        Assert.Equal("CA1852", diagnostics[0].RuleId);
     }
 
     [Fact]

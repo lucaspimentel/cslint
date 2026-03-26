@@ -2,7 +2,7 @@
 
 ## Low priority / high cost
 
-- [ ] **CSLINT239 project-wide type hierarchy** — two-pass architecture to reduce false positives on `SealedTypePreferenceRule` by building an in-memory `HashSet<string>` of inherited type names before the lint pass, so base classes aren't flagged. **Rule is force-disabled until this is implemented.**
+- [ ] **CA1852 project-wide type hierarchy** — two-pass architecture to reduce false positives on `SealedTypePreferenceRule` by building an in-memory `HashSet<string>` of inherited type names before the lint pass, so base classes aren't flagged. **Rule is force-disabled until this is implemented.**
   - Requires a pre-scan pass in `DirectoryLinter` over all syntax trees to collect `BaseListSyntax` identifiers
   - New `IProjectContext` (or similar) threaded through `RuleContext` to rules that need cross-file info
   - Trade-off: simple-name matching only (no semantic model), so name collisions could suppress diagnostics on unrelated types — rare in practice
@@ -11,7 +11,7 @@
 
 ## Match .NET SDK default rule enablement
 
-- [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Mirror .NET SDK defaults for CA vs IDE rules** — in the .NET SDK, code quality rules (CA*) are enabled by default since .NET 5, while code style rules (IDE*) are disabled by default on command-line builds. CsLint should match this: CA-mapped rules (CA1821, CA1805, CSLINT239/CA1852) should be enabled by default without requiring `.editorconfig` opt-in; IDE style rules should continue requiring explicit config
+- [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Mirror .NET SDK defaults for CA vs IDE rules** — in the .NET SDK, code quality rules (CA*) are enabled by default since .NET 5, while code style rules (IDE*) are disabled by default on command-line builds. CsLint should match this: CA-mapped rules (CA1821, CA1805, CA1852) should be enabled by default without requiring `.editorconfig` opt-in; IDE style rules should continue requiring explicit config
   - Currently all Tier 3 rules use `IsEnabled` that checks for a config key — CA rules need a different default (enabled when key absent)
   - Tier 4 rules already default to enabled (`GetSeverityForKey != None`), so the CA pattern exists
   - Reference: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview

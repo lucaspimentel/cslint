@@ -193,7 +193,7 @@ csharp_no_empty_finalizers = true:warning
 # CA1805: UnnecessaryInitialization
 csharp_no_unnecessary_initialization = true:warning
 
-# CSLINT239: SealedTypePreference
+# CA1852: SealedTypePreference
 csharp_prefer_sealed_types = true:warning
 
 # CSLINT240: NoEmptyStatements
@@ -293,8 +293,8 @@ csharp_no_empty_catch_blocks = true:warning
 # Tier 4 — Semantic analysis (--semantic)
 ########################################
 
-# CSLINT300: UnusedUsings
-dotnet_diagnostic.CSLINT300.severity = warning
+# IDE0005: UnusedUsings
+dotnet_diagnostic.IDE0005.severity = warning
 
 # CSLINT301: UnusedLocalVariable
 dotnet_diagnostic.CSLINT301.severity = warning
@@ -308,8 +308,8 @@ dotnet_diagnostic.CA1069.severity = warning
 # CSLINT304: SelfAssignment
 dotnet_diagnostic.CSLINT304.severity = warning
 
-# CSLINT306: UnnecessaryCast
-dotnet_diagnostic.CSLINT306.severity = warning
+# IDE0004: UnnecessaryCast
+dotnet_diagnostic.IDE0004.severity = warning
 
 # CSLINT307: RedundantAwait
 dotnet_diagnostic.CSLINT307.severity = warning

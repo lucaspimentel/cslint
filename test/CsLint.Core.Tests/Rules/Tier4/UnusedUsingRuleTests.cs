@@ -32,7 +32,7 @@ public class UnusedUsingRuleTests
         _rule.Analyze(context, model, diagnostics);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT300", diagnostics[0].RuleId);
+        Assert.Equal("IDE0005", diagnostics[0].RuleId);
     }
 
     [Fact]

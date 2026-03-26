@@ -8,11 +8,11 @@ namespace Cslint.Core.Rules.Tier4;
 
 internal sealed class UnnecessaryCastRule : IRuleDefinition, ISemanticRuleHandler
 {
-    public string RuleId => "CSLINT306";
+    public string RuleId => "IDE0004";
 
     public string Name => "UnnecessaryCast";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.CSLINT306.severity"];
+    public IReadOnlyList<string> ConfigKeys { get; } = ["dotnet_diagnostic.IDE0004.severity"];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
@@ -62,7 +62,7 @@ internal sealed class UnnecessaryCastRule : IRuleDefinition, ISemanticRuleHandle
     }
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetDiagnosticSeverity("dotnet_diagnostic.CSLINT306.severity") is not null and not LintSeverity.None;
+        configuration.GetDiagnosticSeverity("dotnet_diagnostic.IDE0004.severity") is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context) => [];
 
