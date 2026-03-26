@@ -19,6 +19,8 @@
 - Add IDE0024 — expression-bodied operators (`csharp_style_expression_bodied_operators`)
 - Add IDE0026 — expression-bodied indexers (`csharp_style_expression_bodied_indexers`)
 - Add IDE0027 — expression-bodied accessors (`csharp_style_expression_bodied_accessors`)
+- Add IDE0031 — null propagation (`dotnet_style_null_propagation`), flags ternary null checks like `x != null ? x.Prop : null`
+- Add IDE0041 — prefer is null (`dotnet_style_prefer_is_null_check_over_reference_equality_method`), flags `ReferenceEquals(x, null)`
 
 ### Changed
 - **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.<ID>.severity = warning` to your `.editorconfig`.

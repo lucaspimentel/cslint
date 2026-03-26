@@ -58,6 +58,8 @@ public sealed class RuleRegistry
         registry.Register(new PredefinedTypeRule());
         registry.Register(new PatternMatchingRule());
         registry.Register(new NullCoalescingRule());
+        registry.Register(new NullPropagationRule());
+        registry.Register(new PreferIsNullRule());
         registry.Register(new ThrowExpressionRule());
         registry.Register(new UsingDeclarationRule());
         registry.Register(new TargetTypedNewRule());

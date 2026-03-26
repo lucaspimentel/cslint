@@ -54,6 +54,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT209 | Pattern matching | `csharp_style_pattern_matching_*` | IDE0020, IDE0038 |
 | IDE0016 | Throw expression | `csharp_style_throw_expression` | IDE0016 |
 | IDE0029 | Null coalescing | `dotnet_style_coalesce_expression` | IDE0029 |
+| IDE0031 | Null propagation | `dotnet_style_null_propagation` | IDE0031 |
+| IDE0041 | Prefer is null | `dotnet_style_prefer_is_null_check_over_reference_equality_method` | IDE0041 |
 | IDE0063 | Using declarations (`using var`) | `csharp_prefer_simple_using_statement` | IDE0063 |
 | IDE0090 | Target-typed `new` | `csharp_style_implicit_object_creation_when_type_is_apparent` | IDE0090 |
 | IDE0034 | Simplify `default` expression | `csharp_prefer_simple_default_expression` | IDE0034 |

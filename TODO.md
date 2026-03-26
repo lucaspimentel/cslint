@@ -103,8 +103,8 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **IDE0024** — expression-bodied operators (`csharp_style_expression_bodied_operators`)
 - [x] **IDE0026** — expression-bodied indexers (`csharp_style_expression_bodied_indexers`)
 - [x] **IDE0027** — expression-bodied accessors (`csharp_style_expression_bodied_accessors`)
-- [ ] **IDE0031** — null propagation (`dotnet_style_null_propagation`)
-- [ ] **IDE0041** — prefer is null (`dotnet_style_prefer_is_null_check_over_reference_equality_method`)
+- [x] **IDE0031** — null propagation (`dotnet_style_null_propagation`)
+- [x] **IDE0041** — prefer is null (`dotnet_style_prefer_is_null_check_over_reference_equality_method`)
 - [x] **Merge CSLINT234 (InferredMemberNameRule) into IDE0037 (InferredTupleNamesRule)** — both map to IDE0037 (`dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`). Merge into a single IDE0037 rule covering both config keys, then drop CSLINT234
 
 ### Rename CSLINT rules with SA* equivalents to use SA IDs
