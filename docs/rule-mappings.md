@@ -83,6 +83,10 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA2014 | Do not use stackalloc in loops | `dotnet_diagnostic.CA2014.severity` | CA2014 |
 | CA2200 | Rethrow to preserve stack details | `dotnet_diagnostic.CA2200.severity` | CA2200 |
 | CA2219 | Do not raise exceptions in finally clauses | `dotnet_diagnostic.CA2219.severity` | CA2219 |
+| CA1012 | Abstract types should not have public constructors | `dotnet_diagnostic.CA1012.severity` | CA1012 |
+| CA1047 | Do not declare protected members in sealed types | `dotnet_diagnostic.CA1047.severity` | CA1047 |
+| CA1052 | Static holder types should be sealed | `dotnet_diagnostic.CA1052.severity` | CA1052 |
+| CA1070 | Do not declare event fields as virtual | `dotnet_diagnostic.CA1070.severity` | CA1070 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -292,6 +296,10 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA2014 | CA2014 | Microsoft |
 | CA2200 | CA2200 | Microsoft |
 | CA2219 | CA2219 | Microsoft |
+| CA1012 | CA1012 | Microsoft |
+| CA1047 | CA1047 | Microsoft |
+| CA1052 | CA1052 | Microsoft |
+| CA1070 | CA1070 | Microsoft |
 
 ## Future Candidates
 

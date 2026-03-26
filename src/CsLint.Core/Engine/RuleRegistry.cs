@@ -154,6 +154,10 @@ public sealed class RuleRegistry
         registry.Register(new PropertySelfAssignmentInSetterRule());
         registry.Register(new ThrowInFinallyRule());
         registry.Register(new StackallocInLoopRule());
+        registry.Register(new ProtectedMemberInSealedTypeRule());
+        registry.Register(new PublicConstructorOnAbstractTypeRule());
+        registry.Register(new StaticHolderShouldBeSealedRule());
+        registry.Register(new VirtualEventRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

@@ -53,7 +53,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 ### Implement CA rules (syntax-only, no semantic analysis needed)
 
 #### Design (CA10xx)
-- [ ] **CA1012** — Abstract types should not have public constructors
+- [x] **CA1012** — Abstract types should not have public constructors
 - [ ] **CA1021** — Avoid out parameters on public methods
 - [ ] **CA1028** — Enum storage should be Int32
 - [ ] **CA1031** — Do not catch general exception types (detect `catch (Exception)`)
@@ -61,11 +61,11 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **CA1040** — Avoid empty interfaces
 - [ ] **CA1041** — Provide ObsoleteAttribute message
 - [ ] **CA1044** — Properties should not be write only
-- [ ] **CA1047** — Do not declare protected members in sealed types
+- [x] **CA1047** — Do not declare protected members in sealed types
 - [ ] **CA1050** — Declare types in namespaces
 - [ ] **CA1051** — Do not declare visible instance fields
-- [ ] **CA1052** — Static holder types should be sealed
-- [ ] **CA1070** — Do not declare event fields as virtual
+- [x] **CA1052** — Static holder types should be sealed
+- [x] **CA1070** — Do not declare event fields as virtual
 
 #### Naming (CA17xx)
 - [ ] **CA1707** — Identifiers should not contain underscores

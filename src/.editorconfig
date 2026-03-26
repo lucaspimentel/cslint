@@ -196,6 +196,10 @@ csharp_prefer_sealed_types = true:warning
 # CA2014: DoNotUseStackallocInLoops (enabled by default)
 # CA2200: RethrowToPreserveStackDetails (enabled by default)
 # CA2219: DoNotRaiseExceptionsInExceptionClauses (enabled by default)
+# CA1012: AbstractTypesShouldNotHavePublicConstructors (enabled by default)
+# CA1047: DoNotDeclareProtectedMembersInSealedTypes (enabled by default)
+# CA1052: StaticHolderTypesShouldBeSealed (enabled by default)
+# CA1070: DoNotDeclareEventFieldsAsVirtual (enabled by default)
 
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning

@@ -208,6 +208,18 @@ dotnet_diagnostic.CA2200.severity = warning
 # CA2219: DoNotRaiseExceptionsInExceptionClauses (enabled by default)
 dotnet_diagnostic.CA2219.severity = warning
 
+# CA1012: AbstractTypesShouldNotHavePublicConstructors (enabled by default)
+dotnet_diagnostic.CA1012.severity = warning
+
+# CA1047: DoNotDeclareProtectedMembersInSealedTypes (enabled by default)
+dotnet_diagnostic.CA1047.severity = warning
+
+# CA1052: StaticHolderTypesShouldBeSealed (enabled by default)
+dotnet_diagnostic.CA1052.severity = warning
+
+# CA1070: DoNotDeclareEventFieldsAsVirtual (enabled by default)
+dotnet_diagnostic.CA1070.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 
