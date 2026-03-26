@@ -50,6 +50,52 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] ⚠️ **BREAKING CHANGE (major version bump)** — **Migrate 1:1 CSLINT rules to use standard IDE IDs directly** — e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT211→IDE0063, CSLINT212→IDE0090, CSLINT213→IDE0034, etc. Keep old CSLINT IDs as pragma aliases for backward compatibility. **Note:** CSLINT234 (IDE0037) excluded — conflicts with InferredTupleNamesRule; needs merge instead.
 - [x] ⚠️ **BREAKING CHANGE (major version bump)** — **Split multi-ID CSLINT rules into individual standard-ID rules** — CSLINT200→IDE0007+IDE0008, CSLINT201→IDE0021+IDE0025 (implemented), CSLINT210→IDE0029+IDE0016 (implemented). Unimplemented diagnostics added to backlog below.
 
+### Implement CA rules (syntax-only, no semantic analysis needed)
+
+#### Design (CA10xx)
+- [ ] **CA1012** — Abstract types should not have public constructors
+- [ ] **CA1021** — Avoid out parameters on public methods
+- [ ] **CA1028** — Enum storage should be Int32
+- [ ] **CA1031** — Do not catch general exception types (detect `catch (Exception)`)
+- [ ] **CA1034** — Nested types should not be visible
+- [ ] **CA1040** — Avoid empty interfaces
+- [ ] **CA1041** — Provide ObsoleteAttribute message
+- [ ] **CA1044** — Properties should not be write only
+- [ ] **CA1047** — Do not declare protected members in sealed types
+- [ ] **CA1050** — Declare types in namespaces
+- [ ] **CA1051** — Do not declare visible instance fields
+- [ ] **CA1052** — Static holder types should be sealed
+- [ ] **CA1070** — Do not declare event fields as virtual
+
+#### Naming (CA17xx)
+- [ ] **CA1707** — Identifiers should not contain underscores
+- [ ] **CA1712** — Do not prefix enum values with type name
+- [ ] **CA1714** — Flags enums should have plural names
+- [ ] **CA1715** — Identifiers should have correct prefix (interface `I`, generic `T`)
+- [ ] **CA1716** — Identifiers should not match keywords
+- [ ] **CA1720** — Identifiers should not contain type names
+- [ ] **CA1721** — Property names should not match get methods
+- [ ] **CA1727** — Use PascalCase for named placeholders
+
+#### Performance (CA18xx)
+- [ ] **CA1825** — Avoid zero-length array allocations (detect `new T[0]`)
+- [ ] **CA1861** — Avoid constant arrays as arguments
+
+#### Reliability (CA20xx)
+- [ ] **CA2011** — Do not assign property within its setter
+- [ ] **CA2014** — Do not use stackalloc in loops
+- [ ] **CA2019** — ThreadStatic fields should not use inline initialization
+
+#### Usage (CA21xx)
+- [ ] **CA2200** — Rethrow to preserve stack details (detect `throw ex;` in catch)
+- [ ] **CA2211** — Non-constant fields should not be visible
+- [ ] **CA2217** — Do not mark enums with FlagsAttribute (values not powers of 2)
+- [ ] **CA2219** — Do not raise exceptions in exception clauses
+- [ ] **CA2244** — Do not duplicate indexed element initializations
+- [ ] **CA2245** — Do not assign a property to itself
+- [ ] **CA2253** — Named placeholders should not be numeric values
+- [ ] **CA2259** — Ensure ThreadStatic is only used with static fields
+
 ### Implement remaining expression-bodied and null-checking rules
 
 - [ ] **IDE0022** — expression-bodied operators (`csharp_style_expression_bodied_operators`)
