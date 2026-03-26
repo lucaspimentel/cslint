@@ -179,6 +179,10 @@ public sealed class RuleRegistry
         registry.Register(new IdentifierContainsTypeNameRule());
         registry.Register(new PropertyNameMatchesGetMethodRule());
         registry.Register(new PascalCasePlaceholderRule());
+        registry.Register(new AvoidOutParametersRule());
+        registry.Register(new CatchGeneralExceptionRule());
+        registry.Register(new DuplicateIndexedElementInitRule());
+        registry.Register(new PropertySelfAssignmentRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

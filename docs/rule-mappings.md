@@ -108,6 +108,10 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1720 | Identifiers should not contain type names | `dotnet_diagnostic.CA1720.severity` | CA1720 |
 | CA1721 | Property names should not match get methods | `dotnet_diagnostic.CA1721.severity` | CA1721 |
 | CA1727 | Use PascalCase for named placeholders | `dotnet_diagnostic.CA1727.severity` | CA1727 |
+| CA1021 | Avoid out parameters | `dotnet_diagnostic.CA1021.severity` | CA1021 |
+| CA1031 | Do not catch general exception types | `dotnet_diagnostic.CA1031.severity` | CA1031 |
+| CA2244 | Do not duplicate indexed element initializations | `dotnet_diagnostic.CA2244.severity` | CA2244 |
+| CA2245 | Do not assign a property to itself | `dotnet_diagnostic.CA2245.severity` | CA2245 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -343,6 +347,10 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA1720 | CA1720 | Microsoft |
 | CA1721 | CA1721 | Microsoft |
 | CA1727 | CA1727 | Microsoft |
+| CA1021 | CA1021 | Microsoft |
+| CA1031 | CA1031 | Microsoft |
+| CA2244 | CA2244 | Microsoft |
+| CA2245 | CA2245 | Microsoft |
 
 ## Future Candidates
 

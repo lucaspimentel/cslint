@@ -285,6 +285,18 @@ dotnet_diagnostic.CA1721.severity = warning
 # CA1727: UsePascalCaseForNamedPlaceholders (enabled by default)
 dotnet_diagnostic.CA1727.severity = warning
 
+# CA1021: AvoidOutParameters (enabled by default)
+dotnet_diagnostic.CA1021.severity = warning
+
+# CA1031: DoNotCatchGeneralExceptionTypes (enabled by default)
+dotnet_diagnostic.CA1031.severity = warning
+
+# CA2244: DoNotDuplicateIndexedElementInitializations (enabled by default)
+dotnet_diagnostic.CA2244.severity = warning
+
+# CA2245: DoNotAssignPropertyToItself (enabled by default)
+dotnet_diagnostic.CA2245.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 
