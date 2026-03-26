@@ -87,6 +87,9 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1047 | Do not declare protected members in sealed types | `dotnet_diagnostic.CA1047.severity` | CA1047 |
 | CA1052 | Static holder types should be sealed | `dotnet_diagnostic.CA1052.severity` | CA1052 |
 | CA1070 | Do not declare event fields as virtual | `dotnet_diagnostic.CA1070.severity` | CA1070 |
+| CA1041 | Provide ObsoleteAttribute message | `dotnet_diagnostic.CA1041.severity` | CA1041 |
+| CA2019 | ThreadStatic fields should not use inline initialization | `dotnet_diagnostic.CA2019.severity` | CA2019 |
+| CA2259 | Ensure ThreadStatic is only used with static fields | `dotnet_diagnostic.CA2259.severity` | CA2259 |
 | CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
 | CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
 | CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
@@ -300,6 +303,9 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA1047 | CA1047 | Microsoft |
 | CA1052 | CA1052 | Microsoft |
 | CA1070 | CA1070 | Microsoft |
+| CA1041 | CA1041 | Microsoft |
+| CA2019 | CA2019 | Microsoft |
+| CA2259 | CA2259 | Microsoft |
 
 ## Future Candidates
 

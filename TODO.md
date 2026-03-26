@@ -59,7 +59,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **CA1031** — Do not catch general exception types (detect `catch (Exception)`)
 - [ ] **CA1034** — Nested types should not be visible
 - [ ] **CA1040** — Avoid empty interfaces
-- [ ] **CA1041** — Provide ObsoleteAttribute message
+- [x] **CA1041** — Provide ObsoleteAttribute message
 - [ ] **CA1044** — Properties should not be write only
 - [x] **CA1047** — Do not declare protected members in sealed types
 - [ ] **CA1050** — Declare types in namespaces
@@ -84,7 +84,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 #### Reliability (CA20xx)
 - [x] **CA2011** — Do not assign property within its setter
 - [x] **CA2014** — Do not use stackalloc in loops
-- [ ] **CA2019** — ThreadStatic fields should not use inline initialization
+- [x] **CA2019** — ThreadStatic fields should not use inline initialization
 
 #### Usage (CA21xx)
 - [x] **CA2200** — Rethrow to preserve stack details (detect `throw ex;` in catch)
@@ -94,7 +94,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [ ] **CA2244** — Do not duplicate indexed element initializations
 - [ ] **CA2245** — Do not assign a property to itself
 - [ ] **CA2253** — Named placeholders should not be numeric values
-- [ ] **CA2259** — Ensure ThreadStatic is only used with static fields
+- [x] **CA2259** — Ensure ThreadStatic is only used with static fields
 
 ### Implement remaining expression-bodied and null-checking rules
 

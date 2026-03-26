@@ -158,6 +158,9 @@ public sealed class RuleRegistry
         registry.Register(new PublicConstructorOnAbstractTypeRule());
         registry.Register(new StaticHolderShouldBeSealedRule());
         registry.Register(new VirtualEventRule());
+        registry.Register(new ThreadStaticOnNonStaticFieldRule());
+        registry.Register(new ThreadStaticWithInitializerRule());
+        registry.Register(new ObsoleteWithoutMessageRule());
 
 #if SEMANTIC
         // Tier 4: Semantic analysis

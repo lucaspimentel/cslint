@@ -220,6 +220,15 @@ dotnet_diagnostic.CA1052.severity = warning
 # CA1070: DoNotDeclareEventFieldsAsVirtual (enabled by default)
 dotnet_diagnostic.CA1070.severity = warning
 
+# CA1041: ProvideObsoleteAttributeMessage (enabled by default)
+dotnet_diagnostic.CA1041.severity = warning
+
+# CA2019: ThreadStaticFieldsShouldNotUseInlineInitialization (enabled by default)
+dotnet_diagnostic.CA2019.severity = warning
+
+# CA2259: EnsureThreadStaticIsOnlyUsedWithStaticFields (enabled by default)
+dotnet_diagnostic.CA2259.severity = warning
+
 # CSLINT240: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 
