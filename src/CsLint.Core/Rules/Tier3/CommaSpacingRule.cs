@@ -40,19 +40,6 @@ public sealed class CommaSpacingRule : IRuleDefinition
         return false;
     }
 
-    private static bool HasTrailingSpaceOrNewline(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -101,7 +88,7 @@ public sealed class CommaSpacingRule : IRuleDefinition
                 // Check space after comma (unless followed by newline or end of tokens)
                 SyntaxToken next = token.GetNextToken();
 
-                if (next != default && !HasTrailingSpaceOrNewline(token))
+                if (next != default && !TriviaHelper.HasTrailingSpaceOrNewline(token))
                 {
                     diagnostics.Add(
                         new LintDiagnostic

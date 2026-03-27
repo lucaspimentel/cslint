@@ -21,19 +21,6 @@ public sealed class MethodCallSpacingRule : IRuleDefinition, IDescendantNodeHand
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ParamListKey) is not null
         || configuration.GetValue(EmptyParamListKey) is not null
@@ -103,7 +90,7 @@ public sealed class MethodCallSpacingRule : IRuleDefinition, IDescendantNodeHand
         }
 
         bool requireSpace = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        bool hasSpace = HasTrailingSpace(token);
+        bool hasSpace = TriviaHelper.HasTrailingSpace(token);
 
         if (requireSpace == hasSpace)
         {

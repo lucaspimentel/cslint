@@ -17,9 +17,6 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static string GetUsingName(UsingDirectiveSyntax u) =>
-        u.NamespaceOrType?.ToString() ?? u.Name?.ToString() ?? string.Empty;
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -35,65 +32,16 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
 
         List<LintDiagnostic>? diagnostics = null;
 
-        // Collect all groups of using directives (top-level and within namespaces)
-        CollectUsings(context.Root, ref diagnostics);
+        UsingDirectiveHelper.ForEachUsingGroup(context.Root, usings =>
+        {
+            ClassifiedUsingGroup group = UsingDirectiveHelper.ClassifyGroup(usings);
+            CheckGroupOrdering(group.Regular, group.Static, group.Alias, ref diagnostics);
+            CheckSystemFirst(group.Regular, ref diagnostics);
+            CheckAlphabeticalOrder(group.Regular, ref diagnostics);
+            CheckStaticAlphabeticalOrder(group.Static, ref diagnostics);
+        });
 
         return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
-    }
-
-    private void CollectUsings(CSharpSyntaxNode root, ref List<LintDiagnostic>? diagnostics)
-    {
-        // Top-level usings
-        if (root is CompilationUnitSyntax compilationUnit && compilationUnit.Usings.Count > 0)
-        {
-            CheckUsingGroup(compilationUnit.Usings, ref diagnostics);
-        }
-
-        // Usings inside namespace declarations
-        foreach (BaseNamespaceDeclarationSyntax ns in root.DescendantNodes().OfType<BaseNamespaceDeclarationSyntax>())
-        {
-            if (ns.Usings.Count > 0)
-            {
-                CheckUsingGroup(ns.Usings, ref diagnostics);
-            }
-        }
-    }
-
-    private void CheckUsingGroup(SyntaxList<UsingDirectiveSyntax> usings, ref List<LintDiagnostic>? diagnostics)
-    {
-        // Classify usings into three groups: regular, static, alias
-        var regular = new List<UsingDirectiveSyntax>();
-        var staticUsings = new List<UsingDirectiveSyntax>();
-        var aliasUsings = new List<UsingDirectiveSyntax>();
-
-        foreach (UsingDirectiveSyntax u in usings)
-        {
-            if (u.Alias is not null)
-            {
-                aliasUsings.Add(u);
-            }
-            else if (u.StaticKeyword != default)
-            {
-                staticUsings.Add(u);
-            }
-            else
-            {
-                regular.Add(u);
-            }
-        }
-
-        // Check group ordering: regular -> static -> alias
-        // Find the last regular, first static, first alias positions
-        CheckGroupOrdering(regular, staticUsings, aliasUsings, ref diagnostics);
-
-        // Check System-first within regular usings
-        CheckSystemFirst(regular, ref diagnostics);
-
-        // Check alphabetical ordering within regular usings (within System and non-System groups)
-        CheckAlphabeticalOrder(regular, ref diagnostics);
-
-        // Check alphabetical ordering within static usings
-        CheckStaticAlphabeticalOrder(staticUsings, ref diagnostics);
     }
 
     private void CheckGroupOrdering(
@@ -184,8 +132,8 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
 
         foreach (UsingDirectiveSyntax u in regular)
         {
-            string name = GetUsingName(u);
-            bool isSystem = name == "System" || name.StartsWith("System.", StringComparison.Ordinal);
+            string name = UsingDirectiveHelper.GetUsingName(u);
+            bool isSystem = UsingDirectiveHelper.IsSystemNamespace(name);
 
             if (isSystem && seenNonSystem)
             {
@@ -220,8 +168,8 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
 
         foreach (UsingDirectiveSyntax u in regular)
         {
-            string name = GetUsingName(u);
-            bool isSystem = name == "System" || name.StartsWith("System.", StringComparison.Ordinal);
+            string name = UsingDirectiveHelper.GetUsingName(u);
+            bool isSystem = UsingDirectiveHelper.IsSystemNamespace(name);
 
             if (isSystem)
             {
@@ -276,7 +224,7 @@ public sealed class UsingDirectiveOrderRule : IRuleDefinition
 
         foreach (UsingDirectiveSyntax u in staticUsings)
         {
-            string name = GetUsingName(u);
+            string name = UsingDirectiveHelper.GetUsingName(u);
 
             if (prev is not null && string.Compare(name, prev, StringComparison.Ordinal) < 0)
             {

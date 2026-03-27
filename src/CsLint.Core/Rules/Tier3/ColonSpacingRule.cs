@@ -27,32 +27,6 @@ public sealed class ColonSpacingRule : IRuleDefinition
         parent.IsKind(SyntaxKind.BaseConstructorInitializer) ||
         parent.IsKind(SyntaxKind.ThisConstructorInitializer);
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool HasTrailingSpaceOrNewline(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -88,12 +62,12 @@ public sealed class ColonSpacingRule : IRuleDefinition
                 {
                     SyntaxToken previous = token.GetPreviousToken();
 
-                    if (previous != default && !HasTrailingSpace(previous))
+                    if (previous != default && !TriviaHelper.HasTrailingSpace(previous))
                     {
                         ReportDiagnostic(token, "Colon should be preceded by a space", diagnostics);
                     }
 
-                    if (!HasTrailingSpaceOrNewline(token))
+                    if (!TriviaHelper.HasTrailingSpaceOrNewline(token))
                     {
                         ReportDiagnostic(token, "Colon should be followed by a space", diagnostics);
                     }

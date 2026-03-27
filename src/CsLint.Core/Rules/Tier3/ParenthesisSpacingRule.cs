@@ -18,32 +18,6 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool HasTrailingNewline(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -73,14 +47,14 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
             if (token.IsKind(SyntaxKind.OpenParenToken))
             {
                 // No space after opening paren
-                if (HasTrailingSpace(token))
+                if (TriviaHelper.HasTrailingSpace(token))
                 {
                     SyntaxToken next = token.GetNextToken();
 
                     // Allow space if followed by newline (multi-line expression)
                     if (next != default && !next.IsKind(SyntaxKind.CloseParenToken))
                     {
-                        if (!HasTrailingNewline(token))
+                        if (!TriviaHelper.HasTrailingNewline(token))
                         {
                             FileLinePositionSpan span = token.GetLocation().GetLineSpan();
 
@@ -104,7 +78,7 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
                 SyntaxToken previous = token.GetPreviousToken();
 
                 if (previous != default && !previous.IsKind(SyntaxKind.OpenParenToken) &&
-                    HasTrailingSpace(previous) && !HasTrailingNewline(previous))
+                    TriviaHelper.HasTrailingSpace(previous) && !TriviaHelper.HasTrailingNewline(previous))
                 {
                     FileLinePositionSpan span = token.GetLocation().GetLineSpan();
 

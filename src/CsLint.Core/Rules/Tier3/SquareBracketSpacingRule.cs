@@ -20,32 +20,6 @@ public sealed class SquareBracketSpacingRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool HasLeadingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.LeadingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(BeforeOpenKey) is not null
         || configuration.GetValue(BetweenEmptyKey) is not null
@@ -87,7 +61,7 @@ public sealed class SquareBracketSpacingRule : IRuleDefinition
         {
             bool requireBefore = string.Equals(beforeValue, "true", StringComparison.OrdinalIgnoreCase);
             SyntaxToken prev = openBracket.GetPreviousToken();
-            bool hasBefore = prev != default && HasTrailingSpace(prev);
+            bool hasBefore = prev != default && TriviaHelper.HasTrailingSpace(prev);
 
             if (requireBefore != hasBefore)
             {
@@ -106,7 +80,7 @@ public sealed class SquareBracketSpacingRule : IRuleDefinition
             if (emptyValue is not null)
             {
                 bool requireSpace = string.Equals(emptyValue, "true", StringComparison.OrdinalIgnoreCase);
-                bool hasSpace = HasTrailingSpace(openBracket);
+                bool hasSpace = TriviaHelper.HasTrailingSpace(openBracket);
 
                 if (requireSpace != hasSpace)
                 {
@@ -121,7 +95,7 @@ public sealed class SquareBracketSpacingRule : IRuleDefinition
             if (betweenValue is not null)
             {
                 bool requireSpace = string.Equals(betweenValue, "true", StringComparison.OrdinalIgnoreCase);
-                bool hasSpace = HasTrailingSpace(openBracket);
+                bool hasSpace = TriviaHelper.HasTrailingSpace(openBracket);
 
                 if (requireSpace != hasSpace)
                 {

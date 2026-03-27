@@ -47,19 +47,6 @@ public sealed class OperatorSpacingRule : IRuleDefinition, IDescendantNodeHandle
         return false;
     }
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -118,7 +105,7 @@ public sealed class OperatorSpacingRule : IRuleDefinition, IDescendantNodeHandle
         }
 
         // Check space after operator
-        if (!HasTrailingSpace(operatorToken))
+        if (!TriviaHelper.HasTrailingSpaceOrNewline(operatorToken))
         {
             ReportDiagnostic(operatorToken, "Binary operator should be followed by a space", filePath, diagnostics);
         }

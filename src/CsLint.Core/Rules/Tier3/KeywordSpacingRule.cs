@@ -45,19 +45,6 @@ public sealed class KeywordSpacingRule : IRuleDefinition
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia) || trivia.IsKind(SyntaxKind.EndOfLineTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration)
     {
         (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
@@ -88,7 +75,7 @@ public sealed class KeywordSpacingRule : IRuleDefinition
             {
                 SyntaxToken next = token.GetNextToken();
 
-                if (next != default && !HasTrailingSpace(token) && !next.IsKind(SyntaxKind.SemicolonToken))
+                if (next != default && !TriviaHelper.HasTrailingSpaceOrNewline(token) && !next.IsKind(SyntaxKind.SemicolonToken))
                 {
                     ReportDiagnostic(token, $"Keyword '{token.Text}' should be followed by a space", diagnostics);
                 }
@@ -97,7 +84,7 @@ public sealed class KeywordSpacingRule : IRuleDefinition
             {
                 SyntaxToken next = token.GetNextToken();
 
-                if (next != default && next.IsKind(SyntaxKind.OpenParenToken) && HasTrailingSpace(token))
+                if (next != default && next.IsKind(SyntaxKind.OpenParenToken) && TriviaHelper.HasTrailingSpaceOrNewline(token))
                 {
                     ReportDiagnostic(token, $"Keyword '{token.Text}' should not be followed by a space", diagnostics);
                 }

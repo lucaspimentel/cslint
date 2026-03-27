@@ -19,32 +19,6 @@ public sealed class DotSpacingRule : IRuleDefinition, IDescendantNodeHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool HasLeadingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.LeadingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(BeforeKey) is not null
         || configuration.GetValue(AfterKey) is not null;
@@ -85,7 +59,7 @@ public sealed class DotSpacingRule : IRuleDefinition, IDescendantNodeHandler
         if (beforeValue is not null)
         {
             bool requireBefore = string.Equals(beforeValue, "true", StringComparison.OrdinalIgnoreCase);
-            bool hasBefore = HasLeadingSpace(dot);
+            bool hasBefore = TriviaHelper.HasLeadingSpace(dot);
 
             if (requireBefore != hasBefore)
             {
@@ -111,7 +85,7 @@ public sealed class DotSpacingRule : IRuleDefinition, IDescendantNodeHandler
         if (afterValue is not null)
         {
             bool requireAfter = string.Equals(afterValue, "true", StringComparison.OrdinalIgnoreCase);
-            bool hasAfter = HasTrailingSpace(dot);
+            bool hasAfter = TriviaHelper.HasTrailingSpace(dot);
 
             if (requireAfter != hasAfter)
             {

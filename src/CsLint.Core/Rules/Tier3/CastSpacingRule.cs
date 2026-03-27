@@ -17,19 +17,6 @@ public sealed class CastSpacingRule : IRuleDefinition, IDescendantNodeHandler
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static bool HasTrailingSpace(SyntaxToken token)
-    {
-        foreach (SyntaxTrivia trivia in token.TrailingTrivia)
-        {
-            if (trivia.IsKind(SyntaxKind.WhitespaceTrivia))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ConfigKey) is not null;
 
@@ -62,7 +49,7 @@ public sealed class CastSpacingRule : IRuleDefinition, IDescendantNodeHandler
         }
 
         bool requireSpace = config.GetBool(ConfigKey);
-        bool hasSpace = HasTrailingSpace(castExpr.CloseParenToken);
+        bool hasSpace = TriviaHelper.HasTrailingSpace(castExpr.CloseParenToken);
 
         if (requireSpace && !hasSpace)
         {
