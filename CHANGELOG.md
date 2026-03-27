@@ -3,40 +3,31 @@
 ## [Unreleased]
 
 ### Added
-- Add 31 new CA code quality rules (enabled by default, matching .NET SDK behavior):
-  - Bug detection: CA2200 (rethrow), CA2011 (self-assign in setter), CA2219 (throw in finally), CA2014 (stackalloc in loop)
-  - Modifier checks: CA1012 (abstract public ctor), CA1047 (protected in sealed), CA1052 (static holder), CA1070 (virtual event)
-  - Attribute checks: CA1041 (Obsolete message), CA2019 (ThreadStatic initializer), CA2259 (ThreadStatic non-static)
-  - Declaration structure: CA1034 (nested type), CA1040 (empty interface), CA1044 (write-only property), CA1050 (type outside namespace), CA1051 (visible field), CA2211 (visible static field)
-  - Enum: CA1028 (enum base type), CA1712 (enum prefix), CA2217 (Flags values)
-  - Performance: CA1825 (zero-length array), CA1861 (constant array arg), CA2253 (numeric placeholder)
-  - Naming: CA1707 (underscores), CA1714 (Flags plural), CA1716 (keyword match), CA1720 (type name param), CA1721 (property vs Get method), CA1727 (PascalCase placeholder)
-  - Other: CA1021 (out params), CA1031 (catch Exception), CA2244 (duplicate index init), CA2245 (self-assign property)
-- Add IDE0052 — remove unread private member (assigned but never read), split from former CSLINT308
-- Add CA1715 pragma alias mapping to existing CSLINT101 (interface I prefix) and CSLINT106 (type param T prefix)
-- Add IDE0022 — prefer block body for methods (paired with IDE0021, same `csharp_style_expression_bodied_methods` config key)
-- Add IDE0023 — expression-bodied conversion operators (`csharp_style_expression_bodied_operators`)
-- Add IDE0024 — expression-bodied operators (`csharp_style_expression_bodied_operators`)
+- Add 31 CA code quality rules enabled by default: CA1012, CA1021, CA1028, CA1031, CA1034, CA1040, CA1041, CA1044, CA1047, CA1050, CA1051, CA1052, CA1070, CA1707, CA1712, CA1714, CA1716, CA1720, CA1721, CA1727, CA1825, CA1861, CA2011, CA2014, CA2019, CA2200, CA2211, CA2217, CA2219, CA2244, CA2245, CA2253, CA2259
+- Add IDE0022 — block body for methods (`csharp_style_expression_bodied_methods`)
+- Add IDE0023/IDE0024 — expression-bodied operators (`csharp_style_expression_bodied_operators`)
 - Add IDE0026 — expression-bodied indexers (`csharp_style_expression_bodied_indexers`)
 - Add IDE0027 — expression-bodied accessors (`csharp_style_expression_bodied_accessors`)
-- Add IDE0031 — null propagation (`dotnet_style_null_propagation`), flags ternary null checks like `x != null ? x.Prop : null`
-- Add IDE0041 — prefer is null (`dotnet_style_prefer_is_null_check_over_reference_equality_method`), flags `ReferenceEquals(x, null)`
-- Add IDE0047 — remove unnecessary parentheses (`dotnet_style_parentheses_in_arithmetic_binary_operators`, `dotnet_style_parentheses_in_relational_binary_operators`, `dotnet_style_parentheses_in_other_binary_operators`)
-- Add IDE0048 — add parentheses for clarity (same config keys as IDE0047, fires when value is `always_for_clarity`)
-- Add IDE0044 — add readonly modifier (`dotnet_style_readonly_field`), flags private fields only assigned in constructors/initializers
-- Add IDE0250 — prefer readonly struct (`csharp_style_prefer_readonly_struct`), flags structs where all fields are readonly and no member mutates state
-- Add IDE0251 — prefer readonly struct member (`csharp_style_prefer_readonly_struct_member`), flags non-mutating methods/properties in structs
-- Add IDE0042 — deconstruct variable declaration (`csharp_style_deconstructed_variable_declaration`), flags explicit tuple-typed locals whose elements are accessed individually
-- Add IDE0032 — prefer auto property (`dotnet_style_prefer_auto_properties`), flags properties that are simple wrappers around private backing fields
-- Add IDE0060 — remove unused parameter (`dotnet_code_quality_unused_parameters`), supports `all` and `non_virtual` modes
+- Add IDE0031 — null propagation (`dotnet_style_null_propagation`)
+- Add IDE0032 — prefer auto property (`dotnet_style_prefer_auto_properties`)
+- Add IDE0041 — prefer is null (`dotnet_style_prefer_is_null_check_over_reference_equality_method`)
+- Add IDE0042 — deconstruct variable declaration (`csharp_style_deconstructed_variable_declaration`)
+- Add IDE0044 — add readonly modifier (`dotnet_style_readonly_field`)
+- Add IDE0047 — remove unnecessary parentheses (`dotnet_style_parentheses_in_*`)
+- Add IDE0048 — add parentheses for clarity (`dotnet_style_parentheses_in_*`)
+- Add IDE0052 — remove unread private member, split from former CSLINT308
+- Add IDE0060 — remove unused parameter (`dotnet_code_quality_unused_parameters`)
+- Add IDE0250 — prefer readonly struct (`csharp_style_prefer_readonly_struct`)
+- Add IDE0251 — prefer readonly struct member (`csharp_style_prefer_readonly_struct_member`)
+- Add CA1715 pragma alias mapping to CSLINT101 and CSLINT106
 
 ### Changed
-- **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.<ID>.severity = warning` to your `.editorconfig`.
-- **BREAKING:** Migrate 27 rules with 1:1 standard mappings from CSLINT* to standard IDE* diagnostic IDs (e.g., CSLINT202→IDE0011, CSLINT205→IDE0036, CSLINT207→IDE0065). Old CSLINT IDs are preserved as pragma aliases for backward compatibility. The `--rules` CLI option also resolves old IDs transparently.
-- **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008 (var/explicit type), CSLINT201→IDE0021+IDE0025 (expression-bodied methods/properties), CSLINT210→IDE0029+IDE0016 (null coalescing/throw expression)
-- **BREAKING:** Migrate remaining 1:1 rules to standard IDs: CSLINT239→CA1852, CSLINT300→IDE0005, CSLINT306→IDE0004, CSLINT308→IDE0051
-- Merge CSLINT234 (InferredMemberNameRule) into IDE0037 — single rule now covers both `dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`
-- Force-disable CA1852 (SealedTypePreferenceRule) to prevent false positives until project-wide type hierarchy support is implemented
+- **BREAKING:** Disable Tier 4 semantic rules by default when `.editorconfig` key is absent, matching .NET SDK behavior
+- **BREAKING:** Migrate 27 rules from CSLINT* to standard IDE* diagnostic IDs (old IDs preserved as pragma aliases)
+- **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008, CSLINT201→IDE0021+IDE0025, CSLINT210→IDE0029+IDE0016
+- **BREAKING:** Migrate CSLINT239→CA1852, CSLINT300→IDE0005, CSLINT306→IDE0004, CSLINT308→IDE0051
+- Merge CSLINT234 into IDE0037 covering both `dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`
+- Force-disable CA1852 to prevent false positives until project-wide type hierarchy is implemented
 
 ## [1.7.0] - 2026-03-25
 
