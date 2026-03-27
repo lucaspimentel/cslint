@@ -43,7 +43,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **`dotnet_style_explicit_tuple_names`** (IDE0033)
 - [ ] **`csharp_style_unused_value_expression_statement_preference`** (IDE0058)
 - [ ] **`csharp_style_unused_value_assignment_preference`** (IDE0059)
-- [ ] **`dotnet_code_quality_unused_parameters`** (IDE0060)
+- [x] **`dotnet_code_quality_unused_parameters`** (IDE0060) — unused parameters (syntax-only, supports all/non_virtual modes)
 
 ### Migrate existing rules to standard diagnostic IDs
 
