@@ -24,8 +24,8 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 
 - [x] **`dotnet_style_readonly_field`** (IDE0044) — add readonly modifier (private fields only, syntax-only)
 - [ ] **`csharp_style_deconstructed_variable_declaration`** (IDE0042) — deconstruct variable declaration
-- [ ] **`csharp_style_prefer_readonly_struct`** (IDE0250) — struct can be made readonly
-- [ ] **`csharp_style_prefer_readonly_struct_member`** (IDE0251) — member can be made readonly
+- [x] **`csharp_style_prefer_readonly_struct`** (IDE0250) — struct can be made readonly (syntax-only)
+- [x] **`csharp_style_prefer_readonly_struct_member`** (IDE0251) — member can be made readonly (syntax-only)
 - [x] **`csharp_prefer_static_local_function`** (IDE0062) — make local function static
 - [ ] **`dotnet_style_prefer_auto_properties`** (IDE0032) — use auto property
 - [x] **`dotnet_style_parentheses_in_arithmetic_binary_operators`** (IDE0047/IDE0048) — parentheses preferences

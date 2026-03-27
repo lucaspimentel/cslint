@@ -93,6 +93,8 @@ public static class PragmaAliasMap
             ["IDE0044"] = ["IDE0044"],
             ["IDE0047"] = ["IDE0047"],
             ["IDE0048"] = ["IDE0048"],
+            ["IDE0250"] = ["IDE0250"],
+            ["IDE0251"] = ["IDE0251"],
             ["IDE0045"] = ["IDE0045"],
             ["IDE0046"] = ["IDE0046"],
             ["IDE0049"] = ["IDE0049"],
