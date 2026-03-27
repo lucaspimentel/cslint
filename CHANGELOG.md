@@ -27,6 +27,7 @@
 - Add IDE0250 — prefer readonly struct (`csharp_style_prefer_readonly_struct`), flags structs where all fields are readonly and no member mutates state
 - Add IDE0251 — prefer readonly struct member (`csharp_style_prefer_readonly_struct_member`), flags non-mutating methods/properties in structs
 - Add IDE0042 — deconstruct variable declaration (`csharp_style_deconstructed_variable_declaration`), flags explicit tuple-typed locals whose elements are accessed individually
+- Add IDE0032 — prefer auto property (`dotnet_style_prefer_auto_properties`), flags properties that are simple wrappers around private backing fields
 
 ### Changed
 - **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.<ID>.severity = warning` to your `.editorconfig`.
