@@ -4,18 +4,15 @@ using Cslint.Core.Rules.Tier3;
 
 namespace Cslint.Core.Tests.Rules.Tier3;
 
-public class AccessorOrderingRuleTests
+public class PropertyAccessorOrderRuleTests
 {
-    private readonly AccessorOrderingRule _rule = new();
+    private readonly PropertyAccessorOrderRule _rule = new();
 
     private static LintConfiguration EnabledConfig() =>
-        new(new Dictionary<string, string>
-        {
-            ["csharp_accessor_ordering"] = "true",
-        });
+        new(new Dictionary<string, string> { ["csharp_accessor_ordering"] = "true" });
 
     [Fact]
-    public void Analyze_PropertyGetBeforeSet_ReturnsNoDiagnostics()
+    public void PropertyGetBeforeSet_NoDiagnostics()
     {
         string source = """
             class Foo
@@ -31,7 +28,7 @@ public class AccessorOrderingRuleTests
     }
 
     [Fact]
-    public void Analyze_PropertySetBeforeGet_ReturnsDiagnostic()
+    public void PropertySetBeforeGet_Flagged()
     {
         string source = """
             class Foo
@@ -44,13 +41,13 @@ public class AccessorOrderingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT263", diagnostics[0].RuleId);
+        Assert.Equal("SA1212", diagnostics[0].RuleId);
         Assert.Contains("get", diagnostics[0].Message);
         Assert.Contains("set", diagnostics[0].Message);
     }
 
     [Fact]
-    public void Analyze_PropertyInitBeforeGet_ReturnsDiagnostic()
+    public void PropertyInitBeforeGet_Flagged()
     {
         string source = """
             class Foo
@@ -63,12 +60,12 @@ public class AccessorOrderingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT263", diagnostics[0].RuleId);
+        Assert.Equal("SA1212", diagnostics[0].RuleId);
         Assert.Contains("init", diagnostics[0].Message);
     }
 
     [Fact]
-    public void Analyze_PropertyGetOnly_ReturnsNoDiagnostics()
+    public void PropertyGetOnly_NoDiagnostics()
     {
         string source = """
             class Foo
@@ -78,13 +75,11 @@ public class AccessorOrderingRuleTests
             """;
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]
-    public void Analyze_AutoPropertyGetSet_ReturnsNoDiagnostics()
+    public void AutoPropertyGetSet_NoDiagnostics()
     {
         string source = """
             class Foo
@@ -94,13 +89,11 @@ public class AccessorOrderingRuleTests
             """;
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]
-    public void Analyze_IndexerSetBeforeGet_ReturnsDiagnostic()
+    public void IndexerSetBeforeGet_Flagged()
     {
         string source = """
             class Foo
@@ -113,50 +106,13 @@ public class AccessorOrderingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT263", diagnostics[0].RuleId);
-    }
-
-    [Fact]
-    public void Analyze_EventAddBeforeRemove_ReturnsNoDiagnostics()
-    {
-        string source = """
-            using System;
-            class Foo
-            {
-                event EventHandler E { add { } remove { } }
-            }
-            """;
-        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
-
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
-    }
-
-    [Fact]
-    public void Analyze_EventRemoveBeforeAdd_ReturnsDiagnostic()
-    {
-        string source = """
-            using System;
-            class Foo
-            {
-                event EventHandler E { remove { } add { } }
-            }
-            """;
-        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
-
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Single(diagnostics);
-        Assert.Equal("CSLINT263", diagnostics[0].RuleId);
-        Assert.Contains("add", diagnostics[0].Message);
-        Assert.Contains("remove", diagnostics[0].Message);
+        Assert.Equal("SA1212", diagnostics[0].RuleId);
     }
 
     [Theory]
     [InlineData("false")]
     [InlineData(null)]
-    public void Analyze_RuleDisabled_ReturnsNoDiagnostics(string? configValue)
+    public void RuleDisabled_NoDiagnostics(string? configValue)
     {
         string source = """
             class Foo
@@ -171,11 +127,8 @@ public class AccessorOrderingRuleTests
             settings["csharp_accessor_ordering"] = configValue;
         }
 
-        var config = new LintConfiguration(settings);
-        RuleContext context = TestHelper.CreateContext(source, config);
+        RuleContext context = TestHelper.CreateContext(source, new LintConfiguration(settings));
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 }

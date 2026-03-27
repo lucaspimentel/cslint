@@ -141,7 +141,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT260 | Brace spacing | `csharp_brace_spacing` | SA1012, SA1013 |
 | SA1024 | Colon spacing | `csharp_colon_spacing` | SA1024 |
 | SA1025 | No multiple whitespace | `csharp_no_multiple_whitespace` | SA1025 |
-| CSLINT263 | Accessor ordering | `csharp_accessor_ordering` | SA1212, SA1213 |
+| SA1212 | Property accessor ordering (get before set) | `csharp_accessor_ordering` | SA1212 |
+| SA1213 | Event accessor ordering (add before remove) | `csharp_accessor_ordering` | SA1213 |
 | SA1214 | Readonly fields before mutable | `csharp_readonly_before_mutable` | SA1214 |
 | SA1203 | Constants before fields | `csharp_constants_before_fields` | SA1203 |
 | SA1204 | Static members before instance | `csharp_static_before_instance` | SA1204 |
@@ -220,7 +221,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | SA1121 | IDE0049 | StyleCop |
 | SA1206 | IDE0036 | StyleCop |
 | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 | CSLINT269 | StyleCop |
-| SA1212, SA1213 | CSLINT263 | StyleCop |
+| SA1212 | SA1212 | StyleCop |
+| SA1213 | SA1213 | StyleCop |
 | SA1304 | CSLINT104 | StyleCop |
 | SA1306 | CSLINT104 | StyleCop |
 | SA1307 | CSLINT104 | StyleCop |

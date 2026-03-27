@@ -366,7 +366,7 @@ csharp_colon_spacing = true:warning
 # SA1025: NoMultipleWhitespace
 csharp_no_multiple_whitespace = true:warning
 
-# CSLINT263: AccessorOrdering
+# SA1212/SA1213: PropertyAccessorOrder/EventAccessorOrder
 csharp_accessor_ordering = true:warning
 
 # SA1214: ReadonlyFieldOrder

@@ -23,6 +23,7 @@
 
 ### Changed
 - **BREAKING:** Rename 37 rules with 1:1 StyleCop mappings from CSLINT* to SA* diagnostic IDs (e.g., CSLINT001→SA1028, CSLINT240→SA1106). Old CSLINT IDs preserved as pragma aliases.
+- **BREAKING:** Split CSLINT263 (AccessorOrdering) into SA1212 (property get/set order) and SA1213 (event add/remove order)
 - **BREAKING:** Disable Tier 4 semantic rules by default when `.editorconfig` key is absent, matching .NET SDK behavior
 - **BREAKING:** Migrate 27 rules from CSLINT* to standard IDE* diagnostic IDs (old IDs preserved as pragma aliases)
 - **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008, CSLINT201→IDE0021+IDE0025, CSLINT210→IDE0029+IDE0016

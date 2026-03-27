@@ -122,7 +122,8 @@ public sealed class RuleRegistry
         registry.Register(new BraceSpacingRule());
         registry.Register(new ColonSpacingRule());
         registry.Register(new NoMultipleWhitespaceRule());
-        registry.Register(new AccessorOrderingRule());
+        registry.Register(new PropertyAccessorOrderRule());
+        registry.Register(new EventAccessorOrderRule());
         registry.Register(new ReadonlyFieldOrderRule());
         registry.Register(new ConstantFieldOrderRule());
         registry.Register(new StaticMemberOrderRule());

@@ -5,13 +5,16 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class AccessorOrderingRule : IRuleDefinition
+/// <summary>
+/// SA1212: Property accessors should follow order — get before set/init.
+/// </summary>
+public sealed class PropertyAccessorOrderRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_accessor_ordering";
 
-    public string RuleId => "CSLINT263";
+    public string RuleId => "SA1212";
 
-    public string Name => "AccessorOrdering";
+    public string Name => "PropertyAccessorOrder";
 
     public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
 
@@ -42,7 +45,6 @@ public sealed class AccessorOrderingRule : IRuleDefinition
             AccessorDeclarationSyntax first = accessorList.Accessors[0];
             AccessorDeclarationSyntax second = accessorList.Accessors[1];
 
-            // get must come before set/init
             if (first.Kind() is SyntaxKind.SetAccessorDeclaration or SyntaxKind.InitAccessorDeclaration
                 && second.Kind() is SyntaxKind.GetAccessorDeclaration)
             {
@@ -54,35 +56,6 @@ public sealed class AccessorOrderingRule : IRuleDefinition
                     {
                         RuleId = RuleId,
                         Message = $"A get accessor must appear before a {firstKeyword} accessor",
-                        Severity = LintSeverity.Warning,
-                        FilePath = span.Path,
-                        Line = span.StartLinePosition.Line + 1,
-                        Column = span.StartLinePosition.Character + 1,
-                    });
-            }
-        }
-
-        foreach (EventDeclarationSyntax eventDecl in context.Root.DescendantNodes().OfType<EventDeclarationSyntax>())
-        {
-            if (eventDecl.AccessorList is not { Accessors.Count: 2 } accessorList)
-            {
-                continue;
-            }
-
-            AccessorDeclarationSyntax first = accessorList.Accessors[0];
-            AccessorDeclarationSyntax second = accessorList.Accessors[1];
-
-            // add must come before remove
-            if (first.Kind() is SyntaxKind.RemoveAccessorDeclaration
-                && second.Kind() is SyntaxKind.AddAccessorDeclaration)
-            {
-                FileLinePositionSpan span = first.Keyword.GetLocation().GetLineSpan();
-
-                (diagnostics ??= []).Add(
-                    new LintDiagnostic
-                    {
-                        RuleId = RuleId,
-                        Message = "An add accessor must appear before a remove accessor",
                         Severity = LintSeverity.Warning,
                         FilePath = span.Path,
                         Line = span.StartLinePosition.Line + 1,
