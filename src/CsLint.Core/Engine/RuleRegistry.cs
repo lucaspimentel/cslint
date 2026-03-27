@@ -189,6 +189,7 @@ public sealed class RuleRegistry
         registry.Register(new CatchGeneralExceptionRule());
         registry.Register(new DuplicateIndexedElementInitRule());
         registry.Register(new PropertySelfAssignmentRule());
+        registry.Register(new ReadonlyFieldPreferenceRule());
         registry.Register(new RemoveUnnecessaryParenthesesRule());
         registry.Register(new AddParenthesesForClarityRule());
 

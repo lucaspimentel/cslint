@@ -23,6 +23,7 @@
 - Add IDE0041 — prefer is null (`dotnet_style_prefer_is_null_check_over_reference_equality_method`), flags `ReferenceEquals(x, null)`
 - Add IDE0047 — remove unnecessary parentheses (`dotnet_style_parentheses_in_arithmetic_binary_operators`, `dotnet_style_parentheses_in_relational_binary_operators`, `dotnet_style_parentheses_in_other_binary_operators`)
 - Add IDE0048 — add parentheses for clarity (same config keys as IDE0047, fires when value is `always_for_clarity`)
+- Add IDE0044 — add readonly modifier (`dotnet_style_readonly_field`), flags private fields only assigned in constructors/initializers
 
 ### Changed
 - **BREAKING:** Tier 4 semantic rules are now disabled by default when `.editorconfig` key is absent, matching .NET SDK behavior. To enable, add `dotnet_diagnostic.<ID>.severity = warning` to your `.editorconfig`.
