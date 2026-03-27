@@ -184,6 +184,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0330 | Prefer System.Threading.Lock | `csharp_prefer_system_threading_lock` | IDE0330 |
 | IDE0350 | Prefer implicitly typed lambda | `csharp_style_prefer_implicitly_typed_lambda_expression` | IDE0350 |
 | IDE0360 | Prefer simple property accessors | `csharp_style_prefer_simple_property_accessors` | IDE0360 |
+| IDE0047 | Remove unnecessary parentheses | `dotnet_style_parentheses_in_*` | IDE0047 |
+| IDE0048 | Add parentheses for clarity | `dotnet_style_parentheses_in_*` | IDE0048 |
 
 ### Tier 4 -- Semantic Analysis (requires `--semantic`)
 
@@ -310,6 +312,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0037 | IDE0037 | Microsoft |
 | IDE0051 | IDE0051 | Microsoft |
 | IDE0052 | IDE0052 | Microsoft |
+| IDE0047 | IDE0047 | Microsoft |
+| IDE0048 | IDE0048 | Microsoft |
 | IDE0075 | IDE0075 | Microsoft |
 | IDE0170 | IDE0170 | Microsoft |
 | CA1821 | CA1821 | Microsoft |
@@ -359,17 +363,6 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA2245 | CA2245 | Microsoft |
 
 ## Future Candidates
-
-### Syntax-Feasible (planned)
-
-These rules can be implemented with syntax-only parsing:
-
-#### Stretch goals (partially feasible)
-
-| IDE Rule | Description | Notes |
-|---|---|---|
-| IDE0047 | Remove unnecessary parentheses | Operator precedence is syntax-determinable but rules are complex |
-| IDE0048 | Add parentheses for clarity | Inverse of IDE0047; equally complex |
 
 ### Not Feasible (require semantic model)
 
