@@ -37,7 +37,7 @@ dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .ed
 
 ## Rule ID convention
 
-New rules that map 1:1 to a standard .NET diagnostic ID must use the standard ID directly as their `RuleId` (e.g., `IDE0200`, not `CSLINT*`). The goal is drop-in replacement for `dotnet format`. Rules with no standard equivalent (SA-origin, CsLint-original) keep `CSLINT*` IDs.
+New rules that map 1:1 to a standard diagnostic ID must use the standard ID directly as their `RuleId` (e.g., `IDE0200`, `SA1028`, `CA1051`). The goal is drop-in replacement for `dotnet format`. Rules with no standard equivalent keep `CSLINT*` IDs.
 
 ## Key design decisions
 
