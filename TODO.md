@@ -38,11 +38,11 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **`csharp_style_prefer_unbound_generic_type_in_nameof`** (IDE0340)
 - [x] **`csharp_style_prefer_implicitly_typed_lambda_expression`** (IDE0350)
 - [x] **`csharp_style_prefer_simple_property_accessors`** (IDE0360)
-- [ ] **`dotnet_style_prefer_foreach_explicit_cast_in_source`** (IDE0220)
+- [ ] **`dotnet_style_prefer_foreach_explicit_cast_in_source`** (IDE0220) — requires semantic analysis (need collection element type); Tier 4 candidate
 - [x] **`dotnet_style_prefer_inferred_tuple_names`** (IDE0037)
 - [x] **`dotnet_style_explicit_tuple_names`** (IDE0033)
-- [ ] **`csharp_style_unused_value_expression_statement_preference`** (IDE0058)
-- [ ] **`csharp_style_unused_value_assignment_preference`** (IDE0059)
+- [ ] **`csharp_style_unused_value_expression_statement_preference`** (IDE0058) — requires semantic analysis (need return type info); Tier 4 candidate
+- [ ] **`csharp_style_unused_value_assignment_preference`** (IDE0059) — requires semantic analysis (need data flow analysis); Tier 4 candidate
 - [x] **`dotnet_code_quality_unused_parameters`** (IDE0060) — unused parameters (syntax-only, supports all/non_virtual modes)
 
 ### Migrate existing rules to standard diagnostic IDs
