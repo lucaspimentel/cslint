@@ -9,7 +9,7 @@ public sealed class StaticMemberOrderRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_static_before_instance";
 
-    public string RuleId => "CSLINT266";
+    public string RuleId => "SA1204";
 
     public string Name => "StaticMemberOrder";
 

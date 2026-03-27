@@ -28,7 +28,7 @@ public class FinalNewlineRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT004", diagnostics[0].RuleId);
+        Assert.Equal("SA1518", diagnostics[0].RuleId);
         Assert.Contains("should end with a newline", diagnostics[0].Message);
     }
 

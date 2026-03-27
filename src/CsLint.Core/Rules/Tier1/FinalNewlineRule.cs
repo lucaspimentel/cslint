@@ -4,7 +4,7 @@ namespace Cslint.Core.Rules.Tier1;
 
 public sealed class FinalNewlineRule : IRuleDefinition
 {
-    public string RuleId => "CSLINT004";
+    public string RuleId => "SA1518";
 
     public string Name => "FinalNewline";
 

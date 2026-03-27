@@ -12,10 +12,10 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 
 | CsLint ID | Rule | Standard Key |
 |-----------|------|-------------|
-| CSLINT001 | TrailingWhitespace | `trim_trailing_whitespace` |
-| CSLINT002 | Indentation | `indent_style`, `indent_size` |
+| SA1028 | TrailingWhitespace | `trim_trailing_whitespace` |
+| SA1027 | Indentation | `indent_style`, `indent_size` |
 | CSLINT003 | LineEnding | `end_of_line` |
-| CSLINT004 | FinalNewline | `insert_final_newline` |
+| SA1518 | FinalNewline | `insert_final_newline` |
 | CSLINT005 | MaxLineLength | `max_line_length` |
 | IDE0073 | FileHeader | `file_header_template` | IDE0073 |
 
@@ -35,7 +35,7 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | IDE0025 | ExpressionBodiedProperties | `csharp_style_expression_bodied_properties` | IDE0025 |
 | IDE0011 | BracePreference | `csharp_prefer_braces` | IDE0011 |
 | CSLINT203 | NamespaceDeclaration | `csharp_style_namespace_declarations` | IDE0160/IDE0161 |
-| CSLINT204 | ThisQualification | `dotnet_style_qualification_for_field`, `_property`, `_method`, `_event` | IDE0003/IDE0009 |
+| SA1101 | ThisQualification | `dotnet_style_qualification_for_field`, `_property`, `_method`, `_event` | IDE0003/IDE0009 |
 | IDE0036 | ModifierOrder | `csharp_preferred_modifier_order` | IDE0036 |
 | IDE0040 | AccessibilityModifier | `dotnet_style_require_accessibility_modifiers` | IDE0040 |
 | IDE0065 | UsingDirectivePlacement | `csharp_using_directive_placement` | IDE0065 |
@@ -127,8 +127,8 @@ These CsLint rules cover functionality that has a standard .editorconfig key, bu
 
 | CsLint ID | Rule | CsLint Key | Standard Key (also accepted) | Standard Rule ID | Notes |
 |-----------|------|-----------|-------------|-----------------|-------|
-| CSLINT008 | MultipleBlankLines | `csharp_no_multiple_blank_lines` | `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | Inverted semantics: CsLint `true` = standard `false`; both accepted |
-| CSLINT010 | Utf8FileEncoding | `csharp_store_files_as_utf8` | `charset = utf-8` / `utf-8-bom` | (universal) | Both keys accepted; `charset` enables when value starts with `utf-8` |
+| SA1507 | MultipleBlankLines | `csharp_no_multiple_blank_lines` | `dotnet_style_allow_multiple_blank_lines_experimental` | IDE2000 | Inverted semantics: CsLint `true` = standard `false`; both accepted |
+| SA1412 | Utf8FileEncoding | `csharp_store_files_as_utf8` | `charset = utf-8` / `utf-8-bom` | (universal) | Both keys accepted; `charset` enables when value starts with `utf-8` |
 
 ### Tier 2 — Naming Rules (legacy)
 
@@ -137,12 +137,12 @@ CsLint has simplified single-key naming rules that are automatically disabled wh
 | CsLint ID | Rule | CsLint Key | Standard Equivalent | Notes |
 |-----------|------|-----------|-------------------|-------|
 | CSLINT100 | TypeNaming | `dotnet_naming_rule.types_should_be_pascal_case` | `dotnet_naming_rule` + `dotnet_naming_symbols` + `dotnet_naming_style` (3-part system) | Disabled when IDE1006 config present |
-| CSLINT101 | InterfacePrefix | `dotnet_naming_rule.interface_should_begin_with_i` | (same 3-part system) | Disabled when IDE1006 config present |
-| CSLINT102 | MemberNaming | `dotnet_naming_rule.members_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1302 | InterfacePrefix | `dotnet_naming_rule.interface_should_begin_with_i` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1300 | MemberNaming | `dotnet_naming_rule.members_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
 | CSLINT103 | ParameterLocalNaming | `dotnet_naming_rule.locals_should_be_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
 | CSLINT104 | FieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
-| CSLINT105 | ConstantNaming | `dotnet_naming_rule.constants_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
-| CSLINT106 | TypeParameterNaming | `dotnet_naming_rule.type_parameters_should_begin_with_t` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1303 | ConstantNaming | `dotnet_naming_rule.constants_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1314 | TypeParameterNaming | `dotnet_naming_rule.type_parameters_should_begin_with_t` | (same 3-part system) | Disabled when IDE1006 config present |
 
 ### Tier 3 — Experimental blank line rules (accept both keys)
 
@@ -150,7 +150,7 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 
 | CsLint ID | Rule | CsLint Key | Standard Key (also accepted) | Standard Rule ID |
 |-----------|------|-----------|-------------|-----------------|
-| CSLINT228 | EmbeddedStatement | `csharp_style_allow_embedded_statements_on_same_line` | `csharp_style_allow_embedded_statements_on_same_line_experimental` | IDE2001 |
+| SA1503 | EmbeddedStatement | `csharp_style_allow_embedded_statements_on_same_line` | `csharp_style_allow_embedded_statements_on_same_line_experimental` | IDE2001 |
 | CSLINT229 | ConsecutiveBraces | `csharp_style_allow_blank_lines_between_consecutive_braces` | `csharp_style_allow_blank_lines_between_consecutive_braces_experimental` | IDE2002 |
 | CSLINT231 | ConstructorInitializerBlankLine | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer` | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental` | IDE2004 |
 | CSLINT232 | ConditionalExpressionBlankLine | `csharp_style_allow_blank_line_after_token_in_conditional_expression` | `csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental` | IDE2005 |

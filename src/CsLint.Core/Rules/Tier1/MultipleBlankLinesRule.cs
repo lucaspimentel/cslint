@@ -8,7 +8,7 @@ public sealed class MultipleBlankLinesRule : IRuleDefinition
 
     private const string StandardKey = "dotnet_style_allow_multiple_blank_lines_experimental";
 
-    public string RuleId => "CSLINT008";
+    public string RuleId => "SA1507";
 
     public string Name => "MultipleBlankLines";
 

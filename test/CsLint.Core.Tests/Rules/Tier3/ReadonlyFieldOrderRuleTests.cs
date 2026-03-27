@@ -46,7 +46,7 @@ public class ReadonlyFieldOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT264", diagnostics[0].RuleId);
+        Assert.Equal("SA1214", diagnostics[0].RuleId);
         Assert.Contains("Readonly", diagnostics[0].Message);
     }
 
@@ -109,7 +109,7 @@ public class ReadonlyFieldOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT264", diagnostics[0].RuleId);
+        Assert.Equal("SA1214", diagnostics[0].RuleId);
     }
 
     [Theory]

@@ -8,7 +8,7 @@ public sealed class NoBlankLineBeforeOpeningBraceRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_no_blank_line_before_opening_brace";
 
-    public string RuleId => "CSLINT249";
+    public string RuleId => "SA1509";
 
     public string Name => "NoBlankLineBeforeOpeningBrace";
 

@@ -9,7 +9,7 @@ public sealed class TrailingCommasRule : IRuleDefinition, IDescendantNodeHandler
 {
     private const string ConfigKey = "csharp_trailing_commas_in_multi_line_initializers";
 
-    public string RuleId => "CSLINT253";
+    public string RuleId => "SA1413";
 
     public string Name => "TrailingCommas";
 

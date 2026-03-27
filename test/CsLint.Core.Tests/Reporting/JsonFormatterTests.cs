@@ -23,7 +23,7 @@ public class JsonFormatterTests
         {
             new()
             {
-                RuleId = "CSLINT001",
+                RuleId = "SA1028",
                 Message = "Trailing whitespace",
                 Severity = LintSeverity.Warning,
                 FilePath = "test.cs",
@@ -38,6 +38,6 @@ public class JsonFormatterTests
         JsonElement root = doc.RootElement;
         Assert.Equal(JsonValueKind.Array, root.ValueKind);
         Assert.Equal(1, root.GetArrayLength());
-        Assert.Equal("CSLINT001", root[0].GetProperty("ruleId").GetString());
+        Assert.Equal("SA1028", root[0].GetProperty("ruleId").GetString());
     }
 }

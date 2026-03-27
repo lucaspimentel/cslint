@@ -12,7 +12,7 @@ public sealed class ColonSpacingRule : IRuleDefinition
 
     private const string StandardAfterKey = "csharp_space_after_colon_in_inheritance_clause";
 
-    public string RuleId => "CSLINT261";
+    public string RuleId => "SA1024";
 
     public string Name => "ColonSpacing";
 

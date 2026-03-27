@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier2;
 
 public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
 {
-    public string RuleId => "CSLINT102";
+    public string RuleId => "SA1300";
 
     public string Name => "MemberNaming";
 
@@ -48,7 +48,7 @@ public sealed class MemberNamingRule : IRuleDefinition, INamingRuleHandler
             diagnostics.Add(
                 new LintDiagnostic
                 {
-                    RuleId = "CSLINT102",
+                    RuleId = "SA1300",
                     Message = $"{kind} '{name}' should use PascalCase",
                     Severity = LintSeverity.Warning,
                     FilePath = span.Path,

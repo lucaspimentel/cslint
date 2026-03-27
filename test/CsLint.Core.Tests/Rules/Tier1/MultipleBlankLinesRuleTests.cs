@@ -30,7 +30,7 @@ public class MultipleBlankLinesRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT008", diagnostics[0].RuleId);
+        Assert.Equal("SA1507", diagnostics[0].RuleId);
         Assert.Equal(3, diagnostics[0].Line);
         Assert.Equal(1, diagnostics[0].Column);
     }
@@ -137,6 +137,6 @@ public class MultipleBlankLinesRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT008", diagnostics[0].RuleId);
+        Assert.Equal("SA1507", diagnostics[0].RuleId);
     }
 }

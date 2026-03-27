@@ -25,7 +25,7 @@ public class NoEmptyStatementsRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT240", diagnostics[0].RuleId);
+        Assert.Equal("SA1106", diagnostics[0].RuleId);
     }
 
     [Fact]

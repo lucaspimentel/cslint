@@ -8,7 +8,7 @@ public sealed class Utf8FileEncodingRule : IRuleDefinition
 
     private const string StandardKey = "charset";
 
-    public string RuleId => "CSLINT010";
+    public string RuleId => "SA1412";
 
     public string Name => "Utf8FileEncoding";
 

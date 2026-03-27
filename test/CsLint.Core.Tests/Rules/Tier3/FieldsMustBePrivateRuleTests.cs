@@ -27,7 +27,7 @@ public sealed class FieldsMustBePrivateRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT251", diagnostics[0].RuleId);
+        Assert.Equal("SA1401", diagnostics[0].RuleId);
     }
 
     [Theory]

@@ -4,7 +4,7 @@ namespace Cslint.Core.Rules.Tier1;
 
 public sealed class IndentationRule : IRuleDefinition
 {
-    public string RuleId => "CSLINT002";
+    public string RuleId => "SA1027";
 
     public string Name => "Indentation";
 

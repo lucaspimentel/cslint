@@ -124,23 +124,22 @@ See [docs/rule-mappings.md](docs/rule-mappings.md) for the complete rule referen
 Suppress specific CsLint rules with `#pragma warning disable`:
 
 ```csharp
-#pragma warning disable CSLINT001
+#pragma warning disable SA1028
 class Foo { }   // trailing whitespace not reported
-#pragma warning restore CSLINT001
+#pragma warning restore SA1028
 ```
 
-- Supports single or multiple rule IDs: `#pragma warning disable CSLINT001, IDE0007`
+- Supports single or multiple rule IDs: `#pragma warning disable SA1028, IDE0007`
 - `#pragma warning disable` (no IDs) suppresses all CsLint rules in that range
 - Without a matching `restore`, suppression continues to end of file
 - Third-party rule IDs (StyleCop `SA*` and Microsoft `IDE*`) are also recognized and mapped to the corresponding CsLint rules. Legacy CSLINT IDs from older versions are still accepted. For example:
 
 | Third-Party ID | CsLint ID(s) | Rule |
 |---|---|---|
-| `SA1302` | `CSLINT101` | Interface prefix |
 | `SA1313` | `CSLINT103` | Parameter naming |
 | `SA1306` | `CSLINT104` | Field naming |
 | `IDE0160`/`IDE0161` | `CSLINT203` | Namespace declarations |
-| `IDE1006` | `CSLINT102`, `CSLINT103`, `CSLINT104` | General naming |
+| `IDE1006` | `SA1300`, `CSLINT103`, `CSLINT104` | General naming |
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the full alias mapping table.
 

@@ -29,7 +29,7 @@ public class ElementsSeparatedByBlankLineRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT250", diagnostics[0].RuleId);
+        Assert.Equal("SA1516", diagnostics[0].RuleId);
     }
 
     [Fact]

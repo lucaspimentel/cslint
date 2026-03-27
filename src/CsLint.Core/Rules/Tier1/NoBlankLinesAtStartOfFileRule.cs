@@ -6,7 +6,7 @@ public sealed class NoBlankLinesAtStartOfFileRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_no_blank_lines_at_start_of_file";
 
-    public string RuleId => "CSLINT009";
+    public string RuleId => "SA1517";
 
     public string Name => "NoBlankLinesAtStartOfFile";
 

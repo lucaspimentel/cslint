@@ -12,7 +12,7 @@ public sealed class CommaSpacingRule : IRuleDefinition
 
     private const string StandardBeforeKey = "csharp_space_before_comma";
 
-    public string RuleId => "CSLINT255";
+    public string RuleId => "SA1001";
 
     public string Name => "CommaSpacing";
 

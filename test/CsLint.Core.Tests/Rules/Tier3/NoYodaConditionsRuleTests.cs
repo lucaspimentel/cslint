@@ -38,7 +38,7 @@ public class NoYodaConditionsRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT242", diagnostics[0].RuleId);
+        Assert.Equal("SA1131", diagnostics[0].RuleId);
     }
 
     [Theory]

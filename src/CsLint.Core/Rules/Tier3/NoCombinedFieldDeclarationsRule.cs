@@ -8,7 +8,7 @@ public sealed class NoCombinedFieldDeclarationsRule : IRuleDefinition, IStyleRul
 {
     private const string ConfigKey = "csharp_no_combined_field_declarations";
 
-    public string RuleId => "CSLINT243";
+    public string RuleId => "SA1132";
 
     public string Name => "NoCombinedFieldDeclarations";
 

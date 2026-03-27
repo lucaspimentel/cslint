@@ -8,7 +8,7 @@ public sealed class NoMultipleWhitespaceRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_no_multiple_whitespace";
 
-    public string RuleId => "CSLINT262";
+    public string RuleId => "SA1025";
 
     public string Name => "NoMultipleWhitespace";
 

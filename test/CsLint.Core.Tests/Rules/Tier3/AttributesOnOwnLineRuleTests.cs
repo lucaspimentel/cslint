@@ -33,7 +33,7 @@ public class AttributesOnOwnLineRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT245", diagnostics[0].RuleId);
+        Assert.Equal("SA1134", diagnostics[0].RuleId);
     }
 
     [Fact]

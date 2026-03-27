@@ -8,7 +8,7 @@ public sealed class NoEmptyStatementsRule : IRuleDefinition, IDescendantNodeHand
 {
     private const string ConfigKey = "csharp_no_empty_statements";
 
-    public string RuleId => "CSLINT240";
+    public string RuleId => "SA1106";
 
     public string Name => "NoEmptyStatements";
 

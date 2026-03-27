@@ -63,10 +63,10 @@ public sealed class FileLinterTests
         var mockProvider = new Mock<IConfigProvider>();
         var linter = new FileLinter(registry, mockProvider.Object);
 
-        const string Source = "#pragma warning disable CSLINT001\nnamespace N;\nclass Foo { }   \n";
+        const string Source = "#pragma warning disable SA1028\nnamespace N;\nclass Foo { }   \n";
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", Source, config);
 
-        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "SA1028");
     }
 
     [Fact]
@@ -79,10 +79,10 @@ public sealed class FileLinterTests
         var mockProvider = new Mock<IConfigProvider>();
         var linter = new FileLinter(registry, mockProvider.Object);
 
-        const string Source = "#pragma warning disable CSLINT001\n#pragma warning restore CSLINT001\nnamespace N;\nclass Foo { }   \n";
+        const string Source = "#pragma warning disable SA1028\n#pragma warning restore SA1028\nnamespace N;\nclass Foo { }   \n";
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", Source, config);
 
-        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.Contains(diagnostics, d => d.RuleId == "SA1028");
     }
 
     [Fact]
@@ -111,7 +111,7 @@ public sealed class FileLinterTests
         var linter = new FileLinter(registry, mockProvider.Object);
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "namespace N;\nclass Foo { }   \n", config);
 
-        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "SA1028");
     }
 
     [Fact]
@@ -125,7 +125,7 @@ public sealed class FileLinterTests
         var linter = new FileLinter(registry, mockProvider.Object);
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "namespace N;\nclass Foo { }   \n", config);
 
-        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "SA1028");
     }
 
     [Fact]
@@ -154,7 +154,7 @@ public sealed class FileLinterTests
         var linter = new FileLinter(registry, mockProvider.Object);
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "namespace N;\nclass Foo { }   \n", config);
 
-        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "SA1028");
     }
 
     [Fact]
@@ -169,7 +169,7 @@ public sealed class FileLinterTests
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "namespace N;\nclass Foo { }   \n", config);
 
         Assert.NotEmpty(diagnostics);
-        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.Contains(diagnostics, d => d.RuleId == "SA1028");
     }
 
     [Fact]
@@ -187,15 +187,15 @@ public sealed class FileLinterTests
         var mockProvider = new Mock<IConfigProvider>();
         var linter = new FileLinter(registry, mockProvider.Object)
         {
-            RuleFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "CSLINT001" },
+            RuleFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "SA1028" },
             SkipEnabledCheck = true,
         };
 
-        // Source has trailing whitespace (CSLINT001) and no final newline (CSLINT002)
+        // Source has trailing whitespace (SA1028) and no final newline (SA1027)
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "namespace N;\nclass Foo { }   ", config);
 
-        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
-        Assert.DoesNotContain(diagnostics, d => d.RuleId == "CSLINT002");
+        Assert.Contains(diagnostics, d => d.RuleId == "SA1028");
+        Assert.DoesNotContain(diagnostics, d => d.RuleId == "SA1027");
     }
 
     [Fact]
@@ -208,13 +208,13 @@ public sealed class FileLinterTests
         var mockProvider = new Mock<IConfigProvider>();
         var linter = new FileLinter(registry, mockProvider.Object)
         {
-            RuleFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "CSLINT001" },
+            RuleFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "SA1028" },
             SkipEnabledCheck = true,
         };
 
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "namespace N;\nclass Foo { }   \n", config);
 
-        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.Contains(diagnostics, d => d.RuleId == "SA1028");
     }
 
     [Fact]
@@ -233,6 +233,6 @@ public sealed class FileLinterTests
         IReadOnlyList<LintDiagnostic> diagnostics = linter.LintSource("test.cs", "namespace N;\nclass Foo { }   \n", config);
 
         // With all rules force-enabled, we should get trailing whitespace at minimum
-        Assert.Contains(diagnostics, d => d.RuleId == "CSLINT001");
+        Assert.Contains(diagnostics, d => d.RuleId == "SA1028");
     }
 }

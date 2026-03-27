@@ -7,7 +7,7 @@ namespace Cslint.Core.Rules.Tier2;
 
 public sealed class ConstantNamingRule : IRuleDefinition, INamingRuleHandler
 {
-    public string RuleId => "CSLINT105";
+    public string RuleId => "SA1303";
 
     public string Name => "ConstantNaming";
 
@@ -27,7 +27,7 @@ public sealed class ConstantNamingRule : IRuleDefinition, INamingRuleHandler
             diagnostics.Add(
                 new LintDiagnostic
                 {
-                    RuleId = "CSLINT105",
+                    RuleId = "SA1303",
                     Message = $"Constant '{name}' should use PascalCase or UPPER_CASE",
                     Severity = LintSeverity.Warning,
                     FilePath = span.Path,

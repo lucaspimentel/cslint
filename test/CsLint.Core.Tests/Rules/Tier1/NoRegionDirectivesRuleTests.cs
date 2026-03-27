@@ -33,7 +33,7 @@ public class NoRegionDirectivesRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT006", diagnostics[0].RuleId);
+        Assert.Equal("SA1124", diagnostics[0].RuleId);
         Assert.Equal(1, diagnostics[0].Line);
     }
 
@@ -47,7 +47,7 @@ public class NoRegionDirectivesRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT006", diagnostics[0].RuleId);
+        Assert.Equal("SA1124", diagnostics[0].RuleId);
     }
 
     [Fact]

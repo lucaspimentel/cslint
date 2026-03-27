@@ -26,7 +26,7 @@ public class EmbeddedStatementRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT228", diagnostics[0].RuleId);
+        Assert.Equal("SA1503", diagnostics[0].RuleId);
     }
 
     [Theory]
@@ -63,7 +63,7 @@ public class EmbeddedStatementRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT228", diagnostics[0].RuleId);
+        Assert.Equal("SA1503", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class EmbeddedStatementRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT228", diagnostics[0].RuleId);
+        Assert.Equal("SA1503", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -87,7 +87,7 @@ public class EmbeddedStatementRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT228", diagnostics[0].RuleId);
+        Assert.Equal("SA1503", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -128,7 +128,7 @@ public class EmbeddedStatementRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT228", diagnostics[0].RuleId);
+        Assert.Equal("SA1503", diagnostics[0].RuleId);
     }
 
     [Theory]

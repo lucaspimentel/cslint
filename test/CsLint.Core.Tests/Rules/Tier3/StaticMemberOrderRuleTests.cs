@@ -46,7 +46,7 @@ public class StaticMemberOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT266", diagnostics[0].RuleId);
+        Assert.Equal("SA1204", diagnostics[0].RuleId);
         Assert.Contains("Static", diagnostics[0].Message);
     }
 
@@ -83,7 +83,7 @@ public class StaticMemberOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT266", diagnostics[0].RuleId);
+        Assert.Equal("SA1204", diagnostics[0].RuleId);
     }
 
     [Fact]

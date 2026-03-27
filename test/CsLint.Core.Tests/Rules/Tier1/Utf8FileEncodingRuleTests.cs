@@ -24,7 +24,7 @@ public class Utf8FileEncodingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         LintDiagnostic diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CSLINT010", diagnostic.RuleId);
+        Assert.Equal("SA1412", diagnostic.RuleId);
         Assert.Equal(1, diagnostic.Line);
         Assert.Equal(1, diagnostic.Column);
         Assert.Contains(expectedEncoding, diagnostic.Message);
@@ -130,6 +130,6 @@ public class Utf8FileEncodingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT010", diagnostics[0].RuleId);
+        Assert.Equal("SA1412", diagnostics[0].RuleId);
     }
 }

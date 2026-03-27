@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class ThisQualificationRule : IRuleDefinition, IDescendantNodeHandler
 {
-    public string RuleId => "CSLINT204";
+    public string RuleId => "SA1101";
 
     public string Name => "ThisQualification";
 

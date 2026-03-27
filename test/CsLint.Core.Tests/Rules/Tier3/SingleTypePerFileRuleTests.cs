@@ -26,7 +26,7 @@ public class SingleTypePerFileRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT252", diagnostics[0].RuleId);
+        Assert.Equal("SA1402", diagnostics[0].RuleId);
         Assert.Contains("B", diagnostics[0].Message);
     }
 

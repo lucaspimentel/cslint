@@ -8,7 +8,7 @@ public sealed class EnumValuesOnSeparateLinesRule : IRuleDefinition, IStyleRuleH
 {
     private const string ConfigKey = "csharp_enum_values_on_separate_lines";
 
-    public string RuleId => "CSLINT246";
+    public string RuleId => "SA1136";
 
     public string Name => "EnumValuesOnSeparateLines";
 

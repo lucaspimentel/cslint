@@ -8,7 +8,7 @@ public sealed class NoCombinedAttributesRule : IRuleDefinition, IDescendantNodeH
 {
     private const string ConfigKey = "csharp_no_combined_attributes";
 
-    public string RuleId => "CSLINT244";
+    public string RuleId => "SA1133";
 
     public string Name => "NoCombinedAttributes";
 

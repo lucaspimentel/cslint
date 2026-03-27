@@ -9,7 +9,7 @@ public sealed class FieldsMustBePrivateRule : IRuleDefinition, IStyleRuleHandler
 {
     private const string ConfigKey = "csharp_fields_must_be_private";
 
-    public string RuleId => "CSLINT251";
+    public string RuleId => "SA1401";
 
     public string Name => "FieldsMustBePrivate";
 

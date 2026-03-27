@@ -49,7 +49,7 @@ public class ElementOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT268", diagnostics[0].RuleId);
+        Assert.Equal("SA1201", diagnostics[0].RuleId);
         Assert.Contains("property", diagnostics[0].Message);
         Assert.Contains("method", diagnostics[0].Message);
     }
@@ -87,7 +87,7 @@ public class ElementOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT268", diagnostics[0].RuleId);
+        Assert.Equal("SA1201", diagnostics[0].RuleId);
         Assert.Contains("field", diagnostics[0].Message);
         Assert.Contains("constructor", diagnostics[0].Message);
     }

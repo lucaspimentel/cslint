@@ -29,7 +29,7 @@ public class IndentationRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT002", diagnostics[0].RuleId);
+        Assert.Equal("SA1027", diagnostics[0].RuleId);
     }
 
     [Fact]

@@ -8,7 +8,7 @@ public sealed class SingleTypePerFileRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_single_type_per_file";
 
-    public string RuleId => "CSLINT252";
+    public string RuleId => "SA1402";
 
     public string Name => "SingleTypePerFile";
 

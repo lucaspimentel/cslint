@@ -22,7 +22,7 @@ public class TextFormatterTests
         {
             new()
             {
-                RuleId = "CSLINT001",
+                RuleId = "SA1028",
                 Message = "Trailing whitespace",
                 Severity = LintSeverity.Warning,
                 FilePath = "test.cs",
@@ -33,6 +33,6 @@ public class TextFormatterTests
 
         string result = _formatter.Format(diagnostics);
 
-        Assert.Contains("test.cs(5,10): warning CSLINT001: Trailing whitespace", result);
+        Assert.Contains("test.cs(5,10): warning SA1028: Trailing whitespace", result);
     }
 }

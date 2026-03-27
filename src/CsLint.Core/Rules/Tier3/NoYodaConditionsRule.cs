@@ -9,7 +9,7 @@ public sealed class NoYodaConditionsRule : IRuleDefinition, IDescendantNodeHandl
 {
     private const string ConfigKey = "csharp_no_yoda_conditions";
 
-    public string RuleId => "CSLINT242";
+    public string RuleId => "SA1131";
 
     public string Name => "NoYodaConditions";
 

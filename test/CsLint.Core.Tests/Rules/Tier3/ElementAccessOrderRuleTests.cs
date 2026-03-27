@@ -46,7 +46,7 @@ public class ElementAccessOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT267", diagnostics[0].RuleId);
+        Assert.Equal("SA1202", diagnostics[0].RuleId);
         Assert.Contains("public", diagnostics[0].Message);
     }
 
@@ -84,7 +84,7 @@ public class ElementAccessOrderRuleTests
 
         // protected internal is more visible than protected, so B should come before A
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT267", diagnostics[0].RuleId);
+        Assert.Equal("SA1202", diagnostics[0].RuleId);
         Assert.Contains("protected internal", diagnostics[0].Message);
     }
 

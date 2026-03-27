@@ -23,7 +23,7 @@ public class NoMultipleWhitespaceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.NotEmpty(diagnostics);
-        Assert.Equal("CSLINT262", diagnostics[0].RuleId);
+        Assert.Equal("SA1025", diagnostics[0].RuleId);
     }
 
     [Fact]

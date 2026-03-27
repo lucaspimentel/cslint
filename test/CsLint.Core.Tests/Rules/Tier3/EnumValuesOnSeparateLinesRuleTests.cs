@@ -23,7 +23,7 @@ public class EnumValuesOnSeparateLinesRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Equal(2, diagnostics.Count);
-        Assert.All(diagnostics, d => Assert.Equal("CSLINT246", d.RuleId));
+        Assert.All(diagnostics, d => Assert.Equal("SA1136", d.RuleId));
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class EnumValuesOnSeparateLinesRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT246", diagnostics[0].RuleId);
+        Assert.Equal("SA1136", diagnostics[0].RuleId);
     }
 
     [Fact]

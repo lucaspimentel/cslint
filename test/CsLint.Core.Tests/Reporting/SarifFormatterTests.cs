@@ -15,7 +15,7 @@ public class SarifFormatterTests
         {
             new()
             {
-                RuleId = "CSLINT001",
+                RuleId = "SA1028",
                 Message = "Trailing whitespace",
                 Severity = LintSeverity.Warning,
                 FilePath = "test.cs",
@@ -34,7 +34,7 @@ public class SarifFormatterTests
 
         JsonElement results = runs[0].GetProperty("results");
         Assert.Equal(1, results.GetArrayLength());
-        Assert.Equal("CSLINT001", results[0].GetProperty("ruleId").GetString());
+        Assert.Equal("SA1028", results[0].GetProperty("ruleId").GetString());
         Assert.Equal("warning", results[0].GetProperty("level").GetString());
     }
 }

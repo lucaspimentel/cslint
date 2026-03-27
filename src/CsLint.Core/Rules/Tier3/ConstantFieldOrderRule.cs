@@ -9,7 +9,7 @@ public sealed class ConstantFieldOrderRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_constants_before_fields";
 
-    public string RuleId => "CSLINT265";
+    public string RuleId => "SA1203";
 
     public string Name => "ConstantFieldOrder";
 

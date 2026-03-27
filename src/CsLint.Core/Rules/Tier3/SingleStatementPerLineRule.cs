@@ -8,7 +8,7 @@ public sealed class SingleStatementPerLineRule : IRuleDefinition, IDescendantNod
 {
     private const string ConfigKey = "csharp_single_statement_per_line";
 
-    public string RuleId => "CSLINT241";
+    public string RuleId => "SA1107";
 
     public string Name => "SingleStatementPerLine";
 

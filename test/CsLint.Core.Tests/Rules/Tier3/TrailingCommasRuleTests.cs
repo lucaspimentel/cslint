@@ -30,7 +30,7 @@ public class TrailingCommasRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT253", diagnostics[0].RuleId);
+        Assert.Equal("SA1413", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -81,7 +81,7 @@ public class TrailingCommasRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT253", diagnostics[0].RuleId);
+        Assert.Equal("SA1413", diagnostics[0].RuleId);
     }
 
     [Fact]

@@ -9,7 +9,7 @@ public sealed class ElementAccessOrderRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_element_access_ordering";
 
-    public string RuleId => "CSLINT267";
+    public string RuleId => "SA1202";
 
     public string Name => "ElementAccessOrder";
 

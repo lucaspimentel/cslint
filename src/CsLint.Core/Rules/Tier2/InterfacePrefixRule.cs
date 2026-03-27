@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier2;
 
 public sealed class InterfacePrefixRule : IRuleDefinition, INamingRuleHandler
 {
-    public string RuleId => "CSLINT101";
+    public string RuleId => "SA1302";
 
     public string Name => "InterfacePrefix";
 
@@ -35,7 +35,7 @@ public sealed class InterfacePrefixRule : IRuleDefinition, INamingRuleHandler
             diagnostics.Add(
                 new LintDiagnostic
                 {
-                    RuleId = "CSLINT101",
+                    RuleId = "SA1302",
                     Message = $"Interface '{name}' should begin with 'I'",
                     Severity = LintSeverity.Warning,
                     FilePath = span.Path,

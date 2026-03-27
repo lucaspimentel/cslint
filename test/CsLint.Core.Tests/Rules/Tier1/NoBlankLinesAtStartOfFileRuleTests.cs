@@ -23,7 +23,7 @@ public class NoBlankLinesAtStartOfFileRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT009", diagnostics[0].RuleId);
+        Assert.Equal("SA1517", diagnostics[0].RuleId);
         Assert.Equal(1, diagnostics[0].Line);
     }
 

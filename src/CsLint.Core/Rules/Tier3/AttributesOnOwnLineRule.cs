@@ -8,7 +8,7 @@ public sealed class AttributesOnOwnLineRule : IRuleDefinition, IDescendantNodeHa
 {
     private const string ConfigKey = "csharp_attributes_on_own_line";
 
-    public string RuleId => "CSLINT245";
+    public string RuleId => "SA1134";
 
     public string Name => "AttributesOnOwnLine";
 

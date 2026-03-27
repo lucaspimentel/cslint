@@ -26,7 +26,7 @@ public class NoCombinedFieldDeclarationsRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT243", diagnostics[0].RuleId);
+        Assert.Equal("SA1132", diagnostics[0].RuleId);
     }
 
     [Theory]

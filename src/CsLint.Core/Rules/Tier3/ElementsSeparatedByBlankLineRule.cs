@@ -8,7 +8,7 @@ public sealed class ElementsSeparatedByBlankLineRule : IRuleDefinition, IDescend
 {
     private const string ConfigKey = "csharp_elements_separated_by_blank_line";
 
-    public string RuleId => "CSLINT250";
+    public string RuleId => "SA1516";
 
     public string Name => "ElementsSeparatedByBlankLine";
 

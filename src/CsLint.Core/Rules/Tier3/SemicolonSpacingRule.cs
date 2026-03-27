@@ -12,7 +12,7 @@ public sealed class SemicolonSpacingRule : IRuleDefinition
 
     private const string StandardAfterKey = "csharp_space_after_semicolon_in_for_statement";
 
-    public string RuleId => "CSLINT256";
+    public string RuleId => "SA1002";
 
     public string Name => "SemicolonSpacing";
 

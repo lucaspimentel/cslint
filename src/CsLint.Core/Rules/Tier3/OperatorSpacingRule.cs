@@ -11,7 +11,7 @@ public sealed class OperatorSpacingRule : IRuleDefinition, IDescendantNodeHandle
 
     private const string StandardKey = "csharp_space_around_binary_operators";
 
-    public string RuleId => "CSLINT257";
+    public string RuleId => "SA1003";
 
     public string Name => "OperatorSpacing";
 

@@ -8,28 +8,28 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 
 | CsLint ID | Description | editorconfig Key | Third-Party IDs |
 |---|---|---|---|
-| CSLINT001 | Trailing whitespace | `trim_trailing_whitespace` | SA1028 |
-| CSLINT002 | Indentation | `indent_style`, `indent_size` | SA1027 |
+| SA1028 | Trailing whitespace | `trim_trailing_whitespace` | SA1028 |
+| SA1027 | Indentation | `indent_style`, `indent_size` | SA1027 |
 | CSLINT003 | Line endings | `end_of_line` | -- |
-| CSLINT004 | Final newline | `insert_final_newline` | SA1518 |
+| SA1518 | Final newline | `insert_final_newline` | SA1518 |
 | CSLINT005 | Max line length | `max_line_length` | -- |
-| CSLINT006 | No `#region` directives | `csharp_no_region_directives` | SA1124 |
+| SA1124 | No `#region` directives | `csharp_no_region_directives` | SA1124 |
 | IDE0073 | File header | `file_header_template` | IDE0073 |
-| CSLINT008 | No multiple blank lines | `csharp_no_multiple_blank_lines` | SA1507, IDE2000 |
-| CSLINT009 | No blank lines at start of file | `csharp_no_blank_lines_at_start_of_file` | SA1517 |
-| CSLINT010 | Store files as UTF-8 | `csharp_store_files_as_utf8` | SA1412 |
+| SA1507 | No multiple blank lines | `csharp_no_multiple_blank_lines` | SA1507, IDE2000 |
+| SA1517 | No blank lines at start of file | `csharp_no_blank_lines_at_start_of_file` | SA1517 |
+| SA1412 | Store files as UTF-8 | `csharp_store_files_as_utf8` | SA1412 |
 
 ### Tier 2 -- Naming Conventions
 
 | CsLint ID | Description | editorconfig Key | Third-Party IDs |
 |---|---|---|---|
 | CSLINT100 | Type naming (PascalCase) | `dotnet_naming_rule` | -- |
-| CSLINT101 | Interface prefix (`I`) | `dotnet_naming_rule` | SA1302 |
-| CSLINT102 | Member naming (PascalCase) | `dotnet_naming_rule` | SA1300, IDE1006 |
+| SA1302 | Interface prefix (`I`) | `dotnet_naming_rule` | SA1302 |
+| SA1300 | Member naming (PascalCase) | `dotnet_naming_rule` | SA1300, IDE1006 |
 | CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1312, SA1313, IDE1006 |
 | CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
-| CSLINT105 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | SA1303 |
-| CSLINT106 | Type parameter naming (T prefix) | `dotnet_naming_rule` | SA1314 |
+| SA1303 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | SA1303 |
+| SA1314 | Type parameter naming (T prefix) | `dotnet_naming_rule` | SA1314 |
 | IDE1006 | Standard naming conventions (3-part system) | `dotnet_naming_rule.*`, `dotnet_naming_symbols.*`, `dotnet_naming_style.*` | IDE1006 |
 
 ### Tier 3 -- Style Preferences
@@ -46,7 +46,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0027 | Expression-bodied accessors | `csharp_style_expression_bodied_accessors` | IDE0027 |
 | IDE0011 | Brace preference | `csharp_prefer_braces` | SA1500, IDE0011 |
 | CSLINT203 | Namespace declarations | `csharp_style_namespace_declarations` | IDE0160, IDE0161 |
-| CSLINT204 | `this.` qualification | `dotnet_style_qualification_for_*` | SA1101, IDE0003, IDE0009 |
+| SA1101 | `this.` qualification | `dotnet_style_qualification_for_*` | SA1101, IDE0003, IDE0009 |
 | IDE0036 | Modifier ordering | `csharp_preferred_modifier_order` | SA1206, IDE0036 |
 | IDE0040 | Accessibility modifiers | `dotnet_style_require_accessibility_modifiers` | SA1400, IDE0040 |
 | IDE0065 | Using directive placement | `csharp_using_directive_placement` | IDE0065 |
@@ -73,7 +73,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0071 | Simplify interpolation | `dotnet_style_prefer_simplified_interpolation` | IDE0071 |
 | IDE0056 | Index operator (`^`) | `csharp_style_prefer_index_operator` | IDE0056 |
 | IDE0057 | Range operator (`..`) | `csharp_style_prefer_range_operator` | IDE0057 |
-| CSLINT228 | Embedded statements on own line | `csharp_style_allow_embedded_statements_on_same_line` | SA1503, IDE2001 |
+| SA1503 | Embedded statements on own line | `csharp_style_allow_embedded_statements_on_same_line` | SA1503, IDE2001 |
 | CSLINT229 | No blank line between consecutive braces | `csharp_style_allow_blank_lines_between_consecutive_braces` | IDE2002 |
 | CSLINT230 | Blank line required after block | `csharp_style_allow_blank_line_after_block` | IDE2003 |
 | CSLINT231 | No blank line after constructor initializer colon | `csharp_style_allow_blank_line_after_colon_in_constructor_initializer` | IDE2004 |
@@ -118,35 +118,35 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CA1031 | Do not catch general exception types | `dotnet_diagnostic.CA1031.severity` | CA1031 |
 | CA2244 | Do not duplicate indexed element initializations | `dotnet_diagnostic.CA2244.severity` | CA2244 |
 | CA2245 | Do not assign a property to itself | `dotnet_diagnostic.CA2245.severity` | CA2245 |
-| CSLINT240 | No empty statements | `csharp_no_empty_statements` | SA1106 |
-| CSLINT241 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
-| CSLINT242 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
-| CSLINT243 | No combined field declarations | `csharp_no_combined_field_declarations` | SA1132 |
-| CSLINT244 | No combined attributes | `csharp_no_combined_attributes` | SA1133 |
-| CSLINT245 | Attributes on own line | `csharp_attributes_on_own_line` | SA1134 |
-| CSLINT246 | Enum values on separate lines | `csharp_enum_values_on_separate_lines` | SA1136 |
-| CSLINT247 | No blank line after opening brace | `csharp_no_blank_line_after_opening_brace` | SA1505 |
-| CSLINT248 | No blank line before closing brace | `csharp_no_blank_line_before_closing_brace` | SA1508 |
-| CSLINT249 | No blank line before opening brace | `csharp_no_blank_line_before_opening_brace` | SA1509 |
-| CSLINT250 | Elements separated by blank line | `csharp_elements_separated_by_blank_line` | SA1516 |
-| CSLINT251 | Fields must be private | `csharp_fields_must_be_private` | SA1401 |
-| CSLINT252 | Single type per file | `csharp_single_type_per_file` | SA1402 |
-| CSLINT253 | Trailing commas in multi-line initializers | `csharp_trailing_commas_in_multi_line_initializers` | SA1413 |
-| CSLINT254 | Keyword spacing | `csharp_keyword_spacing` | SA1000 |
-| CSLINT255 | Comma spacing | `csharp_comma_spacing` | SA1001 |
-| CSLINT256 | Semicolon spacing | `csharp_semicolon_spacing` | SA1002 |
-| CSLINT257 | Operator spacing | `csharp_operator_spacing` | SA1003 |
-| CSLINT258 | Single-line comment spacing | `csharp_comment_spacing` | SA1005 |
+| SA1106 | No empty statements | `csharp_no_empty_statements` | SA1106 |
+| SA1107 | Single statement per line | `csharp_single_statement_per_line` | SA1107 |
+| SA1131 | No Yoda conditions | `csharp_no_yoda_conditions` | SA1131 |
+| SA1132 | No combined field declarations | `csharp_no_combined_field_declarations` | SA1132 |
+| SA1133 | No combined attributes | `csharp_no_combined_attributes` | SA1133 |
+| SA1134 | Attributes on own line | `csharp_attributes_on_own_line` | SA1134 |
+| SA1136 | Enum values on separate lines | `csharp_enum_values_on_separate_lines` | SA1136 |
+| SA1505 | No blank line after opening brace | `csharp_no_blank_line_after_opening_brace` | SA1505 |
+| SA1508 | No blank line before closing brace | `csharp_no_blank_line_before_closing_brace` | SA1508 |
+| SA1509 | No blank line before opening brace | `csharp_no_blank_line_before_opening_brace` | SA1509 |
+| SA1516 | Elements separated by blank line | `csharp_elements_separated_by_blank_line` | SA1516 |
+| SA1401 | Fields must be private | `csharp_fields_must_be_private` | SA1401 |
+| SA1402 | Single type per file | `csharp_single_type_per_file` | SA1402 |
+| SA1413 | Trailing commas in multi-line initializers | `csharp_trailing_commas_in_multi_line_initializers` | SA1413 |
+| SA1000 | Keyword spacing | `csharp_keyword_spacing` | SA1000 |
+| SA1001 | Comma spacing | `csharp_comma_spacing` | SA1001 |
+| SA1002 | Semicolon spacing | `csharp_semicolon_spacing` | SA1002 |
+| SA1003 | Operator spacing | `csharp_operator_spacing` | SA1003 |
+| SA1005 | Single-line comment spacing | `csharp_comment_spacing` | SA1005 |
 | CSLINT259 | Parenthesis spacing | `csharp_parenthesis_spacing` | SA1008, SA1009 |
 | CSLINT260 | Brace spacing | `csharp_brace_spacing` | SA1012, SA1013 |
-| CSLINT261 | Colon spacing | `csharp_colon_spacing` | SA1024 |
-| CSLINT262 | No multiple whitespace | `csharp_no_multiple_whitespace` | SA1025 |
+| SA1024 | Colon spacing | `csharp_colon_spacing` | SA1024 |
+| SA1025 | No multiple whitespace | `csharp_no_multiple_whitespace` | SA1025 |
 | CSLINT263 | Accessor ordering | `csharp_accessor_ordering` | SA1212, SA1213 |
-| CSLINT264 | Readonly fields before mutable | `csharp_readonly_before_mutable` | SA1214 |
-| CSLINT265 | Constants before fields | `csharp_constants_before_fields` | SA1203 |
-| CSLINT266 | Static members before instance | `csharp_static_before_instance` | SA1204 |
-| CSLINT267 | Element access modifier ordering | `csharp_element_access_ordering` | SA1202 |
-| CSLINT268 | Element kind ordering | `csharp_element_ordering` | SA1201 |
+| SA1214 | Readonly fields before mutable | `csharp_readonly_before_mutable` | SA1214 |
+| SA1203 | Constants before fields | `csharp_constants_before_fields` | SA1203 |
+| SA1204 | Static members before instance | `csharp_static_before_instance` | SA1204 |
+| SA1202 | Element access modifier ordering | `csharp_element_access_ordering` | SA1202 |
+| SA1201 | Element kind ordering | `csharp_element_ordering` | SA1201 |
 | CSLINT269 | Using directive ordering | `csharp_using_directive_ordering` | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 |
 | IDE0019 | Pattern matching over `as` with null check | `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 |
 | IDE1005 | Conditional delegate call | `csharp_style_conditional_delegate_call` | IDE1005 |
@@ -211,64 +211,25 @@ These rules use the Roslyn semantic model and are only active when the `--semant
 
 ## Pragma Alias Support
 
-The following third-party rule IDs are recognized in `#pragma warning disable` directives and mapped to CsLint rules:
+The following third-party rule IDs are recognized in `#pragma warning disable` directives and mapped to CsLint rules. Legacy CSLINT IDs from before the SA rename are also accepted for backward compatibility:
 
 | Third-Party ID | CsLint ID(s) | Source |
 |---|---|---|
-| SA1000 | CSLINT254 | StyleCop |
-| SA1001 | CSLINT255 | StyleCop |
-| SA1002 | CSLINT256 | StyleCop |
-| SA1003 | CSLINT257 | StyleCop |
-| SA1005 | CSLINT258 | StyleCop |
 | SA1008, SA1009 | CSLINT259 | StyleCop |
 | SA1012, SA1013 | CSLINT260 | StyleCop |
-| SA1024 | CSLINT261 | StyleCop |
-| SA1025 | CSLINT262 | StyleCop |
-| SA1027 | CSLINT002 | StyleCop |
-| SA1028 | CSLINT001 | StyleCop |
-| SA1101 | CSLINT204 | StyleCop |
-| SA1106 | CSLINT240 | StyleCop |
-| SA1107 | CSLINT241 | StyleCop |
 | SA1121 | IDE0049 | StyleCop |
-| SA1124 | CSLINT006 | StyleCop |
-| SA1131 | CSLINT242 | StyleCop |
-| SA1132 | CSLINT243 | StyleCop |
-| SA1133 | CSLINT244 | StyleCop |
-| SA1134 | CSLINT245 | StyleCop |
-| SA1136 | CSLINT246 | StyleCop |
-| SA1201 | CSLINT268 | StyleCop |
-| SA1202 | CSLINT267 | StyleCop |
-| SA1203 | CSLINT265 | StyleCop |
-| SA1204 | CSLINT266 | StyleCop |
 | SA1206 | IDE0036 | StyleCop |
 | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 | CSLINT269 | StyleCop |
 | SA1212, SA1213 | CSLINT263 | StyleCop |
-| SA1214 | CSLINT264 | StyleCop |
-| SA1300 | CSLINT102 | StyleCop |
-| SA1302 | CSLINT101 | StyleCop |
-| SA1303 | CSLINT105 | StyleCop |
 | SA1304 | CSLINT104 | StyleCop |
 | SA1306 | CSLINT104 | StyleCop |
 | SA1307 | CSLINT104 | StyleCop |
 | SA1311 | CSLINT104 | StyleCop |
 | SA1312 | CSLINT103 | StyleCop |
 | SA1313 | CSLINT103 | StyleCop |
-| SA1314 | CSLINT106 | StyleCop |
 | SA1400 | IDE0040 | StyleCop |
-| SA1401 | CSLINT251 | StyleCop |
-| SA1402 | CSLINT252 | StyleCop |
-| SA1412 | CSLINT010 | StyleCop |
-| SA1413 | CSLINT253 | StyleCop |
 | SA1500 | IDE0011 | StyleCop |
-| SA1503 | CSLINT228 | StyleCop |
-| SA1505 | CSLINT247 | StyleCop |
-| SA1507 | CSLINT008 | StyleCop |
-| SA1508 | CSLINT248 | StyleCop |
-| SA1509 | CSLINT249 | StyleCop |
-| SA1516 | CSLINT250 | StyleCop |
-| SA1517 | CSLINT009 | StyleCop |
-| SA1518 | CSLINT004 | StyleCop |
-| IDE0003, IDE0009 | CSLINT204 | Microsoft |
+| IDE0003, IDE0009 | SA1101 | Microsoft |
 | IDE0007 | IDE0007 | Microsoft |
 | IDE0008 | IDE0008 | Microsoft |
 | IDE0011 | IDE0011 | Microsoft |
@@ -302,14 +263,53 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0071 | IDE0071 | Microsoft |
 | IDE0090 | IDE0090 | Microsoft |
 | IDE0160, IDE0161 | CSLINT203 | Microsoft |
+| CSLINT001 | SA1028 | Legacy |
+| CSLINT002 | SA1027 | Legacy |
+| CSLINT004 | SA1518 | Legacy |
+| CSLINT006 | SA1124 | Legacy |
+| CSLINT008 | SA1507 | Legacy |
+| CSLINT009 | SA1517 | Legacy |
+| CSLINT010 | SA1412 | Legacy |
+| CSLINT101 | SA1302 | Legacy |
+| CSLINT102 | SA1300 | Legacy |
+| CSLINT105 | SA1303 | Legacy |
+| CSLINT106 | SA1314 | Legacy |
+| CSLINT204 | SA1101 | Legacy |
+| CSLINT228 | SA1503 | Legacy |
+| CSLINT240 | SA1106 | Legacy |
+| CSLINT241 | SA1107 | Legacy |
+| CSLINT242 | SA1131 | Legacy |
+| CSLINT243 | SA1132 | Legacy |
+| CSLINT244 | SA1133 | Legacy |
+| CSLINT245 | SA1134 | Legacy |
+| CSLINT246 | SA1136 | Legacy |
+| CSLINT247 | SA1505 | Legacy |
+| CSLINT248 | SA1508 | Legacy |
+| CSLINT249 | SA1509 | Legacy |
+| CSLINT250 | SA1516 | Legacy |
+| CSLINT251 | SA1401 | Legacy |
+| CSLINT252 | SA1402 | Legacy |
+| CSLINT253 | SA1413 | Legacy |
+| CSLINT254 | SA1000 | Legacy |
+| CSLINT255 | SA1001 | Legacy |
+| CSLINT256 | SA1002 | Legacy |
+| CSLINT257 | SA1003 | Legacy |
+| CSLINT258 | SA1005 | Legacy |
+| CSLINT261 | SA1024 | Legacy |
+| CSLINT262 | SA1025 | Legacy |
+| CSLINT264 | SA1214 | Legacy |
+| CSLINT265 | SA1203 | Legacy |
+| CSLINT266 | SA1204 | Legacy |
+| CSLINT267 | SA1202 | Legacy |
+| CSLINT268 | SA1201 | Legacy |
 | IDE0180 | IDE0180 | Microsoft |
 | IDE0230 | IDE0230 | Microsoft |
 | IDE0290 | CSLINT221 | Microsoft |
 | IDE0300--IDE0305 | CSLINT222 | Microsoft |
 | IDE1005 | IDE1005 | Microsoft |
-| IDE1006 | CSLINT102, CSLINT103, CSLINT104 | Microsoft |
-| IDE2000 | CSLINT008 | Microsoft |
-| IDE2001 | CSLINT228 | Microsoft |
+| IDE1006 | SA1300, CSLINT103, CSLINT104 | Microsoft |
+| IDE2000 | SA1507 | Microsoft |
+| IDE2001 | SA1503 | Microsoft |
 | IDE2002 | CSLINT229 | Microsoft |
 | IDE2003 | CSLINT230 | Microsoft |
 | IDE2004 | CSLINT231 | Microsoft |
@@ -364,7 +364,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CA2253 | CA2253 | Microsoft |
 | CA1707 | CA1707 | Microsoft |
 | CA1714 | CA1714 | Microsoft |
-| CA1715 | CSLINT101, CSLINT106 | Microsoft |
+| CA1715 | SA1302, SA1314 | Microsoft |
 | CA1716 | CA1716 | Microsoft |
 | CA1720 | CA1720 | Microsoft |
 | CA1721 | CA1721 | Microsoft |

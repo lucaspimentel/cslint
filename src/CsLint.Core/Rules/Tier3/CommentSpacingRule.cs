@@ -8,7 +8,7 @@ public sealed class CommentSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_comment_spacing";
 
-    public string RuleId => "CSLINT258";
+    public string RuleId => "SA1005";
 
     public string Name => "CommentSpacing";
 

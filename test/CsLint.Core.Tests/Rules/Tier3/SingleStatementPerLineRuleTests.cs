@@ -31,7 +31,7 @@ public class SingleStatementPerLineRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT241", diagnostics[0].RuleId);
+        Assert.Equal("SA1107", diagnostics[0].RuleId);
     }
 
     [Fact]

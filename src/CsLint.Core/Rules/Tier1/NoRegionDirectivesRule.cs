@@ -4,7 +4,7 @@ namespace Cslint.Core.Rules.Tier1;
 
 public sealed class NoRegionDirectivesRule : IRuleDefinition
 {
-    public string RuleId => "CSLINT006";
+    public string RuleId => "SA1124";
 
     public string Name => "NoRegionDirectives";
 

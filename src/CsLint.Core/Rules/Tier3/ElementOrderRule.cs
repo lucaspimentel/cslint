@@ -9,7 +9,7 @@ public sealed class ElementOrderRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_element_ordering";
 
-    public string RuleId => "CSLINT268";
+    public string RuleId => "SA1201";
 
     public string Name => "ElementOrder";
 

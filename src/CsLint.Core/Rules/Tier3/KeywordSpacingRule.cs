@@ -37,7 +37,7 @@ public sealed class KeywordSpacingRule : IRuleDefinition
         SyntaxKind.DefaultKeyword,
     ];
 
-    public string RuleId => "CSLINT254";
+    public string RuleId => "SA1000";
 
     public string Name => "KeywordSpacing";
 

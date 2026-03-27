@@ -19,8 +19,8 @@ public sealed class RuleRegistryTests
     {
         IReadOnlyDictionary<string, List<string>> aliases = RuleRegistry.GetAliases();
 
-        Assert.True(aliases.ContainsKey("CSLINT102"));
-        Assert.Contains("SA1300", aliases["CSLINT102"]);
+        Assert.True(aliases.ContainsKey("SA1300"));
+        Assert.Contains("SA1300", aliases["SA1300"]);
     }
 
     [Fact]
@@ -33,19 +33,19 @@ public sealed class RuleRegistryTests
     }
 
     [Theory]
-    [InlineData("SA1027", "CSLINT002")]
-    [InlineData("SA1028", "CSLINT001")]
-    [InlineData("SA1101", "CSLINT204")]
+    [InlineData("SA1027", "SA1027")]
+    [InlineData("SA1028", "SA1028")]
+    [InlineData("SA1101", "SA1101")]
     [InlineData("SA1121", "IDE0049")]
-    [InlineData("SA1124", "CSLINT006")]
+    [InlineData("SA1124", "SA1124")]
     [InlineData("SA1206", "IDE0036")]
-    [InlineData("SA1303", "CSLINT105")]
+    [InlineData("SA1303", "SA1303")]
     [InlineData("SA1312", "CSLINT103")]
     [InlineData("SA1400", "IDE0040")]
     [InlineData("SA1500", "IDE0011")]
-    [InlineData("SA1503", "CSLINT228")]
-    [InlineData("SA1507", "CSLINT008")]
-    [InlineData("SA1518", "CSLINT004")]
+    [InlineData("SA1503", "SA1503")]
+    [InlineData("SA1507", "SA1507")]
+    [InlineData("SA1518", "SA1518")]
     public void GetAliases_ContainsNewStyleCopMappings(string styleCopId, string cslintId)
     {
         IReadOnlyDictionary<string, List<string>> aliases = RuleRegistry.GetAliases();

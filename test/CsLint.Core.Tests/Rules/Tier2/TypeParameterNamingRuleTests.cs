@@ -22,7 +22,7 @@ public class TypeParameterNamingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT106", diagnostics[0].RuleId);
+        Assert.Equal("SA1314", diagnostics[0].RuleId);
     }
 
     [Theory]

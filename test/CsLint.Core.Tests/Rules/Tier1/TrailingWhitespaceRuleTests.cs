@@ -33,7 +33,7 @@ public class TrailingWhitespaceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT001", diagnostics[0].RuleId);
+        Assert.Equal("SA1028", diagnostics[0].RuleId);
         Assert.Equal(1, diagnostics[0].Line);
     }
 

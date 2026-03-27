@@ -23,7 +23,7 @@ public class SemicolonSpacingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT256", diagnostics[0].RuleId);
+        Assert.Equal("SA1002", diagnostics[0].RuleId);
     }
 
     [Fact]

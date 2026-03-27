@@ -10,7 +10,7 @@ public sealed class EmbeddedStatementRule : IRuleDefinition, IStyleRuleHandler
 
     private const string StandardKey = ConfigKey + "_experimental";
 
-    public string RuleId => "CSLINT228";
+    public string RuleId => "SA1503";
 
     public string Name => "EmbeddedStatement";
 

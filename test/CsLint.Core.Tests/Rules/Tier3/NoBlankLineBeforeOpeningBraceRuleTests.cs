@@ -32,7 +32,7 @@ public class NoBlankLineBeforeOpeningBraceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT249", diagnostics[0].RuleId);
+        Assert.Equal("SA1509", diagnostics[0].RuleId);
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class NoBlankLineBeforeOpeningBraceRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT249", diagnostics[0].RuleId);
+        Assert.Equal("SA1509", diagnostics[0].RuleId);
     }
 
     [Fact]

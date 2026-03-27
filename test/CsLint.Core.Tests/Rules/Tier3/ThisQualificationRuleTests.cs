@@ -36,7 +36,7 @@ public class ThisQualificationRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT204", diagnostics[0].RuleId);
+        Assert.Equal("SA1101", diagnostics[0].RuleId);
         Assert.Contains("this.", diagnostics[0].Message);
     }
 }

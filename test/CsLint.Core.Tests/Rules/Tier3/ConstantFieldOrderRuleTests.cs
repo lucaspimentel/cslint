@@ -46,7 +46,7 @@ public class ConstantFieldOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT265", diagnostics[0].RuleId);
+        Assert.Equal("SA1203", diagnostics[0].RuleId);
         Assert.Contains("Constant", diagnostics[0].Message);
     }
 
@@ -67,7 +67,7 @@ public class ConstantFieldOrderRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT265", diagnostics[0].RuleId);
+        Assert.Equal("SA1203", diagnostics[0].RuleId);
     }
 
     [Fact]

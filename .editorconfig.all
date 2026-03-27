@@ -8,35 +8,35 @@ root = true
 # Tier 1 — Text-level formatting
 ########################################
 
-# CSLINT001: TrailingWhitespace
+# SA1028: TrailingWhitespace
 trim_trailing_whitespace = true
 
-# CSLINT002: Indentation
+# SA1027: Indentation
 indent_style = space
 indent_size = 4
 
 # CSLINT003: LineEnding
 # end_of_line = lf
 
-# CSLINT004: FinalNewline
+# SA1518: FinalNewline
 insert_final_newline = true
 
 # CSLINT005: MaxLineLength
 max_line_length = 150
 
-# CSLINT006: NoRegionDirectives
+# SA1124: NoRegionDirectives
 csharp_no_region_directives = true
 
 # CSLINT007: FileHeader (set to "unset" to require no header, or provide a template)
 file_header_template = unset
 
-# CSLINT008: MultipleBlankLines
+# SA1507: MultipleBlankLines
 csharp_no_multiple_blank_lines = true
 
-# CSLINT009: NoBlankLinesAtStartOfFile
+# SA1517: NoBlankLinesAtStartOfFile
 csharp_no_blank_lines_at_start_of_file = true
 
-# CSLINT010: Utf8FileEncoding
+# SA1412: Utf8FileEncoding
 csharp_store_files_as_utf8 = true
 
 ########################################
@@ -46,10 +46,10 @@ csharp_store_files_as_utf8 = true
 # CSLINT100: TypeNaming — PascalCase for types
 dotnet_naming_rule.types_should_be_pascal_case = true:warning
 
-# CSLINT101: InterfacePrefix — interfaces must start with 'I'
+# SA1302: InterfacePrefix — interfaces must start with 'I'
 dotnet_naming_rule.interface_should_begin_with_i = true:warning
 
-# CSLINT102: MemberNaming — PascalCase for members
+# SA1300: MemberNaming — PascalCase for members
 dotnet_naming_rule.members_should_be_pascal_case = true:warning
 
 # CSLINT103: ParameterLocalNaming — camelCase for parameters/locals
@@ -58,10 +58,10 @@ dotnet_naming_rule.locals_should_be_camel_case = true:warning
 # CSLINT104: FieldNaming — _camelCase for private fields
 dotnet_naming_rule.private_fields_should_be_underscore_camel_case = true:warning
 
-# CSLINT105: ConstantNaming — PascalCase for constants
+# SA1303: ConstantNaming — PascalCase for constants
 dotnet_naming_rule.constants_should_be_pascal_case = true:warning
 
-# CSLINT106: TypeParameterNaming — must begin with 'T'
+# SA1314: TypeParameterNaming — must begin with 'T'
 dotnet_naming_rule.type_parameters_should_begin_with_t = true:warning
 
 ########################################
@@ -84,7 +84,7 @@ csharp_prefer_braces = true:warning
 # CSLINT203: NamespaceDeclaration
 csharp_style_namespace_declarations = file_scoped:warning
 
-# CSLINT204: ThisQualification
+# SA1101: ThisQualification
 dotnet_style_qualification_for_field = false:warning
 dotnet_style_qualification_for_property = false:warning
 dotnet_style_qualification_for_method = false:warning
@@ -160,7 +160,7 @@ csharp_style_prefer_index_operator = true:warning
 # CSLINT227: RangeOperator
 csharp_style_prefer_range_operator = true:warning
 
-# CSLINT228: EmbeddedStatement
+# SA1503: EmbeddedStatement
 csharp_style_allow_embedded_statements_on_same_line = false:warning
 
 # CSLINT229: ConsecutiveBraces
@@ -271,7 +271,7 @@ dotnet_diagnostic.CA1707.severity = warning
 # CA1714: FlagsEnumsShouldHavePluralNames (enabled by default)
 dotnet_diagnostic.CA1714.severity = warning
 
-# CA1715: covered by CSLINT101 (interface I prefix) and CSLINT106 (type param T prefix)
+# CA1715: covered by SA1302 (interface I prefix) and SA1314 (type param T prefix)
 
 # CA1716: IdentifiersShouldNotMatchKeywords (enabled by default)
 dotnet_diagnostic.CA1716.severity = warning
@@ -297,61 +297,61 @@ dotnet_diagnostic.CA2244.severity = warning
 # CA2245: DoNotAssignPropertyToItself (enabled by default)
 dotnet_diagnostic.CA2245.severity = warning
 
-# CSLINT240: NoEmptyStatements
+# SA1106: NoEmptyStatements
 csharp_no_empty_statements = true:warning
 
-# CSLINT241: SingleStatementPerLine
+# SA1107: SingleStatementPerLine
 csharp_single_statement_per_line = true:warning
 
-# CSLINT242: NoYodaConditions
+# SA1131: NoYodaConditions
 csharp_no_yoda_conditions = true:warning
 
-# CSLINT243: NoCombinedFieldDeclarations
+# SA1132: NoCombinedFieldDeclarations
 csharp_no_combined_field_declarations = true:warning
 
-# CSLINT244: NoCombinedAttributes
+# SA1133: NoCombinedAttributes
 csharp_no_combined_attributes = true:warning
 
-# CSLINT245: AttributesOnOwnLine
+# SA1134: AttributesOnOwnLine
 csharp_attributes_on_own_line = true:warning
 
-# CSLINT246: EnumValuesOnSeparateLines
+# SA1136: EnumValuesOnSeparateLines
 csharp_enum_values_on_separate_lines = true:warning
 
-# CSLINT247: NoBlankLineAfterOpeningBrace
+# SA1505: NoBlankLineAfterOpeningBrace
 csharp_no_blank_line_after_opening_brace = true:warning
 
-# CSLINT248: NoBlankLineBeforeClosingBrace
+# SA1508: NoBlankLineBeforeClosingBrace
 csharp_no_blank_line_before_closing_brace = true:warning
 
-# CSLINT249: NoBlankLineBeforeOpeningBrace
+# SA1509: NoBlankLineBeforeOpeningBrace
 csharp_no_blank_line_before_opening_brace = true:warning
 
-# CSLINT250: ElementsSeparatedByBlankLine
+# SA1516: ElementsSeparatedByBlankLine
 csharp_elements_separated_by_blank_line = true:warning
 
-# CSLINT251: FieldsMustBePrivate
+# SA1401: FieldsMustBePrivate
 csharp_fields_must_be_private = true:warning
 
-# CSLINT252: SingleTypePerFile
+# SA1402: SingleTypePerFile
 csharp_single_type_per_file = true:warning
 
-# CSLINT253: TrailingCommas
+# SA1413: TrailingCommas
 csharp_trailing_commas_in_multi_line_initializers = true:warning
 
-# CSLINT254: KeywordSpacing
+# SA1000: KeywordSpacing
 csharp_keyword_spacing = true:warning
 
-# CSLINT255: CommaSpacing
+# SA1001: CommaSpacing
 csharp_comma_spacing = true:warning
 
-# CSLINT256: SemicolonSpacing
+# SA1002: SemicolonSpacing
 csharp_semicolon_spacing = true:warning
 
-# CSLINT257: OperatorSpacing
+# SA1003: OperatorSpacing
 csharp_operator_spacing = true:warning
 
-# CSLINT258: CommentSpacing
+# SA1005: CommentSpacing
 csharp_comment_spacing = true:warning
 
 # CSLINT259: ParenthesisSpacing
@@ -360,28 +360,28 @@ csharp_parenthesis_spacing = true:warning
 # CSLINT260: BraceSpacing
 csharp_brace_spacing = true:warning
 
-# CSLINT261: ColonSpacing
+# SA1024: ColonSpacing
 csharp_colon_spacing = true:warning
 
-# CSLINT262: NoMultipleWhitespace
+# SA1025: NoMultipleWhitespace
 csharp_no_multiple_whitespace = true:warning
 
 # CSLINT263: AccessorOrdering
 csharp_accessor_ordering = true:warning
 
-# CSLINT264: ReadonlyFieldOrder
+# SA1214: ReadonlyFieldOrder
 csharp_readonly_before_mutable = true:warning
 
-# CSLINT265: ConstantFieldOrder
+# SA1203: ConstantFieldOrder
 csharp_constants_before_fields = true:warning
 
-# CSLINT266: StaticMemberOrder
+# SA1204: StaticMemberOrder
 csharp_static_before_instance = true:warning
 
-# CSLINT267: ElementAccessOrder
+# SA1202: ElementAccessOrder
 csharp_element_access_ordering = true:warning
 
-# CSLINT268: ElementOrder
+# SA1201: ElementOrder
 csharp_element_ordering = true:warning
 
 # CSLINT269: UsingDirectiveOrder

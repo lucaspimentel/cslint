@@ -9,7 +9,7 @@ public sealed class ReadonlyFieldOrderRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_readonly_before_mutable";
 
-    public string RuleId => "CSLINT264";
+    public string RuleId => "SA1214";
 
     public string Name => "ReadonlyFieldOrder";
 

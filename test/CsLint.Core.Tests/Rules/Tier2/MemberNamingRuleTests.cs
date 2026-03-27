@@ -33,7 +33,7 @@ public class MemberNamingRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT102", diagnostics[0].RuleId);
+        Assert.Equal("SA1300", diagnostics[0].RuleId);
         Assert.Contains(kind, diagnostics[0].Message);
         Assert.Contains(name, diagnostics[0].Message);
     }

@@ -6,7 +6,7 @@ namespace Cslint.Core.Rules.Tier2;
 
 public sealed class TypeParameterNamingRule : IRuleDefinition, INamingRuleHandler
 {
-    public string RuleId => "CSLINT106";
+    public string RuleId => "SA1314";
 
     public string Name => "TypeParameterNaming";
 

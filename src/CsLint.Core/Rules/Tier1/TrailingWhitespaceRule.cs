@@ -4,7 +4,7 @@ namespace Cslint.Core.Rules.Tier1;
 
 public sealed class TrailingWhitespaceRule : IRuleDefinition
 {
-    public string RuleId => "CSLINT001";
+    public string RuleId => "SA1028";
 
     public string Name => "TrailingWhitespace";
 

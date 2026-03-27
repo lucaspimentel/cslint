@@ -30,7 +30,7 @@ public class InterfacePrefixRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("CSLINT101", diagnostics[0].RuleId);
+        Assert.Equal("SA1302", diagnostics[0].RuleId);
         Assert.Contains(name, diagnostics[0].Message);
     }
 }
