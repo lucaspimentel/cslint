@@ -186,6 +186,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0360 | Prefer simple property accessors | `csharp_style_prefer_simple_property_accessors` | IDE0360 |
 | IDE0047 | Remove unnecessary parentheses | `dotnet_style_parentheses_in_*` | IDE0047 |
 | IDE0048 | Add parentheses for clarity | `dotnet_style_parentheses_in_*` | IDE0048 |
+| IDE0042 | Deconstruct variable declaration | `csharp_style_deconstructed_variable_declaration` | IDE0042 |
 | IDE0044 | Add readonly modifier | `dotnet_style_readonly_field` | IDE0044 |
 | IDE0250 | Prefer readonly struct | `csharp_style_prefer_readonly_struct` | IDE0250 |
 | IDE0251 | Prefer readonly struct member | `csharp_style_prefer_readonly_struct_member` | IDE0251 |
@@ -315,6 +316,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0037 | IDE0037 | Microsoft |
 | IDE0051 | IDE0051 | Microsoft |
 | IDE0052 | IDE0052 | Microsoft |
+| IDE0042 | IDE0042 | Microsoft |
 | IDE0044 | IDE0044 | Microsoft |
 | IDE0047 | IDE0047 | Microsoft |
 | IDE0048 | IDE0048 | Microsoft |
@@ -374,7 +376,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 
 These rules require type information, flow analysis, or semantic model and are not currently implemented (some may become Tier 4 candidates in the future):
 
-IDE0001, IDE0002, IDE0010, IDE0032, IDE0035, IDE0042, IDE0050, IDE0058, IDE0059, IDE0060, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0140, IDE0220, IDE0240, IDE0241, IDE0260, IDE0270, IDE0280, IDE0306, IDE0370, IDE0380
+IDE0001, IDE0002, IDE0010, IDE0032, IDE0035, IDE0050, IDE0058, IDE0059, IDE0060, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0140, IDE0220, IDE0240, IDE0241, IDE0260, IDE0270, IDE0280, IDE0306, IDE0370, IDE0380
 
 ### Not Applicable
 

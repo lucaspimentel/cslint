@@ -23,7 +23,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 ### Implement missing Tier 3 style preference rules
 
 - [x] **`dotnet_style_readonly_field`** (IDE0044) — add readonly modifier (private fields only, syntax-only)
-- [ ] **`csharp_style_deconstructed_variable_declaration`** (IDE0042) — deconstruct variable declaration
+- [x] **`csharp_style_deconstructed_variable_declaration`** (IDE0042) — deconstruct variable declaration (syntax-only, explicit tuple types)
 - [x] **`csharp_style_prefer_readonly_struct`** (IDE0250) — struct can be made readonly (syntax-only)
 - [x] **`csharp_style_prefer_readonly_struct_member`** (IDE0251) — member can be made readonly (syntax-only)
 - [x] **`csharp_prefer_static_local_function`** (IDE0062) — make local function static
