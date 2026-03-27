@@ -70,6 +70,27 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | IDE0039 | LocalOverAnonymousFunction | `csharp_style_prefer_local_over_anonymous_function` | IDE0039 |
 | IDE0033 | ExplicitTupleNames | `dotnet_style_explicit_tuple_names` | IDE0033 |
 | IDE0340 | UnboundGenericInNameof | `csharp_style_prefer_unbound_generic_type_in_nameof` | IDE0340 |
+| IDE0022 | ExpressionBodiedMethods (block) | `csharp_style_expression_bodied_methods` | IDE0022 |
+| IDE0023 | ExpressionBodiedConversionOperators | `csharp_style_expression_bodied_operators` | IDE0023 |
+| IDE0024 | ExpressionBodiedOperators | `csharp_style_expression_bodied_operators` | IDE0024 |
+| IDE0026 | ExpressionBodiedIndexers | `csharp_style_expression_bodied_indexers` | IDE0026 |
+| IDE0027 | ExpressionBodiedAccessors | `csharp_style_expression_bodied_accessors` | IDE0027 |
+| IDE0031 | NullPropagation | `dotnet_style_null_propagation` | IDE0031 |
+| IDE0041 | PreferIsNull | `dotnet_style_prefer_is_null_check_over_reference_equality_method` | IDE0041 |
+| IDE0047 | RemoveUnnecessaryParentheses | `dotnet_style_parentheses_in_arithmetic_binary_operators`, `_relational_`, `_other_binary_` | IDE0047 |
+| IDE0048 | AddParenthesesForClarity | `dotnet_style_parentheses_in_arithmetic_binary_operators`, `_relational_`, `_other_binary_` | IDE0048 |
+| IDE0044 | ReadonlyFieldPreference | `dotnet_style_readonly_field` | IDE0044 |
+| IDE0250 | ReadonlyStructPreference | `csharp_style_prefer_readonly_struct` | IDE0250 |
+| IDE0251 | ReadonlyStructMemberPreference | `csharp_style_prefer_readonly_struct_member` | IDE0251 |
+| IDE0042 | DeconstructedVariable | `csharp_style_deconstructed_variable_declaration` | IDE0042 |
+| IDE0032 | AutoPropertyPreference | `dotnet_style_prefer_auto_properties` | IDE0032 |
+| IDE0060 | UnusedParameter | `dotnet_code_quality_unused_parameters` | IDE0060 |
+| IDE0062 | StaticLocalFunction | `csharp_prefer_static_local_function` | IDE0062 |
+| IDE0150 | NullCheckOverTypeCheck | `csharp_style_prefer_null_check_over_type_check` | IDE0150 |
+| IDE0320 | StaticAnonymousFunction | `csharp_prefer_static_anonymous_function` | IDE0320 |
+| IDE0330 | SystemThreadingLock | `csharp_prefer_system_threading_lock` | IDE0330 |
+| IDE0350 | ImplicitlyTypedLambda | `csharp_style_prefer_implicitly_typed_lambda_expression` | IDE0350 |
+| IDE0360 | SimplePropertyAccessors | `csharp_style_prefer_simple_property_accessors` | IDE0360 |
 
 ### Tier 3 — Formatting (standard key)
 
@@ -151,25 +172,10 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 
 | Standard Key | Standard Rule ID | Description |
 |-------------|-----------------|-------------|
-| `dotnet_style_readonly_field` | IDE0044 | Add readonly modifier |
-| `csharp_style_deconstructed_variable_declaration` | IDE0042 | Deconstruct variable declaration |
-| `csharp_style_prefer_readonly_struct` | IDE0250 | Struct can be made readonly |
-| `csharp_style_prefer_readonly_struct_member` | IDE0251 | Member can be made readonly |
-| `csharp_style_prefer_null_check_over_type_check` | IDE0150 | Prefer null check over type check |
-| `csharp_prefer_static_local_function` | IDE0062 | Make local function static |
-| `csharp_prefer_static_anonymous_function` | IDE0320 | Make anonymous function static |
-| `csharp_prefer_system_threading_lock` | IDE0330 | Prefer System.Threading.Lock |
-| `csharp_style_prefer_implicitly_typed_lambda_expression` | IDE0350 | Use implicitly typed lambda |
-| `csharp_style_prefer_simple_property_accessors` | IDE0360 | Simplify property accessor |
-| `csharp_style_unused_value_expression_statement_preference` | IDE0058 | Remove unused expression value |
-| `csharp_style_unused_value_assignment_preference` | IDE0059 | Remove unnecessary value assignment |
-| `dotnet_code_quality_unused_parameters` | IDE0060 | Remove unused parameter |
-| `dotnet_style_prefer_auto_properties` | IDE0032 | Use auto property |
-| `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach |
-| `dotnet_style_parentheses_in_arithmetic_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
-| `dotnet_style_parentheses_in_relational_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
-| `dotnet_style_parentheses_in_other_binary_operators` | IDE0047/IDE0048 | Parentheses preferences |
-| `dotnet_style_parentheses_in_other_operators` | IDE0047/IDE0048 | Parentheses preferences |
+| `csharp_style_unused_value_expression_statement_preference` | IDE0058 | Remove unused expression value (requires semantic analysis) |
+| `csharp_style_unused_value_assignment_preference` | IDE0059 | Remove unnecessary value assignment (requires semantic analysis) |
+| `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach (requires semantic analysis) |
+| `dotnet_style_parentheses_in_other_operators` | IDE0047/IDE0048 | Parentheses in other operators (deferred — very niche) |
 
 ### Would be Tier 4 (semantic analysis)
 
@@ -206,7 +212,7 @@ These standard rules have **no** CsLint equivalent at all:
 
 | Category | Count |
 |----------|-------|
-| Supported with standard key | 64 |
+| Supported with standard key | 87 |
 | Supported with custom key (standard equivalent exists) | 16 (9 also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | 22 |
+| Standard rules not supported (style/syntax — would be Tier 3) | 4 |
 | Standard rules not supported (semantic — would be Tier 4) | 22 |
