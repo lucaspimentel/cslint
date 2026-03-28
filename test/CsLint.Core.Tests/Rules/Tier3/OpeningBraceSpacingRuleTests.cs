@@ -4,9 +4,9 @@ using Cslint.Core.Rules.Tier3;
 
 namespace Cslint.Core.Tests.Rules.Tier3;
 
-public class BraceSpacingRuleTests
+public class OpeningBraceSpacingRuleTests
 {
-    private readonly BraceSpacingRule _rule = new();
+    private readonly OpeningBraceSpacingRule _rule = new();
 
     private static LintConfiguration EnabledConfig() =>
         new(new Dictionary<string, string>
@@ -22,7 +22,7 @@ public class BraceSpacingRuleTests
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
-        Assert.Contains(diagnostics, d => d.Message.Contains("preceded"));
+        Assert.Contains(diagnostics, d => d.RuleId == "SA1012" && d.Message.Contains("preceded"));
     }
 
     [Fact]
@@ -31,9 +31,7 @@ public class BraceSpacingRuleTests
         string source = "class C { }";
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]
@@ -42,9 +40,7 @@ public class BraceSpacingRuleTests
         string source = """class C { string M(string name) { return $"Hello {name}!"; } }""";
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]
@@ -53,9 +49,7 @@ public class BraceSpacingRuleTests
         string source = """class C { string M(int a, int b) { return $"{a} + {b} = {a + b}"; } }""";
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Theory]
@@ -71,11 +65,8 @@ public class BraceSpacingRuleTests
             settings["csharp_brace_spacing"] = configValue;
         }
 
-        var config = new LintConfiguration(settings);
-        RuleContext context = TestHelper.CreateContext(source, config);
+        RuleContext context = TestHelper.CreateContext(source, new LintConfiguration(settings));
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 }

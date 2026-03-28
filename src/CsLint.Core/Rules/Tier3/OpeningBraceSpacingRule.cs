@@ -4,13 +4,16 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class BraceSpacingRule : IRuleDefinition
+/// <summary>
+/// SA1012: Opening brace should be preceded by a space.
+/// </summary>
+public sealed class OpeningBraceSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_brace_spacing";
 
-    public string RuleId => "CSLINT260";
+    public string RuleId => "SA1012";
 
-    public string Name => "BraceSpacing";
+    public string Name => "OpeningBraceSpacing";
 
     public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
 
@@ -29,7 +32,7 @@ public sealed class BraceSpacingRule : IRuleDefinition
             return [];
         }
 
-        var diagnostics = new List<LintDiagnostic>();
+        List<LintDiagnostic>? diagnostics = null;
         SyntaxToken token = context.Root.GetFirstToken();
 
         while (token != default)
@@ -50,7 +53,7 @@ public sealed class BraceSpacingRule : IRuleDefinition
                 {
                     FileLinePositionSpan span = token.GetLocation().GetLineSpan();
 
-                    diagnostics.Add(
+                    (diagnostics ??= []).Add(
                         new LintDiagnostic
                         {
                             RuleId = RuleId,
@@ -62,44 +65,10 @@ public sealed class BraceSpacingRule : IRuleDefinition
                         });
                 }
             }
-            else if (token.IsKind(SyntaxKind.CloseBraceToken))
-            {
-                // Skip string interpolation braces
-                if (token.Parent?.IsKind(SyntaxKind.Interpolation) == true)
-                {
-                    token = token.GetNextToken();
-                    continue;
-                }
-
-                // Space after closing brace (unless followed by semicolon, comma, paren, or newline)
-                SyntaxToken next = token.GetNextToken();
-
-                if (next != default &&
-                    !next.IsKind(SyntaxKind.SemicolonToken) &&
-                    !next.IsKind(SyntaxKind.CommaToken) &&
-                    !next.IsKind(SyntaxKind.CloseParenToken) &&
-                    !next.IsKind(SyntaxKind.CloseBraceToken) &&
-                    !next.IsKind(SyntaxKind.EndOfFileToken) &&
-                    !TriviaHelper.HasTrailingSpaceOrNewline(token))
-                {
-                    FileLinePositionSpan span = token.GetLocation().GetLineSpan();
-
-                    diagnostics.Add(
-                        new LintDiagnostic
-                        {
-                            RuleId = RuleId,
-                            Message = "Closing brace should be followed by a space",
-                            Severity = DefaultSeverity,
-                            FilePath = span.Path,
-                            Line = span.StartLinePosition.Line + 1,
-                            Column = span.StartLinePosition.Character + 1,
-                        });
-                }
-            }
 
             token = token.GetNextToken();
         }
 
-        return diagnostics;
+        return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
     }
 }

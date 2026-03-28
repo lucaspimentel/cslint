@@ -4,9 +4,9 @@ using Cslint.Core.Rules.Tier3;
 
 namespace Cslint.Core.Tests.Rules.Tier3;
 
-public class ParenthesisSpacingRuleTests
+public class OpeningParenthesisSpacingRuleTests
 {
-    private readonly ParenthesisSpacingRule _rule = new();
+    private readonly OpeningParenthesisSpacingRule _rule = new();
 
     private static LintConfiguration EnabledConfig() =>
         new(new Dictionary<string, string>
@@ -22,18 +22,7 @@ public class ParenthesisSpacingRuleTests
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
-        Assert.Contains(diagnostics, d => d.Message.Contains("opening"));
-    }
-
-    [Fact]
-    public void Analyze_SpaceBeforeCloseParen_ReturnsDiagnostic()
-    {
-        string source = "class C { void M(int x ) { } }";
-        RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
-
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Contains(diagnostics, d => d.Message.Contains("closing"));
+        Assert.Contains(diagnostics, d => d.RuleId == "SA1008" && d.Message.Contains("opening"));
     }
 
     [Fact]
@@ -42,9 +31,7 @@ public class ParenthesisSpacingRuleTests
         string source = "class C { void M(int x) { } }";
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]
@@ -53,9 +40,7 @@ public class ParenthesisSpacingRuleTests
         string source = "class C { void M() { } }";
         RuleContext context = TestHelper.CreateContext(source, EnabledConfig());
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Theory]
@@ -63,7 +48,7 @@ public class ParenthesisSpacingRuleTests
     [InlineData(null)]
     public void Analyze_RuleDisabled_ReturnsNoDiagnostics(string? configValue)
     {
-        string source = "class C { void M( int x ) { } }";
+        string source = "class C { void M( int x) { } }";
         var settings = new Dictionary<string, string>();
 
         if (configValue is not null)
@@ -71,12 +56,9 @@ public class ParenthesisSpacingRuleTests
             settings["csharp_parenthesis_spacing"] = configValue;
         }
 
-        var config = new LintConfiguration(settings);
-        RuleContext context = TestHelper.CreateContext(source, config);
+        RuleContext context = TestHelper.CreateContext(source, new LintConfiguration(settings));
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
-
-        Assert.Empty(diagnostics);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]

@@ -23,6 +23,8 @@
 
 ### Changed
 - **BREAKING:** Rename 37 rules with 1:1 StyleCop mappings from CSLINT* to SA* diagnostic IDs (e.g., CSLINT001→SA1028, CSLINT240→SA1106). Old CSLINT IDs preserved as pragma aliases.
+- **BREAKING:** Split CSLINT259 (ParenthesisSpacing) into SA1008 (opening paren spacing) and SA1009 (closing paren spacing)
+- **BREAKING:** Split CSLINT260 (BraceSpacing) into SA1012 (opening brace spacing) and SA1013 (closing brace spacing)
 - **BREAKING:** Split CSLINT263 (AccessorOrdering) into SA1212 (property get/set order) and SA1213 (event add/remove order)
 - **BREAKING:** Disable Tier 4 semantic rules by default when `.editorconfig` key is absent, matching .NET SDK behavior
 - **BREAKING:** Migrate 27 rules from CSLINT* to standard IDE* diagnostic IDs (old IDs preserved as pragma aliases)

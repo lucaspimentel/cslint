@@ -118,8 +118,10 @@ public sealed class RuleRegistry
         registry.Register(new SemicolonSpacingRule());
         registry.Register(new OperatorSpacingRule());
         registry.Register(new CommentSpacingRule());
-        registry.Register(new ParenthesisSpacingRule());
-        registry.Register(new BraceSpacingRule());
+        registry.Register(new OpeningParenthesisSpacingRule());
+        registry.Register(new ClosingParenthesisSpacingRule());
+        registry.Register(new OpeningBraceSpacingRule());
+        registry.Register(new ClosingBraceSpacingRule());
         registry.Register(new ColonSpacingRule());
         registry.Register(new NoMultipleWhitespaceRule());
         registry.Register(new PropertyAccessorOrderRule());

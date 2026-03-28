@@ -4,15 +4,18 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Cslint.Core.Rules.Tier3;
 
-public sealed class ParenthesisSpacingRule : IRuleDefinition
+/// <summary>
+/// SA1009: No space should appear before a closing parenthesis.
+/// </summary>
+public sealed class ClosingParenthesisSpacingRule : IRuleDefinition
 {
     private const string ConfigKey = "csharp_parenthesis_spacing";
 
     private const string StandardKey = "csharp_space_between_parentheses";
 
-    public string RuleId => "CSLINT259";
+    public string RuleId => "SA1009";
 
-    public string Name => "ParenthesisSpacing";
+    public string Name => "ClosingParenthesisSpacing";
 
     public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, StandardKey];
 
@@ -39,40 +42,12 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
             return [];
         }
 
-        var diagnostics = new List<LintDiagnostic>();
+        List<LintDiagnostic>? diagnostics = null;
         SyntaxToken token = context.Root.GetFirstToken();
 
         while (token != default)
         {
-            if (token.IsKind(SyntaxKind.OpenParenToken))
-            {
-                // No space after opening paren
-                if (TriviaHelper.HasTrailingSpace(token))
-                {
-                    SyntaxToken next = token.GetNextToken();
-
-                    // Allow space if followed by newline (multi-line expression)
-                    if (next != default && !next.IsKind(SyntaxKind.CloseParenToken))
-                    {
-                        if (!TriviaHelper.HasTrailingNewline(token))
-                        {
-                            FileLinePositionSpan span = token.GetLocation().GetLineSpan();
-
-                            diagnostics.Add(
-                                new LintDiagnostic
-                                {
-                                    RuleId = RuleId,
-                                    Message = "No space should appear after an opening parenthesis",
-                                    Severity = DefaultSeverity,
-                                    FilePath = span.Path,
-                                    Line = span.StartLinePosition.Line + 1,
-                                    Column = span.StartLinePosition.Character + 1,
-                                });
-                        }
-                    }
-                }
-            }
-            else if (token.IsKind(SyntaxKind.CloseParenToken))
+            if (token.IsKind(SyntaxKind.CloseParenToken))
             {
                 // No space before closing paren
                 SyntaxToken previous = token.GetPreviousToken();
@@ -82,7 +57,7 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
                 {
                     FileLinePositionSpan span = token.GetLocation().GetLineSpan();
 
-                    diagnostics.Add(
+                    (diagnostics ??= []).Add(
                         new LintDiagnostic
                         {
                             RuleId = RuleId,
@@ -98,6 +73,6 @@ public sealed class ParenthesisSpacingRule : IRuleDefinition
             token = token.GetNextToken();
         }
 
-        return diagnostics;
+        return diagnostics ?? (IReadOnlyList<LintDiagnostic>)[];
     }
 }

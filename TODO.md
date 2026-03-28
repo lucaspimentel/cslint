@@ -112,7 +112,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] ⚠️ **BREAKING CHANGE (major version bump)** — **Rename 37 CSLINT rules with 1:1 SA mappings to use SA IDs directly.** Old CSLINT IDs preserved as pragma aliases for backward compatibility.
 - [ ] ⚠️ **BREAKING CHANGE** — **Split CSLINT103 (ParameterLocalNaming) → SA1312 + SA1313** — separate local variable naming (SA1312) from parameter naming (SA1313), share camelCase check
 - [ ] ⚠️ **BREAKING CHANGE** — **Split CSLINT104 (FieldNaming) → SA1304 + SA1306 + SA1307 + SA1311** — separate private instance `_camelCase` (SA1306) from non-private/readonly/static PascalCase (SA1304, SA1307, SA1311), extract shared FieldNamingHelper
-- [ ] ⚠️ **BREAKING CHANGE** — **Split CSLINT259 (ParenthesisSpacing) → SA1008 + SA1009** — separate opening paren spacing (SA1008) from closing paren spacing (SA1009)
-- [ ] ⚠️ **BREAKING CHANGE** — **Split CSLINT260 (BraceSpacing) → SA1012 + SA1013** — separate opening brace spacing (SA1012) from closing brace spacing (SA1013)
+- [x] ⚠️ **BREAKING CHANGE** — **Split CSLINT259 (ParenthesisSpacing) → SA1008 + SA1009** — separate opening paren spacing (SA1008) from closing paren spacing (SA1009)
+- [x] ⚠️ **BREAKING CHANGE** — **Split CSLINT260 (BraceSpacing) → SA1012 + SA1013** — separate opening brace spacing (SA1012) from closing brace spacing (SA1013)
 - [x] ⚠️ **BREAKING CHANGE** — **Split CSLINT263 (AccessorOrdering) → SA1212 + SA1213** — separate property get/set ordering (SA1212) from event add/remove ordering (SA1213)
 - [ ] ⚠️ **BREAKING CHANGE** — **Split CSLINT269 (UsingDirectiveOrder) → SA1208 + SA1209 + SA1210 + SA1211 + SA1216 + SA1217** — split into 6 individual ordering rules, extract shared UsingDirectiveHelper

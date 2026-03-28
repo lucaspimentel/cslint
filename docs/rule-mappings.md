@@ -137,8 +137,10 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | SA1002 | Semicolon spacing | `csharp_semicolon_spacing` | SA1002 |
 | SA1003 | Operator spacing | `csharp_operator_spacing` | SA1003 |
 | SA1005 | Single-line comment spacing | `csharp_comment_spacing` | SA1005 |
-| CSLINT259 | Parenthesis spacing | `csharp_parenthesis_spacing` | SA1008, SA1009 |
-| CSLINT260 | Brace spacing | `csharp_brace_spacing` | SA1012, SA1013 |
+| SA1008 | Opening parenthesis spacing | `csharp_parenthesis_spacing` | SA1008 |
+| SA1009 | Closing parenthesis spacing | `csharp_parenthesis_spacing` | SA1009 |
+| SA1012 | Opening brace spacing | `csharp_brace_spacing` | SA1012 |
+| SA1013 | Closing brace spacing | `csharp_brace_spacing` | SA1013 |
 | SA1024 | Colon spacing | `csharp_colon_spacing` | SA1024 |
 | SA1025 | No multiple whitespace | `csharp_no_multiple_whitespace` | SA1025 |
 | SA1212 | Property accessor ordering (get before set) | `csharp_accessor_ordering` | SA1212 |
@@ -216,8 +218,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 
 | Third-Party ID | CsLint ID(s) | Source |
 |---|---|---|
-| SA1008, SA1009 | CSLINT259 | StyleCop |
-| SA1012, SA1013 | CSLINT260 | StyleCop |
+| CSLINT259 | SA1008, SA1009 | Legacy |
+| CSLINT260 | SA1012, SA1013 | Legacy |
 | SA1121 | IDE0049 | StyleCop |
 | SA1206 | IDE0036 | StyleCop |
 | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 | CSLINT269 | StyleCop |
@@ -297,8 +299,11 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CSLINT256 | SA1002 | Legacy |
 | CSLINT257 | SA1003 | Legacy |
 | CSLINT258 | SA1005 | Legacy |
+| CSLINT259 | SA1008, SA1009 | Legacy |
+| CSLINT260 | SA1012, SA1013 | Legacy |
 | CSLINT261 | SA1024 | Legacy |
 | CSLINT262 | SA1025 | Legacy |
+| CSLINT263 | SA1212, SA1213 | Legacy |
 | CSLINT264 | SA1214 | Legacy |
 | CSLINT265 | SA1203 | Legacy |
 | CSLINT266 | SA1204 | Legacy |
