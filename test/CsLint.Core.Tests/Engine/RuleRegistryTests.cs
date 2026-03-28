@@ -40,7 +40,7 @@ public sealed class RuleRegistryTests
     [InlineData("SA1124", "SA1124")]
     [InlineData("SA1206", "IDE0036")]
     [InlineData("SA1303", "SA1303")]
-    [InlineData("SA1312", "CSLINT103")]
+    [InlineData("SA1312", "SA1312")]
     [InlineData("SA1400", "IDE0040")]
     [InlineData("SA1500", "IDE0011")]
     [InlineData("SA1503", "SA1503")]

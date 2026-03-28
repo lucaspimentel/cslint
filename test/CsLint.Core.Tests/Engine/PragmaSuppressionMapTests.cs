@@ -163,7 +163,7 @@ public class PragmaSuppressionMapTests
     }
 
     [Fact]
-    public void SA1313_SuppressesCslint103()
+    public void SA1313_SuppressesParameterNaming()
     {
         const string Source = """
             #pragma warning disable SA1313
@@ -172,13 +172,13 @@ public class PragmaSuppressionMapTests
 
         PragmaSuppressionMap map = BuildMap(Source);
 
-        Assert.True(map.IsSuppressed("CSLINT103", 2));
+        Assert.True(map.IsSuppressed("SA1313", 2));
         Assert.False(map.IsSuppressed("SA1300", 2));
-        Assert.False(map.IsSuppressed("CSLINT104", 2));
+        Assert.False(map.IsSuppressed("SA1306", 2));
     }
 
     [Fact]
-    public void IDE1006_SuppressesMultipleCslintRules()
+    public void IDE1006_SuppressesMultipleNamingRules()
     {
         const string Source = """
             #pragma warning disable IDE1006
@@ -188,8 +188,9 @@ public class PragmaSuppressionMapTests
         PragmaSuppressionMap map = BuildMap(Source);
 
         Assert.True(map.IsSuppressed("SA1300", 2));
-        Assert.True(map.IsSuppressed("CSLINT103", 2));
-        Assert.True(map.IsSuppressed("CSLINT104", 2));
+        Assert.True(map.IsSuppressed("SA1312", 2));
+        Assert.True(map.IsSuppressed("SA1313", 2));
+        Assert.True(map.IsSuppressed("SA1306", 2));
         Assert.False(map.IsSuppressed("SA1302", 2));
     }
 

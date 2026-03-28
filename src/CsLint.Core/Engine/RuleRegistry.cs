@@ -34,8 +34,12 @@ public sealed class RuleRegistry
         registry.Register(new TypeNamingRule());
         registry.Register(new InterfacePrefixRule());
         registry.Register(new MemberNamingRule());
-        registry.Register(new ParameterLocalNamingRule());
-        registry.Register(new FieldNamingRule());
+        registry.Register(new LocalVariableNamingRule());
+        registry.Register(new ParameterNamingRule());
+        registry.Register(new PrivateFieldNamingRule());
+        registry.Register(new ReadonlyFieldNamingRule());
+        registry.Register(new AccessibleFieldNamingRule());
+        registry.Register(new StaticReadonlyFieldNamingRule());
         registry.Register(new ConstantNamingRule());
         registry.Register(new TypeParameterNamingRule());
         registry.Register(new NamingConventionRule());

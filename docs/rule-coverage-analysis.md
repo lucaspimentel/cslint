@@ -139,8 +139,12 @@ CsLint has simplified single-key naming rules that are automatically disabled wh
 | CSLINT100 | TypeNaming | `dotnet_naming_rule.types_should_be_pascal_case` | `dotnet_naming_rule` + `dotnet_naming_symbols` + `dotnet_naming_style` (3-part system) | Disabled when IDE1006 config present |
 | SA1302 | InterfacePrefix | `dotnet_naming_rule.interface_should_begin_with_i` | (same 3-part system) | Disabled when IDE1006 config present |
 | SA1300 | MemberNaming | `dotnet_naming_rule.members_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
-| CSLINT103 | ParameterLocalNaming | `dotnet_naming_rule.locals_should_be_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
-| CSLINT104 | FieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1312 | LocalVariableNaming | `dotnet_naming_rule.locals_should_be_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1313 | ParameterNaming | `dotnet_naming_rule.locals_should_be_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1306 | PrivateFieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1304 | ReadonlyFieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1307 | AccessibleFieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
+| SA1311 | StaticReadonlyFieldNaming | `dotnet_naming_rule.private_fields_should_be_underscore_camel_case` | (same 3-part system) | Disabled when IDE1006 config present |
 | SA1303 | ConstantNaming | `dotnet_naming_rule.constants_should_be_pascal_case` | (same 3-part system) | Disabled when IDE1006 config present |
 | SA1314 | TypeParameterNaming | `dotnet_naming_rule.type_parameters_should_begin_with_t` | (same 3-part system) | Disabled when IDE1006 config present |
 

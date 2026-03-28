@@ -136,10 +136,10 @@ class Foo { }   // trailing whitespace not reported
 
 | Third-Party ID | CsLint ID(s) | Rule |
 |---|---|---|
-| `SA1313` | `CSLINT103` | Parameter naming |
-| `SA1306` | `CSLINT104` | Field naming |
+| `CSLINT103` | `SA1312`, `SA1313` | Parameter/local naming |
+| `CSLINT104` | `SA1304`, `SA1306`, `SA1307`, `SA1311` | Field naming |
 | `IDE0160`/`IDE0161` | `CSLINT203` | Namespace declarations |
-| `IDE1006` | `SA1300`, `CSLINT103`, `CSLINT104` | General naming |
+| `IDE1006` | `SA1300`, `SA1312`, `SA1313`, `SA1306` | General naming |
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the full alias mapping table.
 

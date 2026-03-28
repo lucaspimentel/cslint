@@ -26,8 +26,12 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | CSLINT100 | Type naming (PascalCase) | `dotnet_naming_rule` | -- |
 | SA1302 | Interface prefix (`I`) | `dotnet_naming_rule` | SA1302 |
 | SA1300 | Member naming (PascalCase) | `dotnet_naming_rule` | SA1300, IDE1006 |
-| CSLINT103 | Parameter/local naming (camelCase) | `dotnet_naming_rule` | SA1312, SA1313, IDE1006 |
-| CSLINT104 | Field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
+| SA1312 | Local variable naming (camelCase) | `dotnet_naming_rule` | SA1312, IDE1006 |
+| SA1313 | Parameter naming (camelCase) | `dotnet_naming_rule` | SA1313, IDE1006 |
+| SA1306 | Private field naming (`_camelCase`) | `dotnet_naming_rule` | SA1306, IDE1006 |
+| SA1304 | Readonly field naming (PascalCase) | `dotnet_naming_rule` | SA1304, IDE1006 |
+| SA1307 | Accessible field naming (PascalCase) | `dotnet_naming_rule` | SA1307, IDE1006 |
+| SA1311 | Static readonly field naming (PascalCase) | `dotnet_naming_rule` | SA1311, IDE1006 |
 | SA1303 | Constant field naming (PascalCase/UPPER_CASE) | `dotnet_naming_rule` | SA1303 |
 | SA1314 | Type parameter naming (T prefix) | `dotnet_naming_rule` | SA1314 |
 | IDE1006 | Standard naming conventions (3-part system) | `dotnet_naming_rule.*`, `dotnet_naming_symbols.*`, `dotnet_naming_style.*` | IDE1006 |
@@ -225,12 +229,8 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 | CSLINT269 | StyleCop |
 | SA1212 | SA1212 | StyleCop |
 | SA1213 | SA1213 | StyleCop |
-| SA1304 | CSLINT104 | StyleCop |
-| SA1306 | CSLINT104 | StyleCop |
-| SA1307 | CSLINT104 | StyleCop |
-| SA1311 | CSLINT104 | StyleCop |
-| SA1312 | CSLINT103 | StyleCop |
-| SA1313 | CSLINT103 | StyleCop |
+| CSLINT103 | SA1312, SA1313 | Legacy |
+| CSLINT104 | SA1304, SA1306, SA1307, SA1311 | Legacy |
 | SA1400 | IDE0040 | StyleCop |
 | SA1500 | IDE0011 | StyleCop |
 | IDE0003, IDE0009 | SA1101 | Microsoft |
@@ -314,7 +314,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0290 | CSLINT221 | Microsoft |
 | IDE0300--IDE0305 | CSLINT222 | Microsoft |
 | IDE1005 | IDE1005 | Microsoft |
-| IDE1006 | SA1300, CSLINT103, CSLINT104 | Microsoft |
+| IDE1006 | SA1300, SA1312, SA1313, SA1304, SA1306, SA1307, SA1311 | Microsoft |
 | IDE2000 | SA1507 | Microsoft |
 | IDE2001 | SA1503 | Microsoft |
 | IDE2002 | CSLINT229 | Microsoft |
