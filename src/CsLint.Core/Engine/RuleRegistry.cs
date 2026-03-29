@@ -53,6 +53,7 @@ public sealed class RuleRegistry
         registry.Register(new ExpressionBodiedConversionOperatorsRule());
         registry.Register(new ExpressionBodiedIndexersRule());
         registry.Register(new ExpressionBodiedAccessorsRule());
+        registry.Register(new ExpressionBodiedConstructorsRule());
         registry.Register(new BracePreferenceRule());
         registry.Register(new NamespaceDeclarationRule());
         registry.Register(new ThisQualificationRule());

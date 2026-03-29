@@ -61,8 +61,8 @@ public sealed class RuleRegistryTests
 
         Assert.True(registry.Rules.Count > 0);
 
-        // Verify no duplicate rule IDs
-        string[] ruleIds = registry.Rules.Select(r => r.RuleId).ToArray();
-        Assert.Equal(ruleIds.Distinct().Count(), ruleIds.Length);
+        // Verify no duplicate rule names (IDs may be shared, e.g., IDE0021 for methods and constructors)
+        string[] ruleNames = registry.Rules.Select(r => r.Name).ToArray();
+        Assert.Equal(ruleNames.Distinct().Count(), ruleNames.Length);
     }
 }

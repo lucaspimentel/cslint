@@ -43,6 +43,7 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0007 | Prefer `var` | `csharp_style_var_when_type_is_apparent`, `csharp_style_var_for_built_in_types` | IDE0007 |
 | IDE0008 | Prefer explicit type | `csharp_style_var_for_built_in_types`, `csharp_style_var_elsewhere` | IDE0008 |
 | IDE0021 | Expression-bodied methods | `csharp_style_expression_bodied_methods` | IDE0021, IDE0022 |
+| IDE0021 | Expression-bodied constructors | `csharp_style_expression_bodied_constructors` | IDE0021 |
 | IDE0023 | Expression-bodied conversion operators | `csharp_style_expression_bodied_operators` | IDE0023 |
 | IDE0024 | Expression-bodied operators | `csharp_style_expression_bodied_operators` | IDE0024 |
 | IDE0025 | Expression-bodied properties | `csharp_style_expression_bodied_properties` | IDE0025 |

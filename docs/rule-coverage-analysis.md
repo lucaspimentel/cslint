@@ -32,6 +32,7 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | IDE0007 | VarPreference | `csharp_style_var_when_type_is_apparent`, `csharp_style_var_for_built_in_types` | IDE0007 |
 | IDE0008 | ExplicitTypePreference | `csharp_style_var_for_built_in_types`, `csharp_style_var_elsewhere` | IDE0008 |
 | IDE0021 | ExpressionBodiedMethods | `csharp_style_expression_bodied_methods` | IDE0021 |
+| IDE0021 | ExpressionBodiedConstructors | `csharp_style_expression_bodied_constructors` | IDE0021 |
 | IDE0025 | ExpressionBodiedProperties | `csharp_style_expression_bodied_properties` | IDE0025 |
 | IDE0011 | BracePreference | `csharp_prefer_braces` | IDE0011 |
 | CSLINT203 | NamespaceDeclaration | `csharp_style_namespace_declarations` | IDE0160/IDE0161 |
@@ -207,7 +208,7 @@ These standard rules have **no** CsLint equivalent at all:
 
 | Category | Count |
 |----------|-------|
-| Supported with standard key | 91 |
+| Supported with standard key | 92 |
 | Supported with custom key (standard equivalent exists) | 16 (9 also accept standard key) |
 | Standard rules not supported (style/syntax — would be Tier 3) | 0 |
 | Standard rules not supported (semantic — would be Tier 4) | 22 |
