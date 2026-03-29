@@ -176,7 +176,6 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 
 | Standard Key | Standard Rule ID | Description |
 |-------------|-----------------|-------------|
-| `csharp_style_unused_value_expression_statement_preference` | IDE0058 | Remove unused expression value (requires semantic analysis) |
 | `csharp_style_unused_value_assignment_preference` | IDE0059 | Remove unnecessary value assignment (requires semantic analysis) |
 | `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach (requires semantic analysis) |
 
@@ -215,7 +214,7 @@ These standard rules have **no** CsLint equivalent at all:
 
 | Category | Count |
 |----------|-------|
-| Supported with standard key | 88 |
+| Supported with standard key | 89 |
 | Supported with custom key (standard equivalent exists) | 16 (9 also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | 3 |
+| Standard rules not supported (style/syntax — would be Tier 3) | 2 |
 | Standard rules not supported (semantic — would be Tier 4) | 22 |

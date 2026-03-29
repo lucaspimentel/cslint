@@ -221,6 +221,7 @@ public sealed class RuleRegistry
         registry.Register(new RedundantAwaitRule());
         registry.Register(new UnusedPrivateMemberRule());
         registry.Register(new UnreadPrivateMemberRule());
+        registry.Register(new UnusedValueExpressionStatementRule());
 #endif
 
         return registry;
