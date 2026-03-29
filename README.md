@@ -115,7 +115,7 @@ Naming conventions via the standard 3-part `dotnet_naming_rule` / `dotnet_naming
 Code style preferences (`var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, member ordering) and CA code quality rules (naming conventions, design guidelines, performance hints, bug detection). CA rules are enabled by default, matching the .NET SDK.
 
 ### Tier 4 — Semantic (requires `--semantic`)
-Rules that use the Roslyn semantic model: unused usings (IDE0005), unused locals, unreachable code, duplicate enum values (CA1069), self-assignment, unnecessary casts (IDE0004), redundant await, unused/unread private members (IDE0051/IDE0052), unused expression values (IDE0058).
+Rules that use the Roslyn semantic model: unused usings (IDE0005), unused locals, unreachable code, duplicate enum values (CA1069), self-assignment, unnecessary casts (IDE0004), redundant await, unused/unread private members (IDE0051/IDE0052), unused expression values (IDE0058), unused value assignments (IDE0059).
 
 See [docs/rule-mappings.md](docs/rule-mappings.md) for the complete rule reference with editorconfig keys and analyzer ID mappings.
 
