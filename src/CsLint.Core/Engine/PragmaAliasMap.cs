@@ -148,6 +148,7 @@ public static class PragmaAliasMap
             ["IDE0052"] = ["IDE0052"],
             ["IDE0058"] = ["IDE0058"],
             ["IDE0059"] = ["IDE0059"],
+            ["IDE0220"] = ["IDE0220"],
             ["IDE1006"] = ["SA1300", "SA1312", "SA1313", "SA1304", "SA1306", "SA1307", "SA1311"],
             ["IDE2000"] = ["SA1507"],
             ["IDE2001"] = ["SA1503"],

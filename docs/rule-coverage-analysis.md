@@ -172,12 +172,6 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 
 ## 3. Not Supported — Standard Rules with No CsLint Equivalent
 
-### Would be Tier 3 (style/syntax preferences)
-
-| Standard Key | Standard Rule ID | Description |
-|-------------|-----------------|-------------|
-| `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach (requires semantic analysis) |
-
 ### Would be Tier 4 (semantic analysis)
 
 These standard rules have **no** CsLint equivalent at all:
@@ -213,7 +207,7 @@ These standard rules have **no** CsLint equivalent at all:
 
 | Category | Count |
 |----------|-------|
-| Supported with standard key | 90 |
+| Supported with standard key | 91 |
 | Supported with custom key (standard equivalent exists) | 16 (9 also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | 1 |
+| Standard rules not supported (style/syntax — would be Tier 3) | 0 |
 | Standard rules not supported (semantic — would be Tier 4) | 22 |

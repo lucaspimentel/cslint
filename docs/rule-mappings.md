@@ -222,6 +222,7 @@ These rules use the Roslyn semantic model and are only active when the `--semant
 | IDE0052 | Remove unread private member | `dotnet_diagnostic.IDE0052.severity` | IDE0052, CS0414 |
 | IDE0058 | Unused value expression statement | `dotnet_diagnostic.IDE0058.severity` | IDE0058 |
 | IDE0059 | Unused value assignment | `dotnet_diagnostic.IDE0059.severity` | IDE0059 |
+| IDE0220 | Prefer foreach explicit cast | `dotnet_diagnostic.IDE0220.severity` | IDE0220 |
 
 ## Pragma Alias Support
 
@@ -334,6 +335,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | IDE0052 | IDE0052 | Microsoft |
 | IDE0058 | IDE0058 | Microsoft |
 | IDE0059 | IDE0059 | Microsoft |
+| IDE0220 | IDE0220 | Microsoft |
 | IDE0032 | IDE0032 | Microsoft |
 | IDE0042 | IDE0042 | Microsoft |
 | IDE0044 | IDE0044 | Microsoft |
@@ -396,7 +398,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 
 These rules require type information, flow analysis, or semantic model and are not currently implemented (some may become Tier 4 candidates in the future):
 
-IDE0001, IDE0002, IDE0010, IDE0035, IDE0050, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0140, IDE0220, IDE0240, IDE0241, IDE0260, IDE0270, IDE0280, IDE0306, IDE0370, IDE0380
+IDE0001, IDE0002, IDE0010, IDE0035, IDE0050, IDE0064, IDE0070, IDE0072, IDE0076, IDE0077, IDE0079, IDE0080, IDE0082, IDE0100, IDE0110, IDE0120, IDE0121, IDE0140, IDE0240, IDE0241, IDE0260, IDE0270, IDE0280, IDE0306, IDE0370, IDE0380
 
 ### Not Applicable
 
