@@ -11,10 +11,7 @@
 
 ## Match .NET SDK default rule enablement
 
-- [ ] ⚠️ **BREAKING CHANGE (major version bump)** — **Mirror .NET SDK defaults for CA vs IDE rules** — in the .NET SDK, code quality rules (CA*) are enabled by default since .NET 5, while code style rules (IDE*) are disabled by default on command-line builds. CsLint should match this: CA-mapped rules (CA1821, CA1805, CA1852) should be enabled by default without requiring `.editorconfig` opt-in; IDE style rules should continue requiring explicit config
-  - Currently all Tier 3 rules use `IsEnabled` that checks for a config key — CA rules need a different default (enabled when key absent)
-  - Tier 4 rules already default to enabled (`GetSeverityForKey != None`), so the CA pattern exists
-  - Reference: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview
+- [x] ⚠️ **BREAKING CHANGE (major version bump)** — **Mirror .NET SDK defaults for CA vs IDE rules** — CA1821 and CA1805 now enabled by default (matching .NET SDK); CA1852 remains force-disabled until project-wide type hierarchy is implemented. All CA rules accept `dotnet_diagnostic.CAxxxx.severity` key.
 
 ## Standard .editorconfig rule coverage
 

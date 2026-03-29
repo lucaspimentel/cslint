@@ -92,10 +92,8 @@ public class EmptyFinalizerRuleTests
         Assert.Empty(diagnostics);
     }
 
-    [Theory]
-    [InlineData("false")]
-    [InlineData(null)]
-    public void Analyze_RuleDisabled_ReturnsNoDiagnostics(string? configValue)
+    [Fact]
+    public void Analyze_EnabledByDefault_ReturnsDiagnostic()
     {
         string source = """
             class Foo
@@ -103,18 +101,44 @@ public class EmptyFinalizerRuleTests
                 ~Foo() { }
             }
             """;
-        var settings = new Dictionary<string, string>();
+        RuleContext context = TestHelper.CreateContext(source);
 
-        if (configValue is not null)
+        Assert.Single(_rule.Analyze(context));
+    }
+
+    [Fact]
+    public void Analyze_DisabledViaCustomKey_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class Foo
+            {
+                ~Foo() { }
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
         {
-            settings["csharp_no_empty_finalizers"] = configValue;
-        }
-
-        var config = new LintConfiguration(settings);
+            ["csharp_no_empty_finalizers"] = "false",
+        });
         RuleContext context = TestHelper.CreateContext(source, config);
 
-        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+        Assert.Empty(_rule.Analyze(context));
+    }
 
-        Assert.Empty(diagnostics);
+    [Fact]
+    public void Analyze_DisabledViaDiagnosticKey_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class Foo
+            {
+                ~Foo() { }
+            }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["dotnet_diagnostic.CA1821.severity"] = "none",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        Assert.Empty(_rule.Analyze(context));
     }
 }

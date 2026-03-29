@@ -86,8 +86,8 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | IDE0037 | Inferred member name | `dotnet_style_prefer_inferred_tuple_names`, `dotnet_style_prefer_inferred_anonymous_type_member_names` | IDE0037 |
 | IDE0075 | Simplify boolean expression | `dotnet_style_prefer_simplified_boolean_expressions` | IDE0075 |
 | IDE0170 | Extended property pattern | `csharp_style_prefer_extended_property_pattern` | IDE0170 |
-| CA1821 | Empty finalizer | `csharp_no_empty_finalizers` | CA1821 |
-| CA1805 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization` | CA1805 |
+| CA1821 | Empty finalizer | `csharp_no_empty_finalizers`, `dotnet_diagnostic.CA1821.severity` | CA1821 |
+| CA1805 | Do not initialize unnecessarily | `csharp_no_unnecessary_initialization`, `dotnet_diagnostic.CA1805.severity` | CA1805 |
 | CA1852 | Prefer sealed types | `csharp_prefer_sealed_types` | CA1852 |
 | CA2011 | Do not assign property within its setter | `dotnet_diagnostic.CA2011.severity` | CA2011 |
 | CA2014 | Do not use stackalloc in loops | `dotnet_diagnostic.CA2014.severity` | CA2014 |

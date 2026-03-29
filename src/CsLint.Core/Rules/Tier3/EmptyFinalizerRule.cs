@@ -6,19 +6,20 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class EmptyFinalizerRule : IRuleDefinition, IStyleRuleHandler
 {
+    private const string CustomKey = "csharp_no_empty_finalizers";
+
+    private const string DiagnosticKey = "dotnet_diagnostic.CA1821.severity";
+
     public string RuleId => "CA1821";
 
     public string Name => "EmptyFinalizer";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = ["csharp_no_empty_finalizers"];
+    public IReadOnlyList<string> ConfigKeys { get; } = [CustomKey, DiagnosticKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    public bool IsEnabled(LintConfiguration configuration)
-    {
-        (string? pref, string? _) = configuration.GetValueWithSeverity("csharp_no_empty_finalizers");
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
+    public bool IsEnabled(LintConfiguration configuration) =>
+        CaRuleHelper.IsEnabledByDefault(configuration, DiagnosticKey, CustomKey);
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
@@ -32,9 +33,7 @@ public sealed class EmptyFinalizerRule : IRuleDefinition, IStyleRuleHandler
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
-        (string? pref, string? _) = config.GetValueWithSeverity("csharp_no_empty_finalizers");
-
-        if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
+        if (!CaRuleHelper.IsEnabledByDefault(config, DiagnosticKey, CustomKey))
         {
             return;
         }

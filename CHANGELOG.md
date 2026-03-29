@@ -31,6 +31,7 @@
 - **BREAKING:** Split CSLINT260 (BraceSpacing) into SA1012 (opening brace spacing) and SA1013 (closing brace spacing)
 - **BREAKING:** Split CSLINT263 (AccessorOrdering) into SA1212 (property get/set order) and SA1213 (event add/remove order)
 - **BREAKING:** Split CSLINT269 (UsingDirectiveOrder) into SA1208 (System first), SA1209 (alias after all), SA1210 (alphabetical), SA1211 (alias alphabetical), SA1216 (static after regular), SA1217 (static alphabetical)
+- **BREAKING:** Enable CA1821 and CA1805 by default when `.editorconfig` key is absent, matching .NET SDK behavior for CA code quality rules
 - **BREAKING:** Disable Tier 4 semantic rules by default when `.editorconfig` key is absent, matching .NET SDK behavior
 - **BREAKING:** Migrate 27 rules from CSLINT* to standard IDE* diagnostic IDs (old IDs preserved as pragma aliases)
 - **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008, CSLINT201→IDE0021+IDE0025, CSLINT210→IDE0029+IDE0016

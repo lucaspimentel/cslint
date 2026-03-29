@@ -13,7 +13,7 @@ public sealed class SealedTypePreferenceRule : IRuleDefinition, IDescendantNodeH
 
     public string Name => "SealedTypePreference";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey, "dotnet_diagnostic.CA1852.severity"];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 

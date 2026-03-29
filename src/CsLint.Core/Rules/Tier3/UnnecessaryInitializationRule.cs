@@ -7,7 +7,9 @@ namespace Cslint.Core.Rules.Tier3;
 
 public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleHandler
 {
-    private const string ConfigKey = "csharp_no_unnecessary_initialization";
+    private const string CustomKey = "csharp_no_unnecessary_initialization";
+
+    private const string DiagnosticKey = "dotnet_diagnostic.CA1805.severity";
 
     private static readonly HashSet<string> IntegralTypes = new(StringComparer.Ordinal)
     {
@@ -24,7 +26,7 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
 
     public string Name => "UnnecessaryInitialization";
 
-    public IReadOnlyList<string> ConfigKeys { get; } = [ConfigKey];
+    public IReadOnlyList<string> ConfigKeys { get; } = [CustomKey, DiagnosticKey];
 
     public LintSeverity DefaultSeverity => LintSeverity.Info;
 
@@ -119,11 +121,8 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
         };
     }
 
-    public bool IsEnabled(LintConfiguration configuration)
-    {
-        (string? pref, string? _) = configuration.GetValueWithSeverity(ConfigKey);
-        return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
-    }
+    public bool IsEnabled(LintConfiguration configuration) =>
+        CaRuleHelper.IsEnabledByDefault(configuration, DiagnosticKey, CustomKey);
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {
@@ -137,9 +136,7 @@ public sealed class UnnecessaryInitializationRule : IRuleDefinition, IStyleRuleH
         LintConfiguration config,
         List<LintDiagnostic> diagnostics)
     {
-        (string? pref, string? _) = config.GetValueWithSeverity(ConfigKey);
-
-        if (!string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase))
+        if (!CaRuleHelper.IsEnabledByDefault(config, DiagnosticKey, CustomKey))
         {
             return;
         }
