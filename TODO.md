@@ -31,7 +31,7 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] **`dotnet_style_parentheses_in_arithmetic_binary_operators`** (IDE0047/IDE0048) — parentheses preferences
 - [x] **`dotnet_style_parentheses_in_relational_binary_operators`** (IDE0047/IDE0048)
 - [x] **`dotnet_style_parentheses_in_other_binary_operators`** (IDE0047/IDE0048)
-- [ ] **`dotnet_style_parentheses_in_other_operators`** (IDE0047/IDE0048) — deferred (covers cast/ternary/await, very niche)
+- [x] **`dotnet_style_parentheses_in_other_operators`** (IDE0047/IDE0048) — parentheses around non-binary expressions
 - [x] **`csharp_style_prefer_null_check_over_type_check`** (IDE0150)
 - [x] **`csharp_prefer_static_anonymous_function`** (IDE0320)
 - [x] **`csharp_prefer_system_threading_lock`** (IDE0330)

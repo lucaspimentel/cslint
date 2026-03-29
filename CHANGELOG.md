@@ -21,6 +21,7 @@
 - Add IDE0251 — prefer readonly struct member (`csharp_style_prefer_readonly_struct_member`)
 - Add CA1715 pragma alias mapping to CSLINT101 and CSLINT106
 - Add SA1211 — alias using directives must be sorted alphabetically by alias name
+- Add `dotnet_style_parentheses_in_other_operators` support for IDE0047 — flag unnecessary parentheses around non-binary expressions
 
 ### Changed
 - **BREAKING:** Rename 37 rules with 1:1 StyleCop mappings from CSLINT* to SA* diagnostic IDs (e.g., CSLINT001→SA1028, CSLINT240→SA1106). Old CSLINT IDs preserved as pragma aliases.

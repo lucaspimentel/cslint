@@ -77,8 +77,8 @@ These CsLint rules use the same .editorconfig key as the standard .NET/C# conven
 | IDE0027 | ExpressionBodiedAccessors | `csharp_style_expression_bodied_accessors` | IDE0027 |
 | IDE0031 | NullPropagation | `dotnet_style_null_propagation` | IDE0031 |
 | IDE0041 | PreferIsNull | `dotnet_style_prefer_is_null_check_over_reference_equality_method` | IDE0041 |
-| IDE0047 | RemoveUnnecessaryParentheses | `dotnet_style_parentheses_in_arithmetic_binary_operators`, `_relational_`, `_other_binary_` | IDE0047 |
-| IDE0048 | AddParenthesesForClarity | `dotnet_style_parentheses_in_arithmetic_binary_operators`, `_relational_`, `_other_binary_` | IDE0048 |
+| IDE0047 | RemoveUnnecessaryParentheses | `dotnet_style_parentheses_in_arithmetic_binary_operators`, `_relational_`, `_other_binary_`, `_other_operators` | IDE0047 |
+| IDE0048 | AddParenthesesForClarity | `dotnet_style_parentheses_in_arithmetic_binary_operators`, `_relational_`, `_other_binary_`, `_other_operators` | IDE0048 |
 | IDE0044 | ReadonlyFieldPreference | `dotnet_style_readonly_field` | IDE0044 |
 | IDE0250 | ReadonlyStructPreference | `csharp_style_prefer_readonly_struct` | IDE0250 |
 | IDE0251 | ReadonlyStructMemberPreference | `csharp_style_prefer_readonly_struct_member` | IDE0251 |
@@ -179,7 +179,6 @@ CsLint accepts both its own key (without `_experimental` suffix) and the standar
 | `csharp_style_unused_value_expression_statement_preference` | IDE0058 | Remove unused expression value (requires semantic analysis) |
 | `csharp_style_unused_value_assignment_preference` | IDE0059 | Remove unnecessary value assignment (requires semantic analysis) |
 | `dotnet_style_prefer_foreach_explicit_cast_in_source` | IDE0220 | Add explicit cast in foreach (requires semantic analysis) |
-| `dotnet_style_parentheses_in_other_operators` | IDE0047/IDE0048 | Parentheses in other operators (deferred — very niche) |
 
 ### Would be Tier 4 (semantic analysis)
 
@@ -216,7 +215,7 @@ These standard rules have **no** CsLint equivalent at all:
 
 | Category | Count |
 |----------|-------|
-| Supported with standard key | 87 |
+| Supported with standard key | 88 |
 | Supported with custom key (standard equivalent exists) | 16 (9 also accept standard key) |
-| Standard rules not supported (style/syntax — would be Tier 3) | 4 |
+| Standard rules not supported (style/syntax — would be Tier 3) | 3 |
 | Standard rules not supported (semantic — would be Tier 4) | 22 |

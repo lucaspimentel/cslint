@@ -17,6 +17,9 @@ public class RemoveUnnecessaryParenthesesRuleTests
     private static LintConfiguration OtherBinaryConfig(string value) =>
         Config("dotnet_style_parentheses_in_other_binary_operators", value);
 
+    private static LintConfiguration OtherOperatorsConfig(string value) =>
+        Config("dotnet_style_parentheses_in_other_operators", value);
+
     [Fact]
     public void HigherPrecedenceInLowerContext_Flagged()
     {
@@ -241,6 +244,115 @@ public class RemoveUnnecessaryParenthesesRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
+    }
+
+    [Fact]
+    public void OtherOperators_ParensAroundNameInReturn_Flagged()
+    {
+        string source = """
+            class C
+            {
+                int M(int x)
+                {
+                    return (x);
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, OtherOperatorsConfig("never_if_unnecessary"));
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+        Assert.Equal("IDE0047", diagnostics[0].RuleId);
+    }
+
+    [Fact]
+    public void OtherOperators_ParensAroundConditionalInAssignment_Flagged()
+    {
+        string source = """
+            class C
+            {
+                void M(bool flag)
+                {
+                    int x = (flag ? 1 : 0);
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, OtherOperatorsConfig("never_if_unnecessary"));
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Single(diagnostics);
+    }
+
+    [Fact]
+    public void OtherOperators_ParensAroundMemberAccessInAssignment_Flagged()
+    {
+        string source = """
+            class C
+            {
+                void M(string s)
+                {
+                    int x = (s).Length;
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, OtherOperatorsConfig("never_if_unnecessary"));
+
+        // Parent of (s) is MemberAccessExpression, not a safe-removal context
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void OtherOperators_ParensInInterpolation_NotFlagged()
+    {
+        string source = """
+            class C
+            {
+                string M(bool flag) => $"{(flag ? "a" : "b")}";
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, OtherOperatorsConfig("never_if_unnecessary"));
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void OtherOperators_ConfigAbsent_NotFlagged()
+    {
+        string source = """
+            class C
+            {
+                int M(int x)
+                {
+                    return (x);
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source);
+
+        Assert.Empty(_rule.Analyze(context));
+    }
+
+    [Fact]
+    public void OtherOperators_ConfigAlwaysForClarity_NotFlagged()
+    {
+        string source = """
+            class C
+            {
+                int M(int x)
+                {
+                    return (x);
+                }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, OtherOperatorsConfig("always_for_clarity"));
+
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]

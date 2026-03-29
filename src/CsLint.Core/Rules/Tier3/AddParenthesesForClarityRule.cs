@@ -17,6 +17,7 @@ public sealed class AddParenthesesForClarityRule : IRuleDefinition
         "dotnet_style_parentheses_in_arithmetic_binary_operators",
         "dotnet_style_parentheses_in_relational_binary_operators",
         "dotnet_style_parentheses_in_other_binary_operators",
+        "dotnet_style_parentheses_in_other_operators",
     ];
 
     public string RuleId => "IDE0048";
