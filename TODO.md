@@ -115,4 +115,4 @@ Goal: support as many standard .editorconfig rules as possible using standard ke
 - [x] ⚠️ **BREAKING CHANGE** — **Split CSLINT259 (ParenthesisSpacing) → SA1008 + SA1009** — separate opening paren spacing (SA1008) from closing paren spacing (SA1009)
 - [x] ⚠️ **BREAKING CHANGE** — **Split CSLINT260 (BraceSpacing) → SA1012 + SA1013** — separate opening brace spacing (SA1012) from closing brace spacing (SA1013)
 - [x] ⚠️ **BREAKING CHANGE** — **Split CSLINT263 (AccessorOrdering) → SA1212 + SA1213** — separate property get/set ordering (SA1212) from event add/remove ordering (SA1213)
-- [ ] ⚠️ **BREAKING CHANGE** — **Split CSLINT269 (UsingDirectiveOrder) → SA1208 + SA1209 + SA1210 + SA1211 + SA1216 + SA1217** — split into 6 individual ordering rules, extract shared UsingDirectiveHelper
+- [x] ⚠️ **BREAKING CHANGE** — **Split CSLINT269 (UsingDirectiveOrder) → SA1208 + SA1209 + SA1210 + SA1211 + SA1216 + SA1217** — split into 6 individual ordering rules, extract shared UsingDirectiveHelper

@@ -154,7 +154,12 @@ Comprehensive reference for all CsLint rules and their corresponding third-party
 | SA1204 | Static members before instance | `csharp_static_before_instance` | SA1204 |
 | SA1202 | Element access modifier ordering | `csharp_element_access_ordering` | SA1202 |
 | SA1201 | Element kind ordering | `csharp_element_ordering` | SA1201 |
-| CSLINT269 | Using directive ordering | `csharp_using_directive_ordering` | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 |
+| SA1208 | System using directive ordering | `csharp_using_directive_ordering` | SA1208 |
+| SA1209 | Alias using directive ordering | `csharp_using_directive_ordering` | SA1209 |
+| SA1210 | Using directive alphabetical order | `csharp_using_directive_ordering` | SA1210 |
+| SA1211 | Alias using directive alphabetical order | `csharp_using_directive_ordering` | SA1211 |
+| SA1216 | Static using directive ordering | `csharp_using_directive_ordering` | SA1216 |
+| SA1217 | Static using directive alphabetical order | `csharp_using_directive_ordering` | SA1217 |
 | IDE0019 | Pattern matching over `as` with null check | `csharp_style_pattern_matching_over_as_with_null_check` | IDE0019 |
 | IDE1005 | Conditional delegate call | `csharp_style_conditional_delegate_call` | IDE1005 |
 | IDE0018 | Inlined variable declaration | `csharp_style_inlined_variable_declaration` | IDE0018 |
@@ -226,7 +231,7 @@ The following third-party rule IDs are recognized in `#pragma warning disable` d
 | CSLINT260 | SA1012, SA1013 | Legacy |
 | SA1121 | IDE0049 | StyleCop |
 | SA1206 | IDE0036 | StyleCop |
-| SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 | CSLINT269 | StyleCop |
+| CSLINT269 | SA1208, SA1209, SA1210, SA1211, SA1216, SA1217 | Legacy |
 | SA1212 | SA1212 | StyleCop |
 | SA1213 | SA1213 | StyleCop |
 | CSLINT103 | SA1312, SA1313 | Legacy |

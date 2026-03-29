@@ -135,7 +135,12 @@ public sealed class RuleRegistry
         registry.Register(new StaticMemberOrderRule());
         registry.Register(new ElementAccessOrderRule());
         registry.Register(new ElementOrderRule());
-        registry.Register(new UsingDirectiveOrderRule());
+        registry.Register(new SystemUsingDirectiveOrderRule());
+        registry.Register(new AliasUsingDirectiveOrderRule());
+        registry.Register(new UsingDirectiveAlphabeticalOrderRule());
+        registry.Register(new AliasUsingDirectiveAlphabeticalOrderRule());
+        registry.Register(new StaticUsingDirectiveOrderRule());
+        registry.Register(new StaticUsingDirectiveAlphabeticalOrderRule());
         registry.Register(new PatternMatchingAsRule());
         registry.Register(new ConditionalDelegateCallRule());
         registry.Register(new InlinedVariableDeclarationRule());

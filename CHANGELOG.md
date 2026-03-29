@@ -20,6 +20,7 @@
 - Add IDE0250 — prefer readonly struct (`csharp_style_prefer_readonly_struct`)
 - Add IDE0251 — prefer readonly struct member (`csharp_style_prefer_readonly_struct_member`)
 - Add CA1715 pragma alias mapping to CSLINT101 and CSLINT106
+- Add SA1211 — alias using directives must be sorted alphabetically by alias name
 
 ### Changed
 - **BREAKING:** Rename 37 rules with 1:1 StyleCop mappings from CSLINT* to SA* diagnostic IDs (e.g., CSLINT001→SA1028, CSLINT240→SA1106). Old CSLINT IDs preserved as pragma aliases.
@@ -28,6 +29,7 @@
 - **BREAKING:** Split CSLINT259 (ParenthesisSpacing) into SA1008 (opening paren spacing) and SA1009 (closing paren spacing)
 - **BREAKING:** Split CSLINT260 (BraceSpacing) into SA1012 (opening brace spacing) and SA1013 (closing brace spacing)
 - **BREAKING:** Split CSLINT263 (AccessorOrdering) into SA1212 (property get/set order) and SA1213 (event add/remove order)
+- **BREAKING:** Split CSLINT269 (UsingDirectiveOrder) into SA1208 (System first), SA1209 (alias after all), SA1210 (alphabetical), SA1211 (alias alphabetical), SA1216 (static after regular), SA1217 (static alphabetical)
 - **BREAKING:** Disable Tier 4 semantic rules by default when `.editorconfig` key is absent, matching .NET SDK behavior
 - **BREAKING:** Migrate 27 rules from CSLINT* to standard IDE* diagnostic IDs (old IDs preserved as pragma aliases)
 - **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008, CSLINT201→IDE0021+IDE0025, CSLINT210→IDE0029+IDE0016

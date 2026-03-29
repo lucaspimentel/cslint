@@ -34,9 +34,15 @@ public static class PragmaAliasMap
             ["SA1203"] = ["SA1203"],
             ["SA1204"] = ["SA1204"],
             ["SA1206"] = ["IDE0036"],
+            ["SA1208"] = ["SA1208"],
+            ["SA1209"] = ["SA1209"],
+            ["SA1210"] = ["SA1210"],
+            ["SA1211"] = ["SA1211"],
             ["SA1212"] = ["SA1212"],
             ["SA1213"] = ["SA1213"],
             ["SA1214"] = ["SA1214"],
+            ["SA1216"] = ["SA1216"],
+            ["SA1217"] = ["SA1217"],
             ["SA1300"] = ["SA1300"],
             ["SA1302"] = ["SA1302"],
             ["SA1303"] = ["SA1303"],
@@ -284,6 +290,7 @@ public static class PragmaAliasMap
             ["CSLINT266"] = ["SA1204"],
             ["CSLINT267"] = ["SA1202"],
             ["CSLINT268"] = ["SA1201"],
+            ["CSLINT269"] = ["SA1208", "SA1209", "SA1210", "SA1211", "SA1216", "SA1217"],
         };
 
     public static bool TryGetMappedIds(string id, out string[] cslintIds) =>
