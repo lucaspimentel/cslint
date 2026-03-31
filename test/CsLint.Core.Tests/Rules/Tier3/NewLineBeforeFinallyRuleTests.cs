@@ -68,4 +68,18 @@ public class NewLineBeforeFinallyRuleTests
 
         Assert.Empty(_rule.Analyze(context));
     }
+
+    [Fact]
+    public void Analyze_SingleLineTryFinally_WhenRequired_ReturnsNoDiagnostics()
+    {
+        string source = "class C { void M() { try { } finally { } } }";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_finally"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        // No newline at all — nothing to enforce
+        Assert.Empty(_rule.Analyze(context));
+    }
 }

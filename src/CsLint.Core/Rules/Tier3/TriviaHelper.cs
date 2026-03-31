@@ -56,4 +56,32 @@ internal static class TriviaHelper
 
         return false;
     }
+
+    public static bool IsOnSameLineAsPrevious(SyntaxToken token)
+    {
+        SyntaxToken previous = token.GetPreviousToken();
+
+        if (previous == default)
+        {
+            return false;
+        }
+
+        int prevLine = previous.GetLocation().GetLineSpan().EndLinePosition.Line;
+        int currLine = token.GetLocation().GetLineSpan().StartLinePosition.Line;
+        return prevLine == currLine;
+    }
+
+    public static bool IsOnSameLineAsNext(SyntaxToken token)
+    {
+        SyntaxToken next = token.GetNextToken();
+
+        if (next == default)
+        {
+            return false;
+        }
+
+        int currLine = token.GetLocation().GetLineSpan().EndLinePosition.Line;
+        int nextLine = next.GetLocation().GetLineSpan().StartLinePosition.Line;
+        return currLine == nextLine;
+    }
 }

@@ -68,4 +68,18 @@ public class NewLineBeforeCatchRuleTests
 
         Assert.Empty(_rule.Analyze(context));
     }
+
+    [Fact]
+    public void Analyze_SingleLineTryCatch_WhenRequired_ReturnsNoDiagnostics()
+    {
+        string source = "class C { void M() { try { } catch { } } }";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_catch"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        // No newline at all — nothing to enforce
+        Assert.Empty(_rule.Analyze(context));
+    }
 }

@@ -29,7 +29,7 @@
 
 ### Fixed
 - Fix expression-bodied methods rule using wrong ID (IDE0021 → IDE0022) and constructors rule emitting IDE0022 instead of IDE0021, which caused `:none` severity to not suppress diagnostics
-- Fix CSLINT279 (`csharp_new_line_before_open_brace`) false positive on single-line constructs — only flag when a newline exists but is in the wrong place
+- Fix false positive on single-line constructs in newline rules (CSLINT279/280/281/282) — only flag when a newline exists but is in the wrong place
 
 ### Changed
 - **BREAKING:** Rename 37 rules with 1:1 StyleCop mappings from CSLINT* to SA* diagnostic IDs (e.g., CSLINT001→SA1028, CSLINT240→SA1106). Old CSLINT IDs preserved as pragma aliases.

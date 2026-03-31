@@ -16,19 +16,6 @@ public sealed class NewLineBeforeFinallyRule : IRuleDefinition, IDescendantNodeH
 
     public LintSeverity DefaultSeverity => LintSeverity.Warning;
 
-    private static bool IsOnSameLineAsPrevious(SyntaxToken token)
-    {
-        SyntaxToken previous = token.GetPreviousToken();
-
-        if (previous == default)
-        {
-            return false;
-        }
-
-        int prevLine = previous.GetLocation().GetLineSpan().EndLinePosition.Line;
-        int currLine = token.GetLocation().GetLineSpan().StartLinePosition.Line;
-        return prevLine == currLine;
-    }
 
     public bool IsEnabled(LintConfiguration configuration) =>
         configuration.GetValue(ConfigKey) is not null;
@@ -62,9 +49,9 @@ public sealed class NewLineBeforeFinallyRule : IRuleDefinition, IDescendantNodeH
         }
 
         bool requireNewLine = config.GetBool(ConfigKey);
-        bool sameLine = IsOnSameLineAsPrevious(finallyClause.FinallyKeyword);
+        bool sameLine = TriviaHelper.IsOnSameLineAsPrevious(finallyClause.FinallyKeyword);
 
-        if (requireNewLine && sameLine)
+        if (requireNewLine && sameLine && !TriviaHelper.IsOnSameLineAsNext(finallyClause.FinallyKeyword))
         {
             FileLinePositionSpan span = finallyClause.FinallyKeyword.GetLocation().GetLineSpan();
 

@@ -96,4 +96,18 @@ public class NewLineBeforeElseRuleTests
 
         Assert.Empty(_rule.Analyze(context));
     }
+
+    [Fact]
+    public void Analyze_SingleLineIfElse_WhenRequired_ReturnsNoDiagnostics()
+    {
+        string source = "class C { void M() { if (true) { } else { } } }";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_else"] = "true",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        // No newline at all — nothing to enforce
+        Assert.Empty(_rule.Analyze(context));
+    }
 }
