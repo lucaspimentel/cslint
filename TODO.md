@@ -11,8 +11,8 @@
 
 ## Bugs
 
-- [ ] **`:none` severity not respected** — rules using `GetValueWithSeverity()` discard the severity component (e.g., `csharp_style_expression_bodied_methods = false:none` still emits diagnostics). All rules that call `GetValueWithSeverity` and ignore the severity with `_` need to suppress diagnostics when severity is `none`.
-- [ ] **`csharp_new_line_before_open_brace` (CSLINT279) false positive on single-line constructs** — the rule should only check newline placement when a newline actually exists around the brace. Single-line expressions like `string[] foo = new[] { "1", "2" };` should not trigger a diagnostic.
+- [x] **`:none` severity not respected** — fixed by correcting IDE0021/IDE0022 rule ID assignments so `ApplySeverityOverrides` can properly match and suppress diagnostics.
+- [x] **`csharp_new_line_before_open_brace` (CSLINT279) false positive on single-line constructs** — fixed by only flagging when a newline exists but is in the wrong place (after the brace instead of before it).
 - [ ] **CA rules should not all be enabled by default** — only rules listed under the "Enabled Rules" section at https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview should be enabled by default. Currently all 36 CA rules in `src/CsLint.Core/Rules/Tier3/` use `IsEnabled` logic that defaults to enabled when the config key is absent. Non-default rules should require explicit `dotnet_diagnostic.CA####.severity` to activate.
 
 ## Standard .editorconfig rule coverage

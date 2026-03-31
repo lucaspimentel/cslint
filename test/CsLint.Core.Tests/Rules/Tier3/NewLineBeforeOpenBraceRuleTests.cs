@@ -64,7 +64,7 @@ public class NewLineBeforeOpenBraceRuleTests
     [Fact]
     public void Analyze_SpecificContext_MatchingBrace_ReturnsDiagnostic()
     {
-        string source = "class C { void M() { if (true) { } } }";
+        string source = "class C { void M() { if (true) {\n    int x = 1;\n} } }";
         var config = new LintConfiguration(new Dictionary<string, string>
         {
             ["csharp_new_line_before_open_brace"] = "control_blocks",
@@ -94,7 +94,7 @@ public class NewLineBeforeOpenBraceRuleTests
     [Fact]
     public void Analyze_CommaSeparatedContexts_FlagsBoth()
     {
-        string source = "class C { void M() { if (true) { } } }";
+        string source = "class C { void M() {\n    if (true) {\n        int x = 1;\n    }\n} }";
         var config = new LintConfiguration(new Dictionary<string, string>
         {
             ["csharp_new_line_before_open_brace"] = "methods, control_blocks",
@@ -113,6 +113,63 @@ public class NewLineBeforeOpenBraceRuleTests
         string source = "class C { }";
         RuleContext context = TestHelper.CreateContext(source);
 
+        Assert.Empty(_rule.Analyze(context));
+    }
+
+    [Fact]
+    public void Analyze_AllValue_SingleLineInitializer_ReturnsNoDiagnostics()
+    {
+        string source = """
+            class C { void M() { string[] foo = new[] { "1", "2" }; } }
+            """;
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_open_brace"] = "all",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        Assert.Empty(_rule.Analyze(context));
+    }
+
+    [Fact]
+    public void Analyze_AllValue_MultiLineInitializerBraceInline_ReturnsNoDiagnostics()
+    {
+        string source = "class C { void M() { string[] foo = new[] { \"a\",\n\"b\" }; } }";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_open_brace"] = "all",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        // No newline between previous token and the brace — brace is inline, no diagnostic
+        Assert.DoesNotContain(_rule.Analyze(context), d => d.Message.Contains("object_collection_array_initializers"));
+    }
+
+    [Fact]
+    public void Analyze_AllValue_BraceOnNewLineWithContentOnNextLine_ReturnsNoDiagnostics()
+    {
+        string source = "class C\n{ }";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_open_brace"] = "all",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        // Newline is before the brace (correct Allman style) — no diagnostic
+        Assert.Empty(_rule.Analyze(context));
+    }
+
+    [Fact]
+    public void Analyze_AllValue_BraceOnNewLineWithMultiLineBody_ReturnsNoDiagnostics()
+    {
+        string source = "class C\n{\n}";
+        var config = new LintConfiguration(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_open_brace"] = "all",
+        });
+        RuleContext context = TestHelper.CreateContext(source, config);
+
+        // Newline is before the brace (correct Allman style) — no diagnostic
         Assert.Empty(_rule.Analyze(context));
     }
 }

@@ -75,6 +75,20 @@ public sealed class NewLineBeforeOpenBraceRule : IRuleDefinition
         return prevLine == currLine;
     }
 
+    private static bool IsOnSameLineAsNext(SyntaxToken token)
+    {
+        SyntaxToken next = token.GetNextToken();
+
+        if (next == default)
+        {
+            return false;
+        }
+
+        int currLine = token.GetLocation().GetLineSpan().EndLinePosition.Line;
+        int nextLine = next.GetLocation().GetLineSpan().StartLinePosition.Line;
+        return currLine == nextLine;
+    }
+
     private static HashSet<string>? ParseContexts(string value)
     {
         if (string.Equals(value, "all", StringComparison.OrdinalIgnoreCase)
@@ -140,7 +154,7 @@ public sealed class NewLineBeforeOpenBraceRule : IRuleDefinition
 
                     bool sameLine = IsOnSameLineAsPrevious(token);
 
-                    if (requireNewLine && sameLine)
+                    if (requireNewLine && sameLine && !IsOnSameLineAsNext(token))
                     {
                         FileLinePositionSpan span = token.GetLocation().GetLineSpan();
 
