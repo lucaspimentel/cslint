@@ -66,11 +66,11 @@ public sealed class ExpressionBodiedConstructorsRule : IRuleDefinition, IStyleRu
 
         if (preferExpression && node.ExpressionBody is null && node.Body is not null && IsSingleStatement(node.Body))
         {
-            AddDiagnostic(node.Identifier, "IDE0021", "Constructor can use expression body", diagnostics);
+            AddDiagnostic(node.Identifier, RuleId, "Constructor can use expression body", diagnostics);
         }
         else if (!preferExpression && node.ExpressionBody is not null)
         {
-            AddDiagnostic(node.Identifier, "IDE0022", "Constructor can use block body", diagnostics);
+            AddDiagnostic(node.Identifier, RuleId, "Constructor can use block body", diagnostics);
         }
     }
 }

@@ -56,7 +56,7 @@ public class ExpressionBodiedConstructorsRuleTests
     }
 
     [Fact]
-    public void Analyze_ExpressionBodiedConstructor_WhenBlockPreferred_ReturnsIDE0022()
+    public void Analyze_ExpressionBodiedConstructor_WhenBlockPreferred_ReturnsIDE0021()
     {
         string source = "class C { int _x; C(int x) => _x = x; }";
         var config = new LintConfiguration(new Dictionary<string, string>
@@ -68,7 +68,7 @@ public class ExpressionBodiedConstructorsRuleTests
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
         Assert.Single(diagnostics);
-        Assert.Equal("IDE0022", diagnostics[0].RuleId);
+        Assert.Equal("IDE0021", diagnostics[0].RuleId);
     }
 
     [Fact]

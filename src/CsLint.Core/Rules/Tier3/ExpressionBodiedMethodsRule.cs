@@ -5,13 +5,13 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Cslint.Core.Rules.Tier3;
 
 /// <summary>
-/// IDE0021: Use expression body for methods.
+/// IDE0022: Use expression body for methods.
 /// </summary>
 public sealed class ExpressionBodiedMethodsRule : IRuleDefinition, IStyleRuleHandler
 {
     private const string ConfigKey = "csharp_style_expression_bodied_methods";
 
-    public string RuleId => "IDE0021";
+    public string RuleId => "IDE0022";
 
     public string Name => "ExpressionBodiedMethods";
 
@@ -66,11 +66,11 @@ public sealed class ExpressionBodiedMethodsRule : IRuleDefinition, IStyleRuleHan
 
         if (preferExpression && node.ExpressionBody is null && node.Body is not null && IsSingleStatement(node.Body))
         {
-            AddDiagnostic(node.Identifier, "IDE0021", "Method can use expression body", diagnostics);
+            AddDiagnostic(node.Identifier, RuleId, "Method can use expression body", diagnostics);
         }
         else if (!preferExpression && node.ExpressionBody is not null)
         {
-            AddDiagnostic(node.Identifier, "IDE0022", "Method can use block body", diagnostics);
+            AddDiagnostic(node.Identifier, RuleId, "Method can use block body", diagnostics);
         }
     }
 }

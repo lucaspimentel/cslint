@@ -27,6 +27,9 @@
 - Add IDE0220 — prefer foreach explicit cast (`dotnet_diagnostic.IDE0220.severity`), Tier 4 semantic rule that flags implicit casts in foreach loops
 - Add expression-bodied constructors support (`csharp_style_expression_bodied_constructors`), reports as IDE0021
 
+### Fixed
+- Fix expression-bodied methods rule using wrong ID (IDE0021 → IDE0022) and constructors rule emitting IDE0022 instead of IDE0021, which caused `:none` severity to not suppress diagnostics
+
 ### Changed
 - **BREAKING:** Rename 37 rules with 1:1 StyleCop mappings from CSLINT* to SA* diagnostic IDs (e.g., CSLINT001→SA1028, CSLINT240→SA1106). Old CSLINT IDs preserved as pragma aliases.
 - **BREAKING:** Split CSLINT103 (ParameterLocalNaming) into SA1312 (local variable naming) and SA1313 (parameter naming)
