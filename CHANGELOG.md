@@ -13,22 +13,19 @@
 - Add IDE0041 — prefer is null (`dotnet_style_prefer_is_null_check_over_reference_equality_method`)
 - Add IDE0042 — deconstruct variable declaration (`csharp_style_deconstructed_variable_declaration`)
 - Add IDE0044 — add readonly modifier (`dotnet_style_readonly_field`)
-- Add IDE0047 — remove unnecessary parentheses (`dotnet_style_parentheses_in_*`)
+- Add IDE0047 — remove unnecessary parentheses (`dotnet_style_parentheses_in_*`, including `dotnet_style_parentheses_in_other_operators`)
 - Add IDE0048 — add parentheses for clarity (`dotnet_style_parentheses_in_*`)
 - Add IDE0052 — remove unread private member, split from former CSLINT308
 - Add IDE0060 — remove unused parameter (`dotnet_code_quality_unused_parameters`)
 - Add IDE0250 — prefer readonly struct (`csharp_style_prefer_readonly_struct`)
 - Add IDE0251 — prefer readonly struct member (`csharp_style_prefer_readonly_struct_member`)
 - Add CA1715 pragma alias mapping to CSLINT101 and CSLINT106
-- Add SA1211 — alias using directives must be sorted alphabetically by alias name
-- Add `dotnet_style_parentheses_in_other_operators` support for IDE0047 — flag unnecessary parentheses around non-binary expressions
 - Add IDE0058 — unused value expression statement (`dotnet_diagnostic.IDE0058.severity`), Tier 4 semantic rule that flags discarded return values
 - Add IDE0059 — unused value assignment (`dotnet_diagnostic.IDE0059.severity`), Tier 4 semantic rule that flags assignments where the value is never read before being overwritten
 - Add IDE0220 — prefer foreach explicit cast (`dotnet_diagnostic.IDE0220.severity`), Tier 4 semantic rule that flags implicit casts in foreach loops
 - Add expression-bodied constructors support (`csharp_style_expression_bodied_constructors`), reports as IDE0021
 
 ### Fixed
-- Fix expression-bodied methods rule using wrong ID (IDE0021 → IDE0022) and constructors rule emitting IDE0022 instead of IDE0021, which caused `:none` severity to not suppress diagnostics
 - Fix false positive on single-line constructs in newline rules (CSLINT279/280/281/282) — only flag when a newline exists but is in the wrong place
 
 ### Changed
