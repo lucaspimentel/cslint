@@ -36,6 +36,12 @@ dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .ed
   - `dotnet_diagnostic.IDE0005.severity = warning` — no colon-separated value
   - `IsEnabled` checks `GetDiagnosticSeverity(...) is not null and not LintSeverity.None` — rule is opt-in (disabled when key absent), matching .NET SDK behavior
 
+## Rule ID references
+
+- **IDE rules (code style)**: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/
+- **CA rules (code quality)**: https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/
+- **SA rules (StyleCop)**: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/documentation
+
 ## Rule ID convention
 
 New rules that map 1:1 to a standard diagnostic ID must use the standard ID directly as their `RuleId` (e.g., `IDE0200`, `SA1028`, `CA1051`). The goal is drop-in replacement for `dotnet format`. Rules with no standard equivalent keep `CSLINT*` IDs.
