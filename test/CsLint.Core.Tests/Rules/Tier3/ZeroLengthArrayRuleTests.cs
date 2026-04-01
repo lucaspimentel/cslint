@@ -8,6 +8,11 @@ public class ZeroLengthArrayRuleTests
 {
     private readonly ZeroLengthArrayRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1825.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("var a = new int[0];")]
     [InlineData("var a = new string[0];")]
@@ -25,7 +30,7 @@ public class ZeroLengthArrayRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -52,7 +57,7 @@ public class ZeroLengthArrayRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

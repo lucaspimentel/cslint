@@ -8,6 +8,11 @@ public class WriteOnlyPropertyRuleTests
 {
     private readonly WriteOnlyPropertyRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1044.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_SetterOnly_ReturnsDiagnostic()
     {
@@ -17,7 +22,7 @@ public class WriteOnlyPropertyRuleTests
                 public int Value { set { } }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -35,7 +40,7 @@ public class WriteOnlyPropertyRuleTests
                 public int Value { init { } }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -51,7 +56,7 @@ public class WriteOnlyPropertyRuleTests
                 public int Value { get; set; }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -67,7 +72,7 @@ public class WriteOnlyPropertyRuleTests
                 public int Value { get; }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -83,7 +88,7 @@ public class WriteOnlyPropertyRuleTests
                 public int Value => 42;
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

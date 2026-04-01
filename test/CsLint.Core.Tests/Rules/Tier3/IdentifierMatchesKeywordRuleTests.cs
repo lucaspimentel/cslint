@@ -8,6 +8,11 @@ public class IdentifierMatchesKeywordRuleTests
 {
     private readonly IdentifierMatchesKeywordRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1716.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("namespace N; public class Event { }")]
     [InlineData("namespace N; class C { public void Delegate() { } }")]
@@ -15,7 +20,7 @@ public class IdentifierMatchesKeywordRuleTests
     public void Analyze_IdentifierMatchesKeyword_ReturnsDiagnostic(
         string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

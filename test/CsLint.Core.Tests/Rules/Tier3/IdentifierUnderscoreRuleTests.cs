@@ -8,6 +8,11 @@ public class IdentifierUnderscoreRuleTests
 {
     private readonly IdentifierUnderscoreRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1707.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("namespace N; class C { public void Do_Work() { } }")]
     [InlineData("namespace N; class C { public int My_Prop { get; } }")]
@@ -15,7 +20,7 @@ public class IdentifierUnderscoreRuleTests
     public void Analyze_UnderscoreInIdentifier_ReturnsDiagnostic(
         string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

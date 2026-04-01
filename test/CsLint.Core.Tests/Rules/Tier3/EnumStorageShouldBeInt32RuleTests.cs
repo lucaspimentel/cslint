@@ -8,6 +8,11 @@ public class EnumStorageShouldBeInt32RuleTests
 {
     private readonly EnumStorageShouldBeInt32Rule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1028.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("enum E : byte { A }")]
     [InlineData("enum E : long { A }")]
@@ -18,7 +23,7 @@ public class EnumStorageShouldBeInt32RuleTests
     [InlineData("enum E : sbyte { A }")]
     public void Analyze_NonInt32BaseType_ReturnsDiagnostic(string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

@@ -5,7 +5,7 @@ namespace Cslint.Core.Rules.Tier3;
 /// <summary>
 /// Shared enablement logic for CA rules that support both a standard
 /// <c>dotnet_diagnostic.CAxxxx.severity</c> key and a legacy custom key.
-/// Enabled by default when neither key is present, matching .NET SDK behavior.
+/// Disabled by default when neither key is present; requires explicit config to activate.
 /// </summary>
 internal static class CaRuleHelper
 {
@@ -27,7 +27,7 @@ internal static class CaRuleHelper
             return string.Equals(pref, "true", StringComparison.OrdinalIgnoreCase);
         }
 
-        // Default: enabled (matches .NET SDK behavior for CA rules)
-        return true;
+        // Default: disabled (only .NET SDK default-enabled CA rules should be on without config)
+        return false;
     }
 }

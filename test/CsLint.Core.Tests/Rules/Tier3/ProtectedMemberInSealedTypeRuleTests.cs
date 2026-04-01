@@ -8,6 +8,11 @@ public class ProtectedMemberInSealedTypeRuleTests
 {
     private readonly ProtectedMemberInSealedTypeRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1047.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("sealed class C { protected void M() { } }")]
     [InlineData("sealed class C { protected int Field; }")]
@@ -15,7 +20,7 @@ public class ProtectedMemberInSealedTypeRuleTests
     [InlineData("sealed class C { protected event System.EventHandler E; }")]
     public void Analyze_ProtectedMemberInSealedType_ReturnsDiagnostic(string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

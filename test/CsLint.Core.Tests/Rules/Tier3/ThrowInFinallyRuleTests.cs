@@ -8,6 +8,11 @@ public class ThrowInFinallyRuleTests
 {
     private readonly ThrowInFinallyRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2219.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_ThrowInFinally_ReturnsDiagnostic()
     {
@@ -26,7 +31,7 @@ public class ThrowInFinallyRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -56,7 +61,7 @@ public class ThrowInFinallyRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

@@ -8,6 +8,11 @@ public class CatchGeneralExceptionRuleTests
 {
     private readonly CatchGeneralExceptionRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1031.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("catch (Exception) { }")]
     [InlineData("catch (Exception ex) { }")]
@@ -28,7 +33,7 @@ public class CatchGeneralExceptionRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -51,7 +56,7 @@ public class CatchGeneralExceptionRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         Assert.Single(_rule.Analyze(context));
     }

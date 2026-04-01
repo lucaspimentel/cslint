@@ -8,6 +8,11 @@ public class PropertyNameMatchesGetMethodRuleTests
 {
     private readonly PropertyNameMatchesGetMethodRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1721.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_GetMethodMatchesProperty_ReturnsDiagnostic()
     {
@@ -20,7 +25,7 @@ public class PropertyNameMatchesGetMethodRuleTests
                 public int GetValue() => 0;
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

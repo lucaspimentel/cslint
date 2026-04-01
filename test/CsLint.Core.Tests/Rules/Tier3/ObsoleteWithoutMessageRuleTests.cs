@@ -8,6 +8,11 @@ public class ObsoleteWithoutMessageRuleTests
 {
     private readonly ObsoleteWithoutMessageRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1041.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("[Obsolete]")]
     [InlineData("[System.Obsolete]")]
@@ -23,7 +28,7 @@ public class ObsoleteWithoutMessageRuleTests
                 public void M() { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -43,7 +48,7 @@ public class ObsoleteWithoutMessageRuleTests
                 public void M() { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -78,7 +83,7 @@ public class ObsoleteWithoutMessageRuleTests
             [Obsolete]
             class C { }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

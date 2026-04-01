@@ -8,6 +8,11 @@ public class EnumValuesPrefixedWithTypeNameRuleTests
 {
     private readonly EnumValuesPrefixedWithTypeNameRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1712.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_AllValuesPrefixed_ReturnsDiagnostic()
     {
@@ -19,7 +24,7 @@ public class EnumValuesPrefixedWithTypeNameRuleTests
                 ColorBlue,
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

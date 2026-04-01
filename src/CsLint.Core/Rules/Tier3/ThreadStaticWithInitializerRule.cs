@@ -50,7 +50,7 @@ public sealed class ThreadStaticWithInitializerRule : IRuleDefinition
     }
 
     public bool IsEnabled(LintConfiguration configuration) =>
-        configuration.GetDiagnosticSeverity(ConfigKey) is not LintSeverity.None;
+        configuration.GetDiagnosticSeverity(ConfigKey) is not null and not LintSeverity.None;
 
     public IReadOnlyList<LintDiagnostic> Analyze(RuleContext context)
     {

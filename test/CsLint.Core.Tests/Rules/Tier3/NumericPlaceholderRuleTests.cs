@@ -8,6 +8,11 @@ public class NumericPlaceholderRuleTests
 {
     private readonly NumericPlaceholderRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2253.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("logger.LogInformation(\"{0} processed\", item);")]
     [InlineData("logger.LogWarning(\"{0} failed with {1}\", a, b);")]
@@ -26,7 +31,7 @@ public class NumericPlaceholderRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

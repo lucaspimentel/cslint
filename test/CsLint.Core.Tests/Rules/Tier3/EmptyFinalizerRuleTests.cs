@@ -8,6 +8,11 @@ public class EmptyFinalizerRuleTests
 {
     private readonly EmptyFinalizerRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1821.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("~Foo() { }")]
     [InlineData("~Foo() {\n}")]
@@ -101,7 +106,7 @@ public class EmptyFinalizerRuleTests
                 ~Foo() { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         Assert.Single(_rule.Analyze(context));
     }

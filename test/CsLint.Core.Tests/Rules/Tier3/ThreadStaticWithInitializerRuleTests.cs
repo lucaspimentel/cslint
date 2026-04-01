@@ -8,6 +8,11 @@ public class ThreadStaticWithInitializerRuleTests
 {
     private readonly ThreadStaticWithInitializerRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2019.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_ThreadStaticWithInitializer_ReturnsDiagnostic()
     {
@@ -20,7 +25,7 @@ public class ThreadStaticWithInitializerRuleTests
                 private static int _field = 42;
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

@@ -8,6 +8,11 @@ public class AvoidOutParametersRuleTests
 {
     private readonly AvoidOutParametersRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1021.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_PublicMethodWithOut_ReturnsDiagnostic()
     {
@@ -19,7 +24,7 @@ public class AvoidOutParametersRuleTests
                 public void M(out int result) { result = 0; }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

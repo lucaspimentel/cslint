@@ -8,6 +8,11 @@ public class FlagsEnumPluralNameRuleTests
 {
     private readonly FlagsEnumPluralNameRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1714.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_FlagsSingularName_ReturnsDiagnostic()
     {
@@ -17,7 +22,7 @@ public class FlagsEnumPluralNameRuleTests
             [Flags]
             enum Permission { Read = 1, Write = 2 }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

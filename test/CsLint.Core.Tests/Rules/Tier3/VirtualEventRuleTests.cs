@@ -8,6 +8,11 @@ public class VirtualEventRuleTests
 {
     private readonly VirtualEventRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1070.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_VirtualEventField_ReturnsDiagnostic()
     {
@@ -19,7 +24,7 @@ public class VirtualEventRuleTests
                 public virtual event EventHandler MyEvent;
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -39,7 +44,7 @@ public class VirtualEventRuleTests
                 public event EventHandler MyEvent;
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -64,7 +69,7 @@ public class VirtualEventRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

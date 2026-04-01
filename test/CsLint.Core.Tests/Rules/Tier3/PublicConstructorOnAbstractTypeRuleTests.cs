@@ -8,6 +8,11 @@ public class PublicConstructorOnAbstractTypeRuleTests
 {
     private readonly PublicConstructorOnAbstractTypeRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1012.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_PublicCtorOnAbstractClass_ReturnsDiagnostic()
     {
@@ -17,7 +22,7 @@ public class PublicConstructorOnAbstractTypeRuleTests
                 public C() { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -68,7 +73,7 @@ public class PublicConstructorOnAbstractTypeRuleTests
                 private C(string s) { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

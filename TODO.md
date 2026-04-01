@@ -13,7 +13,7 @@
 
 - [x] **`:none` severity not respected** — fixed by correcting IDE0021/IDE0022 rule ID assignments so `ApplySeverityOverrides` can properly match and suppress diagnostics.
 - [x] **`csharp_new_line_before_open_brace` (CSLINT279) false positive on single-line constructs** — fixed by only flagging when a newline exists but is in the wrong place (after the brace instead of before it).
-- [ ] **CA rules should not all be enabled by default** — only rules listed under the "Enabled Rules" section at https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview should be enabled by default. Currently all 36 CA rules in `src/CsLint.Core/Rules/Tier3/` use `IsEnabled` logic that defaults to enabled when the config key is absent. Non-default rules should require explicit `dotnet_diagnostic.CA####.severity` to activate.
+- [x] **CA rules should not all be enabled by default** — fixed: only the 4 CA rules that are default-enabled in the .NET SDK (CA1861, CA2014, CA2200, CA2259) are now enabled without config. The other 29 CA rules require explicit `dotnet_diagnostic.CA####.severity` to activate. Also fixed `CaRuleHelper` default from `true` to `false`.
 
 ## Standard .editorconfig rule coverage
 

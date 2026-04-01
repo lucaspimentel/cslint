@@ -8,11 +8,16 @@ public class EmptyInterfaceRuleTests
 {
     private readonly EmptyInterfaceRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1040.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_EmptyInterface_ReturnsDiagnostic()
     {
         const string source = "interface IMarker { }";
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

@@ -8,6 +8,11 @@ public class FlagsEnumValuesRuleTests
 {
     private readonly FlagsEnumValuesRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2217.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_FlagsWithNonPowerOfTwo_ReturnsDiagnostic()
     {
@@ -26,7 +31,7 @@ public class FlagsEnumValuesRuleTests
                 Invalid = 9,
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -111,7 +116,7 @@ public class FlagsEnumValuesRuleTests
             [Flags]
             enum E { A = 0, B = 1, C = 2, D = 4, Bad = 9 }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

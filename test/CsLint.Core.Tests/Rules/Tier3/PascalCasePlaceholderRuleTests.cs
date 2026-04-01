@@ -8,6 +8,11 @@ public class PascalCasePlaceholderRuleTests
 {
     private readonly PascalCasePlaceholderRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1727.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("logger.LogInformation(\"{item} processed\", x);")]
     [InlineData("logger.LogWarning(\"{errorCode} failed\", x);")]
@@ -24,7 +29,7 @@ public class PascalCasePlaceholderRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

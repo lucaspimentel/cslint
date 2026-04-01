@@ -8,6 +8,11 @@ public class VisibleNestedTypeRuleTests
 {
     private readonly VisibleNestedTypeRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1034.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_PublicNestedClass_ReturnsDiagnostic()
     {
@@ -17,7 +22,7 @@ public class VisibleNestedTypeRuleTests
                 public class Inner { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -35,7 +40,7 @@ public class VisibleNestedTypeRuleTests
                 private class Inner { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -46,7 +51,7 @@ public class VisibleNestedTypeRuleTests
     public void Analyze_TopLevelClass_NoDiagnostic()
     {
         const string source = "public class C { }";
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -62,7 +67,7 @@ public class VisibleNestedTypeRuleTests
                 internal class Inner { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

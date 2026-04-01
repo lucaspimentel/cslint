@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ### Added
-- Add 31 CA code quality rules enabled by default: CA1012, CA1021, CA1028, CA1031, CA1034, CA1040, CA1041, CA1044, CA1047, CA1050, CA1051, CA1052, CA1070, CA1707, CA1712, CA1714, CA1716, CA1720, CA1721, CA1727, CA1825, CA1861, CA2011, CA2014, CA2019, CA2200, CA2211, CA2217, CA2219, CA2244, CA2245, CA2253, CA2259
+- Add 31 CA code quality rules: CA1012, CA1021, CA1028, CA1031, CA1034, CA1040, CA1041, CA1044, CA1047, CA1050, CA1051, CA1052, CA1070, CA1707, CA1712, CA1714, CA1716, CA1720, CA1721, CA1727, CA1825, CA1861, CA2011, CA2014, CA2019, CA2200, CA2211, CA2217, CA2219, CA2244, CA2245, CA2253, CA2259
 - Add IDE0022 — block body for methods (`csharp_style_expression_bodied_methods`)
 - Add IDE0023/IDE0024 — expression-bodied operators (`csharp_style_expression_bodied_operators`)
 - Add IDE0026 — expression-bodied indexers (`csharp_style_expression_bodied_indexers`)
@@ -39,7 +39,7 @@
 - **BREAKING:** Split CSLINT260 (BraceSpacing) into SA1012 (opening brace spacing) and SA1013 (closing brace spacing)
 - **BREAKING:** Split CSLINT263 (AccessorOrdering) into SA1212 (property get/set order) and SA1213 (event add/remove order)
 - **BREAKING:** Split CSLINT269 (UsingDirectiveOrder) into SA1208 (System first), SA1209 (alias after all), SA1210 (alphabetical), SA1211 (alias alphabetical), SA1216 (static after regular), SA1217 (static alphabetical)
-- **BREAKING:** Enable CA1821 and CA1805 by default when `.editorconfig` key is absent, matching .NET SDK behavior for CA code quality rules
+- **BREAKING:** Change CA rule defaults to match .NET SDK: only CA1861, CA2014, CA2200, CA2259 are enabled by default; all other CA rules (including CA1805, CA1821) require explicit `dotnet_diagnostic.CA####.severity` to activate
 - **BREAKING:** Disable Tier 4 semantic rules by default when `.editorconfig` key is absent, matching .NET SDK behavior
 - **BREAKING:** Migrate 27 rules from CSLINT* to standard IDE* diagnostic IDs (old IDs preserved as pragma aliases)
 - **BREAKING:** Split multi-ID rules into individual standard-ID rules: CSLINT200→IDE0007+IDE0008, CSLINT201→IDE0021+IDE0025, CSLINT210→IDE0029+IDE0016

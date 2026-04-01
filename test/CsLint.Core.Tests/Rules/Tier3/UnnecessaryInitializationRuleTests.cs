@@ -8,6 +8,11 @@ public sealed class UnnecessaryInitializationRuleTests
 {
     private readonly UnnecessaryInitializationRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1805.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("int", "0")]
     [InlineData("long", "0")]
@@ -157,7 +162,7 @@ public sealed class UnnecessaryInitializationRuleTests
                 int _x = 0;
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         Assert.Single(_rule.Analyze(context));
     }

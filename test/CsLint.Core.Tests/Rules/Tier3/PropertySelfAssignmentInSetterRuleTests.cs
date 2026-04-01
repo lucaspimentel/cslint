@@ -8,6 +8,11 @@ public class PropertySelfAssignmentInSetterRuleTests
 {
     private readonly PropertySelfAssignmentInSetterRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2011.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_SelfAssignmentInSetter_ReturnsDiagnostic()
     {
@@ -23,7 +28,7 @@ public class PropertySelfAssignmentInSetterRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -45,7 +50,7 @@ public class PropertySelfAssignmentInSetterRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -104,7 +109,7 @@ public class PropertySelfAssignmentInSetterRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

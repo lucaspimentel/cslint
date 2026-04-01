@@ -8,6 +8,11 @@ public class TypeOutsideNamespaceRuleTests
 {
     private readonly TypeOutsideNamespaceRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1050.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("class C { }")]
     [InlineData("struct S { }")]
@@ -15,7 +20,7 @@ public class TypeOutsideNamespaceRuleTests
     [InlineData("interface I { }")]
     public void Analyze_TypeOutsideNamespace_ReturnsDiagnostic(string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

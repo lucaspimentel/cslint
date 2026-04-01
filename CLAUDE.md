@@ -28,9 +28,10 @@ dotnet run --project src/CsLint.Cli -- --show-config [path]  # show resolved .ed
   - `csharp_prefer_braces = true:warning` — value is a preference, severity is after `:`
   - `IsEnabled` checks `string.Equals(pref, "true", ...)` — rule is opt-in (disabled when key absent)
   - Some rules accept multiple config keys (standard + CsLint aliases) via `GetFirstValue()` — CsLint key takes precedence
-- **Tier 3 CA rules (code quality)** use `dotnet_diagnostic.CA####.severity` keys and are **enabled by default**:
-  - `IsEnabled` checks `GetDiagnosticSeverity(...) is not LintSeverity.None` — omitting `not null` means absent key → enabled
-  - Disable with `dotnet_diagnostic.CA####.severity = none`
+- **Tier 3 CA rules (code quality)** use `dotnet_diagnostic.CA####.severity` keys:
+  - Only 4 rules matching the .NET SDK default-enabled list (CA1861, CA2014, CA2200, CA2259) are **enabled by default** — `IsEnabled` checks `is not LintSeverity.None` (absent key → enabled)
+  - All other CA rules are **opt-in** — `IsEnabled` checks `is not null and not LintSeverity.None` (absent key → disabled)
+  - Disable a default-enabled rule with `dotnet_diagnostic.CA####.severity = none`
 - **Tier 4** use `dotnet_diagnostic.<ID>.severity` keys where the raw value *is* the severity:
   - `dotnet_diagnostic.IDE0005.severity = warning` — no colon-separated value
   - `IsEnabled` checks `GetDiagnosticSeverity(...) is not null and not LintSeverity.None` — rule is opt-in (disabled when key absent), matching .NET SDK behavior

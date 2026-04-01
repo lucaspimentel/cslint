@@ -8,6 +8,11 @@ public class DuplicateIndexedElementInitRuleTests
 {
     private readonly DuplicateIndexedElementInitRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2244.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_DuplicateIndex_ReturnsDiagnostic()
     {
@@ -28,7 +33,7 @@ public class DuplicateIndexedElementInitRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

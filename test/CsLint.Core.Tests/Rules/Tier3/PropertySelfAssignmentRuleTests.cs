@@ -8,6 +8,11 @@ public class PropertySelfAssignmentRuleTests
 {
     private readonly PropertySelfAssignmentRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2245.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("Name = Name;")]
     [InlineData("this.Name = this.Name;")]
@@ -26,7 +31,7 @@ public class PropertySelfAssignmentRuleTests
                 }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

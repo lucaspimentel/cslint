@@ -8,6 +8,11 @@ public class StaticHolderShouldBeSealedRuleTests
 {
     private readonly StaticHolderShouldBeSealedRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1052.severity"] = "warning",
+    });
+
     [Fact]
     public void Analyze_AllStaticMembers_NotSealed_ReturnsDiagnostic()
     {
@@ -18,7 +23,7 @@ public class StaticHolderShouldBeSealedRuleTests
                 public static int Value => 42;
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -37,7 +42,7 @@ public class StaticHolderShouldBeSealedRuleTests
                 public static void Log() { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -183,7 +188,7 @@ public class StaticHolderShouldBeSealedRuleTests
                 public static void DoWork() { }
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

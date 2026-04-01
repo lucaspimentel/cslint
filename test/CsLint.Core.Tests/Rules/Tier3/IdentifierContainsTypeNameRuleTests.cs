@@ -8,6 +8,11 @@ public class IdentifierContainsTypeNameRuleTests
 {
     private readonly IdentifierContainsTypeNameRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1720.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("public void M(int int32) { }")]
     [InlineData("public void M(string boolean) { }")]
@@ -22,7 +27,7 @@ public class IdentifierContainsTypeNameRuleTests
                 {{method}}
             }
             """;
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

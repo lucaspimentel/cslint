@@ -112,7 +112,7 @@ Text-level checks: indentation, line endings, whitespace, max line length, `#reg
 Naming conventions via the standard 3-part `dotnet_naming_rule` / `dotnet_naming_symbols` / `dotnet_naming_style` system (IDE1006), plus built-in defaults for PascalCase types/members, `I`-prefix interfaces, camelCase parameters, `_camelCase` fields.
 
 ### Tier 3 — Style & Code Quality
-Code style preferences (`var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, member ordering) and CA code quality rules (naming conventions, design guidelines, performance hints, bug detection). CA rules are enabled by default, matching the .NET SDK.
+Code style preferences (`var` usage, expression-bodied members, braces, namespaces, pattern matching, sealed types, member ordering) and CA code quality rules (naming conventions, design guidelines, performance hints, bug detection). Only the CA rules that are [enabled by default in the .NET SDK](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview#enabled-rules) are enabled by default; other CA rules require explicit `dotnet_diagnostic.CA####.severity` configuration.
 
 ### Tier 4 — Semantic (requires `--semantic`)
 Rules that use the Roslyn semantic model: unused usings (IDE0005), unused locals, unreachable code, duplicate enum values (CA1069), self-assignment, unnecessary casts (IDE0004), redundant await, unused/unread private members (IDE0051/IDE0052), unused expression values (IDE0058), unused value assignments (IDE0059), implicit foreach casts (IDE0220).

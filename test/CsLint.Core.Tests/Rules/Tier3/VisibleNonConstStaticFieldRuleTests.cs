@@ -8,13 +8,18 @@ public class VisibleNonConstStaticFieldRuleTests
 {
     private readonly VisibleNonConstStaticFieldRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA2211.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("class C { public static int Field; }")]
     [InlineData("class C { protected static int Field; }")]
     public void Analyze_VisibleMutableStaticField_ReturnsDiagnostic(
         string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -30,7 +35,7 @@ public class VisibleNonConstStaticFieldRuleTests
     [InlineData("class C { public int Field; }")]
     public void Analyze_ConstOrReadonlyOrNonVisible_NoDiagnostic(string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 

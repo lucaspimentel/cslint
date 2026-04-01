@@ -8,12 +8,17 @@ public class VisibleInstanceFieldRuleTests
 {
     private readonly VisibleInstanceFieldRule _rule = new();
 
+    private static readonly LintConfiguration EnabledConfig = new(new Dictionary<string, string>
+    {
+        ["dotnet_diagnostic.CA1051.severity"] = "warning",
+    });
+
     [Theory]
     [InlineData("class C { public int Field; }")]
     [InlineData("class C { protected int Field; }")]
     public void Analyze_VisibleInstanceField_ReturnsDiagnostic(string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
@@ -31,7 +36,7 @@ public class VisibleInstanceFieldRuleTests
     [InlineData("record struct S(int X) { public int Field; }")]
     public void Analyze_NonVisibleOrStaticField_NoDiagnostic(string source)
     {
-        RuleContext context = TestHelper.CreateContext(source);
+        RuleContext context = TestHelper.CreateContext(source, EnabledConfig);
 
         IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
 
