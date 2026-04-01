@@ -6,6 +6,9 @@
 
     <!-- Native AOT when semantic rules are excluded (standalone binary) -->
     <PublishAot Condition="'$(PackAsTool)' != 'true' and '$(IncludeSemanticRules)' != 'true'">true</PublishAot>
+    <!-- Roslyn 5.x uses Assembly.Location internally, which is incompatible with Native AOT.
+         CsLint only uses syntax parsing APIs, not the compiler driver, so this is safe to suppress. -->
+    <NoWarn>IL3000</NoWarn>
 
     <!-- .NET Tool -->
     <PackAsTool>true</PackAsTool>
