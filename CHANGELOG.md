@@ -43,6 +43,7 @@
 - **BREAKING:** Migrate CSLINT239→CA1852, CSLINT300→IDE0005, CSLINT306→IDE0004, CSLINT308→IDE0051
 - Merge CSLINT234 into IDE0037 covering both `dotnet_style_prefer_inferred_tuple_names` and `dotnet_style_prefer_inferred_anonymous_type_member_names`
 - Force-disable CA1852 to prevent false positives until project-wide type hierarchy is implemented
+- Update NuGet dependencies to latest versions
 
 ## [1.7.0] - 2026-03-25
 
