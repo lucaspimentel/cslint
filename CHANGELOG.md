@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [2.0.0-beta.2] - 2026-04-06
 
 ### Fixed
 - Fix CSLINT283/CSLINT284 (object initializer and anonymous type newline rules) to skip single-line initializers and enforce inverse when `false` — consistent with CSLINT279/280/281/282
