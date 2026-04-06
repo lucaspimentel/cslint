@@ -14,8 +14,38 @@ public class NewLineInObjectInitializerRuleTests
             ["csharp_new_line_before_members_in_object_initializers"] = "true",
         });
 
+    private static LintConfiguration NotEnforced =>
+        new(new Dictionary<string, string>
+        {
+            ["csharp_new_line_before_members_in_object_initializers"] = "false",
+        });
+
     [Fact]
-    public void Analyze_MembersOnSameLine_ReturnsDiagnostic()
+    public void Analyze_MembersOnSameLine_MultiLine_WhenRequired_ReturnsDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M()
+                {
+                    var x = new C
+                    {
+                        A = 1, B = 2
+                    };
+                }
+                int A { get; set; }
+                int B { get; set; }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, Enforced);
+
+        IReadOnlyList<LintDiagnostic> diagnostics = _rule.Analyze(context);
+        Assert.Single(diagnostics);
+        Assert.Equal("CSLINT283", diagnostics[0].RuleId);
+    }
+
+    [Fact]
+    public void Analyze_SingleLineInitializer_WhenRequired_ReturnsNoDiagnostics()
     {
         string source = """
             class C
@@ -30,12 +60,11 @@ public class NewLineInObjectInitializerRuleTests
             """;
         RuleContext context = TestHelper.CreateContext(source, Enforced);
 
-        Assert.Single(_rule.Analyze(context));
-        Assert.Equal("CSLINT283", _rule.Analyze(context)[0].RuleId);
+        Assert.Empty(_rule.Analyze(context));
     }
 
     [Fact]
-    public void Analyze_MembersOnSeparateLines_ReturnsNoDiagnostics()
+    public void Analyze_MembersOnSeparateLines_WhenRequired_ReturnsNoDiagnostics()
     {
         string source = """
             class C
@@ -55,6 +84,29 @@ public class NewLineInObjectInitializerRuleTests
         RuleContext context = TestHelper.CreateContext(source, Enforced);
 
         Assert.Empty(_rule.Analyze(context));
+    }
+
+    [Fact]
+    public void Analyze_MembersOnSeparateLines_WhenNotRequired_ReturnsDiagnostic()
+    {
+        string source = """
+            class C
+            {
+                void M()
+                {
+                    var x = new C
+                    {
+                        A = 1,
+                        B = 2,
+                    };
+                }
+                int A { get; set; }
+                int B { get; set; }
+            }
+            """;
+        RuleContext context = TestHelper.CreateContext(source, NotEnforced);
+
+        Assert.Single(_rule.Analyze(context));
     }
 
     [Fact]

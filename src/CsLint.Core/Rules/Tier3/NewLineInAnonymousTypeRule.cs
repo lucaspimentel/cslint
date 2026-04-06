@@ -52,6 +52,15 @@ public sealed class NewLineInAnonymousTypeRule : IRuleDefinition, IDescendantNod
             return;
         }
 
+        // Skip single-line anonymous types (e.g., new { A = 1, B = 2 })
+        int openLine = anonType.OpenBraceToken.GetLocation().GetLineSpan().StartLinePosition.Line;
+        int closeLine = anonType.CloseBraceToken.GetLocation().GetLineSpan().StartLinePosition.Line;
+
+        if (openLine == closeLine)
+        {
+            return;
+        }
+
         bool requireNewLine = config.GetBool(ConfigKey);
 
         for (int i = 1; i < anonType.Initializers.Count; i++)
@@ -72,6 +81,19 @@ public sealed class NewLineInAnonymousTypeRule : IRuleDefinition, IDescendantNod
                     {
                         RuleId = RuleId,
                         Message = "Place each member in an anonymous type on a new line",
+                        Severity = LintSeverity.Warning,
+                        FilePath = filePath,
+                        Line = currSpan.StartLinePosition.Line + 1,
+                        Column = currSpan.StartLinePosition.Character + 1,
+                    });
+            }
+            else if (!requireNewLine && !sameLine)
+            {
+                diagnostics.Add(
+                    new LintDiagnostic
+                    {
+                        RuleId = RuleId,
+                        Message = "Place anonymous type members on the same line",
                         Severity = LintSeverity.Warning,
                         FilePath = filePath,
                         Line = currSpan.StartLinePosition.Line + 1,
