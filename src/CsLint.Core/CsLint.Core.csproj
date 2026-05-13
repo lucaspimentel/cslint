@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.3.0" />
     <PackageReference Include="editorconfig" Version="0.15.0" />
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.6" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.8" />
   </ItemGroup>
 
 </Project>
